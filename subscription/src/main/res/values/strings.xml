@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Subscription</string>
+    <string name="subscription_progress_text">加载中...</string>
+</resources>
