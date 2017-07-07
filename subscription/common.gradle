@@ -1,0 +1,69 @@
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+}
+
+def libVersion;
+def libArtifactId;
+def libGroupId = 'cn.daily.android';
+def libDescription = 'lib';
+
+task readProperty() {
+    Properties properties = new Properties();
+    InputStream inputStream = project.file("local.properties").newInputStream();
+    properties.load(inputStream);
+    libVersion = properties.getProperty("version");
+    libArtifactId = properties.getProperty("artifactId");
+    libGroupId = properties.getProperty("groupId")
+    libDescription = properties.getProperty("description")
+}
+
+//上传AAR、source、JavaDoc脚本
+uploadArchives {
+    repositories {
+        //配置仓库地址和模块相关信息
+        mavenDeployer {
+            snapshotRepository(url: 'http://10.100.47.176:8086/nexus/content/repositories/snapshots') {
+                authentication(userName: 'deployment', password: 'deployment123')
+            }
+            repository(url: 'http://10.100.47.176:8086/nexus/content/repositories/releases') {
+                authentication(userName: 'deployment', password: 'deployment123')
+            }
+            pom.project {
+                version libVersion
+                artifactId libArtifactId
+                groupId libGroupId
+                description libDescription
+                packaging 'aar'
+            }
+        }
+
+        //创建javadoc的任务
+        task javadoc(type: Javadoc) {
+            source = android.sourceSets.main.java.srcDirs
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+            destinationDir = file("../javadoc/")
+            failOnError false
+        }
+
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            classifier = 'javadoc'
+            from javadoc.destinationDir
+        }
+
+        //创建源文件任务
+        task androidSourcesJar(type: Jar) {
+            classifier = 'sources'
+            from android.sourceSets.main.java.srcDirs
+        }
+
+        //上传文件
+        artifacts {
+            archives file('subscription.aar')
+            archives androidSourcesJar
+            archives javadocJar
+        }
+    }
+}
