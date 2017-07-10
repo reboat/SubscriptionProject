@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-apply from: 'common.gradle'
-
+apply from: 'http://10.100.47.176:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.2/publish-0.0.2.gradle'
 
 android {
     compileSdkVersion 25
