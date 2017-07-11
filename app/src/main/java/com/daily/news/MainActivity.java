@@ -22,31 +22,29 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment recommend = fragmentManager.findFragmentByTag("recommend");
+            FragmentTransaction transaction = null;
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTextMessage.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.title_home);
-
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    Fragment fragment = fragmentManager.findFragmentByTag("recommend");
-                    if (fragment != null) {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.hide(fragment);
+                    if (recommend != null) {
+                        transaction = fragmentManager.beginTransaction();
+                        transaction.hide(recommend);
                         transaction.commit();
                     }
-
-
                     return true;
                 case R.id.navigation_dashboard:
-                    fragmentManager = getSupportFragmentManager();
-                    fragment = fragmentManager.findFragmentByTag("recommend");
-                    if (fragment == null) {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    if (recommend == null) {
+                        transaction = fragmentManager.beginTransaction();
                         transaction.add(R.id.content, new RecommendFragment(), "recommend");
                         transaction.commit();
                     } else {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.show(fragment);
+                        transaction = fragmentManager.beginTransaction();
+                        transaction.show(recommend);
                         transaction.commit();
                     }
                     mTextMessage.setVisibility(View.GONE);
@@ -55,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     mTextMessage.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.title_notifications);
-                    fragmentManager = getSupportFragmentManager();
-                    fragment = fragmentManager.findFragmentByTag("recommend");
-                    if (fragment != null) {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    if (recommend != null) {
                         transaction = fragmentManager.beginTransaction();
-                        transaction.hide(fragment);
+                        transaction.hide(recommend);
                         transaction.commit();
                     }
                     return true;

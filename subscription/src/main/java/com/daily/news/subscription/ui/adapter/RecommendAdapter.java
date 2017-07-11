@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.model.Recommend;
@@ -16,16 +17,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
- * Created by lixinke on 2017/7/11.
+ * 无订阅时，推荐订阅内容
  */
 
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
     private Context mContext;
     private List<Recommend> mRecommends;
     private OnSubscribeListener mOnSubscribeListener;
+    private OnItemClickListener<Recommend> mOnItemClickListener;
 
     public RecommendAdapter(Context context, List<Recommend> list) {
         mContext = context;
@@ -39,13 +40,28 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     }
 
     @Override
-    public void onBindViewHolder(RecommendViewHolder holder, int position) {
-        Recommend recommend = mRecommends.get(position);
+    public void onBindViewHolder(RecommendViewHolder holder, final int position) {
+        final Recommend recommend = mRecommends.get(position);
         Glide.with(holder.itemView).load(recommend.picUrl).into(holder.subImageView);
-        holder.subArticleNumView.setText("文章"+recommend.articleCount);
-        holder.subNumView.setText("订阅数"+recommend.subscribeCount);
+        holder.subArticleNumView.setText("文章" + recommend.articleCount);
+        holder.subNumView.setText("订阅数" + recommend.subscribeCount);
         holder.subTitleView.setText(recommend.name);
-        holder.subBtnView.setTag(recommend);
+        holder.subBtnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnSubscribeListener != null) {
+                    mOnSubscribeListener.onSubscribe(recommend);
+                }
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(position, recommend);
+                }
+            }
+        });
     }
 
     @Override
@@ -53,19 +69,28 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         return mRecommends != null ? mRecommends.size() : 0;
     }
 
+    public void setOnItemClickListener(OnItemClickListener<Recommend> onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    /**
+     * 订阅监听事件
+     *
+     * @param onSubscribeListener
+     */
     public void setOnSubscribeListener(OnSubscribeListener onSubscribeListener) {
         mOnSubscribeListener = onSubscribeListener;
     }
 
+    /**
+     * 订阅接口
+     */
     public interface OnSubscribeListener {
+        /**
+         * 点击订阅按钮时的回调
+         * @param recommend
+         */
         void onSubscribe(Recommend recommend);
-    }
-
-    @OnClick(R2.id.recommend_subscription_btn)
-    public void onSubscribe(View v) {
-        if (mOnSubscribeListener != null) {
-            mOnSubscribeListener.onSubscribe((Recommend) v.getTag());
-        }
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +107,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
         public RecommendViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
