@@ -6,7 +6,7 @@ package com.daily.news.subscription.model;
 
 public class Recommend {
     public String uid;
-    public String name;
+    public String name = "";
     public String picUrl;
     public int subscribeCount;
     public int articleCount;

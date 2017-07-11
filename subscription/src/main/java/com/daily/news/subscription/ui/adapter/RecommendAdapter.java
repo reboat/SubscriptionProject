@@ -34,7 +34,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
     @Override
     public RecommendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(mContext, R.layout.item_recommend_layout, null);
+        View view = View.inflate(mContext, R.layout.item_recommend, null);
         return new RecommendViewHolder(view);
     }
 
@@ -42,8 +42,9 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     public void onBindViewHolder(RecommendViewHolder holder, int position) {
         Recommend recommend = mRecommends.get(position);
         Glide.with(holder.itemView).load(recommend.picUrl).into(holder.subImageView);
-        holder.subArticleNumView.setText(recommend.articleCount);
-        holder.subNumView.setText(recommend.subscribeCount);
+        holder.subArticleNumView.setText("文章"+recommend.articleCount);
+        holder.subNumView.setText("订阅数"+recommend.subscribeCount);
+        holder.subTitleView.setText(recommend.name);
         holder.subBtnView.setTag(recommend);
     }
 
@@ -81,7 +82,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
         public RecommendViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 }
