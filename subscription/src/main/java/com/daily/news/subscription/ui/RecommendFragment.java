@@ -8,19 +8,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.model.Recommend;
 import com.daily.news.subscription.ui.adapter.RecommendAdapter;
 import com.daily.news.subscription.ui.adapter.SubscriptionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -33,7 +32,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class RecommendFragment extends Fragment implements RecommendAdapter.OnSubscribeListener ,OnItemClickListener<Recommend>{
+public class RecommendFragment extends Fragment implements RecommendAdapter.OnSubscribeListener, OnItemClickListener<Recommend> {
 
     @BindView(R2.id.recommend_progress_container)
     View mProgressContainer;
@@ -44,7 +43,6 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private RecommendAdapter mRecommendAdapter;
 
     private SubscriptionAdapter mSubscriptionAdapter;
-    private TextView textView;
 
     public RecommendFragment() {
     }
@@ -56,29 +54,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
                 .flatMap(new Function<Long, ObservableSource<List<Recommend>>>() {
                     @Override
                     public ObservableSource<List<Recommend>> apply(@NonNull Long aLong) throws Exception {
-
-                        List<Recommend> recommends = new ArrayList<>();
-                        String[] names = {"发", "浙", "报", "人", "现", "锄", "额", "和"};
-                        String[] imags = {
-                                "http://img3.imgtn.bdimg.com/it/u=826828499,2412343960&fm=26&gp=0.jpg",
-                                "http://img2.imgtn.bdimg.com/it/u=3732184319,1857452749&fm=26&gp=0.jpg",
-                                "http://img0.imgtn.bdimg.com/it/u=2767677514,459923336&fm=26&gp=0.jpg",
-                                "http://img1.imgtn.bdimg.com/it/u=638461789,1813123122&fm=26&gp=0.jpg",
-                                "http://img3.imgtn.bdimg.com/it/u=1679448770,3520010627&fm=26&gp=0.jpg"
-                        };
-                        Random random = new Random();
-                        for (int i = 0; i < 30; i++) {
-                            Recommend recommend = new Recommend();
-                            recommend.articleCount = random.nextInt();
-                            for (int j = 0; j < 4; j++) {
-                                recommend.name += names[random.nextInt(names.length)];
-                            }
-
-                            recommend.subscribeCount = random.nextInt();
-                            recommend.picUrl = imags[random.nextInt(imags.length)];
-                            recommends.add(recommend);
-                        }
-                        return Observable.just(recommends);
+                        return Observable.just(MockResponse.getInstance().getRecommedResponse());
                     }
                 })
                 .subscribeOn(Schedulers.newThread())
@@ -87,18 +63,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
                     @Override
                     public void accept(@NonNull List<Recommend> recommends) throws Exception {
                         mProgressContainer.setVisibility(View.GONE);
-                        mRecommends.clear();
                         mRecommends.addAll(recommends);
-
-                        textView = new TextView(getActivity());
-                        textView.setTextSize(30);
-                        textView.setText("我是头部1");
-                        TextView textView2 = new TextView(getActivity());
-                        textView2.setTextSize(30);
-                        textView2.setText("我是头部2");
-                        mSubscriptionAdapter.addHeaderView(textView);
-                        mSubscriptionAdapter.addHeaderView(textView2);
-
                         mSubscriptionAdapter.notifyDataSetChanged();
                     }
                 });

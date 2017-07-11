@@ -12,24 +12,24 @@ import java.util.List;
  */
 
 public class SubscriptionAdapter extends RecyclerView.Adapter {
-    private static int NORMAL_VIEW_TYPE;
+    private static int NORMAL_VIEW_TYPE = 10;
 
     private List<View> mHeaderViews = new ArrayList<>();
     private RecommendAdapter mRecommendAdapter;
 
     /**
-     * recyclerView添加顶部View,正常Item的视图类型更新。10是随便写的，防止冲突。
+     * recyclerView添加顶部View,正常Item的视图类型更新。
+     *
      * @param view
      */
     public void addHeaderView(View view) {
         mHeaderViews.add(view);
-        NORMAL_VIEW_TYPE = mHeaderViews.size() + 10;
+        NORMAL_VIEW_TYPE = mHeaderViews.size() + NORMAL_VIEW_TYPE;
         notifyDataSetChanged();
     }
 
     public void removeHeaderView(View view) {
         mHeaderViews.remove(view);
-        NORMAL_VIEW_TYPE = mHeaderViews.size() + 10;
         notifyDataSetChanged();
     }
 
@@ -39,12 +39,13 @@ public class SubscriptionAdapter extends RecyclerView.Adapter {
 
     /**
      * 用position作为HeaderView的ViewType
+     *
      * @param position
      * @return
      */
     @Override
     public int getItemViewType(int position) {
-        if (position < mHeaderViews.size()) {
+        if (mHeaderViews.size() > 0 && position < mHeaderViews.size()) {
             return position;
         }
         return NORMAL_VIEW_TYPE;
