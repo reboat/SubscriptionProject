@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,15 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         ButterKnife.bind(this, root);
 
         mHeaderRecommendAdapter = new HeaderRecommendAdapter();
-        mRecyclerView.setAdapter(mHeaderRecommendAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        initRecommend();
+
         initFocusView(inflater, container);
         initRecommendHeader(inflater, container);
+        initRecommend();
+
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mHeaderRecommendAdapter);
 
         return root;
     }

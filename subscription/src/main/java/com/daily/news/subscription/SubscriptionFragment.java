@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.model.SubscriptionBean;
+import com.daily.news.subscription.ui.MySubscriptionFragment;
 import com.daily.news.subscription.ui.RecommendFragment;
 
 import java.util.concurrent.TimeUnit;
@@ -55,7 +56,10 @@ public class SubscriptionFragment extends Fragment {
                     public void accept(@NonNull SubscriptionBean subscriptionBean) throws Exception {
                         mProgressContainer.setVisibility(View.GONE);
                         if (subscriptionBean.data.has_subscribe) {
-
+                            FragmentManager fragmentManager = getChildFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            transaction.add(R.id.subscription_container, MySubscriptionFragment.newInstance("",""));
+                            transaction.commit();
                         } else if (!subscriptionBean.data.has_subscribe) {
                             FragmentManager fragmentManager = getChildFragmentManager();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();

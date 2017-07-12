@@ -27,7 +27,7 @@ public class SubscriptionBean implements Parcelable {
 
         public static class RecommendBean implements Parcelable {
             public String uid;
-            public String name;
+            public String name="";
             public String pic_url;
             public int subscribe_count;
             public int article_count;
