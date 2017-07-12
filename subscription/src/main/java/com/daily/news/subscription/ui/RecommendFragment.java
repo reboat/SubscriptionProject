@@ -40,7 +40,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private Banner mFocusBanner;
     private List<SubscriptionBean.DataBean.FocusBean> mFocusBeen;
 
-    private List<SubscriptionBean.DataBean.RecommendBean> mRecommends;
+    private List<SubscriptionBean.DataBean.RecommendBean> mRecommendBeen;
     private RecommendAdapter mRecommendAdapter;
 
     private HeaderRecommendAdapter mHeaderRecommendAdapter;
@@ -62,7 +62,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             SubscriptionBean.DataBean dataBean = getArguments().getParcelable(SUBSCRIPTION_DATA);
-            mRecommends = dataBean.recommend_list;
+            mRecommendBeen = dataBean.recommend_list;
             mFocusBeen = dataBean.focus_list;
         }
     }
@@ -91,7 +91,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * 初始化推荐相关
      */
     private void initRecommend() {
-        mRecommendAdapter = new RecommendAdapter(getActivity(), mRecommends);
+        mRecommendAdapter = new RecommendAdapter(getActivity(), mRecommendBeen);
         mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
 
