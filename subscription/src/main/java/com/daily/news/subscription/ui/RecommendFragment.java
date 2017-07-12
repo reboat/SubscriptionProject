@@ -32,8 +32,6 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
-    @BindView(R2.id.recommend_progress_container)
-    View mProgressContainer;
     @BindView(R2.id.recommend_recyclerView)
     RecyclerView mRecyclerView;
 
@@ -73,7 +71,6 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_recommend, container, false);
         ButterKnife.bind(this, root);
-        mProgressContainer.setVisibility(View.GONE);
 
         mHeaderRecommendAdapter = new HeaderRecommendAdapter();
         mRecyclerView.setAdapter(mHeaderRecommendAdapter);
@@ -107,6 +104,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private void initFocusView(LayoutInflater inflater, ViewGroup container) {
         mFocusView = inflater.inflate(R.layout.item_focus, container, false);
         mFocusBanner = (Banner) mFocusView.findViewById(R.id.focus_banner);
+        mHeaderRecommendAdapter.addHeaderView(mFocusView);
         mFocusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mFocusBanner.setImageLoader(new ImageLoader() {
             @Override
@@ -123,7 +121,6 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         }
         mFocusBanner.setBannerTitles(title);
         mFocusBanner.start();
-        mHeaderRecommendAdapter.addHeaderView(mFocusView);
     }
 
     /**
