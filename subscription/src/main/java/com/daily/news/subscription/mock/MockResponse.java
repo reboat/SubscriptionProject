@@ -1,5 +1,6 @@
 package com.daily.news.subscription.mock;
 
+import com.daily.news.subscription.model.Focus;
 import com.daily.news.subscription.model.Recommend;
 
 import java.util.ArrayList;
@@ -43,5 +44,28 @@ public class MockResponse {
             recommends.add(recommend);
         }
         return recommends;
+    }
+
+    public List<Focus> getFocusResponse() {
+        String[] titles = {
+                "空山新雨后,天气晚来秋",
+                "落霞与孤鹜齐飞,秋水共长天一色",
+                "天生我材必有用",
+                "海上生明月"
+        };
+        String[] picUrl = {
+                "http://img5.imgtn.bdimg.com/it/u=1397660481,1798130402&fm=26&gp=0.jpg",
+                "http://img1.imgtn.bdimg.com/it/u=2382350308,4278424087&fm=26&gp=0.jpg",
+                "http://img3.imgtn.bdimg.com/it/u=2121918424,1843211123&fm=26&gp=0.jpg",
+                "http://img0.imgtn.bdimg.com/it/u=4032300341,2620734131&fm=26&gp=0.jpg"
+        };
+        List<Focus> focuses = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Focus focus = new Focus();
+            focus.docTitle = titles[i];
+            focus.picUrl = picUrl[i];
+            focuses.add(focus);
+        }
+        return focuses;
     }
 }
