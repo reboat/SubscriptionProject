@@ -20,7 +20,7 @@ import com.daily.news.subscription.model.Focus;
 import com.daily.news.subscription.model.Recommend;
 import com.daily.news.subscription.model.SubRecommend;
 import com.daily.news.subscription.ui.adapter.RecommendAdapter;
-import com.daily.news.subscription.ui.adapter.SubscriptionAdapter;
+import com.daily.news.subscription.ui.adapter.HeaderRecommendAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -53,7 +53,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private List<Recommend> mRecommends = new ArrayList<>();
     private RecommendAdapter mRecommendAdapter;
 
-    private SubscriptionAdapter mSubscriptionAdapter;
+    private HeaderRecommendAdapter mHeaderRecommendAdapter;
 
 
     public RecommendFragment() {
@@ -95,7 +95,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
                 }
                 mFocusBanner.setBannerTitles(title);
                 mRecommends.addAll(subRecommend.recommends);
-                mSubscriptionAdapter.notifyDataSetChanged();
+                mHeaderRecommendAdapter.notifyDataSetChanged();
                 mFocusBanner.start();
             }
         });
@@ -108,7 +108,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         View root = inflater.inflate(R.layout.fragment_recommend, container, false);
         ButterKnife.bind(this, root);
         mProgressContainer.setVisibility(View.VISIBLE);
-        mSubscriptionAdapter = new SubscriptionAdapter();
+        mHeaderRecommendAdapter = new HeaderRecommendAdapter();
 
         initRecommend();
         initFocusView(inflater, container);
@@ -125,8 +125,8 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
 
-        mSubscriptionAdapter.setRecommendAdapter(mRecommendAdapter);
-        mRecyclerView.setAdapter(mSubscriptionAdapter);
+        mHeaderRecommendAdapter.setRecommendAdapter(mRecommendAdapter);
+        mRecyclerView.setAdapter(mHeaderRecommendAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
@@ -149,7 +149,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         });
         mFocusBanner.isAutoPlay(true);
         mFocusBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        mSubscriptionAdapter.addHeaderView(mFocusView);
+        mHeaderRecommendAdapter.addHeaderView(mFocusView);
     }
 
     /**
@@ -166,7 +166,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
 
             }
         });
-        mSubscriptionAdapter.addHeaderView(recommendHeaderView);
+        mHeaderRecommendAdapter.addHeaderView(recommendHeaderView);
     }
 
     /**

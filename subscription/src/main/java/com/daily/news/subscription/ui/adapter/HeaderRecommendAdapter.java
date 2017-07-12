@@ -11,7 +11,7 @@ import java.util.List;
  * 带有HeaderView的订阅Adapter
  */
 
-public class SubscriptionAdapter extends RecyclerView.Adapter {
+public class HeaderRecommendAdapter extends RecyclerView.Adapter {
     private static int NORMAL_VIEW_TYPE = 10;
 
     private List<View> mHeaderViews = new ArrayList<>();
