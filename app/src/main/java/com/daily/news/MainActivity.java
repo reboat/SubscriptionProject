@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.daily.news.subscription.ui.RecommendFragment;
+import com.daily.news.subscription.SubscriptionFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment recommend = fragmentManager.findFragmentByTag("recommend");
+            Fragment recommend = fragmentManager.findFragmentByTag("subscription");
             FragmentTransaction transaction = null;
 
             switch (item.getItemId()) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     if (recommend == null) {
                         transaction = fragmentManager.beginTransaction();
-                        transaction.add(R.id.content, new RecommendFragment(), "recommend");
+                        transaction.add(R.id.content, new SubscriptionFragment(), "subscription");
                         transaction.commit();
                     } else {
                         transaction = fragmentManager.beginTransaction();

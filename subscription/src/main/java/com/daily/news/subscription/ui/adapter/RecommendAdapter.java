@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.model.Recommend;
+import com.daily.news.subscription.model.SubscriptionBean;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
     private Context mContext;
-    private List<Recommend> mRecommends;
+    private List<SubscriptionBean.DataBean.RecommendBean> mRecommends;
     private OnSubscribeListener mOnSubscribeListener;
-    private OnItemClickListener<Recommend> mOnItemClickListener;
+    private OnItemClickListener<SubscriptionBean.DataBean.RecommendBean> mOnItemClickListener;
 
-    public RecommendAdapter(Context context, List<Recommend> list) {
+    public RecommendAdapter(Context context, List<SubscriptionBean.DataBean.RecommendBean> list) {
         mContext = context;
         mRecommends = list;
     }
@@ -41,10 +41,10 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
     @Override
     public void onBindViewHolder(RecommendViewHolder holder, final int position) {
-        final Recommend recommend = mRecommends.get(position);
-        Glide.with(holder.itemView).load(recommend.picUrl).into(holder.subImageView);
-        holder.subArticleNumView.setText("文章" + recommend.articleCount);
-        holder.subNumView.setText("订阅数" + recommend.subscribeCount);
+        final SubscriptionBean.DataBean.RecommendBean recommend = mRecommends.get(position);
+        Glide.with(holder.itemView).load(recommend.pic_url).into(holder.subImageView);
+        holder.subArticleNumView.setText("文章" + recommend.article_count);
+        holder.subNumView.setText("订阅数" + recommend.subscribe_count);
         holder.subTitleView.setText(recommend.name);
         holder.subBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         return mRecommends != null ? mRecommends.size() : 0;
     }
 
-    public void setOnItemClickListener(OnItemClickListener<Recommend> onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<SubscriptionBean.DataBean.RecommendBean> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -90,7 +90,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
          * 点击订阅按钮时的回调
          * @param recommend
          */
-        void onSubscribe(Recommend recommend);
+        void onSubscribe(SubscriptionBean.DataBean.RecommendBean recommend);
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder {
