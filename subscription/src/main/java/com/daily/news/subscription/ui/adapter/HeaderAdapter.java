@@ -38,10 +38,10 @@ public class HeaderAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (mHeaderViews.size() > 0) {
+        if (mHeaderViews.size() > 0 && position < mHeaderViews.size()) {
             return position;
         } else if (mInternalAdapter != null) {
-            return mInternalAdapter.getItemViewType(position) + mHeaderViews.size() + COUNT_TEMP;
+            return mInternalAdapter.getItemViewType(position - mHeaderViews.size()) + mHeaderViews.size() + COUNT_TEMP;
         }
         return super.getItemViewType(position);
     }

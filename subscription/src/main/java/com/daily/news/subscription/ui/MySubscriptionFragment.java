@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.ui.adapter.HeaderAdapter;
 import com.daily.news.subscription.ui.adapter.MySubAdapter;
 
 import butterknife.BindView;
@@ -26,7 +27,9 @@ public class MySubscriptionFragment extends Fragment {
 
     @BindView(R2.id.my_sub_recyclerView)
     RecyclerView mRecyclerView;
-    private View rootView;
+    private View mRootView;
+
+    private HeaderAdapter mHeaderAdapter;
 
     public MySubscriptionFragment() {
     }
@@ -47,19 +50,38 @@ public class MySubscriptionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        rootView = View.inflate(getActivity(), R.layout.fragment_my_subscription, null);
-        ButterKnife.bind(this, rootView);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        mRecyclerView.setAdapter(new MySubAdapter(getActivity()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return rootView;
+
+        mRootView = inflater.inflate(R.layout.fragment_my_subscription, container, false);
+        ButterKnife.bind(this, mRootView);
+
+        mHeaderAdapter = new HeaderAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mHeaderAdapter.setInternalAdapter(new MySubAdapter(getActivity()));
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
+        View headerView = inflater.inflate(R.layout.my_subscription_header, container, false);
+        mHeaderAdapter.addHeaderView(headerView);
+
+        headerView.findViewById(R.id.my_sub_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        headerView.findViewById(R.id.my_sub_more_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mRecyclerView.setAdapter(mHeaderAdapter);
+        return mRootView;
     }
 
 }
