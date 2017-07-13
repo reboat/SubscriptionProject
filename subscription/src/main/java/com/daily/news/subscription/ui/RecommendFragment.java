@@ -17,7 +17,7 @@ import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.model.SubscriptionBean;
-import com.daily.news.subscription.ui.adapter.HeaderRecommendAdapter;
+import com.daily.news.subscription.ui.adapter.HeaderAdapter;
 import com.daily.news.subscription.ui.adapter.RecommendAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -43,7 +43,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private List<SubscriptionBean.DataBean.RecommendBean> mRecommendBeen;
     private RecommendAdapter mRecommendAdapter;
 
-    private HeaderRecommendAdapter mHeaderRecommendAdapter;
+    private HeaderAdapter mHeaderRecommendAdapter;
 
 
     public static RecommendFragment newInstance(SubscriptionBean.DataBean dataBean) {
@@ -73,7 +73,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         View root = inflater.inflate(R.layout.fragment_recommend, container, false);
         ButterKnife.bind(this, root);
 
-        mHeaderRecommendAdapter = new HeaderRecommendAdapter();
+        mHeaderRecommendAdapter = new HeaderAdapter();
 
 
         initFocusView(inflater, container);
@@ -95,7 +95,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
 
-        mHeaderRecommendAdapter.setRecommendAdapter(mRecommendAdapter);
+        mHeaderRecommendAdapter.setInternalAdapter(mRecommendAdapter);
     }
 
 

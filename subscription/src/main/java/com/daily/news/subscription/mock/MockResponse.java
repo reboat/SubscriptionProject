@@ -21,15 +21,15 @@ public class MockResponse {
     private MockResponse() {
     }
 
-    public SubscriptionBean getSubscriptionResponse(){
-        SubscriptionBean subscription=new SubscriptionBean();
-        subscription.code=1;
-        subscription.request_id= UUID.randomUUID().toString();
-        subscription.message="mock subscription info";
-        subscription.data=new SubscriptionBean.DataBean();
-        subscription.data.has_subscribe=false;
-        subscription.data.focus_list=getFocusResponse();
-        subscription.data.recommend_list=getRecommedResponse();
+    public SubscriptionBean getSubscriptionResponse() {
+        SubscriptionBean subscription = new SubscriptionBean();
+        subscription.code = 1;
+        subscription.request_id = UUID.randomUUID().toString();
+        subscription.message = "mock subscription info";
+        subscription.data = new SubscriptionBean.DataBean();
+        subscription.data.has_subscribe = false;
+        subscription.data.focus_list = getFocusResponse();
+        subscription.data.recommend_list = getRecommedResponse();
         return subscription;
     }
 
