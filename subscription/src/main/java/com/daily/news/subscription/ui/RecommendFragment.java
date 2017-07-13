@@ -36,8 +36,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     @BindView(R2.id.recommend_recyclerView)
     RecyclerView mRecyclerView;
 
-    private View mFocusView;
-    private Banner mFocusBanner;
+    private Banner mFocusView;
     private List<SubscriptionBean.DataBean.FocusBean> mFocusBeen;
 
     private List<SubscriptionBean.DataBean.RecommendBean> mRecommendBeen;
@@ -106,25 +105,24 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * @param container
      */
     private void initFocusView(LayoutInflater inflater, ViewGroup container) {
-        mFocusView = inflater.inflate(R.layout.item_focus, container, false);
-        mFocusBanner = (Banner) mFocusView.findViewById(R.id.focus_banner);
+        mFocusView = (Banner) inflater.inflate(R.layout.item_focus, container, false);
         mHeaderRecommendAdapter.addHeaderView(mFocusView);
-        mFocusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        mFocusBanner.setImageLoader(new ImageLoader() {
+        mFocusView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        mFocusView.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
                 Glide.with(context).load(((SubscriptionBean.DataBean.FocusBean) path).pic_url).into(imageView);
             }
         });
-        mFocusBanner.isAutoPlay(true);
-        mFocusBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        mFocusBanner.setImages(mFocusBeen);
+        mFocusView.isAutoPlay(true);
+        mFocusView.setIndicatorGravity(BannerConfig.RIGHT);
+        mFocusView.setImages(mFocusBeen);
         List<String> title = new ArrayList<>();
         for (int i = 0; i < mFocusBeen.size(); i++) {
             title.add(mFocusBeen.get(i).doc_title);
         }
-        mFocusBanner.setBannerTitles(title);
-        mFocusBanner.start();
+        mFocusView.setBannerTitles(title);
+        mFocusView.start();
     }
 
     /**
@@ -173,8 +171,8 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     @Override
     public void onDetach() {
         super.onDetach();
-        if (mFocusBanner != null) {
-            mFocusBanner.stopAutoPlay();
+        if (mFocusView != null) {
+            mFocusView.stopAutoPlay();
         }
     }
 }
