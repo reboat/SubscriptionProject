@@ -1,4 +1,4 @@
-package com.daily.news.subscription.ui;
+package com.daily.news.subscription.subscription.recommend;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.OnItemClickListener;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.model.SubscriptionBean;
-import com.daily.news.subscription.ui.adapter.HeaderAdapter;
-import com.daily.news.subscription.ui.adapter.RecommendAdapter;
+import com.daily.news.subscription.detail.SubscriptionDetailActivity;
+import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.subscription.SubscriptionBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;

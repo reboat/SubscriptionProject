@@ -1,4 +1,4 @@
-package com.daily.news.subscription.ui.adapter;
+package com.daily.news.subscription.subscription.recommend;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.OnItemClickListener;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.model.SubscriptionBean;
+import com.daily.news.subscription.subscription.SubscriptionBean;
 
 import java.util.List;
 

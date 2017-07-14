@@ -1,4 +1,4 @@
-package com.daily.news.subscription.ui;
+package com.daily.news.subscription.subscription.my;
 
 
 import android.os.Bundle;
@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.ui.adapter.HeaderAdapter;
-import com.daily.news.subscription.ui.adapter.MySubAdapter;
+import com.daily.news.subscription.base.HeaderAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

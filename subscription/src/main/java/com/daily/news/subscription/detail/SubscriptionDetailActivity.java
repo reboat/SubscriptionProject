@@ -1,4 +1,4 @@
-package com.daily.news.subscription.ui;
+package com.daily.news.subscription.detail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

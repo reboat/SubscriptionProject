@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.daily.news.subscription.SubscriptionFragment;
+import com.daily.news.subscription.subscription.SubscriptionFragment;
 
 public class MainActivity extends AppCompatActivity {
 

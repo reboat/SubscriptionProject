@@ -1,6 +1,6 @@
 package com.daily.news.subscription.mock;
 
-import com.daily.news.subscription.model.SubscriptionBean;
+import com.daily.news.subscription.subscription.SubscriptionBean;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.daily.news.subscription.ui.SubscriptionDetailActivity"
+    tools:context="com.daily.news.subscription.detail.SubscriptionDetailActivity"
     tools:showIn="@layout/activity_subscription_detail">
 
     <TextView
