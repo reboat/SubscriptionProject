@@ -88,6 +88,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     public interface OnSubscribeListener {
         /**
          * 点击订阅按钮时的回调
+         *
          * @param recommend
          */
         void onSubscribe(SubscriptionBean.DataBean.RecommendBean recommend);

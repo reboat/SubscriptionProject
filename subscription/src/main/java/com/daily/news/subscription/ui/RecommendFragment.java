@@ -1,6 +1,7 @@
 package com.daily.news.subscription.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -160,7 +161,8 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      */
     @Override
     public void onItemClick(int position, SubscriptionBean.DataBean.RecommendBean recommend) {
-        Toast.makeText(getActivity(), recommend.name, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), recommend.name, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(),SubscriptionDetailActivity.class));
     }
 
     @Override
