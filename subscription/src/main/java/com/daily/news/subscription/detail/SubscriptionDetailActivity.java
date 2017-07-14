@@ -14,6 +14,7 @@ public class SubscriptionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subscription_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }
