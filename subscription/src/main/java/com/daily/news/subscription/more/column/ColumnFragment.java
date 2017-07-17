@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more.detail;
+package com.daily.news.subscription.more.column;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailFragment extends Fragment implements DetailContract.View, ColumnAdapter.OnItemClickListener {
+public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnItemClickListener {
     public static final String ARG_ITEM_ID = "item_id";
 
     @BindView(R2.id.more_detail_recyclerView)
@@ -36,9 +36,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Col
     @BindView(R2.id.more_detail_progressBar)
     ProgressBar mProgressBar;
 
-    private DetailContract.Presenter mPresenter;
+    private ColumnContract.Presenter mPresenter;
 
-    public DetailFragment() {
+    public ColumnFragment() {
     }
 
     @Override
@@ -85,7 +85,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Col
     }
 
     @Override
-    public void setPresenter(DetailContract.Presenter presenter) {
+    public void setPresenter(ColumnContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

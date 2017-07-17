@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more.detail;
+package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.more.CategoryBean;
 
@@ -13,12 +13,12 @@ import io.reactivex.functions.Consumer;
  * Created by lixinke on 2017/7/17.
  */
 
-public class DetailPresenter implements DetailContract.Presenter {
-    private DetailContract.View mDetailView;
-    private DetailContract.Store mDetailStore;
+public class ColumnPresenter implements ColumnContract.Presenter {
+    private ColumnContract.View mDetailView;
+    private ColumnContract.Store mDetailStore;
     private CompositeDisposable mDisposable;
 
-    public DetailPresenter(DetailContract.View detailView, DetailContract.Store detailStore) {
+    public ColumnPresenter(ColumnContract.View detailView, ColumnContract.Store detailStore) {
         mDetailView = detailView;
         mDetailView.setPresenter(this);
         mDetailStore = detailStore;

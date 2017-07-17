@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.detail.DetailFragment;
-import com.daily.news.subscription.more.detail.DetailPresenter;
-import com.daily.news.subscription.more.detail.DetailStore;
+import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.more.column.ColumnStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,13 +124,13 @@ public class MoreFragment extends Fragment implements MoreContract.View {
                 @Override
                 public void onClick(View v) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(DetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                    DetailFragment fragment = new DetailFragment();
+                    arguments.putString(ColumnFragment.ARG_ITEM_ID, holder.mItem.id);
+                    ColumnFragment fragment = new ColumnFragment();
                     fragment.setArguments(arguments);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
-                    new DetailPresenter(fragment,new DetailStore());
+                    new ColumnPresenter(fragment,new ColumnStore());
                 }
             });
         }

@@ -1,6 +1,6 @@
 package com.daily.news.subscription.more;
 
-import com.daily.news.subscription.more.detail.DetailContract;
+import com.daily.news.subscription.more.column.ColumnContract;
 
 import org.reactivestreams.Publisher;
 
@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class SearchStore implements DetailContract.Store<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> {
+public class SearchStore implements ColumnContract.Store<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> {
     @Override
     public Flowable<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)

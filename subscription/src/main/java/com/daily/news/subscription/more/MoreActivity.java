@@ -7,8 +7,8 @@ import android.widget.EditText;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.detail.DetailFragment;
-import com.daily.news.subscription.more.detail.DetailPresenter;
+import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,12 +39,12 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         String keyword = mKeywordView.getText().toString();
         Bundle arguments = new Bundle();
-        arguments.putString(DetailFragment.ARG_ITEM_ID, keyword);
-        DetailFragment fragment = new SearchDetailFragment();
+        arguments.putString(ColumnFragment.ARG_ITEM_ID, keyword);
+        ColumnFragment fragment = new SearchColumnFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.more_container, fragment)
                 .commit();
-        new DetailPresenter(fragment,new SearchStore());
+        new ColumnPresenter(fragment,new SearchStore());
     }
 }

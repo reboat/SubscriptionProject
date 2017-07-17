@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more.detail;
+package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.BasePresenter;
 import com.daily.news.subscription.BaseStore;
@@ -11,7 +11,7 @@ import java.util.List;
  * Created by lixinke on 2017/7/17.
  */
 
-public interface DetailContract {
+public interface ColumnContract {
     interface Presenter extends BasePresenter {
         void setItemId(String itemId);
     }
