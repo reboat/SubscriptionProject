@@ -54,6 +54,7 @@ public class MockResponse {
 
             recommend.subscribe_count = random.nextInt();
             recommend.pic_url = imags[random.nextInt(imags.length)];
+            recommend.uid = UUID.randomUUID().toString();
             recommends.add(recommend);
         }
         return recommends;

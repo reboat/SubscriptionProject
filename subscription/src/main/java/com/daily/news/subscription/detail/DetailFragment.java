@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -41,6 +42,7 @@ public class DetailFragment extends Fragment {
         if (getArguments() != null) {
             mUid = getArguments().getString(UID);
         }
+        Toast.makeText(getActivity(), "UID:" + mUid, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.daily.news.subscription.subscription.recommend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +15,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.detail.DetailActivity;
 import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.subscription.SubscriptionBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -161,8 +161,9 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      */
     @Override
     public void onItemClick(int position, SubscriptionBean.DataBean.RecommendBean recommend) {
-//        Toast.makeText(getActivity(), recommend.name, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(),DetailActivity.class));
+        Intent intent=new Intent("android.intent.action.DAILY");
+        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid",recommend.uid).build());
+        startActivity(intent);
     }
 
     @Override

@@ -8,9 +8,8 @@
     android:orientation="vertical"
     tools:context="com.daily.news.subscription.detail.DetailActivity">
 
-    <fragment
-        android:id="@+id/detail_fragment"
-        android:name="com.daily.news.subscription.detail.DetailFragment"
+    <FrameLayout
+        android:id="@+id/detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

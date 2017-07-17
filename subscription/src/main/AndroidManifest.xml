@@ -17,6 +17,18 @@
             android:name=".detail.DetailActivity"
             android:label="@string/title_activity_subscription_detail"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.DAILY"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:scheme="http"
+                    android:host="www.8531.cn"
+                    android:path="/subscription/detail"/>
+            </intent-filter>
         </activity>
     </application>
 
