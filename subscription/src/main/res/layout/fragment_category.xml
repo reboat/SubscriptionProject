@@ -21,7 +21,7 @@
                                             android:layout_marginRight="16dp"
                                             app:layoutManager="LinearLayoutManager"
                                             tools:context="com.daily.news.subscription.more.MoreListActivity"
-                                            tools:listitem="@layout/more_list_content"/>
+                                            tools:listitem="@layout/item_more"/>
 
     <FrameLayout
         android:id="@+id/more_category_detail_container"

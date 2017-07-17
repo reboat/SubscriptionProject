@@ -7,7 +7,6 @@ import android.widget.EditText;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.category.CategoryFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +25,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);
 
-        CategoryFragment fragment = new CategoryFragment();
+        MoreFragment fragment = new MoreFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.more_container, fragment)
                 .commit();
