@@ -16,11 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String UID = "uid";
 
-    private String mParam1;
-    private String mParam2;
+    private String mUid;
 
     @BindView(R2.id.detail_articles)
     RecyclerView mRecyclerView;
@@ -29,11 +27,10 @@ public class DetailFragment extends Fragment {
     public DetailFragment() {
     }
 
-    public static DetailFragment newInstance(String param1, String param2) {
+    public static DetailFragment newInstance(String uid) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(UID, uid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,8 +39,7 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mUid = getArguments().getString(UID);
         }
     }
 
