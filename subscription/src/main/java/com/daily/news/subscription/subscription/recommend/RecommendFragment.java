@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.detail.SubscriptionDetailActivity;
+import com.daily.news.subscription.detail.DetailActivity;
 import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.subscription.SubscriptionBean;
 import com.youth.banner.Banner;
@@ -162,7 +162,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     @Override
     public void onItemClick(int position, SubscriptionBean.DataBean.RecommendBean recommend) {
 //        Toast.makeText(getActivity(), recommend.name, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(),SubscriptionDetailActivity.class));
+        startActivity(new Intent(getActivity(),DetailActivity.class));
     }
 
     @Override
