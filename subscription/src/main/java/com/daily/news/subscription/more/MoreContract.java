@@ -4,6 +4,8 @@ import com.daily.news.subscription.BasePresenter;
 import com.daily.news.subscription.BaseStore;
 import com.daily.news.subscription.BaseView;
 
+import java.util.List;
+
 /**
  * Created by lixinke on 2017/7/17.
  */
@@ -11,13 +13,20 @@ import com.daily.news.subscription.BaseView;
 public interface MoreContract {
     interface View extends BaseView<Presenter> {
 
+        void updateValues(List<CategoryContent.CategoryItem> items);
+
+        void showError(String message);
+
+        void showProgressBar();
+
+        void hideProgressBar();
     }
 
     interface Presenter extends BasePresenter {
 
     }
 
-    interface Store extends BaseStore {
-
+    interface Store<T> extends BaseStore<T> {
+       String getUrl();
     }
 }

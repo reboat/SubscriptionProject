@@ -29,6 +29,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.more_container, fragment)
                 .commit();
+         new MorePresenter(fragment, new MoreStore());
     }
 
     @Override

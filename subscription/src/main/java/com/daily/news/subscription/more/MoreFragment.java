@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,6 +27,8 @@ public class MoreFragment extends Fragment implements MoreContract.View {
 
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
+    MoreAdapter mMoreAdapter;
+    List<CategoryContent.CategoryItem> mCategoryItems;
 
     public MoreFragment() {
     }
@@ -48,16 +52,44 @@ public class MoreFragment extends Fragment implements MoreContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mPresenter.subscribe();
+        mPresenter.subscribe();
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new MoreAdapter(CategoryContent.ITEMS));
+        mCategoryItems=new ArrayList<>();
+        mMoreAdapter=new MoreAdapter(mCategoryItems);
+        recyclerView.setAdapter(mMoreAdapter);
     }
 
     @Override
     public void setPresenter(MoreContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void updateValues(List<CategoryContent.CategoryItem> items) {
+        mMoreAdapter.updateValue(items);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unsubscribe();
     }
 
     public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.ViewHolder> {
@@ -66,6 +98,12 @@ public class MoreFragment extends Fragment implements MoreContract.View {
 
         public MoreAdapter(List<CategoryContent.CategoryItem> items) {
             mValues = items;
+        }
+
+        public void updateValue(List<CategoryContent.CategoryItem> items){
+            mValues.clear();
+            mValues.addAll(items);
+            notifyDataSetChanged();
         }
 
         @Override
