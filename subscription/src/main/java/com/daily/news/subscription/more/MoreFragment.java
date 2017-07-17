@@ -16,6 +16,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.detail.DetailFragment;
 import com.daily.news.subscription.more.detail.DetailPresenter;
+import com.daily.news.subscription.more.detail.DetailStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +130,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
-                    new DetailPresenter(fragment,null);
+                    new DetailPresenter(fragment,new DetailStore());
                 }
             });
         }

@@ -1,9 +1,32 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:id="@+id/more_detail"
-          style="?android:attr/textAppearanceLarge"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:padding="16dp"
-          android:textIsSelectable="true"
-          tools:context="com.daily.news.subscription.more.detail.DetailFragment"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/more_detail"
+             style="?android:attr/textAppearanceLarge"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="16dp"
+             android:textIsSelectable="true"
+             tools:context="com.daily.news.subscription.more.detail.DetailFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/more_detail_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/more_detail_tip_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/more_detail_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/more_detail_tip_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载中..."/>
+    </LinearLayout>
+</FrameLayout>

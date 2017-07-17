@@ -9,7 +9,7 @@
               android:divider="?android:attr/dividerHorizontal"
               android:orientation="horizontal"
               android:showDividers="middle"
-              tools:context="com.daily.news.subscription.more.MoreListActivity">
+              tools:context="com.daily.news.subscription.more.MoreActivity">
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:tools="http://schemas.android.com/tools"

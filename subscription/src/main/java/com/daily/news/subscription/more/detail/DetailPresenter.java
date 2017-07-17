@@ -1,6 +1,8 @@
 package com.daily.news.subscription.more.detail;
 
-import com.daily.news.subscription.more.CategoryContent;
+import com.daily.news.subscription.more.CategoryBean;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -24,13 +26,18 @@ public class DetailPresenter implements DetailContract.Presenter {
     }
 
     @Override
+    public void setItemId(String itemId) {
+
+    }
+
+    @Override
     public void subscribe() {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
-                .subscribe(new Consumer<CategoryContent.CategoryItem>() {
+                .subscribe(new Consumer<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>>() {
                     @Override
-                    public void accept(@NonNull CategoryContent.CategoryItem categoryItem) throws Exception {
-                        mDetailView.updateValue(categoryItem);
+                    public void accept(@NonNull List<CategoryBean.DataBean.ElementsBean.ColumnsBean> columnsBeen) throws Exception {
+                        mDetailView.updateValue(columnsBeen);
                         mDetailView.hideProgressBar();
                     }
                 }, new Consumer<Throwable>() {

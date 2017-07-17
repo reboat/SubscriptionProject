@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 public class MoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R2.id.more_key_word)
-    EditText mKeyWordView;
+    EditText mKeywordView;
     @BindView(R2.id.more_search)
     View mSearchView;
 
@@ -26,6 +26,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_more);
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);
+        mKeywordView.clearFocus();
 
         MoreFragment fragment = new MoreFragment();
         getSupportFragmentManager().beginTransaction()
@@ -36,7 +37,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String keyword = mKeyWordView.getText().toString();
+        String keyword = mKeywordView.getText().toString();
         Bundle arguments = new Bundle();
         arguments.putString(DetailFragment.ARG_ITEM_ID, keyword);
         DetailFragment fragment = new SearchDetailFragment();
