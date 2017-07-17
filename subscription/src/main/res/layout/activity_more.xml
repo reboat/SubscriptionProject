@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.daily.news.subscription.more.MoreActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+
+            <EditText
+                android:id="@+id/more_key_word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_launcher_round"
+                android:gravity="center"
+                android:hint="请输入关键词"
+                android:textColorHint="#999999"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/more_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6sp"
+            android:text="搜索"
+            android:textColor="#484848"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/more_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+</LinearLayout>

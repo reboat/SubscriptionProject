@@ -63,7 +63,7 @@ public class MySubscriptionFragment extends Fragment {
         mHeaderAdapter.setInternalAdapter(new MySubAdapter(getActivity()));
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
-        View headerView = inflater.inflate(R.layout.my_subscription_header, container, false);
+        View headerView = inflater.inflate(R.layout.header_my_subscription, container, false);
         mHeaderAdapter.addHeaderView(headerView);
 
         headerView.findViewById(R.id.my_sub_btn).setOnClickListener(new View.OnClickListener() {

@@ -43,7 +43,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private List<SubscriptionBean.DataBean.RecommendBean> mRecommendBeen;
     private RecommendAdapter mRecommendAdapter;
 
-    private HeaderAdapter mHeaderRecommendAdapter;
+    private HeaderAdapter mAdapter;
 
 
     public static RecommendFragment newInstance(SubscriptionBean.DataBean dataBean) {
@@ -73,16 +73,16 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         View root = inflater.inflate(R.layout.fragment_recommend, container, false);
         ButterKnife.bind(this, root);
 
-        mHeaderRecommendAdapter = new HeaderAdapter();
+        mAdapter = new HeaderAdapter();
 
 
         initFocusView(inflater, container);
-        initRecommendHeader(inflater, container);
+        initMoreHeader(inflater, container);
         initRecommend();
 
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mHeaderRecommendAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         return root;
     }
@@ -95,7 +95,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
 
-        mHeaderRecommendAdapter.setInternalAdapter(mRecommendAdapter);
+        mAdapter.setInternalAdapter(mRecommendAdapter);
     }
 
 
@@ -107,7 +107,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      */
     private void initFocusView(LayoutInflater inflater, ViewGroup container) {
         mFocusView = (Banner) inflater.inflate(R.layout.item_focus, container, false);
-        mHeaderRecommendAdapter.addHeaderView(mFocusView);
+        mAdapter.addHeaderView(mFocusView);
         mFocusView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mFocusView.setImageLoader(new ImageLoader() {
             @Override
@@ -132,15 +132,17 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * @param inflater
      * @param container
      */
-    private void initRecommendHeader(LayoutInflater inflater, ViewGroup container) {
-        View recommendHeaderView = inflater.inflate(R.layout.recommend_header, container, false);
-        recommendHeaderView.setOnClickListener(new View.OnClickListener() {
+    private void initMoreHeader(LayoutInflater inflater, ViewGroup container) {
+        View moreHeaderView = inflater.inflate(R.layout.header_more, container, false);
+        moreHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent("android.intent.action.DAILY");
+                intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
+                startActivity(intent);
             }
         });
-        mHeaderRecommendAdapter.addHeaderView(recommendHeaderView);
+        mAdapter.addHeaderView(moreHeaderView);
     }
 
     /**
