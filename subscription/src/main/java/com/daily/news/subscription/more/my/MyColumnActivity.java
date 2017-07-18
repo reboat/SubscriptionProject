@@ -7,12 +7,12 @@ import android.view.MenuItem;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 
-public class MySubscriptionActivity extends AppCompatActivity {
+public class MyColumnActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_subscription);
+        setContentView(R.layout.activity_my_column);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("我的订阅");
 
