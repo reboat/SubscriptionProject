@@ -26,7 +26,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @BindView(R2.id.more_detail_recyclerView)
     RecyclerView mRecyclerView;
-    List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> mColumnsBeans;
+    List<SubscriptionColumn.DataBean.Category.ColumnsBean> mColumnsBeans;
     ColumnAdapter mColumnAdapter;
 
     @BindView(R2.id.more_detail_tip_container)
@@ -75,12 +75,12 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void onItemClick(int position, SubscriptionColumn.DataBean.ElementsBean.ColumnsBean bean) {
+    public void onItemClick(int position, SubscriptionColumn.DataBean.Category.ColumnsBean bean) {
 
     }
 
     @Override
-    public void onSubscribe(SubscriptionColumn.DataBean.ElementsBean.ColumnsBean bean) {
+    public void onSubscribe(SubscriptionColumn.DataBean.Category.ColumnsBean bean) {
 
     }
 
@@ -97,7 +97,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void updateValue(List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeen) {
+    public void updateValue(List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeen) {
         mColumnAdapter.updateValues(columnsBeen);
     }
 

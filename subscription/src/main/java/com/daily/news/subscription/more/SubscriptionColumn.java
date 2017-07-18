@@ -13,9 +13,9 @@ public class SubscriptionColumn {
     public DataBean data;
 
     public static class DataBean {
-        public List<ElementsBean> elements;
+        public List<Category> elements;
 
-        public static class ElementsBean {
+        public static class Category {
             public String class_name;
             public int class_id;
             public int class_sort_number;

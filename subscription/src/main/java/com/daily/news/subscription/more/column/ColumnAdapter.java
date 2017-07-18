@@ -22,20 +22,20 @@ import butterknife.ButterKnife;
  */
 
 public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnViewHolder> {
-    private List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> mColumnsBeens;
+    private List<SubscriptionColumn.DataBean.Category.ColumnsBean> mColumnsBeens;
     private OnItemClickListener mOnItemClickListener;
 
-    public ColumnAdapter(List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeens) {
+    public ColumnAdapter(List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeens) {
         mColumnsBeens = columnsBeens;
     }
 
-    public void updateValues(List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeens) {
+    public void updateValues(List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeens) {
         mColumnsBeens.clear();
         mColumnsBeens.addAll(columnsBeens);
         notifyDataSetChanged();
     }
 
-    public void addMoreValues(List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeens) {
+    public void addMoreValues(List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeens) {
         mColumnsBeens.addAll(columnsBeens);
     }
 
@@ -47,7 +47,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
 
     @Override
     public void onBindViewHolder(ColumnViewHolder holder, final int position) {
-        final SubscriptionColumn.DataBean.ElementsBean.ColumnsBean columnsBean = mColumnsBeens.get(position);
+        final SubscriptionColumn.DataBean.Category.ColumnsBean columnsBean = mColumnsBeens.get(position);
         holder.mTitleView.setText(columnsBean.name);
         holder.mColumnInfosView.setText(String.format(Locale.getDefault(), "%d万订阅 %d份稿件", columnsBean.subscribe_count, columnsBean.article_count));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +81,9 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
      * 点击和订阅回调
      */
     public interface OnItemClickListener {
-        void onItemClick(int position, SubscriptionColumn.DataBean.ElementsBean.ColumnsBean bean);
+        void onItemClick(int position, SubscriptionColumn.DataBean.Category.ColumnsBean bean);
 
-        void onSubscribe(SubscriptionColumn.DataBean.ElementsBean.ColumnsBean bean);
+        void onSubscribe(SubscriptionColumn.DataBean.Category.ColumnsBean bean);
     }
 
    protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
