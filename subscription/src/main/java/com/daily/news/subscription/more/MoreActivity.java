@@ -2,6 +2,7 @@ package com.daily.news.subscription.more;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,6 +30,10 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
+
+        getSupportActionBar().setTitle("订阅更多");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);
         mKeywordView.clearFocus();
@@ -37,7 +42,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.more_container, fragment)
                 .commit();
-         new CategoryPresenter(fragment, new CategoryStore());
+        new CategoryPresenter(fragment, new CategoryStore());
     }
 
     @Override
@@ -50,6 +55,15 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.more_container, fragment)
                 .commit();
-        new ColumnPresenter(fragment,new SearchStore());
+        new ColumnPresenter(fragment, new SearchStore());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

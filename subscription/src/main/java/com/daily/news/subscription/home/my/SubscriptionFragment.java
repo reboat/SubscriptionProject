@@ -1,6 +1,8 @@
 package com.daily.news.subscription.home.my;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,7 +53,7 @@ public class SubscriptionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         mRootView = inflater.inflate(R.layout.fragment_my_subscription, container, false);
@@ -68,14 +70,18 @@ public class SubscriptionFragment extends Fragment {
         headerView.findViewById(R.id.my_sub_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent("android.intent.action.DAILY");
+                intent.setData(Uri.parse("http://www.8531.cn/subscription/my/subscription"));
+                startActivity(intent);
             }
         });
 
         headerView.findViewById(R.id.my_sub_more_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent("android.intent.action.DAILY");
+                intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
+                startActivity(intent);
             }
         });
         mRecyclerView.setAdapter(mHeaderAdapter);

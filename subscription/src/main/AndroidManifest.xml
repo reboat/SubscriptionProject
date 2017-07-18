@@ -16,6 +16,7 @@
         <activity
             android:name=".detail.DetailActivity"
             android:label="@string/title_activity_subscription_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.DAILY"/>
@@ -32,8 +33,9 @@
         </activity>
         <activity
             android:name=".more.MoreActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:label="@string/title_more_list">
+            android:label="@string/title_more_list"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.DAILY"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -44,6 +46,22 @@
                 <data
                     android:host="www.8531.cn"
                     android:path="/subscription/more"
+                    android:scheme="http"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".more.my.MySubscriptionActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/subscription/my/subscription"
                     android:scheme="http"/>
             </intent-filter>
         </activity>
