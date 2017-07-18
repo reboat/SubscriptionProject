@@ -71,6 +71,14 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void updateValues(List<Category> items) {
         mMoreAdapter.updateValue(items);
+        Bundle arguments = new Bundle();
+        arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(items.get(0).class_id));
+        ColumnFragment fragment = new ColumnFragment();
+        fragment.setArguments(arguments);
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.more_category_detail_container, fragment)
+                .commit();
+        new ColumnPresenter(fragment, new ColumnStore());
     }
 
     @Override
