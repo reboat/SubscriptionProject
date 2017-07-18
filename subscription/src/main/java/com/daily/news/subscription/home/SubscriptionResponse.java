@@ -39,11 +39,11 @@ public class SubscriptionResponse {
 
         protected DataBean(Parcel in) {
             this.has_subscribe = in.readByte() != 0;
-            this.focus_list = new ArrayList<Focus>();
+            this.focus_list = new ArrayList<>();
             in.readList(this.focus_list, Focus.class.getClassLoader());
-            this.recommend_list = new ArrayList<Column>();
+            this.recommend_list = new ArrayList<>();
             in.readList(this.recommend_list, Column.class.getClassLoader());
-            this.article_list = new ArrayList<Article>();
+            this.article_list = new ArrayList<>();
             in.readList(this.article_list, Article.class.getClassLoader());
         }
 

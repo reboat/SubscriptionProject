@@ -10,34 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SubscriptionFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
+    private static final String ARTICLES = "articles";
 
     @BindView(R2.id.my_sub_recyclerView)
     RecyclerView mRecyclerView;
     private View mRootView;
 
     private HeaderAdapter mHeaderAdapter;
+    private List<Article> mArticles;
 
     public SubscriptionFragment() {
     }
 
-    public static SubscriptionFragment newInstance(String param1, String param2) {
+    public static SubscriptionFragment newInstance(ArrayList<Article> articles) {
         SubscriptionFragment fragment = new SubscriptionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelableArrayList(ARTICLES, articles);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,8 +46,7 @@ public class SubscriptionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mArticles = getArguments().getParcelableArrayList(ARTICLES);
         }
     }
 
@@ -60,7 +59,7 @@ public class SubscriptionFragment extends Fragment {
 
         mHeaderAdapter = new HeaderAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mHeaderAdapter.setInternalAdapter(new SubscriptionAdapter(getActivity()));
+        mHeaderAdapter.setInternalAdapter(new SubscriptionAdapter(mArticles));
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         View headerView = inflater.inflate(R.layout.header_my_subscription, container, false);
