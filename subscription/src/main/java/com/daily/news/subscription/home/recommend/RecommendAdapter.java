@@ -1,4 +1,4 @@
-package com.daily.news.subscription.subscription.recommend;
+package com.daily.news.subscription.home.recommend;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

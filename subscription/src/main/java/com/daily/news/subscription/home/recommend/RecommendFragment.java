@@ -1,4 +1,4 @@
-package com.daily.news.subscription.subscription.recommend;
+package com.daily.news.subscription.home.recommend;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +20,8 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.more.column.Column;
-import com.daily.news.subscription.subscription.Focus;
-import com.daily.news.subscription.subscription.SubscriptionResponse;
+import com.daily.news.subscription.home.Focus;
+import com.daily.news.subscription.home.SubscriptionResponse;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;

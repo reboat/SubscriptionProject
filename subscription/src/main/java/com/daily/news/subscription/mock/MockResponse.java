@@ -1,8 +1,8 @@
 package com.daily.news.subscription.mock;
 
 import com.daily.news.subscription.more.column.Column;
-import com.daily.news.subscription.subscription.Focus;
-import com.daily.news.subscription.subscription.SubscriptionResponse;
+import com.daily.news.subscription.home.Focus;
+import com.daily.news.subscription.home.SubscriptionResponse;
 
 import java.util.ArrayList;
 import java.util.List;

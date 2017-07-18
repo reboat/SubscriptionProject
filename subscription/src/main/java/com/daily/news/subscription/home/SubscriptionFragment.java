@@ -1,4 +1,4 @@
-package com.daily.news.subscription.subscription;
+package com.daily.news.subscription.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.mock.MockResponse;
-import com.daily.news.subscription.subscription.my.MySubscriptionFragment;
-import com.daily.news.subscription.subscription.recommend.RecommendFragment;
+import com.daily.news.subscription.home.my.MySubscriptionFragment;
+import com.daily.news.subscription.home.recommend.RecommendFragment;
 
 import java.util.concurrent.TimeUnit;
 
