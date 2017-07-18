@@ -6,7 +6,7 @@ import java.util.List;
  * 订阅栏目数据结构
  */
 
-public class SubscriptionColumn {
+public class CategoryResponse {
     public int code;
     public String message;
     public String request_id;
