@@ -23,16 +23,16 @@ import butterknife.ButterKnife;
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnItemClickListener {
     public static final String ARG_ITEM_ID = "item_id";
 
-    @BindView(R2.id.more_detail_recyclerView)
+    @BindView(R2.id.column_recyclerView)
     RecyclerView mRecyclerView;
     List<Column> mColumns;
     ColumnAdapter mColumnAdapter;
 
-    @BindView(R2.id.more_detail_tip_container)
+    @BindView(R2.id.column_tip_container)
     View mTipContainer;
-    @BindView(R2.id.more_detail_tip_view)
+    @BindView(R2.id.column_tip_view)
     TextView mTipView;
-    @BindView(R2.id.more_detail_progressBar)
+    @BindView(R2.id.column_progressBar)
     ProgressBar mProgressBar;
 
     private ColumnContract.Presenter mPresenter;
