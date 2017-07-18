@@ -2,7 +2,6 @@ package com.daily.news.subscription.more;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +30,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
     MoreAdapter mMoreAdapter;
-    List<Category> mCategoryItems;
+    List<Category> mCategories;
 
     public MoreFragment() {
     }
@@ -48,7 +47,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
 
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, rootView);
-        setupRecyclerView(mRecyclerView);
+        setupRecyclerView();
         return rootView;
     }
 
@@ -58,10 +57,10 @@ public class MoreFragment extends Fragment implements MoreContract.View {
         mPresenter.subscribe();
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        mCategoryItems=new ArrayList<>();
-        mMoreAdapter=new MoreAdapter(mCategoryItems);
-        recyclerView.setAdapter(mMoreAdapter);
+    private void setupRecyclerView() {
+        mCategories = new ArrayList<>();
+        mMoreAdapter = new MoreAdapter(mCategories);
+        mRecyclerView.setAdapter(mMoreAdapter);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -103,7 +102,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
             mValues = items;
         }
 
-        public void updateValue(List<Category> items){
+        public void updateValue(List<Category> items) {
             mValues.clear();
             mValues.addAll(items);
             notifyDataSetChanged();
@@ -130,7 +129,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
-                    new ColumnPresenter(fragment,new ColumnStore());
+                    new ColumnPresenter(fragment, new ColumnStore());
                 }
             });
         }
