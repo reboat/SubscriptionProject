@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.category;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import io.reactivex.functions.Consumer;
  * Created by lixinke on 2017/7/17.
  */
 
-public class MorePresenter implements MoreContract.Presenter {
-    private MoreContract.View mMoreView;
-    private MoreContract.Store mMoreStore;
+public class CategoryPresenter implements CategoryContract.Presenter {
+    private CategoryContract.View mMoreView;
+    private CategoryContract.Store mMoreStore;
     private CompositeDisposable mDisposable;
 
-    public MorePresenter(MoreContract.View moreView, MoreContract.Store moreStore) {
+    public CategoryPresenter(CategoryContract.View moreView, CategoryContract.Store moreStore) {
         mMoreView = moreView;
         mMoreView.setPresenter(this);
         mMoreStore = moreStore;

@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.category;
 
 import com.daily.news.subscription.BasePresenter;
 import com.daily.news.subscription.BaseStore;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by lixinke on 2017/7/17.
  */
 
-public interface MoreContract {
+public interface CategoryContract {
     interface View extends BaseView<Presenter> {
 
         void updateValues(List<Category> items);

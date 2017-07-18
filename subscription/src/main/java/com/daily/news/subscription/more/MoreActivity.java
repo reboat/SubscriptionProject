@@ -7,8 +7,13 @@ import android.widget.EditText;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.more.category.CategoryFragment;
+import com.daily.news.subscription.more.category.CategoryPresenter;
+import com.daily.news.subscription.more.category.CategoryStore;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.more.search.SearchColumnFragment;
+import com.daily.news.subscription.more.search.SearchStore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,11 +33,11 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         mSearchView.setOnClickListener(this);
         mKeywordView.clearFocus();
 
-        MoreFragment fragment = new MoreFragment();
+        CategoryFragment fragment = new CategoryFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.more_container, fragment)
                 .commit();
-         new MorePresenter(fragment, new MoreStore());
+         new CategoryPresenter(fragment, new CategoryStore());
     }
 
     @Override

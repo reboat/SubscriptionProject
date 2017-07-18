@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.category;
 
 import java.util.List;
 

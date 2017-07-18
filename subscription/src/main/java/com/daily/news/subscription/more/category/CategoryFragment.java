@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.category;
 
 
 import android.os.Bundle;
@@ -23,16 +23,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoreFragment extends Fragment implements MoreContract.View {
+public class CategoryFragment extends Fragment implements CategoryContract.View {
 
-    private MoreContract.Presenter mPresenter;
+    private CategoryContract.Presenter mPresenter;
 
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
     MoreAdapter mMoreAdapter;
     List<Category> mCategories;
 
-    public MoreFragment() {
+    public CategoryFragment() {
     }
 
 
@@ -64,7 +64,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
     }
 
     @Override
-    public void setPresenter(MoreContract.Presenter presenter) {
+    public void setPresenter(CategoryContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

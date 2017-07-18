@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.search;
 
 import com.daily.news.subscription.more.column.ColumnFragment;
 

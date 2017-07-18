@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more;
+package com.daily.news.subscription.more.category;
 
 import org.reactivestreams.Publisher;
 
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class MoreStore implements MoreContract.Store<List<Category>> {
+public class CategoryStore implements CategoryContract.Store<List<Category>> {
     private static String MORE_URL = "";
 
     @Override
