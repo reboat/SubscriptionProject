@@ -28,8 +28,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (TextUtils.equals(action, "android.intent.action.DAILY")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.detail_container, DetailFragment.newInstance(data.getQueryParameter("uid")));
+            DetailFragment detailFragment=DetailFragment.newInstance(data.getQueryParameter("uid"));
+            transaction.add(R.id.detail_container, detailFragment);
             transaction.commit();
+
+            new DetailPresenter(detailFragment,new DetailStore());
         }
 
     }

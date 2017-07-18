@@ -2,6 +2,7 @@ package com.daily.news.subscription.detail;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +13,19 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.more.column.Column;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements DetailContract.View{
     private static final String UID = "uid";
 
     private String mUid;
+
+    private DetailContract.Presenter mPresenter;
 
     @BindView(R2.id.detail_articles)
     RecyclerView mRecyclerView;
@@ -57,6 +63,36 @@ public class DetailFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter.subscribe();
+    }
+
+    @Override
+    public void setPresenter(DetailContract.Presenter presenter) {
+        mPresenter=presenter;
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void updateValue(List<Column> columnsBeen) {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
 
     @Override
     public void onAttach(Context context) {

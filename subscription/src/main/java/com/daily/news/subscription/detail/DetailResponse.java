@@ -7,8 +7,6 @@ import java.util.List;
  */
 
 public class DetailResponse {
-
-
     private int code;
     private String message;
     private String request_id;

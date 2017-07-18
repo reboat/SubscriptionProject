@@ -1,5 +1,7 @@
 package com.daily.news.subscription.more.column;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -71,6 +73,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mColumns = new ArrayList<>();
         mColumnAdapter = new ColumnAdapter(mColumns);
         mColumnAdapter.setOnSubscribeListener(this);
+        mColumnAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
@@ -78,7 +81,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
     @Override
     public void onItemClick(int position, Column bean) {
-
+        Intent intent=new Intent("android.intent.action.DAILY");
+        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid",bean.uid).build());
+        startActivity(intent);
     }
 
     @Override
