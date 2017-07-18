@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.SubscriptionColumn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @BindView(R2.id.more_detail_recyclerView)
     RecyclerView mRecyclerView;
-    List<SubscriptionColumn.DataBean.Category.Column> mColumns;
+    List<Column> mColumns;
     ColumnAdapter mColumnAdapter;
 
     @BindView(R2.id.more_detail_tip_container)
@@ -75,12 +74,12 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void onItemClick(int position, SubscriptionColumn.DataBean.Category.Column bean) {
+    public void onItemClick(int position, Column bean) {
 
     }
 
     @Override
-    public void onSubscribe(SubscriptionColumn.DataBean.Category.Column bean) {
+    public void onSubscribe(Column bean) {
 
     }
 
@@ -97,7 +96,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void updateValue(List<SubscriptionColumn.DataBean.Category.Column> columnsBeen) {
+    public void updateValue(List<Column> columnsBeen) {
         mColumnAdapter.updateValues(columnsBeen);
     }
 

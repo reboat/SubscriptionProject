@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more;
 
+import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnContract;
 
 import org.reactivestreams.Publisher;
@@ -19,17 +20,17 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class SearchStore implements ColumnContract.Store<List<SubscriptionColumn.DataBean.Category.Column>> {
+public class SearchStore implements ColumnContract.Store<List<Column>> {
     @Override
-    public Flowable<List<SubscriptionColumn.DataBean.Category.Column>> getFlowable(String url) {
+    public Flowable<List<Column>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<SubscriptionColumn.DataBean.Category.Column>>>() {
+                .flatMap(new Function<Long, Publisher<List<Column>>>() {
                     @Override
-                    public Publisher<List<SubscriptionColumn.DataBean.Category.Column>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<Column>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<SubscriptionColumn.DataBean.Category.Column> columns = new ArrayList<>();
+                        List<Column> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            SubscriptionColumn.DataBean.Category.Column column = new SubscriptionColumn.DataBean.Category.Column();
+                            Column column = new Column();
                             column.article_count = random.nextInt();
                             column.subscribe_count = random.nextInt();
                             column.name = "搜索数据" + random.nextInt();

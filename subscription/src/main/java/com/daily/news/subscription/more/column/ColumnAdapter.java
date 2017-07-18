@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.SubscriptionColumn;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,20 +21,20 @@ import butterknife.ButterKnife;
  */
 
 public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnViewHolder> {
-    private List<SubscriptionColumn.DataBean.Category.Column> mColumnsBeens;
+    private List<Column> mColumnsBeens;
     private OnItemClickListener mOnItemClickListener;
 
-    public ColumnAdapter(List<SubscriptionColumn.DataBean.Category.Column> columnsBeens) {
+    public ColumnAdapter(List<Column> columnsBeens) {
         mColumnsBeens = columnsBeens;
     }
 
-    public void updateValues(List<SubscriptionColumn.DataBean.Category.Column> columnsBeens) {
+    public void updateValues(List<Column> columnsBeens) {
         mColumnsBeens.clear();
         mColumnsBeens.addAll(columnsBeens);
         notifyDataSetChanged();
     }
 
-    public void addMoreValues(List<SubscriptionColumn.DataBean.Category.Column> columnsBeens) {
+    public void addMoreValues(List<Column> columnsBeens) {
         mColumnsBeens.addAll(columnsBeens);
     }
 
@@ -47,7 +46,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
 
     @Override
     public void onBindViewHolder(ColumnViewHolder holder, final int position) {
-        final SubscriptionColumn.DataBean.Category.Column column = mColumnsBeens.get(position);
+        final Column column = mColumnsBeens.get(position);
         holder.mTitleView.setText(column.name);
         holder.mColumnInfosView.setText(String.format(Locale.getDefault(), "%d万订阅 %d份稿件", column.subscribe_count, column.article_count));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +80,9 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
      * 点击和订阅回调
      */
     public interface OnItemClickListener {
-        void onItemClick(int position, SubscriptionColumn.DataBean.Category.Column bean);
+        void onItemClick(int position, Column bean);
 
-        void onSubscribe(SubscriptionColumn.DataBean.Category.Column bean);
+        void onSubscribe(Column bean);
     }
 
    protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
