@@ -1,6 +1,6 @@
 package com.daily.news.subscription.more.column;
 
-import com.daily.news.subscription.more.CategoryBean;
+import com.daily.news.subscription.more.SubscriptionColumn;
 
 import org.reactivestreams.Publisher;
 
@@ -19,17 +19,17 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class ColumnStore implements ColumnContract.Store<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> {
+public class ColumnStore implements ColumnContract.Store<List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean>> {
     @Override
-    public Flowable<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> getFlowable(String url) {
+    public Flowable<List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>>>() {
+                .flatMap(new Function<Long, Publisher<List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean>>>() {
                     @Override
-                    public Publisher<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<CategoryBean.DataBean.ElementsBean.ColumnsBean> columns = new ArrayList<>();
+                        List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            CategoryBean.DataBean.ElementsBean.ColumnsBean columnsBean = new CategoryBean.DataBean.ElementsBean.ColumnsBean();
+                            SubscriptionColumn.DataBean.ElementsBean.ColumnsBean columnsBean = new SubscriptionColumn.DataBean.ElementsBean.ColumnsBean();
                             columnsBean.article_count = random.nextInt();
                             columnsBean.subscribe_count = random.nextInt();
                             columnsBean.name = "文化中国" + random.nextInt();

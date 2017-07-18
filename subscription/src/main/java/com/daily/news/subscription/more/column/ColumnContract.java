@@ -3,7 +3,7 @@ package com.daily.news.subscription.more.column;
 import com.daily.news.subscription.BasePresenter;
 import com.daily.news.subscription.BaseStore;
 import com.daily.news.subscription.BaseView;
-import com.daily.news.subscription.more.CategoryBean;
+import com.daily.news.subscription.more.SubscriptionColumn;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface ColumnContract {
 
         void showProgressBar();
 
-        void updateValue(List<CategoryBean.DataBean.ElementsBean.ColumnsBean> columnsBeen);
+        void updateValue(List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeen);
 
         void hideProgressBar();
 

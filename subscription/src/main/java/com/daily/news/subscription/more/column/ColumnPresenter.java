@@ -1,6 +1,6 @@
 package com.daily.news.subscription.more.column;
 
-import com.daily.news.subscription.more.CategoryBean;
+import com.daily.news.subscription.more.SubscriptionColumn;
 
 import java.util.List;
 
@@ -34,9 +34,9 @@ public class ColumnPresenter implements ColumnContract.Presenter {
     public void subscribe() {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
-                .subscribe(new Consumer<List<CategoryBean.DataBean.ElementsBean.ColumnsBean>>() {
+                .subscribe(new Consumer<List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean>>() {
                     @Override
-                    public void accept(@NonNull List<CategoryBean.DataBean.ElementsBean.ColumnsBean> columnsBeen) throws Exception {
+                    public void accept(@NonNull List<SubscriptionColumn.DataBean.ElementsBean.ColumnsBean> columnsBeen) throws Exception {
                         mDetailView.updateValue(columnsBeen);
                         mDetailView.hideProgressBar();
                     }
