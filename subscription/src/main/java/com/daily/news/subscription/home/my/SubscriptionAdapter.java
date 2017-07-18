@@ -14,12 +14,12 @@ import butterknife.ButterKnife;
  * Created by lixinke on 2017/7/12.
  */
 
-public class MySubAdapter extends RecyclerView.Adapter {
+public class SubscriptionAdapter extends RecyclerView.Adapter {
     private static final int ARTICLE_TYPE = 1;
     private static final int VIDEO_TYPE = 2;
     private Context mContext;
 
-    public MySubAdapter(Context context) {
+    public SubscriptionAdapter(Context context) {
         mContext = context;
     }
 

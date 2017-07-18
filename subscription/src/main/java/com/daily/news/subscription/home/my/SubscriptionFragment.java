@@ -17,7 +17,7 @@ import com.daily.news.subscription.base.HeaderAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MySubscriptionFragment extends Fragment {
+public class SubscriptionFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -30,11 +30,11 @@ public class MySubscriptionFragment extends Fragment {
 
     private HeaderAdapter mHeaderAdapter;
 
-    public MySubscriptionFragment() {
+    public SubscriptionFragment() {
     }
 
-    public static MySubscriptionFragment newInstance(String param1, String param2) {
-        MySubscriptionFragment fragment = new MySubscriptionFragment();
+    public static SubscriptionFragment newInstance(String param1, String param2) {
+        SubscriptionFragment fragment = new SubscriptionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +60,7 @@ public class MySubscriptionFragment extends Fragment {
 
         mHeaderAdapter = new HeaderAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mHeaderAdapter.setInternalAdapter(new MySubAdapter(getActivity()));
+        mHeaderAdapter.setInternalAdapter(new SubscriptionAdapter(getActivity()));
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         View headerView = inflater.inflate(R.layout.header_my_subscription, container, false);

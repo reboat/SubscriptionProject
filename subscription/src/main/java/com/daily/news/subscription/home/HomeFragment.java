@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.mock.MockResponse;
-import com.daily.news.subscription.home.my.MySubscriptionFragment;
+import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.home.no.NoSubscriptionFragment;
 
 import java.util.concurrent.TimeUnit;
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
                         if (subscriptionBean.data.has_subscribe) {
                             FragmentManager fragmentManager = getChildFragmentManager();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            transaction.add(R.id.subscription_container, MySubscriptionFragment.newInstance("",""));
+                            transaction.add(R.id.subscription_container, SubscriptionFragment.newInstance("",""));
                             transaction.commit();
                         } else if (!subscriptionBean.data.has_subscribe) {
                             FragmentManager fragmentManager = getChildFragmentManager();
