@@ -1,4 +1,4 @@
-package com.daily.news.subscription.home.recommend;
+package com.daily.news.subscription.home.no;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -22,13 +22,13 @@ import butterknife.ButterKnife;
  * 无订阅时，推荐订阅内容
  */
 
-public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
+public class NoSubscriptionAdapter extends RecyclerView.Adapter<NoSubscriptionAdapter.RecommendViewHolder> {
     private Context mContext;
     private List<Column> mRecommends;
     private OnSubscribeListener mOnSubscribeListener;
     private OnItemClickListener<Column> mOnItemClickListener;
 
-    public RecommendAdapter(Context context, List<Column> list) {
+    public NoSubscriptionAdapter(Context context, List<Column> list) {
         mContext = context;
         mRecommends = list;
     }

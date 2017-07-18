@@ -13,7 +13,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.home.my.MySubscriptionFragment;
-import com.daily.news.subscription.home.recommend.RecommendFragment;
+import com.daily.news.subscription.home.no.NoSubscriptionFragment;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,12 +28,12 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SubscriptionFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     @BindView(R2.id.subscription_progress_container)
     View mProgressContainer;
 
-    public SubscriptionFragment() {
+    public HomeFragment() {
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SubscriptionFragment extends Fragment {
                         } else if (!subscriptionBean.data.has_subscribe) {
                             FragmentManager fragmentManager = getChildFragmentManager();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            transaction.add(R.id.subscription_container, RecommendFragment.newInstance(subscriptionBean.data));
+                            transaction.add(R.id.subscription_container, NoSubscriptionFragment.newInstance(subscriptionBean.data));
                             transaction.commit();
                         }
                     }

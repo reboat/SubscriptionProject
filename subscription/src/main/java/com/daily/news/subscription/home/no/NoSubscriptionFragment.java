@@ -1,4 +1,4 @@
-package com.daily.news.subscription.home.recommend;
+package com.daily.news.subscription.home.no;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecommendFragment extends Fragment implements RecommendAdapter.OnSubscribeListener, OnItemClickListener<Column> {
+public class NoSubscriptionFragment extends Fragment implements NoSubscriptionAdapter.OnSubscribeListener, OnItemClickListener<Column> {
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
@@ -43,20 +43,20 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     private List<Focus> mFocusBeen;
 
     private List<Column> mRecommendBeen;
-    private RecommendAdapter mRecommendAdapter;
+    private NoSubscriptionAdapter mRecommendAdapter;
 
     private HeaderAdapter mAdapter;
 
 
-    public static RecommendFragment newInstance(SubscriptionResponse.DataBean dataBean) {
-        RecommendFragment fragment = new RecommendFragment();
+    public static NoSubscriptionFragment newInstance(SubscriptionResponse.DataBean dataBean) {
+        NoSubscriptionFragment fragment = new NoSubscriptionFragment();
         Bundle args = new Bundle();
         args.putParcelable(SUBSCRIPTION_DATA, dataBean);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public RecommendFragment() {
+    public NoSubscriptionFragment() {
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * 初始化推荐相关
      */
     private void initRecommend() {
-        mRecommendAdapter = new RecommendAdapter(getActivity(), mRecommendBeen);
+        mRecommendAdapter = new NoSubscriptionAdapter(getActivity(), mRecommendBeen);
         mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
 
