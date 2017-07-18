@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.subscription.SubscriptionBean;
+import com.daily.news.subscription.base.OnItemClickListener;
+import com.daily.news.subscription.more.column.Column;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
     private Context mContext;
-    private List<SubscriptionBean.DataBean.RecommendBean> mRecommends;
+    private List<Column> mRecommends;
     private OnSubscribeListener mOnSubscribeListener;
-    private OnItemClickListener<SubscriptionBean.DataBean.RecommendBean> mOnItemClickListener;
+    private OnItemClickListener<Column> mOnItemClickListener;
 
-    public RecommendAdapter(Context context, List<SubscriptionBean.DataBean.RecommendBean> list) {
+    public RecommendAdapter(Context context, List<Column> list) {
         mContext = context;
         mRecommends = list;
     }
@@ -41,7 +41,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
     @Override
     public void onBindViewHolder(RecommendViewHolder holder, final int position) {
-        final SubscriptionBean.DataBean.RecommendBean recommend = mRecommends.get(position);
+        final Column recommend = mRecommends.get(position);
         Glide.with(holder.itemView).load(recommend.pic_url).into(holder.subImageView);
         holder.subArticleNumView.setText("文章" + recommend.article_count);
         holder.subNumView.setText("订阅数" + recommend.subscribe_count);
@@ -69,7 +69,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         return mRecommends != null ? mRecommends.size() : 0;
     }
 
-    public void setOnItemClickListener(OnItemClickListener<SubscriptionBean.DataBean.RecommendBean> onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<Column> onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -91,7 +91,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
          *
          * @param recommend
          */
-        void onSubscribe(SubscriptionBean.DataBean.RecommendBean recommend);
+        void onSubscribe(Column recommend);
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder {

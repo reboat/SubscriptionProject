@@ -19,7 +19,9 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.OnItemClickListener;
-import com.daily.news.subscription.subscription.SubscriptionBean;
+import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.subscription.Focus;
+import com.daily.news.subscription.subscription.SubscriptionResponse;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -30,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecommendFragment extends Fragment implements RecommendAdapter.OnSubscribeListener, OnItemClickListener<SubscriptionBean.DataBean.RecommendBean> {
+public class RecommendFragment extends Fragment implements RecommendAdapter.OnSubscribeListener, OnItemClickListener<Column> {
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
@@ -38,15 +40,15 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     RecyclerView mRecyclerView;
 
     private Banner mFocusView;
-    private List<SubscriptionBean.DataBean.FocusBean> mFocusBeen;
+    private List<Focus> mFocusBeen;
 
-    private List<SubscriptionBean.DataBean.RecommendBean> mRecommendBeen;
+    private List<Column> mRecommendBeen;
     private RecommendAdapter mRecommendAdapter;
 
     private HeaderAdapter mAdapter;
 
 
-    public static RecommendFragment newInstance(SubscriptionBean.DataBean dataBean) {
+    public static RecommendFragment newInstance(SubscriptionResponse.DataBean dataBean) {
         RecommendFragment fragment = new RecommendFragment();
         Bundle args = new Bundle();
         args.putParcelable(SUBSCRIPTION_DATA, dataBean);
@@ -61,7 +63,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            SubscriptionBean.DataBean dataBean = getArguments().getParcelable(SUBSCRIPTION_DATA);
+            SubscriptionResponse.DataBean dataBean = getArguments().getParcelable(SUBSCRIPTION_DATA);
             mRecommendBeen = dataBean.recommend_list;
             mFocusBeen = dataBean.focus_list;
         }
@@ -112,7 +114,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
         mFocusView.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(((SubscriptionBean.DataBean.FocusBean) path).pic_url).into(imageView);
+                Glide.with(context).load(((Focus) path).pic_url).into(imageView);
             }
         });
         mFocusView.isAutoPlay(true);
@@ -151,7 +153,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * @param recommend
      */
     @Override
-    public void onSubscribe(SubscriptionBean.DataBean.RecommendBean recommend) {
+    public void onSubscribe(Column recommend) {
         Toast.makeText(getActivity(), recommend.pic_url, Toast.LENGTH_SHORT).show();
     }
 
@@ -162,7 +164,7 @@ public class RecommendFragment extends Fragment implements RecommendAdapter.OnSu
      * @param recommend
      */
     @Override
-    public void onItemClick(int position, SubscriptionBean.DataBean.RecommendBean recommend) {
+    public void onItemClick(int position, Column recommend) {
         Intent intent=new Intent("android.intent.action.DAILY");
         intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid",recommend.uid).build());
         startActivity(intent);

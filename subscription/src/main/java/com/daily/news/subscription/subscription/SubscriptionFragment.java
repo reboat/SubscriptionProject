@@ -44,17 +44,17 @@ public class SubscriptionFragment extends Fragment {
 
     private void sendRequest() {
         Observable.timer(1000, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, ObservableSource<SubscriptionBean>>() {
+                .flatMap(new Function<Long, ObservableSource<SubscriptionResponse>>() {
                     @Override
-                    public ObservableSource<SubscriptionBean> apply(@NonNull Long aLong) throws Exception {
+                    public ObservableSource<SubscriptionResponse> apply(@NonNull Long aLong) throws Exception {
                         return Observable.just(MockResponse.getInstance().getSubscriptionResponse());
                     }
                 })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<SubscriptionBean>() {
+                .subscribe(new Consumer<SubscriptionResponse>() {
                     @Override
-                    public void accept(@NonNull SubscriptionBean subscriptionBean) throws Exception {
+                    public void accept(@NonNull SubscriptionResponse subscriptionBean) throws Exception {
                         mProgressContainer.setVisibility(View.GONE);
                         if (subscriptionBean.data.has_subscribe) {
                             FragmentManager fragmentManager = getChildFragmentManager();

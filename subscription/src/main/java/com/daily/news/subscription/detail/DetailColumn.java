@@ -1,6 +1,6 @@
 package com.daily.news.subscription.detail;
 
-import com.daily.news.subscription.subscription.SubscriptionBean;
+import com.daily.news.subscription.Article;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public class DetailColumn {
     private boolean subscribed;
     private String background_url;
     private String description;
-    private List<SubscriptionBean.DataBean.ArticleBean> elements;
+    private List<Article> elements;
 }
