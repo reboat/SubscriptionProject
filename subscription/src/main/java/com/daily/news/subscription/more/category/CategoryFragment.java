@@ -111,7 +111,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         @Override
         public MoreAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_more, parent, false);
+                    .inflate(R.layout.item_category, parent, false);
             return new MoreAdapter.ViewHolder(view);
         }
 

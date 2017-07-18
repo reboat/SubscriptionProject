@@ -17,7 +17,7 @@
                                             android:layout_height="match_parent"
                                             app:layoutManager="LinearLayoutManager"
                                             tools:context="com.daily.news.subscription.more.MoreListActivity"
-                                            tools:listitem="@layout/item_more"/>
+                                            tools:listitem="@layout/item_category"/>
 
     <FrameLayout
         android:id="@+id/more_category_detail_container"
