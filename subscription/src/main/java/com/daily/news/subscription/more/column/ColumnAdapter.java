@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.base.OnItemClickListener;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +23,9 @@ import butterknife.ButterKnife;
 
 public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnViewHolder> {
     private List<Column> mColumnsBeens;
+    private OnSubscribeListener mOnSubscribeListener;
+
+
     private OnItemClickListener mOnItemClickListener;
 
     public ColumnAdapter(List<Column> columnsBeens) {
@@ -60,8 +64,8 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
         holder.mSubscribeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onSubscribe(column);
+                if (mOnSubscribeListener != null) {
+                    mOnSubscribeListener.onSubscribe(column);
                 }
             }
         });
@@ -76,16 +80,18 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
         mOnItemClickListener = onItemClickListener;
     }
 
+    public void setOnSubscribeListener(OnSubscribeListener onSubscribeListener) {
+        mOnSubscribeListener = onSubscribeListener;
+    }
+
     /**
      * 点击和订阅回调
      */
-    public interface OnItemClickListener {
-        void onItemClick(int position, Column bean);
-
+    public interface OnSubscribeListener {
         void onSubscribe(Column bean);
     }
 
-   protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
+    protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.column_imageView)
         ImageView mImageView;
         @BindView(R2.id.column_title_view)

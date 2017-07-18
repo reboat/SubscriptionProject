@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.column.Column;
@@ -32,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NoSubscriptionFragment extends Fragment implements  ColumnAdapter.OnItemClickListener {
+public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.OnSubscribeListener,OnItemClickListener<Column> {
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
@@ -94,8 +95,8 @@ public class NoSubscriptionFragment extends Fragment implements  ColumnAdapter.O
      */
     private void initRecommend() {
         mRecommendAdapter = new ColumnAdapter(mRecommendBeen);
+        mRecommendAdapter.setOnSubscribeListener(this);
         mRecommendAdapter.setOnItemClickListener(this);
-
         mAdapter.setInternalAdapter(mRecommendAdapter);
     }
 

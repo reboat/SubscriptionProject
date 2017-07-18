@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.base.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnItemClickListener {
+public class ColumnFragment extends Fragment implements ColumnContract.View,
+        ColumnAdapter.OnSubscribeListener,
+        OnItemClickListener<Column> {
     public static final String ARG_ITEM_ID = "item_id";
 
     @BindView(R2.id.column_recyclerView)
@@ -59,7 +62,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_column, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
         setupRecycleView();
         return rootView;
     }
@@ -67,7 +70,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     private void setupRecycleView() {
         mColumns = new ArrayList<>();
         mColumnAdapter = new ColumnAdapter(mColumns);
-        mColumnAdapter.setOnItemClickListener(this);
+        mColumnAdapter.setOnSubscribeListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
