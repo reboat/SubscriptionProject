@@ -27,9 +27,9 @@ public class MorePresenter implements MoreContract.Presenter {
     public void subscribe() {
         mMoreView.showProgressBar();
         Disposable disposable = mMoreStore.getFlowable(mMoreStore.getUrl())
-                .subscribe(new Consumer<List<CategoryContent.CategoryItem>>() {
+                .subscribe(new Consumer<List<Category>>() {
                     @Override
-                    public void accept(@NonNull List<CategoryContent.CategoryItem> items) throws Exception {
+                    public void accept(@NonNull List<Category> items) throws Exception {
                         mMoreView.updateValues(items);
                         mMoreView.hideProgressBar();
                     }

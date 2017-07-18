@@ -31,7 +31,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
     MoreAdapter mMoreAdapter;
-    List<CategoryContent.CategoryItem> mCategoryItems;
+    List<Category> mCategoryItems;
 
     public MoreFragment() {
     }
@@ -70,7 +70,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
     }
 
     @Override
-    public void updateValues(List<CategoryContent.CategoryItem> items) {
+    public void updateValues(List<Category> items) {
         mMoreAdapter.updateValue(items);
     }
 
@@ -97,13 +97,13 @@ public class MoreFragment extends Fragment implements MoreContract.View {
 
     public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.ViewHolder> {
 
-        private final List<CategoryContent.CategoryItem> mValues;
+        private final List<Category> mValues;
 
-        public MoreAdapter(List<CategoryContent.CategoryItem> items) {
+        public MoreAdapter(List<Category> items) {
             mValues = items;
         }
 
-        public void updateValue(List<CategoryContent.CategoryItem> items){
+        public void updateValue(List<Category> items){
             mValues.clear();
             mValues.addAll(items);
             notifyDataSetChanged();
@@ -119,12 +119,12 @@ public class MoreFragment extends Fragment implements MoreContract.View {
         @Override
         public void onBindViewHolder(final MoreAdapter.ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mCategoryView.setText(mValues.get(position).content);
+            holder.mCategoryView.setText(mValues.get(position).class_name);
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(ColumnFragment.ARG_ITEM_ID, holder.mItem.id);
+                    arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(holder.mItem.class_id));
                     ColumnFragment fragment = new ColumnFragment();
                     fragment.setArguments(arguments);
                     getChildFragmentManager().beginTransaction()
@@ -144,7 +144,7 @@ public class MoreFragment extends Fragment implements MoreContract.View {
             @BindView(R2.id.more_item_category_name)
             TextView mCategoryView;
             public View mView;
-            public CategoryContent.CategoryItem mItem;
+            public Category mItem;
 
             public ViewHolder(View view) {
                 super(view);

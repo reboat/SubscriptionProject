@@ -13,7 +13,7 @@ import java.util.List;
 public interface MoreContract {
     interface View extends BaseView<Presenter> {
 
-        void updateValues(List<CategoryContent.CategoryItem> items);
+        void updateValues(List<Category> items);
 
         void showError(String message);
 

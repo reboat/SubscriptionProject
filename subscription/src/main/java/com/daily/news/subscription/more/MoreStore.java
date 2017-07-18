@@ -16,19 +16,21 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class MoreStore implements MoreContract.Store<List<CategoryContent.CategoryItem>> {
+public class MoreStore implements MoreContract.Store<List<Category>> {
     private static String MORE_URL = "";
 
     @Override
-    public Flowable<List<CategoryContent.CategoryItem>> getFlowable(String url) {
+    public Flowable<List<Category>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<CategoryContent.CategoryItem>>>() {
+                .flatMap(new Function<Long, Publisher<List<Category>>>() {
                     @Override
-                    public Publisher<List<CategoryContent.CategoryItem>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<Category>> apply(@NonNull Long aLong) throws Exception {
 
-                        List<CategoryContent.CategoryItem> items = new ArrayList<>();
+                        List<Category> items = new ArrayList<>();
                         for (int i = 0; i < 20; i++) {
-                            items.add(new CategoryContent.CategoryItem("" + i, "内容" + i, ""));
+                            Category category=new Category();
+                            category.class_name="文化"+i;
+                            items.add(category);
                         }
                         return Flowable.just(items);
                     }
