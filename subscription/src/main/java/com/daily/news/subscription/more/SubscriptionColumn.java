@@ -19,9 +19,9 @@ public class SubscriptionColumn {
             public String class_name;
             public int class_id;
             public int class_sort_number;
-            public List<ColumnsBean> columns;
+            public List<Column> columns;
 
-            public static class ColumnsBean {
+            public static class Column {
                 public String uid;
                 public String name;
                 public String pic_url;

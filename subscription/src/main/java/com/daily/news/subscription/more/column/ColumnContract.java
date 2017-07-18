@@ -20,7 +20,7 @@ public interface ColumnContract {
 
         void showProgressBar();
 
-        void updateValue(List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeen);
+        void updateValue(List<SubscriptionColumn.DataBean.Category.Column> columnsBeen);
 
         void hideProgressBar();
 

@@ -19,22 +19,22 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class SearchStore implements ColumnContract.Store<List<SubscriptionColumn.DataBean.Category.ColumnsBean>> {
+public class SearchStore implements ColumnContract.Store<List<SubscriptionColumn.DataBean.Category.Column>> {
     @Override
-    public Flowable<List<SubscriptionColumn.DataBean.Category.ColumnsBean>> getFlowable(String url) {
+    public Flowable<List<SubscriptionColumn.DataBean.Category.Column>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<SubscriptionColumn.DataBean.Category.ColumnsBean>>>() {
+                .flatMap(new Function<Long, Publisher<List<SubscriptionColumn.DataBean.Category.Column>>>() {
                     @Override
-                    public Publisher<List<SubscriptionColumn.DataBean.Category.ColumnsBean>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<SubscriptionColumn.DataBean.Category.Column>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<SubscriptionColumn.DataBean.Category.ColumnsBean> columns = new ArrayList<>();
+                        List<SubscriptionColumn.DataBean.Category.Column> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            SubscriptionColumn.DataBean.Category.ColumnsBean columnsBean = new SubscriptionColumn.DataBean.Category.ColumnsBean();
-                            columnsBean.article_count = random.nextInt();
-                            columnsBean.subscribe_count = random.nextInt();
-                            columnsBean.name = "搜索数据" + random.nextInt();
-                            columnsBean.subscribed = random.nextBoolean();
-                            columns.add(columnsBean);
+                            SubscriptionColumn.DataBean.Category.Column column = new SubscriptionColumn.DataBean.Category.Column();
+                            column.article_count = random.nextInt();
+                            column.subscribe_count = random.nextInt();
+                            column.name = "搜索数据" + random.nextInt();
+                            column.subscribed = random.nextBoolean();
+                            columns.add(column);
                         }
 
                         return Flowable.just(columns);

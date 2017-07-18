@@ -34,9 +34,9 @@ public class ColumnPresenter implements ColumnContract.Presenter {
     public void subscribe() {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
-                .subscribe(new Consumer<List<SubscriptionColumn.DataBean.Category.ColumnsBean>>() {
+                .subscribe(new Consumer<List<SubscriptionColumn.DataBean.Category.Column>>() {
                     @Override
-                    public void accept(@NonNull List<SubscriptionColumn.DataBean.Category.ColumnsBean> columnsBeen) throws Exception {
+                    public void accept(@NonNull List<SubscriptionColumn.DataBean.Category.Column> columnsBeen) throws Exception {
                         mDetailView.updateValue(columnsBeen);
                         mDetailView.hideProgressBar();
                     }
