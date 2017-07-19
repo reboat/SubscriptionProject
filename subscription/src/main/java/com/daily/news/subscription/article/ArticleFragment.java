@@ -60,7 +60,6 @@ public class ArticleFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHeaderAdapter.setInternalAdapter(new ArticleAdapter(mArticles));
-        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mRecyclerView.setAdapter(mHeaderAdapter);
         return mRootView;
     }
