@@ -16,17 +16,9 @@ public interface ColumnContract {
     }
 
     interface View extends BaseView<Presenter> {
-
-        void showProgressBar();
-
         void updateValue(List<Column> columnsBeen);
-
-        void hideProgressBar();
-
-        void showError(String message);
     }
 
     interface Store<T> extends BaseStore<T> {
-
     }
 }

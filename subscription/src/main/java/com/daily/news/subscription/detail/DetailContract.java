@@ -14,17 +14,9 @@ public interface DetailContract {
     }
 
     interface View extends BaseView<Presenter> {
-
-        void showProgressBar();
-
         void updateValue(DetailColumn detailColumn);
-
-        void hideProgressBar();
-
-        void showError(String message);
     }
 
     interface Store<T> extends BaseStore<T> {
-
     }
 }

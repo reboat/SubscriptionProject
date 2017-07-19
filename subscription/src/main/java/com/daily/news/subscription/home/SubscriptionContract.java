@@ -10,21 +10,13 @@ import com.daily.news.subscription.base.BaseView;
 
 public class SubscriptionContract {
 
-    interface Presenter extends BasePresenter{
-
+    interface Presenter extends BasePresenter {
     }
 
-    interface View extends BaseView<Presenter>{
-
-        void hideProgressBar();
-
-        void showProgressBar();
-
+    interface View extends BaseView<Presenter> {
         void updateValue(SubscriptionResponse subscriptionResponse);
-
-        void showError(String message);
     }
-    interface Store<T> extends BaseStore<T>{
 
+    interface Store<T> extends BaseStore<T> {
     }
 }

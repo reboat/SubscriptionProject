@@ -12,21 +12,13 @@ import java.util.List;
 
 public interface CategoryContract {
     interface View extends BaseView<Presenter> {
-
         void updateValues(List<Category> items);
-
-        void showError(String message);
-
-        void showProgressBar();
-
-        void hideProgressBar();
     }
 
     interface Presenter extends BasePresenter {
-
     }
 
     interface Store<T> extends BaseStore<T> {
-       String getUrl();
+        String getUrl();
     }
 }

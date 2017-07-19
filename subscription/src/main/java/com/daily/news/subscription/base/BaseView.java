@@ -6,4 +6,10 @@ package com.daily.news.subscription.base;
 
 public interface BaseView<T> {
     void setPresenter(T presenter);
+
+    void showProgressBar();
+
+    void hideProgressBar();
+
+    void showError(String message);
 }
