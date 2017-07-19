@@ -1,4 +1,4 @@
-package com.daily.news.subscription.home.my;
+package com.daily.news.subscription.article;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,14 +23,14 @@ import butterknife.ButterKnife;
  * Created by lixinke on 2017/7/12.
  */
 
-public class SubscriptionAdapter extends RecyclerView.Adapter {
+public class ArticleAdapter extends RecyclerView.Adapter {
     private static final int ARTICLE_TYPE = 1;
     private static final int VIDEO_TYPE = 2;
     private static final int MULTIPLE_PICTURES = 3;
 
     private List<Article> mArticles;
 
-    public SubscriptionAdapter(List<Article> articles) {
+    public ArticleAdapter(List<Article> articles) {
         mArticles = articles;
     }
 
