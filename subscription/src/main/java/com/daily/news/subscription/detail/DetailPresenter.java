@@ -35,9 +35,9 @@ public class DetailPresenter implements DetailContract.Presenter {
     public void subscribe() {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
-                .subscribe(new Consumer<List<Column>>() {
+                .subscribe(new Consumer<DetailColumn>() {
                     @Override
-                    public void accept(@NonNull List<Column> columnsBeen) throws Exception {
+                    public void accept(@NonNull DetailColumn columnsBeen) throws Exception {
                         mDetailView.updateValue(columnsBeen);
                         mDetailView.hideProgressBar();
                     }

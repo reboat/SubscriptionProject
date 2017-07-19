@@ -9,26 +9,48 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.home.SubscriptionPresenter;
+import com.daily.news.subscription.home.SubscriptionStore;
+import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.more.column.Column;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailFragment extends Fragment implements DetailContract.View{
+public class DetailFragment extends Fragment implements DetailContract.View {
     private static final String UID = "uid";
-
     private String mUid;
-
     private DetailContract.Presenter mPresenter;
 
-    @BindView(R2.id.detail_articles)
-    RecyclerView mRecyclerView;
+    @BindView(R2.id.detail_column_imageView)
+    ImageView mImageView;
+    @BindView(R2.id.detail_column_title)
+    TextView mTitleView;
+    @BindView(R2.id.detail_column_info)
+    TextView mInfoView;
+    @BindView(R2.id.detail_column_description)
+    TextView mDescritpionView;
+    @BindView(R2.id.detail_column_sub_btn)
+    TextView mSubscriptionView;
+    @BindView(R2.id.detail_column_progressBar_container)
+    View mProgressBarContainer;
+    @BindView(R2.id.detail_column_progressBar)
+    ProgressBar mProgressBar;
+    @BindView(R2.id.detail_column_tip_view)
+    TextView mTipView;
 
 
     public DetailFragment() {
@@ -48,7 +70,6 @@ public class DetailFragment extends Fragment implements DetailContract.View{
         if (getArguments() != null) {
             mUid = getArguments().getString(UID);
         }
-        Toast.makeText(getActivity(), "UID:" + mUid, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -56,10 +77,6 @@ public class DetailFragment extends Fragment implements DetailContract.View{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, rootView);
-
-        mRecyclerView.setAdapter(new DetailArticleAdapter());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         return rootView;
     }
 
@@ -71,27 +88,37 @@ public class DetailFragment extends Fragment implements DetailContract.View{
 
     @Override
     public void setPresenter(DetailContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
     public void showProgressBar() {
-
+        mProgressBarContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mTipView.setText("加载中...");
     }
 
     @Override
-    public void updateValue(List<Column> columnsBeen) {
+    public void updateValue(DetailColumn detailColumn) {
+        Glide.with(this).load(detailColumn.pic_url).into(mImageView);
+        mTitleView.setText(detailColumn.name);
+        mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
+        mDescritpionView.setText(detailColumn.description);
 
+        SubscriptionFragment fragment = SubscriptionFragment.newInstance((ArrayList<Article>) detailColumn.elements);
+        getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
     }
 
     @Override
     public void hideProgressBar() {
-
+        mProgressBarContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String message) {
-
+        mProgressBarContainer.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
+        mTipView.setText(message);
     }
 
     @Override
@@ -103,6 +130,7 @@ public class DetailFragment extends Fragment implements DetailContract.View{
     @Override
     public void onDetach() {
         super.onDetach();
+        mPresenter.unsubscribe();
     }
 
 }

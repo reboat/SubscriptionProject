@@ -1,6 +1,8 @@
 package com.daily.news.subscription.mock;
 
 import com.daily.news.subscription.Article;
+import com.daily.news.subscription.detail.DetailColumn;
+import com.daily.news.subscription.detail.DetailFragment;
 import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.column.Column;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import static android.R.attr.detailColumn;
 
 /**
  * Created by lixinke on 2017/7/11.
@@ -99,9 +103,9 @@ public class MockResponse {
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < 600; i++) {
             Article article = new Article();
-            if(random.nextBoolean()){
+            if (random.nextBoolean()) {
                 article.list_title = "习近平主持召开中央财经领导小组第十六次会议";
-            }else{
+            } else {
                 article.list_title = "习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议";
             }
 
@@ -123,5 +127,19 @@ public class MockResponse {
             articles.add(article);
         }
         return articles;
+    }
+
+    public DetailColumn getDetail(String id) {
+        Random random = new Random();
+        DetailColumn detailColumn = new DetailColumn();
+        detailColumn.pic_url="http://img3.redocn.com/tupian/20150314/shuyediqiutushangyeicon_4007116.jpg";
+        detailColumn.background_url="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=cc3fc816a5c3793169658e6a83addd30/0b55b319ebc4b745f766bd06c5fc1e178a82152b.jpg";
+        detailColumn.article_count = Math.abs(random.nextInt(1000));
+        detailColumn.subscribe_count = Math.abs(random.nextInt(1000));
+        detailColumn.name = "诗经里的野菜";
+        detailColumn.description = "先民根据地球在黄道轨迹上的位置变化制定了二十四节气，每个节气分别相应于地球在黄道上每运动15°所到达的位置。太阳到达黄经315°位置时，正是二十四节气中之“立春";
+        detailColumn.background_url = "http://easyread.ph.126.net/Me57p9l34QHfkkYHXDEnzQ==/8796093022385378775.jpg";
+        detailColumn.elements = getArticles();
+        return detailColumn;
     }
 }

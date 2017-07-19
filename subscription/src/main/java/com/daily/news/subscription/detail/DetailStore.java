@@ -1,5 +1,6 @@
 package com.daily.news.subscription.detail;
 
+import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnContract;
 
@@ -27,8 +28,7 @@ public class DetailStore implements DetailContract.Store<DetailColumn> {
                 .flatMap(new Function<Long, Publisher<DetailColumn>>() {
                     @Override
                     public Publisher<DetailColumn> apply(@NonNull Long aLong) throws Exception {
-                        DetailColumn detailColumn = new DetailColumn();
-                        return Flowable.just(detailColumn);
+                        return Flowable.just(MockResponse.getInstance().getDetail(""));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

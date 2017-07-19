@@ -9,13 +9,13 @@ import java.util.List;
  */
 
 public class DetailColumn {
-    private String uid;
-    private String name;
-    private String pic_url;
-    private int subscribe_count;
-    private int article_count;
-    private boolean subscribed;
-    private String background_url;
-    private String description;
-    private List<Article> elements;
+    public String uid;
+    public String name;
+    public String pic_url;
+    public int subscribe_count;
+    public int article_count;
+    public boolean subscribed;
+    public String background_url;
+    public String description;
+    public List<Article> elements;
 }

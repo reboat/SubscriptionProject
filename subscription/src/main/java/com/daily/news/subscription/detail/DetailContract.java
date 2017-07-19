@@ -20,7 +20,7 @@ public interface DetailContract {
 
         void showProgressBar();
 
-        void updateValue(List<Column> columnsBeen);
+        void updateValue(DetailColumn detailColumn);
 
         void hideProgressBar();
 
