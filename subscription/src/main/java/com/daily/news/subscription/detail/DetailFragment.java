@@ -19,6 +19,8 @@ import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
+import com.daily.news.subscription.article.ArticlePresenter;
+import com.daily.news.subscription.article.ArticleStore;
 import com.daily.news.subscription.home.SubscriptionPresenter;
 import com.daily.news.subscription.home.SubscriptionStore;
 import com.daily.news.subscription.home.my.SubscriptionFragment;
@@ -106,8 +108,10 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
         mDescritpionView.setText(detailColumn.description);
 
-        ArticleFragment fragment = ArticleFragment.newInstance((ArrayList<Article>) detailColumn.elements);
+        ArticleFragment fragment =new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
+        ArticlePresenter presenter=new ArticlePresenter(fragment,new ArticleStore());
+        presenter.setArticles(detailColumn.elements);
     }
 
     @Override

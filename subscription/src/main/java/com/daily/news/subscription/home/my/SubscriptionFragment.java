@@ -29,13 +29,6 @@ public class SubscriptionFragment extends ArticleFragment {
     public SubscriptionFragment() {
     }
 
-    public static SubscriptionFragment newInstance(ArrayList<Article> articles) {
-        SubscriptionFragment fragment = new SubscriptionFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ARTICLES, articles);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

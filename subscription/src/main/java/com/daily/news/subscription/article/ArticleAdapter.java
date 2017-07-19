@@ -94,6 +94,11 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         return mArticles != null ? mArticles.size() : 0;
     }
 
+    public void updateValue(List<Article> articles) {
+        mArticles.addAll(articles);
+        notifyDataSetChanged();
+    }
+
     static class ArticleViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.article_imageView)
         ImageView mImageView;

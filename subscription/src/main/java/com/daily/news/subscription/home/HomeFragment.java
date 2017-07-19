@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.article.ArticlePresenter;
+import com.daily.news.subscription.article.ArticleStore;
 import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.home.no.NoSubscriptionFragment;
 
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.R.attr.fragment;
 
 
 public class HomeFragment extends Fragment implements SubscriptionContract.View {
@@ -70,10 +74,11 @@ public class HomeFragment extends Fragment implements SubscriptionContract.View 
     @Override
     public void updateValue(SubscriptionResponse subscriptionBean) {
         if (subscriptionBean.data.has_subscribe) {
-            FragmentManager fragmentManager = getChildFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.subscription_container, SubscriptionFragment.newInstance((ArrayList<Article>) subscriptionBean.data.article_list));
-            transaction.commit();
+            SubscriptionFragment fragment = new SubscriptionFragment();
+            getChildFragmentManager().beginTransaction().add(R.id.subscription_container, fragment).commit();
+            ArticlePresenter articlePresenter = new ArticlePresenter(fragment, new ArticleStore());
+            articlePresenter.setArticles(subscriptionBean.data.article_list);
+
         } else if (!subscriptionBean.data.has_subscribe) {
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();

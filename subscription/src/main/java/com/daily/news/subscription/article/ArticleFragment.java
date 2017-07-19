@@ -2,6 +2,7 @@ package com.daily.news.subscription.article;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,34 +22,34 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleFragment extends Fragment {
-    protected static final String ARTICLES = "articles";
+public class ArticleFragment extends Fragment implements ArticleContract.View {
 
     @BindView(R2.id.article_recyclerView)
     RecyclerView mRecyclerView;
     private View mRootView;
 
     private HeaderAdapter mHeaderAdapter;
+    private ArticleAdapter mArticleAdapter;
     private List<Article> mArticles;
+
+    private ArticleContract.Presenter mPresenter;
 
     public ArticleFragment() {
     }
 
-    public static ArticleFragment newInstance(ArrayList<Article> articles) {
-        ArticleFragment fragment = new ArticleFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ARTICLES, articles);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mArticles = getArguments().getParcelableArrayList(ARTICLES);
-            mHeaderAdapter = new HeaderAdapter();
-        }
+        mHeaderAdapter = new HeaderAdapter();
+        mArticles = new ArrayList<>();
+        mArticleAdapter = new ArticleAdapter(mArticles);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter.subscribe();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ArticleFragment extends Fragment {
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mHeaderAdapter.setInternalAdapter(new ArticleAdapter(mArticles));
+        mHeaderAdapter.setInternalAdapter(mArticleAdapter);
         mRecyclerView.setAdapter(mHeaderAdapter);
         return mRootView;
     }
@@ -68,4 +69,34 @@ public class ArticleFragment extends Fragment {
         mHeaderAdapter.addHeaderView(headerView);
     }
 
+    @Override
+    public void setPresenter(ArticleContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void updateValue(List<Article> articles) {
+        mArticleAdapter.updateValue(articles);
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPresenter.unsubscribe();
+    }
 }
