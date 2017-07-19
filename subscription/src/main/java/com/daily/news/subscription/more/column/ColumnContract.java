@@ -3,6 +3,7 @@ package com.daily.news.subscription.more.column;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.BaseView;
+import com.daily.news.subscription.base.UIBaseView;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ColumnContract {
         void setItemId(String itemId);
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends UIBaseView<Presenter> {
         void updateValue(List<Column> columnsBeen);
     }
 

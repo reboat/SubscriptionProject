@@ -3,6 +3,7 @@ package com.daily.news.subscription.more.category;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.BaseView;
+import com.daily.news.subscription.base.UIBaseView;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 
 public interface CategoryContract {
-    interface View extends BaseView<Presenter> {
+    interface View extends UIBaseView<Presenter> {
         void updateValues(List<Category> items);
     }
 
