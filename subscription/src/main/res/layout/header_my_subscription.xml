@@ -5,13 +5,13 @@
               android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/my_sub_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center">
 
         <TextView
-            android:id="@+id/my_sub_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/subscription"
@@ -30,13 +30,13 @@
         android:background="#d4d4d4"/>
 
     <LinearLayout
+        android:id="@+id/my_sub_more_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center">
 
         <TextView
-            android:id="@+id/my_sub_more_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/more_subscription"

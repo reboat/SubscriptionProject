@@ -2,9 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
+                android:background="@android:color/white"
+                android:paddingTop="11dp"
+                android:paddingBottom="11dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginRight="11dp"
         android:id="@+id/column_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +41,7 @@
             android:id="@+id/column_infos_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:text="72万订阅"
             android:textColor="#999999"
             android:textSize="11sp"/>
@@ -42,13 +49,15 @@
 
     <TextView
         android:id="@+id/column_subscribe_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="57dp"
+        android:layout_height="29dp"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/subscription_btn_selector"
+        android:gravity="center"
+        android:text="订阅"
         android:textColor="#f44b50"
-        android:text="订阅"/>
+        android:textSize="14sp"/>
 
 </RelativeLayout>

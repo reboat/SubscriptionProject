@@ -15,13 +15,20 @@
                                             android:name="com.daily.news.subscription.more.MoreListFragment"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
+                                            android:background="@android:color/white"
                                             app:layoutManager="LinearLayoutManager"
                                             tools:context="com.daily.news.subscription.more.MoreListActivity"
                                             tools:listitem="@layout/item_category"/>
 
-    <FrameLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/more_category_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <View
+            android:background="#dddddd"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </LinearLayout>

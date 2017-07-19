@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daily.news.subscription.LinearLayoutColorDivider;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.OnItemClickListener;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     public static final String ARG_ITEM_ID = "item_id";
 
     @BindView(R2.id.column_recyclerView)
-    RecyclerView mRecyclerView;
+    XRecyclerView mRecyclerView;
     List<Column> mColumns;
     ColumnAdapter mColumnAdapter;
 
@@ -77,6 +79,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
+        mRecyclerView.setPullRefreshEnabled(false);
+        mRecyclerView.setLoadingMoreEnabled(false);
+        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(),R.color.dddddd,R.dimen.divide_height,LinearLayoutManager.VERTICAL));
     }
 
     @Override
