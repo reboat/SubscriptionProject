@@ -11,7 +11,7 @@ import java.util.List;
  * Created by lixinke on 2017/7/17.
  */
 
-public interface ArticleContract<T> {
+public interface ArticleContract {
     interface Presenter extends BasePresenter {
         void setItemId(String itemId);
     }
