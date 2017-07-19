@@ -1,8 +1,6 @@
 package com.daily.news.subscription.article;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +24,7 @@ import butterknife.ButterKnife;
 public class ArticleFragment extends Fragment {
     protected static final String ARTICLES = "articles";
 
-    @BindView(R2.id.my_sub_recyclerView)
+    @BindView(R2.id.article_recyclerView)
     RecyclerView mRecyclerView;
     private View mRootView;
 
@@ -57,7 +55,7 @@ public class ArticleFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mRootView = inflater.inflate(R.layout.fragment_my_subscription, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_article, container, false);
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
