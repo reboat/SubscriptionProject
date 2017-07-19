@@ -98,7 +98,7 @@ public class MockResponse {
         String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4"};
 
         List<Article> articles = new ArrayList<>();
-        for (int i = 0; i < 600; i++) {
+        for (int i = 0; i < 30; i++) {
             Article article = new Article();
             if (random.nextBoolean()) {
                 article.list_title = "习近平主持召开中央财经领导小组第十六次会议";

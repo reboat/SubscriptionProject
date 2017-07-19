@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daily.news.subscription.LinearLayoutColorDivider;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.HeaderAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import butterknife.ButterKnife;
 public class ArticleFragment extends Fragment implements ArticleContract.View {
 
     @BindView(R2.id.article_recyclerView)
-    RecyclerView mRecyclerView;
+    XRecyclerView mRecyclerView;
     private View mRootView;
 
     private HeaderAdapter mHeaderAdapter;
@@ -60,6 +62,9 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHeaderAdapter.setInternalAdapter(mArticleAdapter);
         mRecyclerView.setAdapter(mHeaderAdapter);
+        mRecyclerView.setPullRefreshEnabled(false);
+        mRecyclerView.setLoadingMoreEnabled(false);
+        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(),R.color.dddddd,R.dimen.divide_height,LinearLayoutManager.VERTICAL));
         return mRootView;
     }
 

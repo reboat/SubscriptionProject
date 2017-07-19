@@ -15,6 +15,12 @@
         android:textColor="#484848"
         android:textSize="15sp"
         />
+    
+    <View
+        android:layout_gravity="center"
+        android:background="#d4d4d4"
+        android:layout_width="1dp"
+        android:layout_height="24dp"/>
 
     <TextView
         android:id="@+id/my_sub_more_btn"

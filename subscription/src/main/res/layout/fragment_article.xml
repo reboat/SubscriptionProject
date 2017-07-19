@@ -4,9 +4,9 @@
              android:layout_height="match_parent"
              tools:context="com.daily.news.subscription.home.my.SubscriptionFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/article_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
 
 </FrameLayout>
