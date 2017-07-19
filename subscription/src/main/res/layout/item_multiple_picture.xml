@@ -12,6 +12,11 @@
         android:id="@+id/multiple_picture_article_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="TextView"/>
 
     <LinearLayout
@@ -27,6 +32,10 @@
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/ic_launcher"/>
 
+        <View
+            android:layout_width="4.5dp"
+            android:layout_height="75dp"/>
+
         <ImageView
             android:id="@+id/multiple_picture_imageView2"
             android:layout_width="match_parent"
@@ -35,6 +44,10 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/ic_launcher"/>
+
+        <View
+            android:layout_width="4.5dp"
+            android:layout_height="75dp"/>
 
         <ImageView
             android:id="@+id/multiple_picture_imageView3"
@@ -51,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="1.4万人阅读"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="7dp"
         android:textColor="#999999"
         android:textSize="11sp"/>
 </LinearLayout>

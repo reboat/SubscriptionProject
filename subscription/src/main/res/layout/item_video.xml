@@ -29,6 +29,8 @@
         android:text="杭州丝绸现身“一带一路”高峰论坛杭州丝绸现身“一带一\n路高峰论坛高峰论坛杭州丝绸高峰论坛杭州丝绸…"
         android:textColor="#484848"
         android:textSize="14sp"
+        android:ellipsize="end"
+        android:lines="2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"

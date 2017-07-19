@@ -71,12 +71,12 @@ public class ArticleAdapter extends RecyclerView.Adapter {
             ArticleViewHolder articleViewHolder = (ArticleViewHolder) holder;
             articleViewHolder.mTitleView.setText(article.list_title);
             Glide.with(holder.itemView).load(article.list_pics.get(0)).into(articleViewHolder.mImageView);
-            articleViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%d万人阅读 %d万人点赞", article.read_count, article.like_count));
+            articleViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%s %d万人阅读 %d万人点赞", article.channel_name,article.read_count, article.like_count));
         } else if (holder instanceof VideoViewHolder) {
             VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
             videoViewHolder.mTitleView.setText(article.list_title);
             Glide.with(holder.itemView).load(article.list_pics.get(0)).into(videoViewHolder.mImageView);
-            videoViewHolder.mCategoryView.setText(article.column_name);
+            videoViewHolder.mCategoryView.setText(article.channel_name);
             videoViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%d万人观看 %d万人点赞", article.read_count, article.like_count));
         } else if (holder instanceof MultiplePictureViewHolder) {
             MultiplePictureViewHolder multiplePictureViewHolder = (MultiplePictureViewHolder) holder;
