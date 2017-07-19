@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticlePresenter;
@@ -19,12 +18,8 @@ import com.daily.news.subscription.article.ArticleStore;
 import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.home.no.NoSubscriptionFragment;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.R.attr.fragment;
 
 
 public class HomeFragment extends Fragment implements SubscriptionContract.View {

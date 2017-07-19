@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 

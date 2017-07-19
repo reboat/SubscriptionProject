@@ -1,8 +1,7 @@
 package com.daily.news.subscription.mock;
 
-import com.daily.news.subscription.Article;
+import com.daily.news.subscription.article.Article;
 import com.daily.news.subscription.detail.DetailColumn;
-import com.daily.news.subscription.detail.DetailFragment;
 import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.column.Column;
@@ -11,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
-import static android.R.attr.detailColumn;
 
 /**
  * Created by lixinke on 2017/7/11.

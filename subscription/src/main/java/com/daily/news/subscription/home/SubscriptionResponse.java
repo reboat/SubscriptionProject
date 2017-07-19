@@ -3,7 +3,7 @@ package com.daily.news.subscription.home;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.daily.news.subscription.Article;
+import com.daily.news.subscription.article.Article;
 import com.daily.news.subscription.more.column.Column;
 
 import java.util.ArrayList;

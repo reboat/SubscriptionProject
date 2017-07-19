@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.base.OnItemClickListener;
+import com.daily.news.subscription.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

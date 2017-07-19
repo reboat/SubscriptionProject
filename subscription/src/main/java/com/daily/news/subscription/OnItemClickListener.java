@@ -1,4 +1,4 @@
-package com.daily.news.subscription.base;
+package com.daily.news.subscription;
 
 /**
  * 点击事件接口

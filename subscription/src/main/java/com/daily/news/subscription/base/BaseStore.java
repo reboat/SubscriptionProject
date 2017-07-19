@@ -1,4 +1,4 @@
-package com.daily.news.subscription;
+package com.daily.news.subscription.base;
 
 import io.reactivex.Flowable;
 

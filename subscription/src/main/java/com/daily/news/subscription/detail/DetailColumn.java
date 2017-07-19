@@ -1,6 +1,6 @@
 package com.daily.news.subscription.detail;
 
-import com.daily.news.subscription.Article;
+import com.daily.news.subscription.article.Article;
 
 import java.util.List;
 

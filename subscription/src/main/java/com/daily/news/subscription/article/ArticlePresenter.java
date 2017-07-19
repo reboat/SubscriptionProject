@@ -1,8 +1,5 @@
 package com.daily.news.subscription.article;
 
-import com.daily.news.subscription.Article;
-import com.daily.news.subscription.detail.DetailColumn;
-
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;

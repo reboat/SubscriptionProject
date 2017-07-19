@@ -1,4 +1,4 @@
-package com.daily.news.subscription.base;
+package com.daily.news.subscription;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

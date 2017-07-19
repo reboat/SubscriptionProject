@@ -1,10 +1,8 @@
 package com.daily.news.subscription.article;
 
-import com.daily.news.subscription.Article;
-import com.daily.news.subscription.BasePresenter;
-import com.daily.news.subscription.BaseStore;
-import com.daily.news.subscription.BaseView;
-import com.daily.news.subscription.detail.DetailColumn;
+import com.daily.news.subscription.base.BasePresenter;
+import com.daily.news.subscription.base.BaseStore;
+import com.daily.news.subscription.base.BaseView;
 
 import java.util.List;
 

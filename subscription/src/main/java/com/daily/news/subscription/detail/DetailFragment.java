@@ -4,30 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleStore;
-import com.daily.news.subscription.home.SubscriptionPresenter;
-import com.daily.news.subscription.home.SubscriptionStore;
-import com.daily.news.subscription.home.my.SubscriptionFragment;
-import com.daily.news.subscription.more.column.Column;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;

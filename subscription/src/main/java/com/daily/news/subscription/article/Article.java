@@ -1,4 +1,4 @@
-package com.daily.news.subscription;
+package com.daily.news.subscription.article;
 
 import android.os.Parcel;
 import android.os.Parcelable;

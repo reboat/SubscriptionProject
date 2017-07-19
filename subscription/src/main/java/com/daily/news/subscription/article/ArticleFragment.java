@@ -6,15 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daily.news.subscription.Article;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.HeaderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
