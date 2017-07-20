@@ -61,6 +61,9 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
                 }
             }
         });
+        String subscriptionText=column.subscribed?"已订阅":"订阅";
+        holder.mSubscribeBtn.setText(subscriptionText);
+        holder.mSubscribeBtn.setSelected(column.subscribed);
         holder.mSubscribeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -7,13 +7,12 @@
     <TextView
         android:id="@+id/more_item_category_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="22dp"
-        android:paddingLeft="22.5dp"
-        android:paddingRight="22.5dp"
-        android:paddingTop="22dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginLeft="22.5dp"
+        android:layout_marginRight="22.5dp"
+        android:layout_marginTop="22dp"
         android:text="科技"
-        android:textColor="#484848"
-        android:textSize="17sp"
+        android:textColor="@color/category_text_color_selector"
         />
 </LinearLayout>

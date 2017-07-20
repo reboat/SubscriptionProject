@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
@@ -61,6 +65,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mCategories = new ArrayList<>();
         mMoreAdapter = new MoreAdapter(mCategories);
         mRecyclerView.setAdapter(mMoreAdapter);
+        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     @Override
@@ -72,6 +77,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public void updateValues(List<Category> items) {
         mMoreAdapter.updateValue(items);
         Bundle arguments = new Bundle();
+        items.get(0).is_selected = true;
         arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(items.get(0).class_id));
         ColumnFragment fragment = new ColumnFragment();
         fragment.setArguments(arguments);
@@ -123,10 +129,16 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             return new MoreAdapter.ViewHolder(view);
         }
 
+        int mCurPosition = 0;
+
         @Override
-        public void onBindViewHolder(final MoreAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final MoreAdapter.ViewHolder holder, final int position) {
+            final Category category = mValues.get(position);
             holder.mItem = mValues.get(position);
-            holder.mCategoryView.setText(mValues.get(position).class_name);
+            int textSize = category.is_selected ? 20 : 17;
+            holder.mCategoryView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            holder.mCategoryView.setSelected(category.is_selected);
+            holder.mCategoryView.setText(category.class_name);
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -138,6 +150,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
                     new ColumnPresenter(fragment, new ColumnStore());
+                    category.is_selected = true;
+                    notifyItemChanged(position);
+                    mValues.get(mCurPosition).is_selected = false;
+                    notifyItemChanged(mCurPosition);
+                    mCurPosition = position;
                 }
             });
         }

@@ -9,16 +9,15 @@
               android:showDividers="middle"
               tools:context="com.daily.news.subscription.more.MoreActivity">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:tools="http://schemas.android.com/tools"
-                                            android:id="@+id/more_category_list"
-                                            android:name="com.daily.news.subscription.more.MoreListFragment"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:background="@android:color/white"
-                                            app:layoutManager="LinearLayoutManager"
-                                            tools:context="com.daily.news.subscription.more.MoreListActivity"
-                                            tools:listitem="@layout/item_category"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/more_category_list"
+        android:name="com.daily.news.subscription.more.MoreListFragment"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.daily.news.subscription.more.MoreListActivity"
+        tools:listitem="@layout/item_category"/>
 
     <LinearLayout
         android:orientation="horizontal"
