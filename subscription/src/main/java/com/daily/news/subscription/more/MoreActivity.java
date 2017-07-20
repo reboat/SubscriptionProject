@@ -1,9 +1,12 @@
 package com.daily.news.subscription.more;
 
+import android.content.Context;
+import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.daily.news.subscription.R;
@@ -56,6 +59,9 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(R.id.more_container, fragment)
                 .commit();
         new ColumnPresenter(fragment, new SearchStore());
+
+        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
