@@ -14,8 +14,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:background="@android:color/darker_gray"
-            android:paddingBottom="25dp">
+            android:background="@drawable/detail_column_default"
+            android:paddingBottom="27dp"
+            android:paddingLeft="11.5dp"
+            android:paddingRight="11.5dp">
 
             <ImageView
                 android:id="@+id/detail_column_imageView"
@@ -23,7 +25,8 @@
                 android:layout_height="72dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                app:srcCompat="@mipmap/ic_launcher"/>
+                android:layout_marginRight="9dp"
+                android:src="@drawable/default_pic"/>
 
             <TextView
                 android:id="@+id/detail_column_title"
@@ -31,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/detail_column_imageView"
                 android:layout_toEndOf="@+id/detail_column_imageView"
+                android:layout_toLeftOf="@+id/frameLayout"
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:lineSpacingExtra="1sp"
                 android:text="钱塘江"
@@ -39,11 +43,11 @@
 
             <TextView
                 android:id="@+id/detail_column_info"
+                android:layout_toLeftOf="@+id/frameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/detail_column_title"
-                android:layout_alignRight="@+id/detail_column_title"
                 android:layout_below="@+id/detail_column_title"
+                android:layout_toRightOf="@+id/detail_column_imageView"
                 android:text="23.7万订阅"
                 android:textColor="#c7c7c7"
                 android:textSize="11sp"/>
@@ -52,11 +56,9 @@
                 android:id="@+id/detail_column_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/detail_column_info"
                 android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/detail_column_info"
                 android:layout_toLeftOf="@+id/frameLayout"
-                android:layout_toStartOf="@+id/frameLayout"
+                android:layout_toRightOf="@+id/detail_column_imageView"
                 android:ellipsize="end"
                 android:lines="2"
                 android:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美"
@@ -76,8 +78,10 @@
 
                 <TextView
                     android:id="@+id/detail_column_sub_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="76.5dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/detail_sub_btn"
+                    android:gravity="center"
                     android:text="已订阅"
                     android:textColor="#000000"
                     android:textSize="14sp"
@@ -93,11 +97,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@android:color/white"
         android:id="@+id/detail_column_progressBar_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/detail_column_progressBar"

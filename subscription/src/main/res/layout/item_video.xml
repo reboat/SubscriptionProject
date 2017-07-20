@@ -87,7 +87,7 @@
             android:layout_height="18dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/share"
             />
     </RelativeLayout>
 </RelativeLayout>
