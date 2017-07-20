@@ -2,6 +2,7 @@ package com.daily.news.subscription.article;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Option;
+import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +32,7 @@ public class ArticleAdapter extends RecyclerView.Adapter {
     private static final int MULTIPLE_PICTURES = 3;
 
     private List<Article> mArticles;
+    private SimpleDateFormat mDateFormat=new SimpleDateFormat("hh:mm");
 
     public ArticleAdapter(List<Article> articles) {
         mArticles = articles;
@@ -75,9 +80,12 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof VideoViewHolder) {
             VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
             videoViewHolder.mTitleView.setText(article.list_title);
-            Glide.with(holder.itemView).load(article.list_pics.get(0)).into(videoViewHolder.mImageView);
+            RequestOptions options=new RequestOptions();
+            options.centerCrop();
+            Glide.with(holder.itemView).applyDefaultRequestOptions(options).load(article.list_pics.get(0)).into(videoViewHolder.mImageView);
             videoViewHolder.mCategoryView.setText(article.channel_name);
             videoViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%d万人观看 %d万人点赞", article.read_count, article.like_count));
+            videoViewHolder.mPlayTimeView.setText(mDateFormat.format(article.video_duration));
         } else if (holder instanceof MultiplePictureViewHolder) {
             MultiplePictureViewHolder multiplePictureViewHolder = (MultiplePictureViewHolder) holder;
             multiplePictureViewHolder.mTitleView.setText(article.list_title);
@@ -125,6 +133,10 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         TextView mInfoView;
         @BindView(R2.id.video_share)
         ImageView mShareView;
+        @BindView(R2.id.video_play_view)
+        View mPlayView;
+        @BindView(R2.id.video_play_time_view)
+        TextView mPlayTimeView;
 
         public VideoViewHolder(View itemView) {
             super(itemView);

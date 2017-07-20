@@ -18,31 +18,60 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/ic_launcher"/>
+        app:srcCompat="@drawable/placeholder_big_pic"/>
+
+    <LinearLayout
+        android:id="@+id/video_play_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/video_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11.5dp"
+        android:layout_marginLeft="11.5dp"
+        android:background="@drawable/play_video_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/play_video"/>
+
+        <TextView
+            android:id="@+id/video_play_time_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.03"
+            android:lineSpacingExtra="-3sp"
+            android:text="00:05"
+            android:textColor="#ffffff"
+            android:textSize="11sp"/>
+    </LinearLayout>
 
     <TextView
-        android:padding="7dp"
         android:id="@+id/video_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/video_imageView"
-        android:text="杭州丝绸现身“一带一路”高峰论坛杭州丝绸现身“一带一\n路高峰论坛高峰论坛杭州丝绸高峰论坛杭州丝绸…"
-        android:textColor="#484848"
-        android:textSize="14sp"
-        android:ellipsize="end"
-        android:lines="2"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/video_imageView"
+        android:ellipsize="end"
+        android:lines="2"
+        android:padding="7dp"
+        android:text="杭州丝绸现身“一带一路”高峰论坛杭州丝绸现身“一带一\n路高峰论坛高峰论坛杭州丝绸高峰论坛杭州丝绸…"
+        android:textColor="#484848"
+        android:textSize="14sp"/>
 
     <RelativeLayout
-        android:layout_marginRight="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/video_title">
+        android:layout_below="@+id/video_title"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/video_recommend_view"
@@ -73,8 +102,8 @@
             android:id="@+id/video_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8.5dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="8.5dp"
             android:layout_toLeftOf="@+id/video_share"
             android:text="1.4万人观看"
             android:textColor="#999999"

@@ -95,7 +95,7 @@ public class MockResponse {
     public List<Article> getArticles() {
 
         Random random = new Random();
-        String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4"};
+        String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4","http://img4.duitang.com/uploads/item/201407/26/20140726211046_iGBch.thumb.700_0.jpeg"};
 
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
@@ -120,6 +120,7 @@ public class MockResponse {
             article.like_count = Math.abs(random.nextInt());
             if (random.nextBoolean()) {
                 article.video_url = "http://www.365yg.com/group/6437717271228973570/";
+                article.video_duration=Math.abs(random.nextInt());
             }
             articles.add(article);
         }
