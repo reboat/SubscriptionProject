@@ -4,17 +4,23 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="com.daily.news.subscription.detail.DetailFragment">
 
+        <ImageView
+            android:id="@+id/detail_column_header_imageView"
+            android:scaleType="centerCrop"
+            android:src="@drawable/detail_column_default"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
 
         <RelativeLayout
+            android:id="@+id/detail_column_header"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:background="@drawable/detail_column_default"
             android:paddingBottom="27dp"
             android:paddingLeft="11.5dp"
             android:paddingRight="11.5dp">
@@ -94,10 +100,11 @@
         </RelativeLayout>
 
         <FrameLayout
+            android:layout_below="@+id/detail_column_header"
             android:id="@+id/detail_article_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></FrameLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/detail_column_progressBar_container"

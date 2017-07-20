@@ -44,6 +44,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     ProgressBar mProgressBar;
     @BindView(R2.id.detail_column_tip_view)
     TextView mTipView;
+    @BindView(R2.id.detail_column_header_imageView)
+    ImageView mHeaderImageView;
 
 
     public DetailFragment() {
@@ -100,6 +102,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         String subscriptionText=detailColumn.subscribed?"已经订阅":"订阅";
         mSubscriptionView.setText(subscriptionText);
         mSubscriptionView.setSelected(detailColumn.subscribed);
+        Glide.with(this).load(detailColumn.background_url).into(mHeaderImageView);
 
         ArticleFragment fragment =new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
