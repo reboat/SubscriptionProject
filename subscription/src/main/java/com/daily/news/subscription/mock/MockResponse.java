@@ -95,7 +95,7 @@ public class MockResponse {
     public List<Article> getArticles() {
 
         Random random = new Random();
-        String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4","http://img4.duitang.com/uploads/item/201407/26/20140726211046_iGBch.thumb.700_0.jpeg"};
+        String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4", "http://img4.duitang.com/uploads/item/201407/26/20140726211046_iGBch.thumb.700_0.jpeg"};
 
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
@@ -120,7 +120,7 @@ public class MockResponse {
             article.like_count = Math.abs(random.nextInt());
             if (random.nextBoolean()) {
                 article.video_url = "http://www.365yg.com/group/6437717271228973570/";
-                article.video_duration=Math.abs(random.nextInt());
+                article.video_duration = Math.abs(random.nextInt());
             }
             articles.add(article);
         }
@@ -130,10 +130,11 @@ public class MockResponse {
     public DetailColumn getDetail(String id) {
         Random random = new Random();
         DetailColumn detailColumn = new DetailColumn();
-        detailColumn.pic_url="http://img3.redocn.com/tupian/20150314/shuyediqiutushangyeicon_4007116.jpg";
-        detailColumn.background_url="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=cc3fc816a5c3793169658e6a83addd30/0b55b319ebc4b745f766bd06c5fc1e178a82152b.jpg";
+        detailColumn.pic_url = "http://img3.redocn.com/tupian/20150314/shuyediqiutushangyeicon_4007116.jpg";
+        detailColumn.background_url = "http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=cc3fc816a5c3793169658e6a83addd30/0b55b319ebc4b745f766bd06c5fc1e178a82152b.jpg";
         detailColumn.article_count = Math.abs(random.nextInt(1000));
         detailColumn.subscribe_count = Math.abs(random.nextInt(1000));
+        detailColumn.subscribed = random.nextBoolean();
         detailColumn.name = "诗经里的野菜";
         detailColumn.description = "先民根据地球在黄道轨迹上的位置变化制定了二十四节气，每个节气分别相应于地球在黄道上每运动15°所到达的位置。太阳到达黄经315°位置时，正是二十四节气中之“立春";
         detailColumn.background_url = "http://easyread.ph.126.net/Me57p9l34QHfkkYHXDEnzQ==/8796093022385378775.jpg";

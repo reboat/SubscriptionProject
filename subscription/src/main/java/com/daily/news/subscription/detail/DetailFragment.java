@@ -97,6 +97,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mTitleView.setText(detailColumn.name);
         mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
         mDescritpionView.setText(detailColumn.description);
+        mSubscriptionView.setSelected(detailColumn.subscribed);
 
         ArticleFragment fragment =new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();

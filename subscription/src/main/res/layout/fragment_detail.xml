@@ -78,12 +78,15 @@
 
                 <TextView
                     android:id="@+id/detail_column_sub_btn"
+                    android:padding="8.5dp"
                     android:layout_width="76.5dp"
                     android:layout_height="35dp"
                     android:background="@drawable/detail_sub_btn"
                     android:gravity="center"
                     android:text="已订阅"
-                    android:textColor="#000000"
+                    android:drawablePadding="0dp"
+                    android:drawableLeft="@drawable/detail_sub_left_pic"
+                    android:textColor="@color/detail_btn_text_color_selector"
                     android:textSize="14sp"
                     />
             </LinearLayout>
