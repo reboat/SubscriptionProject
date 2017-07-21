@@ -17,7 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/column_default_small_pic"/>
+        app:srcCompat="@drawable/column_placeholder_big"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

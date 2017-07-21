@@ -32,7 +32,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="9dp"
-                android:src="@drawable/default_pic"/>
+                android:src="@drawable/column_placeholder_big"/>
 
             <TextView
                 android:id="@+id/detail_column_title"
