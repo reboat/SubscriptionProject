@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleStore;
 import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.home.no.NoSubscriptionFragment;
-import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 
@@ -54,7 +51,7 @@ public class HomeFragment extends Fragment implements SubscriptionContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subscription, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
