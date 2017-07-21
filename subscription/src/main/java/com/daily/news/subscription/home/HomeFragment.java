@@ -17,6 +17,9 @@ import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleStore;
 import com.daily.news.subscription.home.my.SubscriptionFragment;
 import com.daily.news.subscription.home.no.NoSubscriptionFragment;
+import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.more.column.LocalColumnStore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,10 +78,9 @@ public class HomeFragment extends Fragment implements SubscriptionContract.View 
             articlePresenter.setArticles(subscriptionBean.data.article_list);
 
         } else if (!subscriptionBean.data.has_subscribe) {
-            FragmentManager fragmentManager = getChildFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.subscription_container, NoSubscriptionFragment.newInstance(subscriptionBean.data));
-            transaction.commit();
+            NoSubscriptionFragment fragment = NoSubscriptionFragment.newInstance(subscriptionBean.data);
+            getChildFragmentManager().beginTransaction().add(R.id.subscription_container, fragment).commit();
+            new ColumnPresenter(fragment, new LocalColumnStore(subscriptionBean.data.recommend_list));
         }
     }
 

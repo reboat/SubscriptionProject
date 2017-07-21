@@ -35,7 +35,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
     public void updateValues(List<Column> columnsBeens) {
         mColumnsBeens.clear();
         mColumnsBeens.addAll(columnsBeens);
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     public void addMoreValues(List<Column> columnsBeens) {

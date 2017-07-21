@@ -23,6 +23,10 @@ import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
+import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.more.column.ColumnStore;
+import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -33,21 +37,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.OnSubscribeListener, OnItemClickListener<Column> {
+public class NoSubscriptionFragment extends ColumnFragment  {
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
-    @BindView(R2.id.recommend_recyclerView)
-    RecyclerView mRecyclerView;
-
     private Banner mFocusView;
     private List<Focus> mFocusBeen;
-
-    private List<Column> mRecommendBeen;
-    private ColumnAdapter mRecommendAdapter;
-
-    private HeaderAdapter mAdapter;
-
 
     public static NoSubscriptionFragment newInstance(SubscriptionResponse.DataBean dataBean) {
         NoSubscriptionFragment fragment = new NoSubscriptionFragment();
@@ -65,7 +60,6 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             SubscriptionResponse.DataBean dataBean = getArguments().getParcelable(SUBSCRIPTION_DATA);
-            mRecommendBeen = dataBean.recommend_list;
             mFocusBeen = dataBean.focus_list;
         }
     }
@@ -73,32 +67,13 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_recommend, container, false);
-        ButterKnife.bind(this, root);
-
-        mAdapter = new HeaderAdapter();
-
-
         initFocusView(inflater, container);
         initMoreHeader(inflater, container);
-        initRecommend();
 
-        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
-
-        return root;
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
 
-    /**
-     * 初始化推荐相关
-     */
-    private void initRecommend() {
-        mRecommendAdapter = new ColumnAdapter(mRecommendBeen);
-        mRecommendAdapter.setOnSubscribeListener(this);
-        mRecommendAdapter.setOnItemClickListener(this);
-        mAdapter.setInternalAdapter(mRecommendAdapter);
-    }
+
 
 
     /**
@@ -109,7 +84,7 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
      */
     private void initFocusView(LayoutInflater inflater, ViewGroup container) {
         mFocusView = (Banner) inflater.inflate(R.layout.item_focus, container, false);
-        mAdapter.addHeaderView(mFocusView);
+        addHeaderView(mFocusView);
         mFocusView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mFocusView.setImageLoader(new ImageLoader() {
             @Override
@@ -144,30 +119,7 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
                 startActivity(intent);
             }
         });
-        mAdapter.addHeaderView(moreHeaderView);
-    }
-
-    /**
-     * 点击订阅按钮
-     *
-     * @param recommend
-     */
-    @Override
-    public void onSubscribe(Column recommend) {
-        Toast.makeText(getActivity(), recommend.pic_url, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 点击item
-     *
-     * @param position  点击item的位置
-     * @param recommend
-     */
-    @Override
-    public void onItemClick(int position, Column recommend) {
-        Intent intent = new Intent("android.intent.action.DAILY");
-        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", recommend.uid).build());
-        startActivity(intent);
+        addHeaderView(moreHeaderView);
     }
 
     @Override

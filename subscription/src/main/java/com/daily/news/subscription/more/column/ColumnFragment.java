@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daily.news.subscription.HeaderAdapter;
 import com.daily.news.subscription.LinearLayoutColorDivider;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -35,12 +36,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     List<Column> mColumns;
     ColumnAdapter mColumnAdapter;
 
+    HeaderAdapter mAdapter;
+
     @BindView(R2.id.column_tip_container)
     View mTipContainer;
     @BindView(R2.id.column_tip_view)
     TextView mTipView;
     @BindView(R2.id.column_progressBar)
     ProgressBar mProgressBar;
+
 
     private ColumnContract.Presenter mPresenter;
 
@@ -54,6 +58,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
             String itemId = getArguments().getString(ARG_ITEM_ID);
             mPresenter.setItemId(itemId);
         }
+        mAdapter=new HeaderAdapter();
     }
 
     @Override
@@ -78,10 +83,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mColumnAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setAdapter(mColumnAdapter);
+        mAdapter.setInternalAdapter(mColumnAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setPullRefreshEnabled(false);
         mRecyclerView.setLoadingMoreEnabled(false);
         mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
+    }
+
+    public void addHeaderView(View headerView){
+        mAdapter.addHeaderView(headerView);
     }
 
     @Override
@@ -111,6 +121,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @Override
     public void updateValue(List<Column> columnsBeen) {
         mColumnAdapter.updateValues(columnsBeen);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
