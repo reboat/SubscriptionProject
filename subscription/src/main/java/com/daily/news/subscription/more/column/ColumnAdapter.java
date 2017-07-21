@@ -99,7 +99,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
         ImageView mImageView;
         @BindView(R2.id.column_title_view)
         TextView mTitleView;
-        @BindView(R2.id.column_infos_view)
+        @BindView(R2.id.column_info_view)
         TextView mColumnInfosView;
         @BindView(R2.id.column_subscribe_btn)
         TextView mSubscribeBtn;

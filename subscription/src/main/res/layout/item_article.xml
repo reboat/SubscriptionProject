@@ -3,7 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@color/item_article_background"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
     >
@@ -31,7 +31,7 @@
         android:ellipsize="end"
         android:lines="2"
         android:text="张高丽夏宝龙车俊对温州倒房作出批做要求全力搜救要求全力搜救要求全搜救要求全搜救要求全搜救要求全搜救要求全搜救要求全搜救要求全"
-        android:textColor="#484848"
+        android:textColor="@color/article_title_color"
         android:textSize="14sp"/>
 
     <TextView
@@ -44,6 +44,6 @@
         android:layout_toRightOf="@+id/article_imageView"
         android:orientation="horizontal"
         android:text="7233万阅读"
-        android:textColor="#999999"
+        android:textColor="@color/article_info_color"
         android:textSize="11sp"/>
 </RelativeLayout>

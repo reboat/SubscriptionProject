@@ -43,7 +43,7 @@
             android:letterSpacing="0.03"
             android:lineSpacingExtra="-3sp"
             android:text="00:05"
-            android:textColor="#ffffff"
+            android:textColor="@color/video_play_time_color"
             android:textSize="11sp"/>
     </LinearLayout>
 
@@ -60,7 +60,7 @@
         android:lines="2"
         android:padding="7dp"
         android:text="杭州丝绸现身“一带一路”高峰论坛杭州丝绸现身“一带一\n路高峰论坛高峰论坛杭州丝绸高峰论坛杭州丝绸…"
-        android:textColor="#484848"
+        android:textColor="@color/video_title_color"
         android:textSize="14sp"/>
 
     <RelativeLayout
@@ -79,8 +79,8 @@
             android:layout_centerVertical="true"
             android:background="@drawable/rectangle_f44b50_shape"
             android:lineSpacingExtra="-5sp"
-            android:text="推荐"
-            android:textColor="#f44b50"
+            android:text="@string/recommend"
+            android:textColor="@color/video_recommend_color"
             android:textSize="11sp"/>
 
         <TextView
@@ -93,7 +93,7 @@
             android:background="@drawable/rectangle_999999_shape"
             android:lineSpacingExtra="-5sp"
             android:text="新闻眼"
-            android:textColor="#999999"
+            android:textColor="@color/video_category_color"
             android:textSize="11sp"/>
 
         <TextView
@@ -104,7 +104,7 @@
             android:layout_marginRight="8.5dp"
             android:layout_toLeftOf="@+id/video_share"
             android:text="1.4万人观看"
-            android:textColor="#999999"
+            android:textColor="@color/video_info_color"
             android:textSize="11sp"
             />
 

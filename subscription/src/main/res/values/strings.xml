@@ -21,4 +21,8 @@
     <string name="loading">加载中...</string>
     <string name="my_subscription_title">我的订阅</string>
     <string name="more_title">订阅更多</string>
+    <string name="recommend_header_title1">大家都在看</string>
+    <string name="subscribe_more">订阅更多</string>
+    <string name="my_sub_more_btn">订阅更多</string>
+    <string name="recommend">推荐</string>
 </resources>

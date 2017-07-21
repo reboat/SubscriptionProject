@@ -34,16 +34,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="文化印象"
-            android:textColor="#484848"
+            android:textColor="@color/column_title_color"
             android:textSize="14sp"/>
 
         <TextView
-            android:id="@+id/column_infos_view"
+            android:id="@+id/column_info_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:text="72万订阅"
-            android:textColor="#999999"
+            android:textColor="@color/column_info_color"
             android:textSize="11sp"/>
     </LinearLayout>
 
@@ -56,7 +56,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/subscription_btn_selector"
         android:gravity="center"
-        android:text="订阅"
+        android:text="@string/subscription"
         android:textColor="@color/column_subscription_text_color_selector"
         android:textSize="14sp"/>
 
