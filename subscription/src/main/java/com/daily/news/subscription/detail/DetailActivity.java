@@ -26,7 +26,7 @@ public class DetailActivity extends AppCompatActivity {
         String action = intent.getAction();
         Uri data = intent.getData();
 
-        if (TextUtils.equals(action, "android.intent.action.DAILY")) {
+        if (TextUtils.equals(action, getString(R.string.daily_intent_action))) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             DetailFragment detailFragment=DetailFragment.newInstance(data.getQueryParameter("uid"));
             transaction.add(R.id.detail_container, detailFragment);
