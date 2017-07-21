@@ -2,17 +2,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="#f1f1f1"/>
+            <solid android:color="@color/f1f1f1"/>
         </shape>
     </item>
     <item
-        android:width="50dp"
-        android:height="50dp"
-        android:bottom="100dp"
+        android:width="@dimen/daily_50"
+        android:height="@dimen/daily_50"
+        android:bottom="@dimen/daily_100"
         android:drawable="@drawable/placeholder_big_pic"
         android:gravity="center"
-        android:left="100dp"
-        android:right="100dp"
-        android:top="100dp"/>
+        android:left="@dimen/daily_100"
+        android:right="@dimen/daily_100"
+        android:top="@dimen/daily_100"/>
 
 </layer-list>

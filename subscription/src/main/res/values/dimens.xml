@@ -5,4 +5,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_width">200dp</dimen>
     <dimen name="divide_height">1dp</dimen>
+    <dimen name="daily_50">50dp</dimen>
+    <dimen name="daily_100">100dp</dimen>
+    <dimen name="daily_1">1dp</dimen>
+    <dimen name="daily_18">18dp</dimen>
+    <dimen name="daily_14">14dp</dimen>
+    <dimen name="daily_19" >19dp</dimen>
+    <dimen name="daily_27">27dp</dimen>
 </resources>

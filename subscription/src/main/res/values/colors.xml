@@ -4,4 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="dddddd">#dddddd</color>
+    <color name="f1f1f1">#f1f1f1</color>
+    <color name="detail_subscription_selected_color">#5bffffff</color>
+    <color name="detail_subscription_selected_stroke_color">#6dffffff</color>
+
+    <color name="detail_subscription_color">#8e3636</color>
+    <color name="detail_subscription_stroke_color">#8e3636</color>
+    <color name="search_background_stroke_color">#e0e0e0</color>
+    <color name="search_background_color">#ffffff</color>
+    <color name="column_subscription_stroke_selected_color">#bababa</color>
+    <color name="column_subscription_stroke_color">#f44b50</color>
 </resources>
