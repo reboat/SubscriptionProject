@@ -52,7 +52,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
     public void onBindViewHolder(ColumnViewHolder holder, final int position) {
         final Column column = mColumnsBeens.get(position);
         holder.mTitleView.setText(column.name);
-        holder.mColumnInfosView.setText(String.format(Locale.getDefault(), "%d万订阅 %d份稿件", column.subscribe_count, column.article_count));
+        holder.mColumnInfosView.setText(String.format(Locale.getDefault(),holder.itemView.getContext().getString(R.string.column_info_format), column.subscribe_count, column.article_count));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +61,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
                 }
             }
         });
-        String subscriptionText=column.subscribed?"已订阅":"订阅";
+        String subscriptionText=column.subscribed?holder.itemView.getContext().getString(R.string.has_been_subscribed):holder.itemView.getContext().getString(R.string.subscription);
         holder.mSubscribeBtn.setText(subscriptionText);
         holder.mSubscribeBtn.setSelected(column.subscribed);
         holder.mSubscribeBtn.setOnClickListener(new View.OnClickListener() {

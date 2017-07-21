@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment implements SubscriptionContract.View 
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("订阅");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.subscription_title);
     }
 
     @Override

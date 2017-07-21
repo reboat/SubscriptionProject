@@ -14,4 +14,11 @@
     <string name="video_info_format">%1$d万人观看 %2$d万人点赞</string>
     <string name="multiple_pic_info_format" formatted="true">%1$d万人观看 %2$d万人点赞</string>
     <string name="daily_intent_action">android.intent.action.DAILY</string>
+    <string name="subscription_title">订阅</string>
+    <string name="column_info_format">%d万订阅 %d份稿件</string>
+    <string name="has_been_subscribed">已订阅</string>
+    <string name="subscription">订阅</string>
+    <string name="loading">加载中...</string>
+    <string name="my_subscription_title">我的订阅</string>
+    <string name="more_title">订阅更多</string>
 </resources>

@@ -34,7 +34,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
 
-        getSupportActionBar().setTitle("订阅更多");
+        getSupportActionBar().setTitle(R.string.more_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);

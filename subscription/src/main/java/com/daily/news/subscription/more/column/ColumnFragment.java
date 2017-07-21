@@ -96,7 +96,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
     @Override
     public void onItemClick(int position, Column bean) {
-        Intent intent = new Intent("android.intent.action.DAILY");
+        Intent intent = new Intent(getString(R.string.daily_intent_action));
         intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", bean.uid).build());
         startActivity(intent);
     }
@@ -115,7 +115,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     public void showProgressBar() {
         mTipContainer.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
-        mTipView.setText("加载中...");
+        mTipView.setText(R.string.loading);
     }
 
     @Override

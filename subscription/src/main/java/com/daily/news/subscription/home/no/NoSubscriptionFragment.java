@@ -119,7 +119,7 @@ public class NoSubscriptionFragment extends ColumnFragment  {
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.intent.action.DAILY");
+                Intent intent = new Intent(getString(R.string.daily_intent_action));
                 intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
                 startActivity(intent);
             }

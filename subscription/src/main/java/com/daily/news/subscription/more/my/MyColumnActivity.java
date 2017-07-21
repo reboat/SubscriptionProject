@@ -14,7 +14,7 @@ public class MyColumnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_column);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("我的订阅");
+        getSupportActionBar().setTitle(R.string.my_subscription_title);
 
         MyColumnFragment fragment = new MyColumnFragment();
         Bundle bundle=new Bundle();
