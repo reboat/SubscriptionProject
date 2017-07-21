@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.HeaderAdapter;
@@ -89,8 +90,12 @@ public class NoSubscriptionFragment extends ColumnFragment  {
         mFocusView.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(((Focus) path).pic_url).into(imageView);
+                RequestOptions options=new RequestOptions();
+                options.centerCrop();
+                options.placeholder(getResources().getDrawable(R.drawable.default_placeholder_big));
+                Glide.with(context).load(((Focus)path).pic_url).apply(options).into(imageView);
             }
+
         });
         mFocusView.isAutoPlay(true);
         mFocusView.setIndicatorGravity(BannerConfig.RIGHT);

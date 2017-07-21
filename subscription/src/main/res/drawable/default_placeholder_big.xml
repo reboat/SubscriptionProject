@@ -6,6 +6,8 @@
         </shape>
     </item>
     <item
+        android:width="50dp"
+        android:height="50dp"
         android:bottom="100dp"
         android:drawable="@drawable/placeholder_big_pic"
         android:gravity="center"
