@@ -81,13 +81,13 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mRecyclerView.setAdapter(mColumnAdapter);
         mRecyclerView.setPullRefreshEnabled(false);
         mRecyclerView.setLoadingMoreEnabled(false);
-        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(),R.color.dddddd,R.dimen.divide_height,LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
     }
 
     @Override
     public void onItemClick(int position, Column bean) {
-        Intent intent=new Intent("android.intent.action.DAILY");
-        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid",bean.uid).build());
+        Intent intent = new Intent("android.intent.action.DAILY");
+        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", bean.uid).build());
         startActivity(intent);
     }
 

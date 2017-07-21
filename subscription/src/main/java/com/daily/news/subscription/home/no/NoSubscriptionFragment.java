@@ -33,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.OnSubscribeListener,OnItemClickListener<Column> {
+public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.OnSubscribeListener, OnItemClickListener<Column> {
 
     private static final String SUBSCRIPTION_DATA = "subscription_data";
 
@@ -136,10 +136,10 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
      */
     private void initMoreHeader(LayoutInflater inflater, ViewGroup container) {
         View moreHeaderView = inflater.inflate(R.layout.header_more, container, false);
-        moreHeaderView.setOnClickListener(new View.OnClickListener() {
+        moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent("android.intent.action.DAILY");
+                Intent intent = new Intent("android.intent.action.DAILY");
                 intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
                 startActivity(intent);
             }
@@ -165,8 +165,8 @@ public class NoSubscriptionFragment extends Fragment implements ColumnAdapter.On
      */
     @Override
     public void onItemClick(int position, Column recommend) {
-        Intent intent=new Intent("android.intent.action.DAILY");
-        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid",recommend.uid).build());
+        Intent intent = new Intent("android.intent.action.DAILY");
+        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", recommend.uid).build());
         startActivity(intent);
     }
 
