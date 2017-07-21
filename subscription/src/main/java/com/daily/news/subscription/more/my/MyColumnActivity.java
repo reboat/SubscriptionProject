@@ -12,7 +12,7 @@ public class MyColumnActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_column);
+        setContentView(R.layout.activity_my_subscription);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.my_subscription_title);
 

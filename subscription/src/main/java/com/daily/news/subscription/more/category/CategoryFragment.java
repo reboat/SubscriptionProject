@@ -25,8 +25,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
     private CategoryContract.Presenter mPresenter;
@@ -49,7 +47,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_category, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_more, container, false);
         ButterKnife.bind(this, rootView);
         setupRecyclerView();
         return rootView;
