@@ -1,5 +1,7 @@
 package com.daily.news.subscription.article;
 
+import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Option;
@@ -21,18 +24,20 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static java.lang.System.load;
 
 /**
  * Created by lixinke on 2017/7/12.
  */
 
-public class ArticleAdapter extends RecyclerView.Adapter {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private static final int ARTICLE_TYPE = 1;
     private static final int VIDEO_TYPE = 2;
     private static final int MULTIPLE_PICTURES = 3;
 
     private List<Article> mArticles;
-    private SimpleDateFormat mDateFormat=new SimpleDateFormat("hh:mm");
 
     public ArticleAdapter(List<Article> articles) {
         mArticles = articles;
@@ -52,9 +57,9 @@ public class ArticleAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArticleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = null;
+        View itemView;
         switch (viewType) {
             case ARTICLE_TYPE:
                 itemView = inflater.inflate(R.layout.item_article, parent, false);
@@ -70,30 +75,9 @@ public class ArticleAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
         Article article = mArticles.get(position);
-        if (holder instanceof ArticleViewHolder) {
-            ArticleViewHolder articleViewHolder = (ArticleViewHolder) holder;
-            articleViewHolder.mTitleView.setText(article.list_title);
-            Glide.with(holder.itemView).load(article.list_pics.get(0)).into(articleViewHolder.mImageView);
-            articleViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%s %d万人阅读 %d万人点赞", article.channel_name,article.read_count, article.like_count));
-        } else if (holder instanceof VideoViewHolder) {
-            VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
-            videoViewHolder.mTitleView.setText(article.list_title);
-            RequestOptions options=new RequestOptions();
-            options.centerCrop();
-            Glide.with(holder.itemView).applyDefaultRequestOptions(options).load(article.list_pics.get(0)).into(videoViewHolder.mImageView);
-            videoViewHolder.mCategoryView.setText(article.channel_name);
-            videoViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%d万人观看 %d万人点赞", article.read_count, article.like_count));
-            videoViewHolder.mPlayTimeView.setText(mDateFormat.format(article.video_duration));
-        } else if (holder instanceof MultiplePictureViewHolder) {
-            MultiplePictureViewHolder multiplePictureViewHolder = (MultiplePictureViewHolder) holder;
-            multiplePictureViewHolder.mTitleView.setText(article.list_title);
-            Glide.with(holder.itemView).load(article.list_pics.get(0)).into(multiplePictureViewHolder.mImageView1);
-            Glide.with(holder.itemView).load(article.list_pics.get(1)).into(multiplePictureViewHolder.mImageView2);
-            Glide.with(holder.itemView).load(article.list_pics.get(2)).into(multiplePictureViewHolder.mImageView3);
-            multiplePictureViewHolder.mInfoView.setText(String.format(Locale.getDefault(), "%d万人观看 %d万人点赞", article.read_count, article.like_count));
-        }
+        holder.bindData(article);
     }
 
     @Override
@@ -106,7 +90,18 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    static class ArticleViewHolder extends RecyclerView.ViewHolder {
+    static abstract class ViewHolder extends RecyclerView.ViewHolder {
+        Resources mResources;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mResources = itemView.getResources();
+        }
+
+        public abstract void bindData(Article article);
+    }
+
+    static class ArticleViewHolder extends ViewHolder {
         @BindView(R2.id.article_imageView)
         ImageView mImageView;
         @BindView(R2.id.article_title)
@@ -117,34 +112,70 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         public ArticleViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mResources = itemView.getResources();
+        }
+
+        @Override
+        public void bindData(Article article) {
+            mTitleView.setText(article.list_title);
+            Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView);
+            String info = String.format(Locale.getDefault(), mResources.getString(R.string.article_info_format), article.channel_name, article.read_count, article.like_count);
+            mInfoView.setText(info);
         }
     }
 
-    static class VideoViewHolder extends RecyclerView.ViewHolder {
+    static class VideoViewHolder extends ViewHolder {
         @BindView(R2.id.video_imageView)
         ImageView mImageView;
         @BindView(R2.id.video_title)
         TextView mTitleView;
-        @BindView(R2.id.video_recommend_view)
-        TextView mRecommedView;
         @BindView(R2.id.video_category)
         TextView mCategoryView;
         @BindView(R2.id.video_info)
         TextView mInfoView;
-        @BindView(R2.id.video_share)
-        ImageView mShareView;
-        @BindView(R2.id.video_play_view)
-        View mPlayView;
         @BindView(R2.id.video_play_time_view)
         TextView mPlayTimeView;
+        SimpleDateFormat mDateFormat = new SimpleDateFormat("hh:mm");
+
 
         public VideoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @Override
+        public void bindData(Article article) {
+            mTitleView.setText(article.list_title);
+            RequestOptions options = new RequestOptions();
+            options.centerCrop();
+            Glide.with(itemView).applyDefaultRequestOptions(options).load(article.list_pics.get(0)).into(mImageView);
+            mCategoryView.setText(article.channel_name);
+            String info = String.format(Locale.getDefault(), mResources.getString(R.string.video_info_format), article.read_count, article.like_count);
+            mInfoView.setText(info);
+            mPlayTimeView.setText(mDateFormat.format(article.video_duration));
+        }
+
+        @OnClick(R2.id.video_recommend_view)
+        void onRecommend(View view) {
+            Toast.makeText(view.getContext(), "Recommend", Toast.LENGTH_SHORT).show();
+        }
+
+        @OnClick(R2.id.video_share)
+        void onShare(View view) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my Share text.");
+            shareIntent.setType("text/plain");
+            view.getContext().startActivity(Intent.createChooser(shareIntent, "分享到"));
+        }
+
+        @OnClick(R2.id.video_play_view)
+        void onPlayVideo(View view) {
+            Toast.makeText(view.getContext(), "onPlayVideo", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    static class MultiplePictureViewHolder extends RecyclerView.ViewHolder {
+    static class MultiplePictureViewHolder extends ViewHolder {
         @BindView(R2.id.multiple_picture_article_title)
         TextView mTitleView;
         @BindView(R2.id.multiple_picture_imageView1)
@@ -159,6 +190,16 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         public MultiplePictureViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void bindData(Article article) {
+            mTitleView.setText(article.list_title);
+            Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView1);
+            Glide.with(itemView).load(article.list_pics.get(1)).into(mImageView2);
+            Glide.with(itemView).load(article.list_pics.get(2)).into(mImageView3);
+            String info = String.format(Locale.getDefault(), mResources.getString(R.string.multiple_pic_info_format), article.read_count, article.like_count);
+            mInfoView.setText(info);
         }
     }
 }
