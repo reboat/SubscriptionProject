@@ -28,9 +28,9 @@ public class ColumnStore implements ColumnContract.Store<List<Column>> {
                         List<Column> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
                             Column column = new Column();
-                            column.article_count = random.nextInt();
-                            column.subscribe_count = random.nextInt();
-                            column.name = "文化中国" + random.nextInt();
+                            column.article_count = random.nextInt(1000);
+                            column.subscribe_count = random.nextInt(1000);
+                            column.name = "文化中国" + random.nextInt(1000);
                             column.subscribed = random.nextBoolean();
                             columns.add(column);
                         }

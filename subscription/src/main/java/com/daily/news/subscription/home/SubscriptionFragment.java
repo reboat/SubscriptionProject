@@ -31,6 +31,12 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     public SubscriptionFragment() {
     }
 
+    public static SubscriptionFragment newInstance() {
+        SubscriptionFragment subscriptionFragment = new SubscriptionFragment();
+        new SubscriptionPresenter(subscriptionFragment, new SubscriptionStore());
+        return subscriptionFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

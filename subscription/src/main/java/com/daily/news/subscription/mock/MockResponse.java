@@ -56,13 +56,14 @@ public class MockResponse {
         Random random = new Random();
         for (int i = 0; i < 30; i++) {
             Column recommend = new Column();
-            recommend.article_count = random.nextInt();
+            recommend.article_count = random.nextInt(10000);
+            recommend.name = "";
             for (int j = 0; j < 4; j++) {
                 recommend.name += names[random.nextInt(names.length)];
             }
 
-            recommend.subscribe_count = random.nextInt();
-            recommend.subscribed=random.nextBoolean();
+            recommend.subscribe_count = random.nextInt(10000);
+            recommend.subscribed = random.nextBoolean();
             recommend.pic_url = imags[random.nextInt(imags.length)];
             recommend.uid = UUID.randomUUID().toString();
             recommends.add(recommend);
@@ -121,7 +122,7 @@ public class MockResponse {
             article.like_count = Math.abs(random.nextInt());
             if (random.nextBoolean()) {
                 article.video_url = "http://www.365yg.com/group/6437717271228973570/";
-                article.video_duration = Math.abs(random.nextInt());
+                article.video_duration = Math.abs(random.nextInt(10000));
             }
             articles.add(article);
         }

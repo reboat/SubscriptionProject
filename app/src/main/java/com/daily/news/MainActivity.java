@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.daily.news.subscription.home.SubscriptionFragment;
-import com.daily.news.subscription.home.SubscriptionPresenter;
-import com.daily.news.subscription.home.SubscriptionStore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     if (recommend == null) {
-                        SubscriptionFragment subscriptionFragment = new SubscriptionFragment();
+
                         transaction = fragmentManager.beginTransaction();
-                        transaction.add(R.id.content, subscriptionFragment, "subscription");
+                        transaction.add(R.id.content, SubscriptionFragment.newInstance(), "subscription");
                         transaction.commit();
-                        new SubscriptionPresenter(subscriptionFragment, new SubscriptionStore());
+
 
                     } else {
                         transaction = fragmentManager.beginTransaction();
