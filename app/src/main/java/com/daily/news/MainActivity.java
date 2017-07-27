@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.daily.news.subscription.home.HomeFragment;
+import com.daily.news.subscription.home.SubscriptionFragment;
 import com.daily.news.subscription.home.SubscriptionPresenter;
 import com.daily.news.subscription.home.SubscriptionStore;
 
@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     if (recommend == null) {
-                        HomeFragment homeFragment = new HomeFragment();
+                        SubscriptionFragment subscriptionFragment = new SubscriptionFragment();
                         transaction = fragmentManager.beginTransaction();
-                        transaction.add(R.id.content, homeFragment, "subscription");
+                        transaction.add(R.id.content, subscriptionFragment, "subscription");
                         transaction.commit();
-                        new SubscriptionPresenter(homeFragment, new SubscriptionStore());
+                        new SubscriptionPresenter(subscriptionFragment, new SubscriptionStore());
 
                     } else {
                         transaction = fragmentManager.beginTransaction();

@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.article.ArticleFragment;
 
-public class SubscriptionFragment extends ArticleFragment {
-    public SubscriptionFragment() {
+public class MySubscriptionFragment extends ArticleFragment {
+    public MySubscriptionFragment() {
     }
 
 
