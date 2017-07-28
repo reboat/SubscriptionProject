@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.my;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,11 +14,14 @@ public class MyColumnActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_subscription);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.my_subscription_title);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.my_subscription_title);
+        }
 
         MyColumnFragment fragment = new MyColumnFragment();
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()

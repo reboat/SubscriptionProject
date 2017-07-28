@@ -1,8 +1,8 @@
 package com.daily.news.subscription.more;
 
 import android.content.Context;
-import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,8 +34,11 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
 
-        getSupportActionBar().setTitle(R.string.more_title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.more_title);
+        }
 
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);
@@ -60,8 +63,8 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
         new ColumnPresenter(fragment, new SearchStore());
 
-        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
