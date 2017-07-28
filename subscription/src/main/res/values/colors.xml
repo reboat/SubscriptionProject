@@ -39,4 +39,5 @@
     <color name="video_recommend_color">#f44b50</color>
     <color name="video_category_color">#999999</color>
     <color name="video_info_color">#999999</color>
+    <color name="subscription_background_color">#ffffff</color>
 </resources>

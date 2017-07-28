@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -95,7 +96,10 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.subscription_title);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.subscription_title);
+        }
     }
 
     @Override
