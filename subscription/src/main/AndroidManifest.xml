@@ -61,7 +61,7 @@
 
                 <data
                     android:host="www.8531.cn"
-                    android:path="/subscription/my/subscription"
+                    android:path="/subscription/more/my/column"
                     android:scheme="http"/>
             </intent-filter>
         </activity>

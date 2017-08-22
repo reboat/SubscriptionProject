@@ -25,7 +25,7 @@ public class MySubscriptionFragment extends ArticleFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getString(R.string.daily_intent_action));
-                intent.setData(Uri.parse("http://www.8531.cn/subscription/my/subscription"));
+                intent.setData(Uri.parse("http://www.8531.cn/subscription/more/my/column"));
                 startActivity(intent);
             }
         });
