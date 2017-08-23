@@ -31,7 +31,7 @@ public class MockResponse {
         subscription.request_id = UUID.randomUUID().toString();
         subscription.message = "mock subscription info";
         subscription.data = new SubscriptionResponse.DataBean();
-        subscription.data.has_subscribe = true;
+        subscription.data.has_subscribe = false;
         subscription.data.focus_list = getFocusResponse();
         subscription.data.recommend_list = getRecommedResponse();
 
