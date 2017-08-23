@@ -43,4 +43,19 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
     public void unsubscribe() {
         mCompositeDisposable.clear();
     }
+
+    @Override
+    public void onRefresh() {
+        mStore.getRefreshFlowable("url").subscribe(new Consumer<SubscriptionResponse>() {
+            @Override
+            public void accept(@NonNull SubscriptionResponse subscriptionResponse) throws Exception {
+                mView.onRefreshComplete(subscriptionResponse);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                mView.onRefreshError(throwable.getMessage());
+            }
+        });
+    }
 }

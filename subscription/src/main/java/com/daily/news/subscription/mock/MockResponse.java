@@ -31,6 +31,23 @@ public class MockResponse {
         subscription.request_id = UUID.randomUUID().toString();
         subscription.message = "mock subscription info";
         subscription.data = new SubscriptionResponse.DataBean();
+        subscription.data.has_subscribe = false;
+        subscription.data.focus_list = getFocusResponse();
+        subscription.data.recommend_list = getRecommedResponse();
+
+        if (subscription.data.has_subscribe) {
+            subscription.data.article_list = getArticles();
+        }
+
+        return subscription;
+    }
+
+    public SubscriptionResponse getRefreshSubscriptionResponse() {
+        SubscriptionResponse subscription = new SubscriptionResponse();
+        subscription.code = 1;
+        subscription.request_id = UUID.randomUUID().toString();
+        subscription.message = "mock subscription info";
+        subscription.data = new SubscriptionResponse.DataBean();
         subscription.data.has_subscribe = true;
         subscription.data.focus_list = getFocusResponse();
         subscription.data.recommend_list = getRecommedResponse();
@@ -41,6 +58,7 @@ public class MockResponse {
 
         return subscription;
     }
+
 
 
     public List<Column> getRecommedResponse() {

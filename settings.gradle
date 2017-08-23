@@ -1,1 +1,3 @@
 include ':app', ':subscription'
+include(':core-library')
+project(":core-library").projectDir=new File('/Users/lixinke/Documents/workspace/daily/CoreProject/coreprojectlibrary')

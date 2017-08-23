@@ -19,10 +19,22 @@ import io.reactivex.schedulers.Schedulers;
 public class SubscriptionStore implements SubscriptionContract.Store<SubscriptionResponse> {
     @Override
     public Flowable<SubscriptionResponse> getFlowable(String url) {
-        return Flowable.timer(300, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<SubscriptionResponse>>() {
+        return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<SubscriptionResponse>>() {
             @Override
             public Publisher<SubscriptionResponse> apply(@NonNull Long aLong) throws Exception {
                 return Flowable.just(MockResponse.getInstance().getSubscriptionResponse());
+            }
+        })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Flowable<SubscriptionResponse> getRefreshFlowable(String url) {
+        return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<SubscriptionResponse>>() {
+            @Override
+            public Publisher<SubscriptionResponse> apply(@NonNull Long aLong) throws Exception {
+                return Flowable.just(MockResponse.getInstance().getRefreshSubscriptionResponse());
             }
         })
                 .subscribeOn(Schedulers.newThread())
