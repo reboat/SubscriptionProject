@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daily.news.subscription.HeaderAdapter;
 import com.daily.news.subscription.LinearLayoutColorDivider;
-import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
+import com.daily.news.subscription.OnItemClickListener;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,11 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     public static final String ARG_ITEM_ID = "item_id";
 
     @BindView(R2.id.column_recyclerView)
-    RecyclerView mRecyclerView;
+    XRecyclerView mRecyclerView;
     List<Column> mColumns;
     ColumnAdapter mColumnAdapter;
+
+    HeaderAdapter mAdapter;
 
     @BindView(R2.id.column_tip_container)
     View mTipContainer;
@@ -44,7 +47,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
 
     private ColumnContract.Presenter mPresenter;
-    private HeaderRefreshHolder mHeaderRefreshHolder;
 
     public ColumnFragment() {
     }
@@ -56,6 +58,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
             String itemId = getArguments().getString(ARG_ITEM_ID);
             mPresenter.setItemId(itemId);
         }
+        mAdapter=new HeaderAdapter();
     }
 
     @Override
@@ -69,7 +72,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_column, container, false);
         ButterKnife.bind(this, rootView);
-        mTipContainer.setVisibility(View.GONE);
         setupRecycleView();
         return rootView;
     }
@@ -81,22 +83,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mColumnAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
-        mColumnAdapter.setDatas(mColumns);
-        mRecyclerView.setAdapter(mColumnAdapter);
+        mAdapter.setInternalAdapter(mColumnAdapter);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setPullRefreshEnabled(false);
+        mRecyclerView.setLoadingMoreEnabled(false);
         mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
-
-        mHeaderRefreshHolder = new HeaderRefreshHolder(mRecyclerView);
-        mHeaderRefreshHolder.setOnRefreshListener(new HeaderRefreshHolder.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-        mColumnAdapter.addHeaderView(mHeaderRefreshHolder.getView());
     }
 
-    public void addHeaderView(View headerView) {
-        mColumnAdapter.addHeaderView(headerView);
+    public void addHeaderView(View headerView){
+        mAdapter.addHeaderView(headerView);
     }
 
     @Override
@@ -118,29 +113,27 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
     @Override
     public void showProgressBar() {
-//        mTipContainer.setVisibility(View.VISIBLE);
-//        mProgressBar.setVisibility(View.VISIBLE);
-//        mTipView.setText(R.string.loading);
-        mHeaderRefreshHolder.setRefreshing(true);
+        mTipContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mTipView.setText(R.string.loading);
     }
 
     @Override
     public void updateValue(List<Column> columnsBeen) {
         mColumnAdapter.updateValues(columnsBeen);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void hideProgressBar() {
-//        mTipContainer.setVisibility(View.GONE);
-        mHeaderRefreshHolder.setRefreshing(false);
+        mTipContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String message) {
-//        mTipContainer.setVisibility(View.VISIBLE);
-//        mProgressBar.setVisibility(View.GONE);
-//        mTipView.setText(message);
-        mHeaderRefreshHolder.setRefreshing(false);
+        mTipContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+        mTipView.setText(message);
     }
 
     @Override

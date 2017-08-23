@@ -7,11 +7,11 @@
              android:textIsSelectable="true"
              tools:context="com.daily.news.subscription.more.column.ColumnFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/column_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
     <LinearLayout
         android:id="@+id/column_tip_container"

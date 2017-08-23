@@ -1,54 +1,82 @@
 package com.daily.news.subscription.more.column;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
+import com.daily.news.subscription.OnItemClickListener;
 
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by lixinke on 2017/7/17.
  */
 
-public class ColumnAdapter extends BaseRecyclerAdapter<Column, ColumnAdapter.ColumnViewHolder> {
+public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnViewHolder> {
+    private List<Column> mColumnsBeens;
     private OnSubscribeListener mOnSubscribeListener;
 
 
     private OnItemClickListener mOnItemClickListener;
 
-
     public ColumnAdapter(List<Column> columnsBeens) {
-        super(columnsBeens);
+        mColumnsBeens = columnsBeens;
     }
 
     public void updateValues(List<Column> columnsBeens) {
-        getDatas().clear();
-        getDatas().addAll(columnsBeens);
-        notifyDataSetChanged();
+        mColumnsBeens.clear();
+        mColumnsBeens.addAll(columnsBeens);
+//        notifyDataSetChanged();
     }
 
     public void addMoreValues(List<Column> columnsBeens) {
-        getDatas().addAll(columnsBeens);
+        mColumnsBeens.addAll(columnsBeens);
     }
 
+    @Override
+    public ColumnViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_column, parent, false);
+        return new ColumnViewHolder(itemView);
+    }
 
     @Override
-    public ColumnViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_column, parent, false);
-        return new ColumnViewHolder(itemView, mOnSubscribeListener);
+    public void onBindViewHolder(ColumnViewHolder holder, final int position) {
+        final Column column = mColumnsBeens.get(position);
+        holder.mTitleView.setText(column.name);
+        holder.mColumnInfosView.setText(String.format(Locale.getDefault(),holder.itemView.getContext().getString(R.string.column_info_format), column.subscribe_count, column.article_count));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(position, column);
+                }
+            }
+        });
+        String subscriptionText=column.subscribed?holder.itemView.getContext().getString(R.string.has_been_subscribed):holder.itemView.getContext().getString(R.string.subscription);
+        holder.mSubscribeBtn.setText(subscriptionText);
+        holder.mSubscribeBtn.setSelected(column.subscribed);
+        holder.mSubscribeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnSubscribeListener != null) {
+                    mOnSubscribeListener.onSubscribe(column);
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mColumnsBeens != null ? mColumnsBeens.size() : 0;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -66,8 +94,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<Column, ColumnAdapter.Col
         void onSubscribe(Column bean);
     }
 
-    protected static class ColumnViewHolder extends BaseRecyclerViewHolder<Column> {
-        private final OnSubscribeListener mOnSubscribleListener;
+    protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.column_imageView)
         ImageView mImageView;
         @BindView(R2.id.column_title_view)
@@ -77,28 +104,9 @@ public class ColumnAdapter extends BaseRecyclerAdapter<Column, ColumnAdapter.Col
         @BindView(R2.id.column_subscribe_btn)
         TextView mSubscribeBtn;
 
-        public ColumnViewHolder(View itemView, OnSubscribeListener onSubscribeListener) {
+        public ColumnViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mOnSubscribleListener = onSubscribeListener;
-        }
-
-        @Override
-        public void bindView() {
-            Column column = getData();
-            mTitleView.setText(column.name);
-            mColumnInfosView.setText(String.format(Locale.getDefault(), itemView.getContext().getString(R.string.column_info_format), column.subscribe_count, column.article_count));
-
-            String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
-            mSubscribeBtn.setText(subscriptionText);
-            mSubscribeBtn.setSelected(column.subscribed);
-        }
-
-        @OnClick(R2.id.column_subscribe_btn)
-        public void onSubscribe(View view) {
-            if (mOnSubscribleListener != null) {
-                mOnSubscribleListener.onSubscribe(getData());
-            }
         }
     }
 }

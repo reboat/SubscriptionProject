@@ -4,23 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
+import com.daily.news.subscription.R2;
+import com.daily.news.subscription.HeaderAdapter;
+import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
+import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.more.column.ColumnStore;
+import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NoSubscriptionFragment extends ColumnFragment  {
 
@@ -52,11 +68,10 @@ public class NoSubscriptionFragment extends ColumnFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=super.onCreateView(inflater,container,savedInstanceState);
         initFocusView(inflater, container);
         initMoreHeader(inflater, container);
 
-        return view;
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
 
 

@@ -6,8 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="header_ic_refresh_search">@mipmap/module_core_ic_refresh_search</item>
-        <item name="tc_a5a5a5">@color/tc_a5a5a5</item>
     </style>
 
 </resources>
