@@ -23,12 +23,15 @@ import com.idisfkj.loopview.entity.LoopViewEntity;
 import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * 页面逻辑：
@@ -230,16 +233,21 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      */
     @NonNull
     private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
-
         final LoopView loopView = (LoopView) inflater.inflate(R.layout.item_focus, container, false);
-        List<LoopViewEntity> list=new ArrayList<>();
-        for(int i=0;i<focuses.size();i++){
-            LoopViewEntity entity=new LoopViewEntity();
-            entity.setImageUrl(focuses.get(i).pic_url);
-            entity.setDescript(focuses.get(i).doc_title);
-            list.add(entity);
-        }
-        loopView.setLoopData(list);
+        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<LoopViewEntity>>() {
+            @Override
+            public ObservableSource<LoopViewEntity> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
+                LoopViewEntity entity = new LoopViewEntity();
+                entity.setDescript(focus.doc_title);
+                entity.setImageUrl(focus.pic_url);
+                return Observable.just(entity);
+            }
+        }).toList().subscribe(new Consumer<List<LoopViewEntity>>() {
+            @Override
+            public void accept(@io.reactivex.annotations.NonNull List<LoopViewEntity> loopViewEntities) throws Exception {
+                loopView.setLoopData(loopViewEntities);
+            }
+        });
         return loopView;
     }
 
