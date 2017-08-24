@@ -1,7 +1,5 @@
 package com.daily.news.subscription.more.category;
 
-import java.util.List;
-
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -26,11 +24,11 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     @Override
     public void subscribe() {
         mMoreView.showProgressBar();
-        Disposable disposable = mMoreStore.getFlowable(mMoreStore.getUrl())
-                .subscribe(new Consumer<List<Category>>() {
+        Disposable disposable = mMoreStore.getFlowable("")
+                .subscribe(new Consumer<CategoryResponse>() {
                     @Override
-                    public void accept(@NonNull List<Category> items) throws Exception {
-                        mMoreView.updateValues(items);
+                    public void accept(@NonNull CategoryResponse response) throws Exception {
+                        mMoreView.updateValues(response);
                         mMoreView.hideProgressBar();
                     }
                 }, new Consumer<Throwable>() {
@@ -42,6 +40,10 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                 });
         mDisposable.add(disposable);
     }
+
+
+
+
 
     @Override
     public void unsubscribe() {

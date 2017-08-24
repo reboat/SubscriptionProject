@@ -1,9 +1,9 @@
 package com.daily.news.subscription.more.category;
 
+import com.daily.news.subscription.mock.MockResponse;
+
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -16,23 +16,17 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class CategoryStore implements CategoryContract.Store<List<Category>> {
+public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
     private static String MORE_URL = "";
 
     @Override
-    public Flowable<List<Category>> getFlowable(String url) {
+    public Flowable<CategoryResponse> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<Category>>>() {
+                .flatMap(new Function<Long, Publisher<CategoryResponse>>() {
                     @Override
-                    public Publisher<List<Category>> apply(@NonNull Long aLong) throws Exception {
-
-                        List<Category> items = new ArrayList<>();
-                        for (int i = 0; i < 20; i++) {
-                            Category category=new Category();
-                            category.class_name="文化"+i;
-                            items.add(category);
-                        }
-                        return Flowable.just(items);
+                    public Publisher<CategoryResponse> apply(@NonNull Long aLong) throws Exception {
+                        CategoryResponse response = MockResponse.getInstance().getCategoryResponse();
+                        return Flowable.just(response);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

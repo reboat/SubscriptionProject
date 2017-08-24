@@ -17,7 +17,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
-import com.daily.news.subscription.more.column.ColumnStore;
+import com.daily.news.subscription.more.column.LocalColumnStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,17 +72,17 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     }
 
     @Override
-    public void updateValues(List<Category> items) {
-        mMoreAdapter.updateValue(items);
+    public void updateValues(CategoryResponse response) {
+        mMoreAdapter.updateValue(response.elements);
         Bundle arguments = new Bundle();
-        items.get(0).is_selected = true;
-        arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(items.get(0).class_id));
+        response.elements.get(0).is_selected = true;
+        arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(response.elements.get(0).class_id));
         ColumnFragment fragment = new ColumnFragment();
         fragment.setArguments(arguments);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.more_category_detail_container, fragment)
                 .commit();
-        new ColumnPresenter(fragment, new ColumnStore());
+        new ColumnPresenter(fragment, new LocalColumnStore(response.elements.get(0).columns));
     }
 
     @Override
@@ -147,7 +147,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
-                    new ColumnPresenter(fragment, new ColumnStore());
+                    new ColumnPresenter(fragment, new LocalColumnStore(category.columns));
                     category.is_selected = true;
                     notifyItemChanged(position);
                     mValues.get(mCurPosition).is_selected = false;

@@ -4,12 +4,20 @@ import com.daily.news.subscription.article.Article;
 import com.daily.news.subscription.detail.DetailColumn;
 import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
+import com.daily.news.subscription.more.category.Category;
+import com.daily.news.subscription.more.category.CategoryResponse;
 import com.daily.news.subscription.more.column.Column;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by lixinke on 2017/7/11.
@@ -58,7 +66,6 @@ public class MockResponse {
 
         return subscription;
     }
-
 
 
     public List<Column> getRecommedResponse() {
@@ -160,5 +167,42 @@ public class MockResponse {
         detailColumn.background_url = "http://easyread.ph.126.net/Me57p9l34QHfkkYHXDEnzQ==/8796093022385378775.jpg";
         detailColumn.elements = getArticles();
         return detailColumn;
+    }
+
+    public CategoryResponse getCategoryResponse() {
+
+        final String[] calssNames = {"人文", "科技", "自然", "时间"};
+        final Random random = new Random();
+
+        final CategoryResponse response = new CategoryResponse();
+        response.code = 200;
+        response.elements = new ArrayList<>();
+        Observable.range(0, 50).flatMap(new Function<Integer, ObservableSource<Category>>() {
+            @Override
+            public ObservableSource<Category> apply(@NonNull Integer integer) throws Exception {
+                Category category = new Category();
+                category.is_selected = false;
+                category.class_id = integer;
+                category.class_name = calssNames[random.nextInt(calssNames.length)]+integer;
+                category.columns = new ArrayList<>();
+                for (int i = 0; i < 100; i++) {
+                    Column column = new Column();
+                    column.name = category.class_name + integer+i;
+                    column.article_count = random.nextInt(1000);
+                    column.pic_url = "";
+                    column.subscribe_count = random.nextInt(100);
+                    column.uid = String.valueOf(random.nextInt(10000) + 6000);
+                    category.columns.add(column);
+                }
+                return Observable.just(category);
+            }
+        }).toList().subscribe(new Consumer<List<Category>>() {
+            @Override
+            public void accept(@NonNull List<Category> categories) throws Exception {
+                response.elements = categories;
+            }
+        });
+
+        return response;
     }
 }
