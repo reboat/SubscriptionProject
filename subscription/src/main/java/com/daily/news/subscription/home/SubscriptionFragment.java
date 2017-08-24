@@ -1,9 +1,9 @@
 package com.daily.news.subscription.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,13 +16,16 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.HeaderAdapter;
+import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleAdapter;
+import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
 
 import java.util.ArrayList;
@@ -30,16 +33,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-
+/**
+ * 页面逻辑：
+ * 1.有订阅时返回订阅的新闻，无订阅时返回推荐订阅栏目。
+ * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
+ */
 public class SubscriptionFragment extends Fragment implements SubscriptionContract.View {
 
     @BindView(R2.id.subscription_recyclerView)
     RecyclerView mRecyclerView;
     HeaderAdapter mHeaderAdapter;
 
-    SubscriptionContract.Presenter mPresenter;
+    private SubscriptionContract.Presenter mPresenter;
     private HeaderRefreshHolder mRefreshView;
+    private Unbinder mUnBinder;
 
     public SubscriptionFragment() {
     }
@@ -71,10 +80,21 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
-        ButterKnife.bind(this, rootView);
+        mUnBinder = ButterKnife.bind(this, rootView);
+
+        setupRecyclerView();
+
+        return rootView;
+    }
+
+    /**
+     * 初始化RecyclerView
+     */
+    private void setupRecyclerView() {
         mHeaderAdapter = new HeaderAdapter();
         mRecyclerView.setAdapter(mHeaderAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         mRefreshView = new HeaderRefreshHolder(mRecyclerView);
         mRefreshView.setOnRefreshListener(new HeaderRefreshHolder.OnRefreshListener() {
             @Override
@@ -83,7 +103,6 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
             }
         });
         mHeaderAdapter.addHeaderView(mRefreshView.getView());
-        return rootView;
     }
 
     @Override
@@ -97,9 +116,14 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     }
 
     @Override
+    public void showError(String message) {
+        mRefreshView.setRefreshing(false);
+    }
+
+    @Override
     public void onRefreshComplete(SubscriptionResponse subscriptionResponse) {
         mRefreshView.setRefreshing(false);
-        mRecyclerView.setAdapter(null);
+        //RecycleView会缓存ViewHolder，Adapter中的数据结构发生变化，但缓存的ViewHolder没有变化导致crash。重新设置Adapter清除缓存。
         mRecyclerView.setAdapter(mHeaderAdapter);
         updateValue(subscriptionResponse);
     }
@@ -109,57 +133,112 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mRefreshView.setRefreshing(false);
     }
 
+    /**
+     * 网络请求返回时回调
+     *
+     * @param subscriptionBean
+     */
     @Override
     public void updateValue(SubscriptionResponse subscriptionBean) {
+
         LayoutInflater inflater = LayoutInflater.from(getActivity());
+        HeaderAdapter contentAdapter = null;
+
         if (subscriptionBean.data.has_subscribe) {
-            HeaderAdapter myAdapter = new HeaderAdapter();
-            initMySubscriptionHeader(inflater, (ViewGroup) getView(), myAdapter);
-            myAdapter.setInternalAdapter(new ArticleAdapter(subscriptionBean.data.article_list));
-            mHeaderAdapter.setInternalAdapter(myAdapter);
-            mHeaderAdapter.notifyDataSetChanged();
+            contentAdapter = createMySubscriptionAdapter(subscriptionBean, inflater);
         } else if (!subscriptionBean.data.has_subscribe) {
-            HeaderAdapter recommendAdapter = new HeaderAdapter();
-            initFocusView(inflater, (ViewGroup) getView(), recommendAdapter, subscriptionBean.data.focus_list);
-            initMoreHeader(inflater, (ViewGroup) getView(), recommendAdapter);
-            recommendAdapter.setInternalAdapter(new ColumnAdapter(subscriptionBean.data.recommend_list));
-            mHeaderAdapter.setInternalAdapter(recommendAdapter);
-            mHeaderAdapter.notifyDataSetChanged();
+            contentAdapter = createRecommendAdapter(subscriptionBean, inflater);
         }
+
+        mHeaderAdapter.setInternalAdapter(contentAdapter);
     }
 
-    private void initMySubscriptionHeader(LayoutInflater inflater, ViewGroup container, HeaderAdapter myAdapter) {
+    /**
+     * 创建我的订阅Adapter
+     *
+     * @param subscriptionBean
+     * @param inflater
+     * @return
+     */
+    @NonNull
+    private HeaderAdapter createMySubscriptionAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
+        HeaderAdapter adapter = new HeaderAdapter();
+
+        View headerView = setupMySubscriptionHeaderView(inflater, (ViewGroup) getView());
+        adapter.addHeaderView(headerView);
+
+        adapter.setInternalAdapter(new ArticleAdapter(subscriptionBean.data.article_list));
+        return adapter;
+    }
+
+    /**
+     * 无订阅时创建推荐Adapter
+     *
+     * @param subscriptionBean
+     * @param inflater
+     * @return
+     */
+    @NonNull
+    private HeaderAdapter createRecommendAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
+        HeaderAdapter adapter = new HeaderAdapter();
+
+        Banner mFocusView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
+        adapter.addHeaderView(mFocusView);
+
+        View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
+        adapter.addHeaderView(moreSubscriptionView);
+
+        ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.data.recommend_list);
+        columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
+            @Override
+            public void onItemClick(int position, Column item) {
+                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", item.uid).build(),0);
+            }
+        });
+        adapter.setInternalAdapter(columnAdapter);
+        return adapter;
+    }
+
+
+    /**
+     * 有订阅时，订阅栏目上的导航
+     *
+     * @param inflater
+     * @param container
+     * @return
+     */
+    @NonNull
+    private View setupMySubscriptionHeaderView(LayoutInflater inflater, ViewGroup container) {
         View headerView = inflater.inflate(R.layout.header_my_subscription, container, false);
-        myAdapter.addHeaderView(headerView);
 
         headerView.findViewById(R.id.my_sub_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getString(R.string.daily_intent_action));
-                intent.setData(Uri.parse("http://www.8531.cn/subscription/more/my/column"));
-                startActivity(intent);
+                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more/my/column");
             }
         });
 
         headerView.findViewById(R.id.my_sub_more_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getString(R.string.daily_intent_action));
-                intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
-                startActivity(intent);
+                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
             }
         });
+        return headerView;
     }
 
+
     /**
-     * 初始化顶部图库
+     * 无订阅时，推荐上的轮播图
      *
      * @param inflater
      * @param container
+     * @param focuses
+     * @return
      */
-    private void initFocusView(LayoutInflater inflater, ViewGroup container, HeaderAdapter headerAdapter, List<Focus> focuses) {
+    @NonNull
+    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
         Banner mFocusView = (Banner) inflater.inflate(R.layout.item_focus, container, false);
-        headerAdapter.addHeaderView(mFocusView);
         mFocusView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mFocusView.setImageLoader(new ImageLoader() {
             @Override
@@ -180,34 +259,32 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         }
         mFocusView.setBannerTitles(title);
         mFocusView.start();
+        return mFocusView;
     }
 
     /**
-     * 初始化"大家都在看"栏目
+     * 无订阅页面，推荐上面的更多导航
      *
      * @param inflater
      * @param container
+     * @return
      */
-    private void initMoreHeader(LayoutInflater inflater, ViewGroup container, HeaderAdapter headerAdapter) {
+    @NonNull
+    private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
         View moreHeaderView = inflater.inflate(R.layout.header_more, container, false);
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getString(R.string.daily_intent_action));
-                intent.setData(Uri.parse("http://www.8531.cn/subscription/more"));
-                startActivity(intent);
+                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
             }
         });
-        headerAdapter.addHeaderView(moreHeaderView);
+        return moreHeaderView;
     }
 
-    @Override
-    public void showError(String message) {
-        mRefreshView.setRefreshing(false);
-    }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnBinder.unbind();
     }
 }
