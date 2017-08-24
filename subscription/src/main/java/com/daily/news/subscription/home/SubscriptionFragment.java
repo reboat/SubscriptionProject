@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daily.news.subscription.HeaderAdapter;
+import com.daily.news.subscription.LinearLayoutColorDivider;
 import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -90,6 +91,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mHeaderAdapter = new HeaderAdapter();
         mRecyclerView.setAdapter(mHeaderAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
 
         mRefreshView = new HeaderRefreshHolder(mRecyclerView);
         mRefreshView.setOnRefreshListener(new HeaderRefreshHolder.OnRefreshListener() {
