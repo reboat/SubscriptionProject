@@ -10,8 +10,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -33,6 +33,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     RecyclerView mRecyclerView;
     MoreAdapter mMoreAdapter;
     List<Category> mCategories;
+
+    @BindView(R2.id.column_tip_container)
+    View mTipContainer;
+    @BindView(R2.id.column_tip_view)
+    TextView mTipView;
+    @BindView(R2.id.column_progressBar)
+    ProgressBar mProgressBar;
 
     public CategoryFragment() {
     }
@@ -87,17 +94,21 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        mTipContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+        mTipView.setText(message);
     }
 
     @Override
     public void showProgressBar() {
-
+        mTipContainer.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mTipView.setText(R.string.loading);
     }
 
     @Override
     public void hideProgressBar() {
-
+        mTipContainer.setVisibility(View.GONE);
     }
 
     @Override
