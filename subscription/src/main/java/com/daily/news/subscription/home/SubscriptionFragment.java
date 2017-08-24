@@ -1,6 +1,5 @@
 package com.daily.news.subscription.home;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,10 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.HeaderAdapter;
 import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
@@ -22,21 +18,17 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleAdapter;
 import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.loader.ImageLoader;
+import com.idisfkj.loopview.LoopView;
+import com.idisfkj.loopview.entity.LoopViewEntity;
 import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 /**
  * 页面逻辑：
@@ -182,8 +174,8 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     private HeaderAdapter createRecommendAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
         HeaderAdapter adapter = new HeaderAdapter();
 
-        Banner mFocusView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
-        adapter.addHeaderView(mFocusView);
+        View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
+        adapter.addHeaderView(bannerView);
 
         View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
         adapter.addHeaderView(moreSubscriptionView);
@@ -237,49 +229,18 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      * @return
      */
     @NonNull
-    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
+    private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
 
-        final Banner focusBanner = (Banner) inflater.inflate(R.layout.item_focus, container, false);
-        focusBanner.isAutoPlay(true);
-        focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-
-        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
-                return Observable.just(focus.doc_title);
-            }
-        }).toList().subscribe(new Consumer<List<String>>() {
-            @Override
-            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
-                focusBanner.setBannerTitles(strings);
-            }
-        });
-
-        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
-                return Observable.just(focus.pic_url);
-            }
-        }).toList().subscribe(new Consumer<List<String>>() {
-            @Override
-            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
-                focusBanner.setImages(strings);
-            }
-        });
-
-        focusBanner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                RequestOptions options = new RequestOptions();
-                options.centerCrop();
-                options.placeholder(getResources().getDrawable(R.drawable.default_placeholder_big));
-                Glide.with(context).load(path).apply(options).into(imageView);
-            }
-        });
-
-        focusBanner.start();
-        return focusBanner;
+        final LoopView loopView = (LoopView) inflater.inflate(R.layout.item_focus, container, false);
+        List<LoopViewEntity> list=new ArrayList<>();
+        for(int i=0;i<focuses.size();i++){
+            LoopViewEntity entity=new LoopViewEntity();
+            entity.setImageUrl(focuses.get(i).pic_url);
+            entity.setDescript(focuses.get(i).doc_title);
+            list.add(entity);
+        }
+        loopView.setLoopData(list);
+        return loopView;
     }
 
     /**

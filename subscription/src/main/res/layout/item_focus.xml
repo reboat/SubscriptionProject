@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.youth.banner.Banner xmlns:android="http://schemas.android.com/apk/res/android"
-                         android:id="@+id/focus_banner"
-                         android:layout_width="match_parent"
-                         android:layout_height="178.5dp">
+<com.idisfkj.loopview.LoopView xmlns:android="http://schemas.android.com/apk/res/android"
+                               xmlns:loop="http://schemas.android.com/apk/res-auto"
+                               android:id="@+id/focus_banner"
+                               android:layout_width="match_parent"
+                               android:layout_height="200dp"
+                               loop:bottom_style="@integer/loop_have_descript"
+                               loop:rate="3">
 
-</com.youth.banner.Banner>
+</com.idisfkj.loopview.LoopView>
