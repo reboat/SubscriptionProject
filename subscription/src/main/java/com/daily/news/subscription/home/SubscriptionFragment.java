@@ -28,12 +28,15 @@ import com.youth.banner.loader.ImageLoader;
 import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * 页面逻辑：
@@ -81,9 +84,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
-
         setupRecyclerView();
-
         return rootView;
     }
 
@@ -143,7 +144,6 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         HeaderAdapter contentAdapter = null;
-
         if (subscriptionBean.data.has_subscribe) {
             contentAdapter = createMySubscriptionAdapter(subscriptionBean, inflater);
         } else if (!subscriptionBean.data.has_subscribe) {
@@ -192,7 +192,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
             @Override
             public void onItemClick(int position, Column item) {
-                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", item.uid).build(),0);
+                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", item.uid).build(), 0);
             }
         });
         adapter.setInternalAdapter(columnAdapter);
@@ -238,28 +238,48 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      */
     @NonNull
     private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
-        Banner mFocusView = (Banner) inflater.inflate(R.layout.item_focus, container, false);
-        mFocusView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        mFocusView.setImageLoader(new ImageLoader() {
+
+        final Banner focusBanner = (Banner) inflater.inflate(R.layout.item_focus, container, false);
+        focusBanner.isAutoPlay(true);
+        focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
+        focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+
+        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
+                return Observable.just(focus.doc_title);
+            }
+        }).toList().subscribe(new Consumer<List<String>>() {
+            @Override
+            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
+                focusBanner.setBannerTitles(strings);
+            }
+        });
+
+        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
+                return Observable.just(focus.pic_url);
+            }
+        }).toList().subscribe(new Consumer<List<String>>() {
+            @Override
+            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
+                focusBanner.setImages(strings);
+            }
+        });
+
+        focusBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
                 RequestOptions options = new RequestOptions();
                 options.centerCrop();
                 options.placeholder(getResources().getDrawable(R.drawable.default_placeholder_big));
-                Glide.with(context).load(((Focus) path).pic_url).apply(options).into(imageView);
+                Glide.with(context).load(path).apply(options).into(imageView);
             }
-
         });
-        mFocusView.isAutoPlay(true);
-        mFocusView.setIndicatorGravity(BannerConfig.RIGHT);
-        mFocusView.setImages(focuses);
-        List<String> title = new ArrayList<>();
-        for (int i = 0; i < focuses.size(); i++) {
-            title.add(focuses.get(i).doc_title);
-        }
-        mFocusView.setBannerTitles(title);
-        mFocusView.start();
-        return mFocusView;
+
+        focusBanner.start();
+        return focusBanner;
     }
 
     /**
