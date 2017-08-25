@@ -18,7 +18,7 @@ public class ArticleResponse {
         public static class Article {
             public int id;
             public String list_title;
-            public Object list_style;
+            public String list_style;
             public String list_tag;
             public int doc_type;
             public int read_count;

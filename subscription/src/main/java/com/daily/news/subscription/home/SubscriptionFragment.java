@@ -23,7 +23,7 @@ import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.idisfkj.loopview.LoopView;
 import com.idisfkj.loopview.entity.LoopViewEntity;
 import com.zjrb.coreprojectlibrary.nav.Nav;
-import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefreshHolder;
+import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     HeaderAdapter mHeaderAdapter;
 
     private SubscriptionContract.Presenter mPresenter;
-    private HeaderRefreshHolder mRefreshView;
+    private HeaderRefresh mRefreshView;
     private Unbinder mUnBinder;
 
     public SubscriptionFragment() {
@@ -94,14 +94,14 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
 
-        mRefreshView = new HeaderRefreshHolder(mRecyclerView);
-        mRefreshView.setOnRefreshListener(new HeaderRefreshHolder.OnRefreshListener() {
+        mRefreshView = new HeaderRefresh(mRecyclerView);
+        mRefreshView.setOnRefreshListener(new HeaderRefresh.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.onRefresh();
             }
         });
-        mHeaderAdapter.addHeaderView(mRefreshView.getView());
+        mHeaderAdapter.addHeaderView(mRefreshView.getItemView());
     }
 
     @Override
