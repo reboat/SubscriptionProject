@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.daily.news.subscription.HeaderAdapter;
-import com.daily.news.subscription.LinearLayoutColorDivider;
-import com.daily.news.subscription.OnItemClickListener;
+import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.LinearLayoutColorDivider;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleAdapter;
@@ -254,11 +254,11 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      * @return
      */
     @NonNull
-    private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<Focus> focuses) {
+    private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
         final LoopView loopView = (LoopView) inflater.inflate(R.layout.item_focus, container, false);
-        Observable.fromIterable(focuses).flatMap(new Function<Focus, ObservableSource<LoopViewEntity>>() {
+        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<LoopViewEntity>>() {
             @Override
-            public ObservableSource<LoopViewEntity> apply(@io.reactivex.annotations.NonNull Focus focus) throws Exception {
+            public ObservableSource<LoopViewEntity> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
                 LoopViewEntity entity = new LoopViewEntity();
                 entity.setDescript(focus.doc_title);
                 entity.setImageUrl(focus.pic_url);

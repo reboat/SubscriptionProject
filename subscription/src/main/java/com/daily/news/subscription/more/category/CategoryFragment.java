@@ -31,7 +31,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
-    MoreAdapter mMoreAdapter;
+    CategoryAdapter mCategoryAdapter;
     List<Category> mCategories;
 
     @BindView(R2.id.column_tip_container)
@@ -68,8 +68,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     private void setupRecyclerView() {
         mCategories = new ArrayList<>();
-        mMoreAdapter = new MoreAdapter(mCategories);
-        mRecyclerView.setAdapter(mMoreAdapter);
+        mCategoryAdapter = new CategoryAdapter(mCategories);
+        mRecyclerView.setAdapter(mCategoryAdapter);
         ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
@@ -80,7 +80,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void updateValues(CategoryResponse response) {
-        mMoreAdapter.updateValue(response.elements);
+        mCategoryAdapter.updateValue(response.elements);
         Bundle arguments = new Bundle();
         response.elements.get(0).is_selected = true;
         arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(response.elements.get(0).class_id));
@@ -117,11 +117,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mPresenter.unsubscribe();
     }
 
-    public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.ViewHolder> {
+    public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
         private final List<Category> mValues;
 
-        public MoreAdapter(List<Category> items) {
+        public CategoryAdapter(List<Category> items) {
             mValues = items;
         }
 
@@ -132,16 +132,16 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         }
 
         @Override
-        public MoreAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_category, parent, false);
-            return new MoreAdapter.ViewHolder(view);
+            return new CategoryAdapter.ViewHolder(view);
         }
 
         int mCurPosition = 0;
 
         @Override
-        public void onBindViewHolder(final MoreAdapter.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, final int position) {
             final Category category = mValues.get(position);
             holder.mItem = mValues.get(position);
             int textSize = category.is_selected ? 20 : 17;

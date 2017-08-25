@@ -2,7 +2,6 @@ package com.daily.news.subscription.mock;
 
 import com.daily.news.subscription.article.Article;
 import com.daily.news.subscription.detail.DetailColumn;
-import com.daily.news.subscription.home.Focus;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.category.Category;
 import com.daily.news.subscription.more.category.CategoryResponse;
@@ -96,7 +95,7 @@ public class MockResponse {
         return recommends;
     }
 
-    public List<Focus> getFocusResponse() {
+    public List<SubscriptionResponse.Focus> getFocusResponse() {
         String[] titles = {
                 "空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋空山新雨后,天气晚来秋",
                 "落霞与孤鹜齐飞,秋水共长天一色",
@@ -109,9 +108,9 @@ public class MockResponse {
                 "http://img3.imgtn.bdimg.com/it/u=2121918424,1843211123&fm=26&gp=0.jpg",
                 "http://img0.imgtn.bdimg.com/it/u=4032300341,2620734131&fm=26&gp=0.jpg"
         };
-        List<Focus> focuses = new ArrayList<>();
+        List<SubscriptionResponse.Focus> focuses = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            Focus focus = new Focus();
+            SubscriptionResponse.Focus focus = new SubscriptionResponse.Focus();
             focus.doc_title = titles[i];
             focus.pic_url = picUrl[i];
             focuses.add(focus);

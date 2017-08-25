@@ -13,9 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daily.news.subscription.HeaderAdapter;
-import com.daily.news.subscription.LinearLayoutColorDivider;
-import com.daily.news.subscription.OnItemClickListener;
+import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.LinearLayoutColorDivider;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
