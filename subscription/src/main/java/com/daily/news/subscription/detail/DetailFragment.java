@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.daily.news.subscription.R;
@@ -17,11 +18,13 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleStore;
+import com.daily.news.subscription.more.column.Column;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
     private static final String UID = "id";
@@ -46,6 +49,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     TextView mTipView;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
+    private DetailColumn mDetailColumn;
 
 
     public DetailFragment() {
@@ -95,18 +99,19 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void updateValue(DetailColumn detailColumn) {
+        mDetailColumn = detailColumn;
         Glide.with(this).load(detailColumn.pic_url).into(mImageView);
         mTitleView.setText(detailColumn.name);
         mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
         mDescritpionView.setText(detailColumn.description);
-        String subscriptionText=detailColumn.subscribed?"已经订阅":"订阅";
+        String subscriptionText = detailColumn.subscribed ? "已经订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
         mSubscriptionView.setSelected(detailColumn.subscribed);
         Glide.with(this).load(detailColumn.background_url).into(mHeaderImageView);
 
-        ArticleFragment fragment =new ArticleFragment();
+        ArticleFragment fragment = new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-        ArticlePresenter presenter=new ArticlePresenter(fragment,new ArticleStore());
+        ArticlePresenter presenter = new ArticlePresenter(fragment, new ArticleStore());
         presenter.setArticles(detailColumn.elements);
     }
 
@@ -120,6 +125,30 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mProgressBarContainer.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
         mTipView.setText(message);
+    }
+
+    @OnClick(R2.id.detail_column_sub_btn)
+    public void submitSubscribe() {
+        modifySubscribeBtnState(!mDetailColumn.subscribed);
+        mPresenter.submitSubscribe(mDetailColumn);
+    }
+
+    @Override
+    public void subscribeSuc(Column bean) {
+        modifySubscribeBtnState(bean.subscribed);
+    }
+
+    @Override
+    public void subscribeFail(Column bean, String message) {
+        modifySubscribeBtnState(!bean.subscribed);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void modifySubscribeBtnState(boolean subscribe) {
+        mDetailColumn.subscribed = subscribe;
+        mSubscriptionView.setSelected(mDetailColumn.subscribed);
+        String subscriptionText = mDetailColumn.subscribed ? "已经订阅" : "订阅";
+        mSubscriptionView.setText(subscriptionText);
     }
 
     @Override

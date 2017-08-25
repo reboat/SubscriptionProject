@@ -3,7 +3,7 @@ package com.daily.news.subscription.home;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.subscribe.SubscribeContract;
 
 import io.reactivex.Flowable;
 
@@ -13,27 +13,20 @@ import io.reactivex.Flowable;
 
 public class SubscriptionContract {
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter,SubscribeContract.Presenter {
         void onRefresh();
-
-        void submitSubscribe(Column bean);
     }
 
-    interface View extends UIBaseView<Presenter> {
+    interface View extends UIBaseView<Presenter> ,SubscribeContract.View{
         void updateValue(SubscriptionResponse subscriptionResponse);
 
         void onRefreshComplete(SubscriptionResponse subscriptionResponse);
 
         void onRefreshError(String message);
 
-        void subscribeSuc(Column bean);
-
-        void subscribeFail(Column bean, String message);
     }
 
-    interface Store<T> extends BaseStore<T> {
+    interface Store<T> extends BaseStore<T> ,SubscribeContract.Store{
         Flowable<T> getRefreshFlowable(String url);
-
-        Flowable getSubmitSubscribeFlowable(Column bean);
     }
 }

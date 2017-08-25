@@ -1,5 +1,7 @@
 package com.daily.news.subscription.more.column;
 
+import com.daily.news.subscription.subscribe.SubscribeStore;
+
 import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class ColumnStore implements ColumnContract.Store<List<Column>> {
+public class ColumnStore extends SubscribeStore implements ColumnContract.Store<List<Column>> {
     @Override
     public Flowable<List<Column>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
@@ -42,18 +44,4 @@ public class ColumnStore implements ColumnContract.Store<List<Column>> {
                 .subscribeOn(Schedulers.newThread());
     }
 
-    @Override
-    public Flowable getSubmitSubscribeFlowable(final Column s) {
-        return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
-            @Override
-            public Publisher<?> apply(@NonNull Long aLong) throws Exception {
-                Random random = new Random();
-                if (random.nextBoolean()) {
-                    return Flowable.just(s);
-                } else {
-                    return Flowable.error(new Throwable("提交失败"));
-                }
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
 }

@@ -1,14 +1,10 @@
 package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.mock.MockResponse;
-import com.daily.news.subscription.more.column.Column;
-import com.daily.news.subscription.more.column.ColumnContract;
+import com.daily.news.subscription.subscribe.SubscribeStore;
 
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -21,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class DetailStore implements DetailContract.Store<DetailColumn> {
+public class DetailStore extends SubscribeStore implements DetailContract.Store<DetailColumn> {
     @Override
     public Flowable<DetailColumn> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)

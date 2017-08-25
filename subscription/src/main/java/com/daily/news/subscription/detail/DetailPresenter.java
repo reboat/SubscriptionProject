@@ -1,9 +1,6 @@
 package com.daily.news.subscription.detail;
 
-import com.daily.news.subscription.more.column.Column;
-import com.daily.news.subscription.more.column.ColumnContract;
-
-import java.util.List;
+import com.daily.news.subscription.subscribe.SubscribePresenter;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -14,12 +11,13 @@ import io.reactivex.functions.Consumer;
  * Created by lixinke on 2017/7/17.
  */
 
-public class DetailPresenter implements DetailContract.Presenter {
+public class DetailPresenter extends SubscribePresenter implements DetailContract.Presenter {
     private DetailContract.View mDetailView;
     private DetailContract.Store mDetailStore;
     private CompositeDisposable mDisposable;
 
     public DetailPresenter(DetailContract.View detailView, DetailContract.Store detailStore) {
+        super(detailView,detailStore);
         mDetailView = detailView;
         mDetailView.setPresenter(this);
         mDetailStore = detailStore;
@@ -55,4 +53,6 @@ public class DetailPresenter implements DetailContract.Presenter {
     public void unsubscribe() {
         mDisposable.clear();
     }
+
+
 }

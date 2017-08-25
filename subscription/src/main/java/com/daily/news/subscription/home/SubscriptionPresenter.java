@@ -1,6 +1,6 @@
 package com.daily.news.subscription.home;
 
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.subscribe.SubscribePresenter;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -10,12 +10,13 @@ import io.reactivex.functions.Consumer;
  * Created by lixinke on 2017/7/18.
  */
 
-public class SubscriptionPresenter implements SubscriptionContract.Presenter {
+public class SubscriptionPresenter extends SubscribePresenter implements SubscriptionContract.Presenter {
     private SubscriptionContract.View mView;
     private SubscriptionContract.Store mStore;
     private CompositeDisposable mCompositeDisposable;
 
     public SubscriptionPresenter(SubscriptionContract.View view, SubscriptionContract.Store store) {
+        super(view,store);
         mView = view;
         mView.setPresenter(this);
         mStore = store;
@@ -57,21 +58,6 @@ public class SubscriptionPresenter implements SubscriptionContract.Presenter {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
                 mView.onRefreshError(throwable.getMessage());
-            }
-        });
-    }
-
-    @Override
-    public void submitSubscribe(final Column bean) {
-        mStore.getSubmitSubscribeFlowable(bean).subscribe(new Consumer() {
-            @Override
-            public void accept(@NonNull Object o) throws Exception {
-                mView.subscribeSuc(bean);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-                mView.subscribeFail(bean, throwable.getMessage());
             }
         });
     }

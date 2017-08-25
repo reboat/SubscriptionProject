@@ -155,4 +155,5 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         super.onDestroy();
         mPresenter.unsubscribe();
     }
+
 }
