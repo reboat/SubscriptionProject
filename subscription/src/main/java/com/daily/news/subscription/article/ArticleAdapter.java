@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Option;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -26,8 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static java.lang.System.load;
-
 /**
  * Created by lixinke on 2017/7/12.
  */
@@ -37,16 +33,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     private static final int VIDEO_TYPE = 2;
     private static final int MULTIPLE_PICTURES = 3;
 
-    private List<Article> mArticles;
+    private List<ArticleResponse.DataBean.Article> mArticles;
 
-    public ArticleAdapter(List<Article> articles) {
+    public ArticleAdapter(List<ArticleResponse.DataBean.Article> articles) {
         mArticles = articles;
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        Article article = mArticles.get(position);
+        ArticleResponse.DataBean.Article article = mArticles.get(position);
         if (!TextUtils.isEmpty(article.video_url)) {
             return VIDEO_TYPE;
         }
@@ -76,7 +72,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
-        Article article = mArticles.get(position);
+        ArticleResponse.DataBean.Article article = mArticles.get(position);
         holder.bindData(article);
     }
 
@@ -85,7 +81,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         return mArticles != null ? mArticles.size() : 0;
     }
 
-    public void updateValue(List<Article> articles) {
+    public void updateValue(List<ArticleResponse.DataBean.Article> articles) {
+        mArticles.addAll(articles);
+        notifyDataSetChanged();
+    }
+
+    public void addMore(List<ArticleResponse.DataBean.Article> articles) {
         mArticles.addAll(articles);
         notifyDataSetChanged();
     }
@@ -98,7 +99,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             mResources = itemView.getResources();
         }
 
-        public abstract void bindData(Article article);
+        public abstract void bindData(ArticleResponse.DataBean.Article article);
     }
 
     static class ArticleViewHolder extends ViewHolder {
@@ -116,7 +117,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
 
         @Override
-        public void bindData(Article article) {
+        public void bindData(ArticleResponse.DataBean.Article article) {
             mTitleView.setText(article.list_title);
             Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView);
             String info = String.format(Locale.getDefault(), mResources.getString(R.string.article_info_format), article.channel_name, article.read_count, article.like_count);
@@ -144,7 +145,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
 
         @Override
-        public void bindData(Article article) {
+        public void bindData(ArticleResponse.DataBean.Article article) {
             mTitleView.setText(article.list_title);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
@@ -193,7 +194,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
 
         @Override
-        public void bindData(Article article) {
+        public void bindData(ArticleResponse.DataBean.Article article) {
             mTitleView.setText(article.list_title);
             Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView1);
             Glide.with(itemView).load(article.list_pics.get(1)).into(mImageView2);

@@ -8,11 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -23,13 +24,14 @@ import butterknife.ButterKnife;
 
 public class ArticleFragment extends Fragment implements ArticleContract.View {
 
+    private static final int DEFAULT_PAGE_SIZE = 10;
     @BindView(R2.id.article_recyclerView)
     XRecyclerView mRecyclerView;
     private View mRootView;
 
     private HeaderAdapter mHeaderAdapter;
     private ArticleAdapter mArticleAdapter;
-    private List<Article> mArticles;
+    private List<ArticleResponse.DataBean.Article> mArticles;
 
     private ArticleContract.Presenter mPresenter;
 
@@ -62,8 +64,19 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
         mHeaderAdapter.setInternalAdapter(mArticleAdapter);
         mRecyclerView.setAdapter(mHeaderAdapter);
         mRecyclerView.setPullRefreshEnabled(false);
-        mRecyclerView.setLoadingMoreEnabled(false);
-        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(),R.color.dddddd,R.dimen.divide_height,LinearLayoutManager.VERTICAL));
+        mRecyclerView.setLoadingMoreEnabled(true);
+        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
+        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPresenter.loadMore(mArticles.get(mArticles.size() - 1).sort_number, DEFAULT_PAGE_SIZE);
+            }
+        });
         return mRootView;
     }
 
@@ -82,8 +95,26 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
     }
 
     @Override
-    public void updateValue(List<Article> articles) {
-        mArticleAdapter.updateValue(articles);
+    public void updateValue(ArticleResponse response) {
+        mArticleAdapter.updateValue(response.data.elements);
+    }
+
+    @Override
+    public void loadMoreComplete(ArticleResponse response) {
+        if (response.data.elements != null) {
+            mArticleAdapter.addMore(response.data.elements);
+            mRecyclerView.loadMoreComplete();
+        }
+
+        if (response.data.elements == null || response.data.elements.size() < DEFAULT_PAGE_SIZE) {
+            mRecyclerView.setNoMore(true);
+        }
+    }
+
+    @Override
+    public void loadMoreError(String message) {
+        mRecyclerView.loadMoreComplete();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

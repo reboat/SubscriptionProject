@@ -1,6 +1,6 @@
 package com.daily.news.subscription.home;
 
-import com.daily.news.subscription.article.Article;
+import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.more.column.Column;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class SubscriptionResponse {
         public boolean has_subscribe;
         public List<Focus> focus_list;
         public List<Column> recommend_list;
-        public List<Article> article_list;
+        public List<ArticleResponse.DataBean.Article> article_list;
     }
     public static class Focus{
         public String doc_title;

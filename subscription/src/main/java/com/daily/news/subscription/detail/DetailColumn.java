@@ -1,6 +1,6 @@
 package com.daily.news.subscription.detail;
 
-import com.daily.news.subscription.article.Article;
+import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.more.column.Column;
 
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
 public class DetailColumn extends Column{
     public String background_url;
     public String description;
-    public List<Article> elements;
+    public List<ArticleResponse.DataBean.Article> elements;
 }

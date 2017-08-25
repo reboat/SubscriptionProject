@@ -1,8 +1,6 @@
 package com.daily.news.subscription.article;
 
-import android.text.TextUtils;
-
-import java.util.List;
+import com.daily.news.subscription.mock.MockResponse;
 
 import io.reactivex.Flowable;
 
@@ -10,19 +8,15 @@ import io.reactivex.Flowable;
  * Created by lixinke on 2017/7/17.
  */
 
-public class ArticleStore implements ArticleContract.Store<List<Article>> {
-    private List<Article> mArticles;
+public class ArticleStore implements ArticleContract.Store {
 
     @Override
-    public Flowable<List<Article>> getFlowable(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return Flowable.just(mArticles);
-        }
-        return null;
+    public Flowable<ArticleResponse> getFlowable(String url) {
+        return Flowable.just(MockResponse.getInstance().getArticleResponse());
     }
 
     @Override
-    public void setArticles(List<Article> articles) {
-        mArticles = articles;
+    public Flowable<ArticleResponse> loadMoreFlowable(long sort_number, int pageSize) {
+        return null;
     }
 }

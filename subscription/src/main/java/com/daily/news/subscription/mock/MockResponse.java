@@ -1,6 +1,6 @@
 package com.daily.news.subscription.mock;
 
-import com.daily.news.subscription.article.Article;
+import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.detail.DetailColumn;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.category.Category;
@@ -118,14 +118,14 @@ public class MockResponse {
         return focuses;
     }
 
-    public List<Article> getArticles() {
+    public List<ArticleResponse.DataBean.Article> getArticles() {
 
         Random random = new Random();
         String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4", "http://img4.duitang.com/uploads/item/201407/26/20140726211046_iGBch.thumb.700_0.jpeg"};
 
-        List<Article> articles = new ArrayList<>();
+        List<ArticleResponse.DataBean.Article> articles = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            Article article = new Article();
+            ArticleResponse.DataBean.Article article = new ArticleResponse.DataBean.Article();
             if (random.nextBoolean()) {
                 article.list_title = "习近平主持召开中央财经领导小组第十六次会议";
             } else {
@@ -182,11 +182,11 @@ public class MockResponse {
                 Category category = new Category();
                 category.is_selected = false;
                 category.class_id = integer;
-                category.class_name = calssNames[random.nextInt(calssNames.length)]+integer;
+                category.class_name = calssNames[random.nextInt(calssNames.length)] + integer;
                 category.columns = new ArrayList<>();
                 for (int i = 0; i < 100; i++) {
                     Column column = new Column();
-                    column.name = category.class_name + integer+i;
+                    column.name = category.class_name + integer + i;
                     column.article_count = random.nextInt(1000);
                     column.pic_url = "";
                     column.subscribe_count = random.nextInt(100);
@@ -202,6 +202,14 @@ public class MockResponse {
             }
         });
 
+        return response;
+    }
+
+    public ArticleResponse getArticleResponse() {
+        ArticleResponse response = new ArticleResponse();
+        response.code = 200;
+        response.data = new ArticleResponse.DataBean();
+        response.data.elements = getArticles();
         return response;
     }
 }

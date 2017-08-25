@@ -2,10 +2,9 @@ package com.daily.news.subscription.article;
 
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
-import com.daily.news.subscription.base.BaseView;
 import com.daily.news.subscription.base.UIBaseView;
 
-import java.util.List;
+import io.reactivex.Flowable;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -13,14 +12,18 @@ import java.util.List;
 
 public interface ArticleContract {
     interface Presenter extends BasePresenter {
-        void setItemId(String itemId);
+        void loadMore(long sort_number, int pageSize);
     }
 
     interface View extends UIBaseView<Presenter> {
-        void updateValue(List<Article> articles);
+        void updateValue(ArticleResponse response);
+
+        void loadMoreComplete(ArticleResponse response);
+
+        void loadMoreError(String message);
     }
 
-    interface Store<T> extends BaseStore<T> {
-        void setArticles(List<Article> articles);
+    interface Store extends BaseStore<ArticleResponse> {
+        Flowable<ArticleResponse> loadMoreFlowable(long sort_number, int pageSize);
     }
 }

@@ -1,7 +1,5 @@
 package com.daily.news.subscription.article;
 
-import java.util.List;
-
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -23,22 +21,14 @@ public class ArticlePresenter implements ArticleContract.Presenter {
         mDisposable = new CompositeDisposable();
     }
 
-    @Override
-    public void setItemId(String itemId) {
-
-    }
-
-    public void setArticles(List<Article> articles){
-        mArticleStore.setArticles(articles);
-    }
 
     @Override
     public void subscribe() {
         mArticleView.showProgressBar();
         Disposable disposable = mArticleStore.getFlowable("")
-                .subscribe(new Consumer<List<Article>>() {
+                .subscribe(new Consumer<ArticleResponse>() {
                     @Override
-                    public void accept(@NonNull List<Article> articles) throws Exception {
+                    public void accept(@NonNull ArticleResponse articles) throws Exception {
                         mArticleView.updateValue(articles);
                         mArticleView.hideProgressBar();
                     }
@@ -50,6 +40,21 @@ public class ArticlePresenter implements ArticleContract.Presenter {
                     }
                 });
         mDisposable.add(disposable);
+    }
+
+    @Override
+    public void loadMore(long sort_number, int pageSize) {
+        mArticleStore.loadMoreFlowable(sort_number,pageSize).subscribe(new Consumer<ArticleResponse>() {
+            @Override
+            public void accept(@NonNull ArticleResponse response) throws Exception {
+                mArticleView.loadMoreComplete(response);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                mArticleView.loadMoreError(throwable.getMessage());
+            }
+        });
     }
 
     @Override
