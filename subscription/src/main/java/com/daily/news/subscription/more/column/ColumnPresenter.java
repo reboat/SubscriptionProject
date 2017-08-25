@@ -32,7 +32,7 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     }
 
     @Override
-    public void subscribe() {
+    public void subscribe(String... params) {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
                 .subscribe(new Consumer<List<Column>>() {

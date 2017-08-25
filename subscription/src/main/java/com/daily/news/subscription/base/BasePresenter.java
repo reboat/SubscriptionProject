@@ -5,7 +5,7 @@ package com.daily.news.subscription.base;
  */
 
 public interface BasePresenter {
-    void subscribe();
+    void subscribe(String... params);
 
     void unsubscribe();
 }

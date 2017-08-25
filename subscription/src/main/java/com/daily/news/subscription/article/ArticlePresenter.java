@@ -21,9 +21,8 @@ public class ArticlePresenter implements ArticleContract.Presenter {
         mDisposable = new CompositeDisposable();
     }
 
-
     @Override
-    public void subscribe() {
+    public void subscribe(String... params) {
         mArticleView.showProgressBar();
         Disposable disposable = mArticleStore.getFlowable("")
                 .subscribe(new Consumer<ArticleResponse>() {

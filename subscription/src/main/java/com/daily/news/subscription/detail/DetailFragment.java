@@ -28,6 +28,7 @@ import butterknife.OnClick;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
     private static final String UID = "id";
+    private static final int DEFAULT_PAGE_SIZE = 10;
     private String mUid;
     private DetailContract.Presenter mPresenter;
 
@@ -82,7 +83,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe();
+        mPresenter.subscribe(mUid, String.valueOf(DEFAULT_PAGE_SIZE));
     }
 
     @Override

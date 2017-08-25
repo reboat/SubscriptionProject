@@ -4,20 +4,22 @@ import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
 import com.daily.news.subscription.subscribe.SubscribeContract;
+import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
+import com.zjrb.coreprojectlibrary.api.callback.APICallBack;
 
 /**
  * Created by lixinke on 2017/7/17.
  */
 
 public interface DetailContract {
-    interface Presenter extends BasePresenter ,SubscribeContract.Presenter{
-        void setItemId(String itemId);
+    interface Presenter extends BasePresenter, SubscribeContract.Presenter {
     }
 
-    interface View extends UIBaseView<Presenter> ,SubscribeContract.View{
+    interface View extends UIBaseView<Presenter>, SubscribeContract.View {
         void updateValue(DetailColumn detailColumn);
     }
 
-    interface Store<T> extends BaseStore<T> ,SubscribeContract.Store{
+    interface Store extends BaseStore<DetailColumn>, SubscribeContract.Store {
+        APIPostTask getTask(APICallBack<DetailColumn> callBack);
     }
 }
