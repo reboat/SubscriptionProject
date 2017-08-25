@@ -43,7 +43,7 @@ public class ColumnStore implements ColumnContract.Store<List<Column>> {
     }
 
     @Override
-    public Flowable getSubscribeFlowable(final Column s) {
+    public Flowable getSubmitSubscribeFlowable(final Column s) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
             @Override
             public Publisher<?> apply(@NonNull Long aLong) throws Exception {

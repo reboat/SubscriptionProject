@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daily.news.subscription.HeaderAdapter;
 import com.daily.news.subscription.LinearLayoutColorDivider;
@@ -179,7 +180,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     private HeaderAdapter createRecommendAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
         HeaderAdapter adapter = new HeaderAdapter();
 
-        View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
+        final View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
         adapter.addHeaderView(bannerView);
 
         View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
@@ -192,10 +193,29 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
                 Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", item.id).build(), 0);
             }
         });
+        columnAdapter.setOnSubscribeListener(new ColumnAdapter.OnSubscribeListener() {
+            @Override
+            public void onSubscribe(Column bean) {
+                mPresenter.submitSubscribe(bean);
+                bean.subscribed=!bean.subscribed;
+                mHeaderAdapter.notifyDataSetChanged();
+            }
+        });
         adapter.setInternalAdapter(columnAdapter);
         return adapter;
     }
 
+    @Override
+    public void subscribeSuc(Column bean) {
+
+    }
+
+    @Override
+    public void subscribeFail(Column bean, String message) {
+        bean.subscribed=!bean.subscribed;
+        mHeaderAdapter.notifyDataSetChanged();
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * 有订阅时，订阅栏目上的导航

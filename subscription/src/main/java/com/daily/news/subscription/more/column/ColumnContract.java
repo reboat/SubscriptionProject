@@ -28,6 +28,6 @@ public interface ColumnContract {
     }
 
     interface Store<T> extends BaseStore<T> {
-        Flowable getSubscribeFlowable(Column s);
+        Flowable getSubmitSubscribeFlowable(Column s);
     }
 }

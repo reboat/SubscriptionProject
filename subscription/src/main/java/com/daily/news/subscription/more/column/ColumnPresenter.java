@@ -50,7 +50,7 @@ public class ColumnPresenter implements ColumnContract.Presenter {
 
     @Override
     public void submitSubscribe(final Column bean) {
-        mDetailStore.getSubscribeFlowable(bean).subscribe(new Consumer() {
+        mDetailStore.getSubmitSubscribeFlowable(bean).subscribe(new Consumer() {
             @Override
             public void accept(@NonNull Object o) throws Exception {
                 mDetailView.subscribeSuc(bean);
