@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @BindView(R2.id.detail_column_info)
     TextView mInfoView;
     @BindView(R2.id.detail_column_description)
-    TextView mDescritpionView;
+    TextView mDescriptionView;
     @BindView(R2.id.detail_column_sub_btn)
     TextView mSubscriptionView;
     @BindView(R2.id.detail_column_progressBar_container)
@@ -104,7 +104,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         Glide.with(this).load(detailColumn.pic_url).into(mImageView);
         mTitleView.setText(detailColumn.name);
         mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
-        mDescritpionView.setText(detailColumn.description);
+        mDescriptionView.setText(detailColumn.description);
         String subscriptionText = detailColumn.subscribed ? "已经订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
         mSubscriptionView.setSelected(detailColumn.subscribed);
