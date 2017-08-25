@@ -189,7 +189,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
             @Override
             public void onItemClick(int position, Column item) {
-                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", item.uid).build(), 0);
+                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", item.id).build(), 0);
             }
         });
         adapter.setInternalAdapter(columnAdapter);

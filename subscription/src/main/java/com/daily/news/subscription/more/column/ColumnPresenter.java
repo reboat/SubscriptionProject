@@ -49,6 +49,22 @@ public class ColumnPresenter implements ColumnContract.Presenter {
     }
 
     @Override
+    public void submitSubscribe(final Column bean) {
+        mDetailStore.getSubscribeFlowable(bean).subscribe(new Consumer() {
+            @Override
+            public void accept(@NonNull Object o) throws Exception {
+                mDetailView.subscribeSuc(bean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                mDetailView.subscribeFail(bean,throwable.getMessage());
+            }
+        });
+    }
+
+
+    @Override
     public void unsubscribe() {
         mDisposable.clear();
     }

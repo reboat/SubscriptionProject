@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daily.news.subscription.HeaderAdapter;
 import com.daily.news.subscription.LinearLayoutColorDivider;
+import com.daily.news.subscription.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.OnItemClickListener;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
             String itemId = getArguments().getString(ARG_ITEM_ID);
             mPresenter.setItemId(itemId);
         }
-        mAdapter=new HeaderAdapter();
+        mAdapter = new HeaderAdapter();
     }
 
     @Override
@@ -90,20 +90,34 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
     }
 
-    public void addHeaderView(View headerView){
+    public void addHeaderView(View headerView) {
         mAdapter.addHeaderView(headerView);
     }
 
     @Override
     public void onItemClick(int position, Column bean) {
         Intent intent = new Intent(getString(R.string.daily_intent_action));
-        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("uid", bean.uid).build());
+        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", bean.id).build());
         startActivity(intent);
     }
 
     @Override
     public void onSubscribe(Column bean) {
+        mPresenter.submitSubscribe(bean);
+        bean.subscribed = !bean.subscribed;
+        mAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void subscribeSuc(Column bean) {
+
+    }
+
+    @Override
+    public void subscribeFail(Column bean, String message) {
+        bean.subscribed = !bean.subscribed;
+        mAdapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

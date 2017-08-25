@@ -90,7 +90,7 @@ public class MockResponse {
             recommend.subscribe_count = random.nextInt(10000);
             recommend.subscribed = random.nextBoolean();
             recommend.pic_url = imags[random.nextInt(imags.length)];
-            recommend.uid = UUID.randomUUID().toString();
+            recommend.id = UUID.randomUUID().toString();
             recommends.add(recommend);
         }
         return recommends;
@@ -191,7 +191,7 @@ public class MockResponse {
                     column.article_count = random.nextInt(1000);
                     column.pic_url = "";
                     column.subscribe_count = random.nextInt(100);
-                    column.uid = String.valueOf(random.nextInt(10000) + 6000);
+                    column.id = String.valueOf(random.nextInt(10000) + 6000);
                     category.columns.add(column);
                 }
                 return Observable.just(category);

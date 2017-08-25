@@ -1,7 +1,7 @@
 package com.daily.news.subscription.more.my;
 
 import com.daily.news.subscription.more.column.Column;
-import com.daily.news.subscription.more.column.ColumnContract;
+import com.daily.news.subscription.more.column.ColumnStore;
 
 import org.reactivestreams.Publisher;
 
@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class MyStore implements ColumnContract.Store<List<Column>> {
+public class MyStore extends ColumnStore {
     @Override
     public Flowable<List<Column>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)

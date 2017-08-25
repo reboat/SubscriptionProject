@@ -32,6 +32,9 @@ public class HeaderAdapter extends RecyclerView.Adapter {
         notifyItemRemoved(position);
     }
 
+    public RecyclerView.Adapter getInternalAdapter() {
+        return mInternalAdapter;
+    }
     public void setInternalAdapter(RecyclerView.Adapter adapter) {
         mInternalAdapter = adapter;
     }

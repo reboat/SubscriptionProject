@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
         Uri data = intent.getData();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("uid"));
+        DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("id"));
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
 

@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
-    private static final String UID = "uid";
+    private static final String UID = "id";
     private String mUid;
     private DetailContract.Presenter mPresenter;
 

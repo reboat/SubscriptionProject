@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Column implements Parcelable {
-    public String uid;
+    public String id;
     public String name;
     public String pic_url;
     public int subscribe_count;
@@ -19,7 +19,7 @@ public class Column implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.uid);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.pic_url);
         dest.writeInt(this.subscribe_count);
@@ -32,7 +32,7 @@ public class Column implements Parcelable {
     }
 
     protected Column(Parcel in) {
-        this.uid = in.readString();
+        this.id = in.readString();
         this.name = in.readString();
         this.pic_url = in.readString();
         this.subscribe_count = in.readInt();

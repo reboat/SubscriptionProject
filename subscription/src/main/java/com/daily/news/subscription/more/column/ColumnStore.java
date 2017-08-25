@@ -41,4 +41,19 @@ public class ColumnStore implements ColumnContract.Store<List<Column>> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
     }
+
+    @Override
+    public Flowable getSubscribeFlowable(final Column s) {
+        return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
+            @Override
+            public Publisher<?> apply(@NonNull Long aLong) throws Exception {
+                Random random = new Random();
+                if (random.nextBoolean()) {
+                    return Flowable.just(s);
+                } else {
+                    return Flowable.error(new Throwable("提交失败"));
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 }
