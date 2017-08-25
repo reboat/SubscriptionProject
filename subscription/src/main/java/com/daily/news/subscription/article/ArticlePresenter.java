@@ -43,21 +43,6 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     }
 
     @Override
-    public void loadMore(long sort_number, int pageSize) {
-        mArticleStore.loadMoreFlowable(sort_number,pageSize).subscribe(new Consumer<ArticleResponse>() {
-            @Override
-            public void accept(@NonNull ArticleResponse response) throws Exception {
-                mArticleView.loadMoreComplete(response);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-                mArticleView.loadMoreError(throwable.getMessage());
-            }
-        });
-    }
-
-    @Override
     public void unsubscribe() {
         mDisposable.clear();
     }

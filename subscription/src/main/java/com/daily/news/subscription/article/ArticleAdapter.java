@@ -2,7 +2,6 @@ package com.daily.news.subscription.article;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
+import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -28,7 +29,7 @@ import butterknife.OnClick;
  * Created by lixinke on 2017/7/12.
  */
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
+public class ArticleAdapter extends BaseRecyclerAdapter {
     private static final int ARTICLE_TYPE = 1;
     private static final int VIDEO_TYPE = 2;
     private static final int MULTIPLE_PICTURES = 3;
@@ -36,24 +37,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     private List<ArticleResponse.DataBean.Article> mArticles;
 
     public ArticleAdapter(List<ArticleResponse.DataBean.Article> articles) {
+        super(articles);
         mArticles = articles;
     }
 
     @Override
-    public int getItemViewType(int position) {
-
-        ArticleResponse.DataBean.Article article = mArticles.get(position);
-        if (!TextUtils.isEmpty(article.video_url)) {
-            return VIDEO_TYPE;
-        }
-        if (article.list_pics.size() == 1) {
-            return ARTICLE_TYPE;
-        }
-        return MULTIPLE_PICTURES;
-    }
-
-    @Override
-    public ArticleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView;
         switch (viewType) {
@@ -71,14 +60,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
+    public int getAbsItemViewType(int position) {
         ArticleResponse.DataBean.Article article = mArticles.get(position);
-        holder.bindData(article);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mArticles != null ? mArticles.size() : 0;
+        if (!TextUtils.isEmpty(article.video_url)) {
+            return VIDEO_TYPE;
+        }
+        if (article.list_pics.size() == 1) {
+            return ARTICLE_TYPE;
+        }
+        return MULTIPLE_PICTURES;
     }
 
     public void updateValue(List<ArticleResponse.DataBean.Article> articles) {
@@ -91,24 +81,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    static abstract class ViewHolder extends RecyclerView.ViewHolder {
-        Resources mResources;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mResources = itemView.getResources();
-        }
-
-        public abstract void bindData(ArticleResponse.DataBean.Article article);
-    }
-
-    static class ArticleViewHolder extends ViewHolder {
+    static class ArticleViewHolder extends BaseRecyclerViewHolder<ArticleResponse.DataBean.Article> {
+        private final Resources mResources;
         @BindView(R2.id.article_imageView)
         ImageView mImageView;
         @BindView(R2.id.article_title)
         TextView mTitleView;
         @BindView(R2.id.article_info)
         TextView mInfoView;
+
 
         public ArticleViewHolder(View itemView) {
             super(itemView);
@@ -117,15 +98,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
 
         @Override
-        public void bindData(ArticleResponse.DataBean.Article article) {
+        public void bindView() {
+            ArticleResponse.DataBean.Article article = getData();
             mTitleView.setText(article.list_title);
             Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView);
             String info = String.format(Locale.getDefault(), mResources.getString(R.string.article_info_format), article.channel_name, article.read_count, article.like_count);
             mInfoView.setText(info);
         }
+
     }
 
-    static class VideoViewHolder extends ViewHolder {
+    static class VideoViewHolder extends BaseRecyclerViewHolder<ArticleResponse.DataBean.Article> {
         @BindView(R2.id.video_imageView)
         ImageView mImageView;
         @BindView(R2.id.video_title)
@@ -137,15 +120,18 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         @BindView(R2.id.video_play_time_view)
         TextView mPlayTimeView;
         SimpleDateFormat mDateFormat = new SimpleDateFormat("hh:mm");
+        private Resources mResources;
 
 
         public VideoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mResources = itemView.getResources();
         }
 
         @Override
-        public void bindData(ArticleResponse.DataBean.Article article) {
+        public void bindView() {
+            ArticleResponse.DataBean.Article article = getData();
             mTitleView.setText(article.list_title);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
@@ -176,7 +162,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
     }
 
-    static class MultiplePictureViewHolder extends ViewHolder {
+    static class MultiplePictureViewHolder extends BaseRecyclerViewHolder<ArticleResponse.DataBean.Article> {
         @BindView(R2.id.multiple_picture_article_title)
         TextView mTitleView;
         @BindView(R2.id.multiple_picture_imageView1)
@@ -187,14 +173,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         ImageView mImageView3;
         @BindView(R2.id.multiple_picture_info)
         TextView mInfoView;
+        private Resources mResources;
 
         public MultiplePictureViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mResources = itemView.getResources();
         }
 
         @Override
-        public void bindData(ArticleResponse.DataBean.Article article) {
+        public void bindView() {
+            ArticleResponse.DataBean.Article article = getData();
             mTitleView.setText(article.list_title);
             Glide.with(itemView).load(article.list_pics.get(0)).into(mImageView1);
             Glide.with(itemView).load(article.list_pics.get(1)).into(mImageView2);

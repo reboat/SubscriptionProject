@@ -1,6 +1,5 @@
 package com.daily.news.subscription.more.column;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daily.news.subscription.R;
+import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.daily.news.subscription.base.OnItemClickListener;
-import com.daily.news.subscription.R;
-import com.daily.news.subscription.R2;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +96,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
     @Override
     public void onItemClick(int position, Column bean) {
-        Intent intent = new Intent(getString(R.string.daily_intent_action));
-        intent.setData(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", bean.id).build());
-        startActivity(intent);
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", bean.id).build().toString());
     }
 
     @Override

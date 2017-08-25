@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.daily.news.subscription.home.SubscriptionFragment;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        UIUtils.init(getApplication());
     }
 
 }

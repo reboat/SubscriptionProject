@@ -14,9 +14,4 @@ public class ArticleStore implements ArticleContract.Store {
     public Flowable<ArticleResponse> getFlowable(String url) {
         return Flowable.just(MockResponse.getInstance().getArticleResponse());
     }
-
-    @Override
-    public Flowable<ArticleResponse> loadMoreFlowable(long sort_number, int pageSize) {
-        return null;
-    }
 }

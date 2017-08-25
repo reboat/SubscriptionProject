@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.daily.news.subscription.R;
@@ -23,6 +24,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Uri data = intent.getData();
+        String id = data.getQueryParameter("id");
+        Log.e("TAG",id);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("id"));

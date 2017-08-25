@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.base.HeaderAdapter;
-import com.daily.news.subscription.base.LinearLayoutColorDivider;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
+import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
+import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
+import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +24,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleFragment extends Fragment implements ArticleContract.View {
+public class ArticleFragment extends Fragment implements ArticleContract.View, LoadMoreListener<ArticleResponse.DataBean> {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     @BindView(R2.id.article_recyclerView)
-    XRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     private View mRootView;
 
-    private HeaderAdapter mHeaderAdapter;
     private ArticleAdapter mArticleAdapter;
     private List<ArticleResponse.DataBean.Article> mArticles;
 
     private ArticleContract.Presenter mPresenter;
+    private FooterLoadMore<ArticleResponse.DataBean> mLoadMore;
 
     public ArticleFragment() {
     }
@@ -42,7 +44,6 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHeaderAdapter = new HeaderAdapter();
         mArticles = new ArrayList<>();
         mArticleAdapter = new ArticleAdapter(mArticles);
     }
@@ -61,27 +62,16 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mHeaderAdapter.setInternalAdapter(mArticleAdapter);
-        mRecyclerView.setAdapter(mHeaderAdapter);
-        mRecyclerView.setPullRefreshEnabled(false);
-        mRecyclerView.setLoadingMoreEnabled(true);
-        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
-        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+        mRecyclerView.setAdapter(mArticleAdapter);
+        mRecyclerView.addItemDecoration(new ListSpaceDivider(1, R.color.category_divider_color, true));
+        mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
+        mArticleAdapter.addFooterView(mLoadMore.getItemView());
 
-            }
-
-            @Override
-            public void onLoadMore() {
-                mPresenter.loadMore(mArticles.get(mArticles.size() - 1).sort_number, DEFAULT_PAGE_SIZE);
-            }
-        });
         return mRootView;
     }
 
     public void addHeaderView(View headerView) {
-        mHeaderAdapter.addHeaderView(headerView);
+        mArticleAdapter.addHeaderView(headerView);
     }
 
     @Override
@@ -100,24 +90,6 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
     }
 
     @Override
-    public void loadMoreComplete(ArticleResponse response) {
-        if (response.data.elements != null) {
-            mArticleAdapter.addMore(response.data.elements);
-            mRecyclerView.loadMoreComplete();
-        }
-
-        if (response.data.elements == null || response.data.elements.size() < DEFAULT_PAGE_SIZE) {
-            mRecyclerView.setNoMore(true);
-        }
-    }
-
-    @Override
-    public void loadMoreError(String message) {
-        mRecyclerView.loadMoreComplete();
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void hideProgressBar() {
 
     }
@@ -125,6 +97,19 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
     @Override
     public void showError(String message) {
 
+    }
+
+    @Override
+    public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
+        mArticleAdapter.addMore(data.elements);
+        if (data.elements.size() < DEFAULT_PAGE_SIZE) {
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+    }
+
+    @Override
+    public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
+        new LoadMoreArticleTask(callback).exe(mArticles.get(mArticles.size() - 1), DEFAULT_PAGE_SIZE);
     }
 
     @Override
