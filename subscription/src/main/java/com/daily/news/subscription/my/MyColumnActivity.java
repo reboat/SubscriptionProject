@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more.my;
+package com.daily.news.subscription.my;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

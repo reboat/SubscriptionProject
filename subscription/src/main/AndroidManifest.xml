@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".more.my.MyColumnActivity"
+            android:name=".my.MyColumnActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

@@ -1,4 +1,4 @@
-package com.daily.news.subscription.more.my;
+package com.daily.news.subscription.my;
 
 import com.daily.news.subscription.more.column.ColumnFragment;
 
