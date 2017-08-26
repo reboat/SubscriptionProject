@@ -12,17 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.daily.news.subscription.base.HeaderAdapter;
-import com.daily.news.subscription.base.LinearLayoutColorDivider;
-import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleAdapter;
+import com.daily.news.subscription.article.ArticleResponse;
+import com.daily.news.subscription.base.HeaderAdapter;
+import com.daily.news.subscription.base.LinearLayoutColorDivider;
+import com.daily.news.subscription.base.OnItemClickListener;
 import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.idisfkj.loopview.LoopView;
 import com.idisfkj.loopview.entity.LoopViewEntity;
+import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
+import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
+import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
 import com.zjrb.coreprojectlibrary.nav.Nav;
+import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
 
 import java.util.List;
@@ -124,7 +130,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mRefreshView.setRefreshing(false);
         //RecycleView会缓存ViewHolder，Adapter中的数据结构发生变化，但缓存的ViewHolder没有变化导致crash。重新设置Adapter清除缓存。
         mRecyclerView.setAdapter(mHeaderAdapter);
-        updateValue(subscriptionResponse);
+        updateValue(subscriptionResponse.data);
     }
 
     @Override
@@ -135,20 +141,20 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     /**
      * 网络请求返回时回调
      *
-     * @param subscriptionBean
+     * @param data
      */
     @Override
-    public void updateValue(SubscriptionResponse subscriptionBean) {
+    public void updateValue(SubscriptionResponse.DataBean data) {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        HeaderAdapter contentAdapter = null;
-        if (subscriptionBean.data.has_subscribe) {
-            contentAdapter = createMySubscriptionAdapter(subscriptionBean, inflater);
-        } else if (!subscriptionBean.data.has_subscribe) {
-            contentAdapter = createRecommendAdapter(subscriptionBean, inflater);
+        if (data.has_subscribe) {
+            ArticleAdapter subscriptionAdapter = createMySubscriptionAdapter(data, inflater);
+            mRecyclerView.setAdapter(subscriptionAdapter);
+        } else if (!data.has_subscribe) {
+            HeaderAdapter recommendAdapter = createRecommendAdapter(data, inflater);
+            mHeaderAdapter.setInternalAdapter(recommendAdapter);
         }
 
-        mHeaderAdapter.setInternalAdapter(contentAdapter);
     }
 
     /**
@@ -159,14 +165,39 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      * @return
      */
     @NonNull
-    private HeaderAdapter createMySubscriptionAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
-        HeaderAdapter adapter = new HeaderAdapter();
-
+    private ArticleAdapter createMySubscriptionAdapter(final SubscriptionResponse.DataBean subscriptionBean, LayoutInflater inflater) {
         View headerView = setupMySubscriptionHeaderView(inflater, (ViewGroup) getView());
-        adapter.addHeaderView(headerView);
+        final List<ArticleResponse.DataBean.Article> articles = subscriptionBean.article_list;
+        final ArticleAdapter articleAdapter = new ArticleAdapter(articles);
+        articleAdapter.addHeaderView(mRefreshView.getItemView());
+        articleAdapter.addHeaderView(headerView);
 
-        adapter.setInternalAdapter(new ArticleAdapter(subscriptionBean.data.article_list));
-        return adapter;
+        FooterLoadMore<ArticleResponse.DataBean> loadMoreView = new FooterLoadMore<>(mRecyclerView, new LoadMoreListener<ArticleResponse.DataBean>() {
+            @Override
+            public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
+                articles.addAll(data.elements);
+                articleAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
+                APIPostTask task = new APIPostTask<ArticleResponse.DataBean>(callback) {
+                    @Override
+                    protected void onSetupParams(Object... params) {
+                        put("start", params[0]);
+                        put("size", params[1]);
+                    }
+
+                    @Override
+                    protected String getApi() {
+                        return "/api/column/my_article_list";
+                    }
+                };
+                task.exe(articles.get(articles.size() - 1).sort_number, 10);
+            }
+        });
+        articleAdapter.addFooterView(loadMoreView.getItemView());
+        return articleAdapter;
     }
 
     /**
@@ -177,16 +208,16 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      * @return
      */
     @NonNull
-    private HeaderAdapter createRecommendAdapter(SubscriptionResponse subscriptionBean, LayoutInflater inflater) {
+    private HeaderAdapter createRecommendAdapter(SubscriptionResponse.DataBean subscriptionBean, LayoutInflater inflater) {
         HeaderAdapter adapter = new HeaderAdapter();
 
-        final View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.data.focus_list);
+        final View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.focus_list);
         adapter.addHeaderView(bannerView);
 
         View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
         adapter.addHeaderView(moreSubscriptionView);
 
-        ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.data.recommend_list);
+        ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.recommend_list);
         columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
             @Override
             public void onItemClick(int position, Column item) {
@@ -197,7 +228,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
             @Override
             public void onSubscribe(Column bean) {
                 mPresenter.submitSubscribe(bean);
-                bean.subscribed=!bean.subscribed;
+                bean.subscribed = !bean.subscribed;
                 mHeaderAdapter.notifyDataSetChanged();
             }
         });
@@ -212,9 +243,9 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
 
     @Override
     public void subscribeFail(Column bean, String message) {
-        bean.subscribed=!bean.subscribed;
+        bean.subscribed = !bean.subscribed;
         mHeaderAdapter.notifyDataSetChanged();
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**

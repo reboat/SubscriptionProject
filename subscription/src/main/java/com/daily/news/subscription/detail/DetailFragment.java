@@ -17,7 +17,6 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
-import com.daily.news.subscription.article.LocalArticleStore;
 import com.daily.news.subscription.more.column.Column;
 
 import java.util.Locale;
@@ -112,7 +111,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
         ArticleFragment fragment = new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-        new ArticlePresenter(fragment, new LocalArticleStore(detailColumn.elements));
+        new ArticlePresenter(fragment, new DetailArticleStore(mUid,detailColumn.elements));
     }
 
     @Override

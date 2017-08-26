@@ -3,6 +3,8 @@ package com.daily.news.subscription.article;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
+import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
+import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -10,6 +12,7 @@ import com.daily.news.subscription.base.UIBaseView;
 
 public interface ArticleContract {
     interface Presenter extends BasePresenter {
+        void loadMore(long sortNum,int size,LoadingCallBack<ArticleResponse.DataBean> callback);
     }
 
     interface View extends UIBaseView<Presenter> {
@@ -17,5 +20,6 @@ public interface ArticleContract {
     }
 
     interface Store extends BaseStore<ArticleResponse> {
+        APIPostTask getLoadMoreTask(LoadingCallBack callBack);
     }
 }

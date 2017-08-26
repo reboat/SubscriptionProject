@@ -109,7 +109,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
 
     @Override
     public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
-        new LoadMoreArticleTask(callback).exe(mArticles.get(mArticles.size() - 1), DEFAULT_PAGE_SIZE);
+        mPresenter.loadMore(mArticles.get(mArticles.size()-1).sort_number,DEFAULT_PAGE_SIZE,callback);
     }
 
     @Override

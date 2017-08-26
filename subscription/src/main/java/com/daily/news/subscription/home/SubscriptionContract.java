@@ -18,7 +18,7 @@ public class SubscriptionContract {
     }
 
     interface View extends UIBaseView<Presenter> ,SubscribeContract.View{
-        void updateValue(SubscriptionResponse subscriptionResponse);
+        void updateValue(SubscriptionResponse.DataBean subscriptionResponse);
 
         void onRefreshComplete(SubscriptionResponse subscriptionResponse);
 
