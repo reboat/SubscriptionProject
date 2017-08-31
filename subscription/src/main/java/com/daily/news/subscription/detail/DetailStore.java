@@ -2,8 +2,8 @@ package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.subscribe.SubscribeStore;
-import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
-import com.zjrb.coreprojectlibrary.api.callback.APICallBack;
+import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 

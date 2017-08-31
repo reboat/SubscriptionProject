@@ -23,13 +23,13 @@ import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.idisfkj.loopview.LoopView;
 import com.idisfkj.loopview.entity.LoopViewEntity;
-import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
-import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
-import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
-import com.zjrb.coreprojectlibrary.nav.Nav;
-import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
-import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
+import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.HeaderRefresh;
 
 import java.util.List;
 

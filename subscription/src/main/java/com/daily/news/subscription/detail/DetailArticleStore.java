@@ -2,8 +2,8 @@ package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.article.ArticleContract;
 import com.daily.news.subscription.article.ArticleResponse;
-import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
 
 import java.util.List;
 

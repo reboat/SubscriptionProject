@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.daily.news.subscription.home.SubscriptionFragment;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.utils.UIUtils;
 
 public class MainActivity extends AppCompatActivity {
 

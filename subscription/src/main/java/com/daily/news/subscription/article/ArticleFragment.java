@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
-import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
-import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
-import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
-import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;

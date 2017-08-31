@@ -1,7 +1,7 @@
 package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.subscribe.SubscribePresenter;
-import com.zjrb.coreprojectlibrary.common.manager.APICallManager;
+import com.zjrb.core.common.manager.APICallManager;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;

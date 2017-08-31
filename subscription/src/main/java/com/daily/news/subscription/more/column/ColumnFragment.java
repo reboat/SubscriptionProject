@@ -18,7 +18,7 @@ import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.daily.news.subscription.base.OnItemClickListener;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.zjrb.coreprojectlibrary.nav.Nav;
+import com.zjrb.core.nav.Nav;
 
 import java.util.ArrayList;
 import java.util.List;

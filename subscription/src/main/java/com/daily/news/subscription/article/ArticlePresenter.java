@@ -1,6 +1,7 @@
 package com.daily.news.subscription.article;
 
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+
+import com.zjrb.core.api.callback.LoadingCallBack;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
