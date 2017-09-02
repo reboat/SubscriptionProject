@@ -81,11 +81,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void updateValues(CategoryResponse response) {
         mCategoryAdapter.updateValue(response.elements);
-        Bundle arguments = new Bundle();
         response.elements.get(0).is_selected = true;
-        arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(response.elements.get(0).class_id));
         ColumnFragment fragment = new ColumnFragment();
-        fragment.setArguments(arguments);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.more_category_detail_container, fragment)
                 .commit();
@@ -151,10 +148,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(ColumnFragment.ARG_ITEM_ID, String.valueOf(holder.mItem.class_id));
                     ColumnFragment fragment = new ColumnFragment();
-                    fragment.setArguments(arguments);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();

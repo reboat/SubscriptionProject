@@ -1,13 +1,10 @@
 package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.subscribe.SubscribePresenter;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.callback.APICallBack;
 
-import java.util.List;
-
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -19,7 +16,7 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     private CompositeDisposable mDisposable;
 
     public ColumnPresenter(ColumnContract.View detailView, ColumnContract.Store detailStore) {
-        super(detailView,detailStore);
+        super(detailView, detailStore);
         mDetailView = detailView;
         mDetailView.setPresenter(this);
         mDetailStore = detailStore;
@@ -32,23 +29,40 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     }
 
     @Override
-    public void subscribe(String... params) {
+    public void subscribe(Object... params) {
         mDetailView.showProgressBar();
-        Disposable disposable = mDetailStore.getFlowable("")
-                .subscribe(new Consumer<List<Column>>() {
-                    @Override
-                    public void accept(@NonNull List<Column> columnsBeen) throws Exception {
-                        mDetailView.updateValue(columnsBeen);
-                        mDetailView.hideProgressBar();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        mDetailView.hideProgressBar();
-                        mDetailView.showError(throwable.getMessage());
-                    }
-                });
-        mDisposable.add(disposable);
+//        Disposable disposable = mDetailStore.getFlowable("")
+//                .subscribe(new Consumer<List<Column>>() {
+//                    @Override
+//                    public void accept(@NonNull List<Column> columnsBeen) throws Exception {
+//                        mDetailView.updateValue(columnsBeen);
+//                        mDetailView.hideProgressBar();
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(@NonNull Throwable throwable) throws Exception {
+//                        mDetailView.hideProgressBar();
+//                        mDetailView.showError(throwable.getMessage());
+//                    }
+//                });
+//        mDisposable.add(disposable);
+        APIBaseTask task = mDetailStore.getTask(new APICallBack<ColumnResponse.DataBean>() {
+            @Override
+            public void onSuccess(ColumnResponse.DataBean data) {
+                mDetailView.updateValue(data);
+                mDetailView.hideProgressBar();
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                super.onError(errMsg, errCode);
+                mDetailView.hideProgressBar();
+                mDetailView.showError(errMsg);
+            }
+        });
+        if (task != null) {
+            task.exe(params);
+        }
     }
 
 

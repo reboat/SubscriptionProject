@@ -23,7 +23,7 @@ public class SubscriptionPresenter extends SubscribePresenter implements Subscri
     }
 
     @Override
-    public void subscribe(String... params) {
+    public void subscribe(Object... params) {
         mView.showProgressBar();
 //        mStore.getFlowable("").subscribe(new Consumer<SubscriptionResponse>() {
 //

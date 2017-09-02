@@ -24,23 +24,23 @@ import butterknife.ButterKnife;
  */
 
 public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnViewHolder> {
-    private List<Column> mColumnsBeens;
+    private List<ColumnResponse.DataBean.ElementsBean> mColumnsBeens;
     private OnSubscribeListener mOnSubscribeListener;
 
 
     private OnItemClickListener mOnItemClickListener;
 
-    public ColumnAdapter(List<Column> columnsBeens) {
+    public ColumnAdapter(List<ColumnResponse.DataBean.ElementsBean> columnsBeens) {
         mColumnsBeens = columnsBeens;
     }
 
-    public void updateValues(List<Column> columnsBeens) {
+    public void updateValues(List<ColumnResponse.DataBean.ElementsBean> columnsBeens) {
         mColumnsBeens.clear();
         mColumnsBeens.addAll(columnsBeens);
 //        notifyDataSetChanged();
     }
 
-    public void addMoreValues(List<Column> columnsBeens) {
+    public void addMoreValues(List<ColumnResponse.DataBean.ElementsBean> columnsBeens) {
         mColumnsBeens.addAll(columnsBeens);
     }
 
@@ -52,7 +52,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
 
     @Override
     public void onBindViewHolder(ColumnViewHolder holder, final int position) {
-        final Column column = mColumnsBeens.get(position);
+        final ColumnResponse.DataBean.ElementsBean column = mColumnsBeens.get(position);
         holder.mTitleView.setText(column.name);
         holder.mColumnInfosView.setText(String.format(Locale.getDefault(),holder.itemView.getContext().getString(R.string.column_info_format), column.subscribe_count, column.article_count));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
             @Override
             public void onClick(View v) {
                 if (mOnSubscribeListener != null) {
-                    mOnSubscribeListener.onSubscribe(column);
+//                    mOnSubscribeListener.onSubscribe(column);
                 }
             }
         });

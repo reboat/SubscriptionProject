@@ -5,7 +5,7 @@ import com.daily.news.subscription.detail.DetailColumn;
 import com.daily.news.subscription.home.SubscriptionResponse;
 import com.daily.news.subscription.more.category.Category;
 import com.daily.news.subscription.more.category.CategoryResponse;
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +67,8 @@ public class MockResponse {
     }
 
 
-    public List<Column> getRecommedResponse() {
-        List<Column> recommends = new ArrayList<>();
+    public List<ColumnResponse.DataBean.ElementsBean> getRecommedResponse() {
+        List<ColumnResponse.DataBean.ElementsBean> recommends = new ArrayList<>();
         String[] names = {"发", "浙", "报", "人", "现", "锄", "额", "和"};
         String[] imags = {
                 "http://img3.imgtn.bdimg.com/it/u=826828499,2412343960&fm=26&gp=0.jpg",
@@ -79,7 +79,7 @@ public class MockResponse {
         };
         Random random = new Random();
         for (int i = 0; i < 30; i++) {
-            Column recommend = new Column();
+            ColumnResponse.DataBean.ElementsBean recommend = new ColumnResponse.DataBean.ElementsBean();
             recommend.article_count = random.nextInt(10000);
             recommend.name = "";
             for (int j = 0; j < 4; j++) {
@@ -89,7 +89,7 @@ public class MockResponse {
             recommend.subscribe_count = random.nextInt(10000);
             recommend.subscribed = random.nextBoolean();
             recommend.pic_url = imags[random.nextInt(imags.length)];
-            recommend.id = UUID.randomUUID().toString();
+            recommend.id = 11;
             recommends.add(recommend);
         }
         return recommends;
@@ -185,12 +185,12 @@ public class MockResponse {
                 category.class_name = calssNames[random.nextInt(calssNames.length)] + integer;
                 category.columns = new ArrayList<>();
                 for (int i = 0; i < 100; i++) {
-                    Column column = new Column();
+                    ColumnResponse.DataBean.ElementsBean column = new ColumnResponse.DataBean.ElementsBean();
                     column.name = category.class_name + integer + i;
                     column.article_count = random.nextInt(1000);
                     column.pic_url = "";
                     column.subscribe_count = random.nextInt(100);
-                    column.id = String.valueOf(random.nextInt(10000) + 6000);
+                    column.id = random.nextInt(10000) + 6000;
                     category.columns.add(column);
                 }
                 return Observable.just(category);

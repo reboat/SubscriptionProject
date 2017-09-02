@@ -29,11 +29,10 @@ import butterknife.ButterKnife;
 public class ColumnFragment extends Fragment implements ColumnContract.View,
         ColumnAdapter.OnSubscribeListener,
         OnItemClickListener<Column> {
-    public static final String ARG_ITEM_ID = "item_id";
 
     @BindView(R2.id.column_recyclerView)
     XRecyclerView mRecyclerView;
-    List<Column> mColumns;
+    List<ColumnResponse.DataBean.ElementsBean> mColumns;
     ColumnAdapter mColumnAdapter;
 
     HeaderAdapter mAdapter;
@@ -45,6 +44,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @BindView(R2.id.column_progressBar)
     ProgressBar mProgressBar;
 
+    @BindView(R2.id.column_empty_container)
+    View mEmptyContainer;
+
 
     private ColumnContract.Presenter mPresenter;
 
@@ -54,17 +56,21 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            String itemId = getArguments().getString(ARG_ITEM_ID);
-            mPresenter.setItemId(itemId);
-        }
         mAdapter = new HeaderAdapter();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe();
+        sendRequest(getParams());
+    }
+
+    public void sendRequest(Object... params) {
+        mPresenter.subscribe(params);
+    }
+
+    public Object[] getParams() {
+        return null;
     }
 
     @Override
@@ -131,8 +137,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     }
 
     @Override
-    public void updateValue(List<Column> columnsBeen) {
-        mColumnAdapter.updateValues(columnsBeen);
+    public void updateValue(ColumnResponse.DataBean dataBean) {
+
+        if (dataBean.elements == null || dataBean.elements.size() == 0) {
+            mEmptyContainer.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyContainer.setVisibility(View.GONE);
+        }
+
+        mColumnAdapter.updateValues(dataBean.elements);
         mAdapter.notifyDataSetChanged();
     }
 

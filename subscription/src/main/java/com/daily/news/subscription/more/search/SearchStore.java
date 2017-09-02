@@ -1,7 +1,11 @@
 package com.daily.news.subscription.more.search;
 
 import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.ColumnStore;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -43,5 +47,20 @@ public class SearchStore extends ColumnStore {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
+    }
+
+    @Override
+    public APIBaseTask getTask(APICallBack<ColumnResponse.DataBean> apiCallBack) {
+        return new APIGetTask<ColumnResponse.DataBean>(apiCallBack) {
+            @Override
+            protected void onSetupParams(Object... params) {
+                put("keyword",params);
+            }
+
+            @Override
+            protected String getApi() {
+                return "/api/column_class/search";
+            }
+        };
     }
 }

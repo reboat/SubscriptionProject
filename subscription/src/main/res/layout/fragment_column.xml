@@ -5,7 +5,23 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:textIsSelectable="true"
+             android:background="#ffffff"
              tools:context="com.daily.news.subscription.more.column.ColumnFragment">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/column_empty_container"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="无搜索结果"/>
+
+    </LinearLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/column_recyclerView"
@@ -15,10 +31,10 @@
 
     <LinearLayout
         android:id="@+id/column_tip_container"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/column_progressBar"

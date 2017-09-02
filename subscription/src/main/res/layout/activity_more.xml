@@ -29,6 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="39.5dp"
                 android:hint="请输入关键词"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
                 android:textColorHint="@color/search_text_color_hint"
                 android:textSize="14sp"/>
         </LinearLayout>

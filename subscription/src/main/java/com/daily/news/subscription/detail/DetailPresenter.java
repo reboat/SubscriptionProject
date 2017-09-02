@@ -26,7 +26,7 @@ public class DetailPresenter extends SubscribePresenter implements DetailContrac
     }
 
     @Override
-    public void subscribe(String... params) {
+    public void subscribe(Object... params) {
         mDetailView.showProgressBar();
         Disposable disposable = mDetailStore.getFlowable("")
                 .subscribe(new Consumer<DetailColumn>() {

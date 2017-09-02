@@ -22,7 +22,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     }
 
     @Override
-    public void subscribe(String... params) {
+    public void subscribe(Object... params) {
         mMoreView.showProgressBar();
         Disposable disposable = mMoreStore.getFlowable("")
                 .subscribe(new Consumer<CategoryResponse>() {

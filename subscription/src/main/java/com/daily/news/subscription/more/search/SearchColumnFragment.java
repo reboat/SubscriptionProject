@@ -1,5 +1,7 @@
 package com.daily.news.subscription.more.search;
 
+import android.os.Bundle;
+
 import com.daily.news.subscription.more.column.ColumnFragment;
 
 /**
@@ -7,5 +9,18 @@ import com.daily.news.subscription.more.column.ColumnFragment;
  */
 
 public class SearchColumnFragment extends ColumnFragment {
+    private String mKeyword;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mKeyword = getArguments().getString("keyword");
+        }
+    }
+
+    @Override
+    public String[] getParams() {
+        return new String[]{mKeyword};
+    }
 }

@@ -1,6 +1,8 @@
 package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.subscribe.SubscribeStore;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import java.util.List;
 
@@ -11,9 +13,9 @@ import io.reactivex.Flowable;
  */
 
 public class LocalColumnStore extends SubscribeStore implements ColumnContract.Store {
-    private List<Column> mColumns;
+    private List<ColumnResponse.DataBean.ElementsBean> mColumns;
 
-    public LocalColumnStore(List<Column> columns) {
+    public LocalColumnStore(List<ColumnResponse.DataBean.ElementsBean> columns) {
         mColumns = columns;
     }
 
@@ -23,4 +25,11 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
     }
 
 
+    @Override
+    public APIBaseTask getTask(APICallBack apiCallBack) {
+        ColumnResponse.DataBean dataBean=new ColumnResponse.DataBean();
+        dataBean.elements=mColumns;
+        apiCallBack.onSuccess(dataBean);
+        return null;
+    }
 }

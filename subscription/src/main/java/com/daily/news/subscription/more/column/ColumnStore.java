@@ -1,6 +1,8 @@
 package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.subscribe.SubscribeStore;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -44,4 +46,8 @@ public class ColumnStore extends SubscribeStore implements ColumnContract.Store<
                 .subscribeOn(Schedulers.newThread());
     }
 
+    @Override
+    public APIBaseTask getTask(APICallBack<ColumnResponse.DataBean> apiCallBack) {
+        return null;
+    }
 }
