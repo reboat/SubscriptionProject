@@ -1,6 +1,8 @@
 package com.daily.news.subscription.subscribe;
 
 import com.daily.news.subscription.more.column.Column;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import io.reactivex.Flowable;
 
@@ -21,5 +23,7 @@ public interface SubscribeContract {
 
     interface Store {
         Flowable<Column> getSubmitSubscribeFlowable(Column column);
+
+        APIBaseTask getSubmitSubscribeTask(APICallBack<String> apiCallBack);
     }
 }

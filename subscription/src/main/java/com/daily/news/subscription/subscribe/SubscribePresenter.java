@@ -1,10 +1,9 @@
 package com.daily.news.subscription.subscribe;
 
 import com.daily.news.subscription.more.column.Column;
+import com.zjrb.core.api.callback.APICallBack;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by lixinke on 2017/8/25.
@@ -23,16 +22,29 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
 
     @Override
     public void submitSubscribe(final Column column) {
-        mStore.getSubmitSubscribeFlowable(column).subscribe(new Consumer<Column>() {
+//        mStore.getSubmitSubscribeFlowable(column).subscribe(new Consumer<Column>() {
+//            @Override
+//            public void accept(@NonNull Column column) throws Exception {
+//                mView.subscribeSuc(column);
+//            }
+//        }, new Consumer<Throwable>() {
+//            @Override
+//            public void accept(@NonNull Throwable throwable) throws Exception {
+//                mView.subscribeFail(column, throwable.getMessage());
+//            }
+//        });
+
+        mStore.getSubmitSubscribeTask(new APICallBack<String>() {
             @Override
-            public void accept(@NonNull Column column) throws Exception {
+            public void onSuccess(String data) {
                 mView.subscribeSuc(column);
             }
-        }, new Consumer<Throwable>() {
+
             @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-                mView.subscribeFail(column, throwable.getMessage());
+            public void onError(String errMsg, int errCode) {
+                super.onError(errMsg, errCode);
+                mView.subscribeFail(column,errMsg);
             }
-        });
+        }).exe(column.id,!column.subscribed);
     }
 }

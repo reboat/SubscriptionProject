@@ -1,6 +1,9 @@
 package com.daily.news.subscription.subscribe;
 
 import com.daily.news.subscription.more.column.Column;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -31,5 +34,21 @@ public class SubscribeStore implements SubscribeContract.Store {
                 }
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public APIBaseTask getSubmitSubscribeTask(APICallBack<String> apiCallBack) {
+        return new APIGetTask(apiCallBack) {
+            @Override
+            protected void onSetupParams(Object... params) {
+                put("column_id",params[0]);
+                put("do_subscribe",params[1]);
+            }
+
+            @Override
+            protected String getApi() {
+                return "/api/column/subscribe_action";
+            }
+        };
     }
 }
