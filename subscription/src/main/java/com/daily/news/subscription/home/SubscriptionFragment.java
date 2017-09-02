@@ -73,7 +73,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe();
+        mPresenter.subscribe("杭州");
     }
 
     @Override
@@ -104,7 +104,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mRefreshView.setOnRefreshListener(new HeaderRefresh.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.onRefresh();
+                mPresenter.onRefresh("杭州");
             }
         });
         mHeaderAdapter.addHeaderView(mRefreshView.getItemView());
@@ -126,11 +126,11 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     }
 
     @Override
-    public void onRefreshComplete(SubscriptionResponse subscriptionResponse) {
+    public void onRefreshComplete(SubscriptionResponse.DataBean data) {
         mRefreshView.setRefreshing(false);
         //RecycleView会缓存ViewHolder，Adapter中的数据结构发生变化，但缓存的ViewHolder没有变化导致crash。重新设置Adapter清除缓存。
         mRecyclerView.setAdapter(mHeaderAdapter);
-        updateValue(subscriptionResponse.data);
+        updateValue(data);
     }
 
     @Override
@@ -212,11 +212,13 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         HeaderAdapter adapter = new HeaderAdapter();
 
         final View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.focus_list);
-        adapter.addHeaderView(bannerView);
+        if (bannerView != null) {
+            adapter.addHeaderView(bannerView);
+        }
 
         View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
         adapter.addHeaderView(moreSubscriptionView);
-
+//
         ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.recommend_list);
         columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
             @Override
@@ -286,6 +288,9 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
      */
     @NonNull
     private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
+        if (focuses == null || focuses.size() == 0) {
+            return null;
+        }
         final LoopView loopView = (LoopView) inflater.inflate(R.layout.item_focus, container, false);
         Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<LoopViewEntity>>() {
             @Override

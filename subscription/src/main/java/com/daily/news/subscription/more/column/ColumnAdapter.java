@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.OnItemClickListener;
@@ -72,6 +74,10 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
                 }
             }
         });
+        RequestOptions options=new RequestOptions();
+        options.centerCrop();
+        options.placeholder(R.drawable.column_placeholder_big);
+        Glide.with(holder.itemView).load(column.pic_url).apply(options).into(holder.mImageView);
     }
 
     @Override

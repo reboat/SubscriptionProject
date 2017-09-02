@@ -10,7 +10,7 @@ public class Column implements Parcelable {
     public int subscribe_count;
     public int article_count;
     public boolean subscribed;
-    public int sort_number;
+    public double sort_number;
 
     @Override
     public int describeContents() {
@@ -25,7 +25,7 @@ public class Column implements Parcelable {
         dest.writeInt(this.subscribe_count);
         dest.writeInt(this.article_count);
         dest.writeByte(this.subscribed ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.sort_number);
+        dest.writeDouble(this.sort_number);
     }
 
     public Column() {
@@ -38,7 +38,7 @@ public class Column implements Parcelable {
         this.subscribe_count = in.readInt();
         this.article_count = in.readInt();
         this.subscribed = in.readByte() != 0;
-        this.sort_number = in.readInt();
+        this.sort_number = in.readDouble();
     }
 
     public static final Parcelable.Creator<Column> CREATOR = new Parcelable.Creator<Column>() {

@@ -2,6 +2,9 @@ package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.subscribe.SubscribeStore;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -40,5 +43,20 @@ public class SubscriptionStore extends SubscribeStore implements SubscriptionCon
         })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public APIBaseTask getTask(APICallBack<SubscriptionResponse.DataBean> apiCallBack) {
+        return  new APIGetTask<SubscriptionResponse.DataBean>(apiCallBack) {
+            @Override
+            protected void onSetupParams(Object... params) {
+                put("area", params[0]);
+            }
+
+            @Override
+            protected String getApi() {
+                return "/api/column/first_page_info";
+            }
+        }.setShortestTime(300);
     }
 }

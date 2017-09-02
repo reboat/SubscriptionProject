@@ -8,7 +8,7 @@ public class Category {
     public String class_name;
     public int class_id;
     public boolean is_selected = false;
-    public int class_sort_number;
+    public double class_sort_number;
     public List<Column> columns;
 }
 
