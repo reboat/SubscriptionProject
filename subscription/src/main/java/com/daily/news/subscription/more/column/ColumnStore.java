@@ -21,17 +21,17 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/7/17.
  */
 
-public class ColumnStore extends SubscribeStore implements ColumnContract.Store<List<Column>> {
+public class ColumnStore extends SubscribeStore implements ColumnContract.Store<List<ColumnResponse.DataBean.ElementsBean>> {
     @Override
-    public Flowable<List<Column>> getFlowable(String url) {
+    public Flowable<List<ColumnResponse.DataBean.ElementsBean>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<Column>>>() {
+                .flatMap(new Function<Long, Publisher<List<ColumnResponse.DataBean.ElementsBean>>>() {
                     @Override
-                    public Publisher<List<Column>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<ColumnResponse.DataBean.ElementsBean>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<Column> columns = new ArrayList<>();
+                        List<ColumnResponse.DataBean.ElementsBean> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            Column column = new Column();
+                            ColumnResponse.DataBean.ElementsBean column = new ColumnResponse.DataBean.ElementsBean();
                             column.article_count = random.nextInt(1000);
                             column.subscribe_count = random.nextInt(1000);
                             column.name = "文化中国" + random.nextInt(1000);

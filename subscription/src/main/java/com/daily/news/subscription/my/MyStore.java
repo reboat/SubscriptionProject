@@ -1,6 +1,6 @@
 package com.daily.news.subscription.my;
 
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.ColumnStore;
 
 import org.reactivestreams.Publisher;
@@ -22,15 +22,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MyStore extends ColumnStore {
     @Override
-    public Flowable<List<Column>> getFlowable(String url) {
+    public Flowable<List<ColumnResponse.DataBean.ElementsBean>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<Column>>>() {
+                .flatMap(new Function<Long, Publisher<List<ColumnResponse.DataBean.ElementsBean>>>() {
                     @Override
-                    public Publisher<List<Column>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<ColumnResponse.DataBean.ElementsBean>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<Column> columns = new ArrayList<>();
+                        List<ColumnResponse.DataBean.ElementsBean> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            Column column = new Column();
+                            ColumnResponse.DataBean.ElementsBean column = new ColumnResponse.DataBean.ElementsBean();
                             column.article_count = random.nextInt();
                             column.subscribe_count = random.nextInt();
                             column.name = "搜索数据" + random.nextInt();
