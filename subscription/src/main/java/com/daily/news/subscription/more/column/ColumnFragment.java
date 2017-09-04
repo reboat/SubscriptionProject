@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class ColumnFragment extends Fragment implements ColumnContract.View,
         ColumnAdapter.OnSubscribeListener,
-        OnItemClickListener<Column> {
+        OnItemClickListener<ColumnResponse.DataBean.ElementsBean> {
 
     @BindView(R2.id.column_recyclerView)
     XRecyclerView mRecyclerView;
@@ -101,8 +101,8 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     }
 
     @Override
-    public void onItemClick(int position, Column bean) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", bean.id).build().toString());
+    public void onItemClick(int position, ColumnResponse.DataBean.ElementsBean bean) {
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(bean.id)).build().toString());
     }
 
     @Override
