@@ -55,6 +55,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     private SubscriptionContract.Presenter mPresenter;
     private HeaderRefresh mRefreshView;
     private Unbinder mUnBinder;
+    private FooterLoadMore<ArticleResponse.DataBean> mFooterLoadMore;
 
     public SubscriptionFragment() {
     }
@@ -172,7 +173,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         articleAdapter.addHeaderView(mRefreshView.getItemView());
         articleAdapter.addHeaderView(headerView);
 
-        FooterLoadMore<ArticleResponse.DataBean> loadMoreView = new FooterLoadMore<>(mRecyclerView, new LoadMoreListener<ArticleResponse.DataBean>() {
+         mFooterLoadMore = new FooterLoadMore<>(mRecyclerView, new LoadMoreListener<ArticleResponse.DataBean>() {
             @Override
             public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
                 articles.addAll(data.elements);
@@ -193,10 +194,15 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
                         return "/api/column/my_article_list";
                     }
                 };
-                task.exe(articles.get(articles.size() - 1).sort_number, 10);
+
+                if(articles!=null && articles.size()>0){
+                    task.exe(articles.get(articles.size() - 1).sort_number, 10);
+                }else{
+                    mFooterLoadMore.setState(LoadMore.TYPE_NO_MORE);
+                }
             }
         });
-        articleAdapter.addFooterView(loadMoreView.getItemView());
+        articleAdapter.addFooterView(mFooterLoadMore.getItemView());
         return articleAdapter;
     }
 
