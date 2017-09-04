@@ -164,6 +164,11 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     public void updateValue(ColumnResponse.DataBean dataBean) {
 
         if (dataBean.elements == null || dataBean.elements.size() == 0) {
+            View emptyView = emptyView(LayoutInflater.from(getActivity()), (ViewGroup) getView());
+            if (emptyView != null) {
+                mEmptyContainer.removeAllViews();
+                mEmptyContainer.addView(emptyView);
+            }
             mEmptyContainer.setVisibility(View.VISIBLE);
         } else {
             mEmptyContainer.setVisibility(View.GONE);

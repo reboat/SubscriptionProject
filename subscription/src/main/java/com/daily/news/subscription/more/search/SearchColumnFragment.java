@@ -1,7 +1,11 @@
 package com.daily.news.subscription.more.search;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
 
 /**
@@ -22,5 +26,10 @@ public class SearchColumnFragment extends ColumnFragment {
     @Override
     public String[] getParams() {
         return new String[]{mKeyword};
+    }
+
+    @Override
+    public View emptyView(LayoutInflater inflater, ViewGroup parent) {
+        return inflater.inflate(R.layout.search_empty,parent,false);
     }
 }
