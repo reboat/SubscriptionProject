@@ -17,7 +17,7 @@ public class ColumnResponse {
         public List<ElementsBean> elements;
 
         public static class ElementsBean {
-            public int id;
+            public long id;
             public String name;
             public String pic_url;
             public int subscribe_count;

@@ -41,8 +41,8 @@ public class SubscribeStore implements SubscribeContract.Store {
         return new APIPostTask(apiCallBack) {
             @Override
             protected void onSetupParams(Object... params) {
-                put("column_id",params[0]);
-                put("do_subscribe",params[1]);
+                put("column_id",7);
+                put("do_subscribe",true);
             }
 
             @Override

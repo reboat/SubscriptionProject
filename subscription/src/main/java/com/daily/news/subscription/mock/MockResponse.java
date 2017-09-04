@@ -3,7 +3,6 @@ package com.daily.news.subscription.mock;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.detail.DetailColumn;
 import com.daily.news.subscription.home.SubscriptionResponse;
-import com.daily.news.subscription.more.category.Category;
 import com.daily.news.subscription.more.category.CategoryResponse;
 import com.daily.news.subscription.more.column.ColumnResponse;
 
@@ -175,11 +174,12 @@ public class MockResponse {
 
         final CategoryResponse response = new CategoryResponse();
         response.code = 200;
-        response.elements = new ArrayList<>();
-        Observable.range(0, 50).flatMap(new Function<Integer, ObservableSource<Category>>() {
+        response.data=new CategoryResponse.DataBean();
+        response.data.elements = new ArrayList<>();
+        Observable.range(0, 50).flatMap(new Function<Integer, ObservableSource<CategoryResponse.DataBean.CategoryBean>>() {
             @Override
-            public ObservableSource<Category> apply(@NonNull Integer integer) throws Exception {
-                Category category = new Category();
+            public ObservableSource<CategoryResponse.DataBean.CategoryBean> apply(@NonNull Integer integer) throws Exception {
+                CategoryResponse.DataBean.CategoryBean category = new CategoryResponse.DataBean.CategoryBean();
                 category.is_selected = false;
                 category.class_id = integer;
                 category.class_name = calssNames[random.nextInt(calssNames.length)] + integer;
@@ -195,10 +195,10 @@ public class MockResponse {
                 }
                 return Observable.just(category);
             }
-        }).toList().subscribe(new Consumer<List<Category>>() {
+        }).toList().subscribe(new Consumer<List<CategoryResponse.DataBean.CategoryBean>>() {
             @Override
-            public void accept(@NonNull List<Category> categories) throws Exception {
-                response.elements = categories;
+            public void accept(@NonNull List<CategoryResponse.DataBean.CategoryBean> categories) throws Exception {
+                response.data.elements = categories;
             }
         });
 

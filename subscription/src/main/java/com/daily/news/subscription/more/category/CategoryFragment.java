@@ -32,7 +32,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
     CategoryAdapter mCategoryAdapter;
-    List<Category> mCategories;
+    List<CategoryResponse.DataBean.CategoryBean> mCategories;
 
     @BindView(R2.id.column_tip_container)
     View mTipContainer;
@@ -80,13 +80,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void updateValues(CategoryResponse response) {
-        mCategoryAdapter.updateValue(response.elements);
-        response.elements.get(0).is_selected = true;
+        mCategoryAdapter.updateValue(response.data.elements);
+        response.data.elements.get(0).is_selected = true;
         ColumnFragment fragment = new ColumnFragment();
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.more_category_detail_container, fragment)
                 .commit();
-        new ColumnPresenter(fragment, new LocalColumnStore(response.elements.get(0).columns));
+        new ColumnPresenter(fragment, new LocalColumnStore(response.data.elements.get(0).columns));
     }
 
     @Override
@@ -116,13 +116,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-        private final List<Category> mValues;
+        private final List<CategoryResponse.DataBean.CategoryBean> mValues;
 
-        public CategoryAdapter(List<Category> items) {
+        public CategoryAdapter(List<CategoryResponse.DataBean.CategoryBean> items) {
             mValues = items;
         }
 
-        public void updateValue(List<Category> items) {
+        public void updateValue(List<CategoryResponse.DataBean.CategoryBean> items) {
             mValues.clear();
             mValues.addAll(items);
             notifyDataSetChanged();
@@ -139,7 +139,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
         @Override
         public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, final int position) {
-            final Category category = mValues.get(position);
+            final CategoryResponse.DataBean.CategoryBean category = mValues.get(position);
             holder.mItem = mValues.get(position);
             int textSize = category.is_selected ? 20 : 17;
             holder.mCategoryView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
@@ -171,7 +171,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             @BindView(R2.id.more_item_category_name)
             TextView mCategoryView;
             public View mView;
-            public Category mItem;
+            public CategoryResponse.DataBean.CategoryBean mItem;
 
             public ViewHolder(View view) {
                 super(view);
