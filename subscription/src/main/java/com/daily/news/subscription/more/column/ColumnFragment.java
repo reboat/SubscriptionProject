@@ -45,7 +45,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     ProgressBar mProgressBar;
 
     @BindView(R2.id.column_empty_container)
-    View mEmptyContainer;
+    ViewGroup mEmptyContainer;
 
 
     private ColumnContract.Presenter mPresenter;
@@ -115,6 +115,30 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
 
+    }
+
+    public void removeItem(ColumnResponse.DataBean.ColumnBean bean) {
+        if (mColumns != null && mColumns.size() > 0) {
+            mColumns.remove(bean);
+            mAdapter.notifyDataSetChanged();
+        }
+        checkEmpty();
+    }
+
+    private void checkEmpty() {
+        if (mColumns == null || mColumns.size() == 0) {
+            View emptyView = emptyView(LayoutInflater.from(getContext()), (ViewGroup) getView());
+            if (emptyView != null) {
+                mEmptyContainer.removeAllViews();
+                mEmptyContainer.addView(emptyView);
+                mEmptyContainer.setVisibility(View.VISIBLE);
+            }
+
+        }
+    }
+
+    public View emptyView(LayoutInflater inflater, ViewGroup parent) {
+        return null;
     }
 
     @Override
