@@ -79,6 +79,9 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         SearchColumnFragment fragment= (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
         if (fragment == null) {
             fragment = new SearchColumnFragment();
+            Bundle args=new Bundle();
+            args.putString("keyword",keyword);
+            fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.more_container, fragment,"search")
                     .addToBackStack("search")

@@ -53,7 +53,7 @@ public class SearchStore extends ColumnStore {
         return new APIGetTask<ColumnResponse.DataBean>(apiCallBack) {
             @Override
             protected void onSetupParams(Object... params) {
-                put("keyword",params);
+                put("keyword",params[0]);
             }
 
             @Override
