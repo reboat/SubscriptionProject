@@ -28,11 +28,11 @@ import butterknife.ButterKnife;
 
 public class ColumnFragment extends Fragment implements ColumnContract.View,
         ColumnAdapter.OnSubscribeListener,
-        OnItemClickListener<ColumnResponse.DataBean.ElementsBean> {
+        OnItemClickListener<ColumnResponse.DataBean.ColumnBean> {
 
     @BindView(R2.id.column_recyclerView)
     XRecyclerView mRecyclerView;
-    List<ColumnResponse.DataBean.ElementsBean> mColumns;
+    List<ColumnResponse.DataBean.ColumnBean> mColumns;
     ColumnAdapter mColumnAdapter;
 
     HeaderAdapter mAdapter;
@@ -101,24 +101,24 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     }
 
     @Override
-    public void onItemClick(int position, ColumnResponse.DataBean.ElementsBean bean) {
+    public void onItemClick(int position, ColumnResponse.DataBean.ColumnBean bean) {
         Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(bean.id)).build().toString());
     }
 
     @Override
-    public void onSubscribe(ColumnResponse.DataBean.ElementsBean bean) {
+    public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         mPresenter.submitSubscribe(bean);
         bean.subscribed = !bean.subscribed;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
 
     }
 
     @Override
-    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         bean.subscribed = !bean.subscribed;
         mAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

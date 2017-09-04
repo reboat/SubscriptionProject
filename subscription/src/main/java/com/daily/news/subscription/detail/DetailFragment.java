@@ -133,12 +133,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         modifySubscribeBtnState(bean.subscribed);
     }
 
     @Override
-    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         modifySubscribeBtnState(!bean.subscribed);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

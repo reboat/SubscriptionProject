@@ -220,9 +220,9 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         adapter.addHeaderView(moreSubscriptionView);
 //
         ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.recommend_list);
-        columnAdapter.setOnItemClickListener(new OnItemClickListener<ColumnResponse.DataBean.ElementsBean>() {
+        columnAdapter.setOnItemClickListener(new OnItemClickListener<ColumnResponse.DataBean.ColumnBean>() {
             @Override
-            public void onItemClick(int position, ColumnResponse.DataBean.ElementsBean item) {
+            public void onItemClick(int position, ColumnResponse.DataBean.ColumnBean item) {
                 Nav.with(getActivity())
                         .to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(item.id))
                         .build(), 0);
@@ -230,7 +230,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         });
         columnAdapter.setOnSubscribeListener(new ColumnAdapter.OnSubscribeListener() {
             @Override
-            public void onSubscribe(ColumnResponse.DataBean.ElementsBean bean) {
+            public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
                 mPresenter.submitSubscribe(bean);
                 bean.subscribed = !bean.subscribed;
                 mHeaderAdapter.notifyDataSetChanged();
@@ -241,12 +241,12 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     }
 
     @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
 
     }
 
     @Override
-    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         bean.subscribed = !bean.subscribed;
         mHeaderAdapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

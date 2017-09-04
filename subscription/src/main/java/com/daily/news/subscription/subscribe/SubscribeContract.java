@@ -12,18 +12,18 @@ import io.reactivex.Flowable;
 
 public interface SubscribeContract {
     interface Presenter {
-        void submitSubscribe(ColumnResponse.DataBean.ElementsBean column);
+        void submitSubscribe(ColumnResponse.DataBean.ColumnBean column);
     }
 
     interface View {
-        void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean);
+        void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean);
 
-        void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message);
+        void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message);
     }
 
     interface Store {
-        Flowable<ColumnResponse.DataBean.ElementsBean> getSubmitSubscribeFlowable(ColumnResponse.DataBean.ElementsBean column);
+        Flowable<ColumnResponse.DataBean.ColumnBean> getSubmitSubscribeFlowable(ColumnResponse.DataBean.ColumnBean column);
 
-        APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ElementsBean> apiCallBack);
+        APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ColumnBean> apiCallBack);
     }
 }

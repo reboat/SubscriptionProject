@@ -14,9 +14,9 @@ public class ColumnResponse {
 
 
     public static class DataBean {
-        public List<ElementsBean> elements;
+        public List<ColumnBean> elements;
 
-        public static class ElementsBean {
+        public static class ColumnBean {
             public long id;
             public String name;
             public String pic_url;

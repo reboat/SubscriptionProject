@@ -25,15 +25,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SearchStore extends ColumnStore {
     @Override
-    public Flowable<List<ColumnResponse.DataBean.ElementsBean>> getFlowable(String url) {
+    public Flowable<List<ColumnResponse.DataBean.ColumnBean>> getFlowable(String url) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Long, Publisher<List<ColumnResponse.DataBean.ElementsBean>>>() {
+                .flatMap(new Function<Long, Publisher<List<ColumnResponse.DataBean.ColumnBean>>>() {
                     @Override
-                    public Publisher<List<ColumnResponse.DataBean.ElementsBean>> apply(@NonNull Long aLong) throws Exception {
+                    public Publisher<List<ColumnResponse.DataBean.ColumnBean>> apply(@NonNull Long aLong) throws Exception {
                         Random random = new Random();
-                        List<ColumnResponse.DataBean.ElementsBean> columns = new ArrayList<>();
+                        List<ColumnResponse.DataBean.ColumnBean> columns = new ArrayList<>();
                         for (int i = 0; i < 30; i++) {
-                            ColumnResponse.DataBean.ElementsBean column = new ColumnResponse.DataBean.ElementsBean();
+                            ColumnResponse.DataBean.ColumnBean column = new ColumnResponse.DataBean.ColumnBean();
                             column.article_count = random.nextInt();
                             column.subscribe_count = random.nextInt();
                             column.name = "搜索数据" + random.nextInt();

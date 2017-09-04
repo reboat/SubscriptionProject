@@ -21,7 +21,7 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
     }
 
     @Override
-    public void submitSubscribe(final ColumnResponse.DataBean.ElementsBean column) {
+    public void submitSubscribe(final ColumnResponse.DataBean.ColumnBean column) {
 //        mStore.getSubmitSubscribeFlowable(column).subscribe(new Consumer<Column>() {
 //            @Override
 //            public void accept(@NonNull Column column) throws Exception {
@@ -34,9 +34,9 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
 //            }
 //        });
 
-        mStore.getSubmitSubscribeTask(new APICallBack<ColumnResponse.DataBean.ElementsBean>() {
+        mStore.getSubmitSubscribeTask(new APICallBack<ColumnResponse.DataBean.ColumnBean>() {
             @Override
-            public void onSuccess(ColumnResponse.DataBean.ElementsBean data) {
+            public void onSuccess(ColumnResponse.DataBean.ColumnBean data) {
                 mView.subscribeSuc(column);
             }
 

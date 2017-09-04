@@ -13,9 +13,9 @@ import io.reactivex.Flowable;
  */
 
 public class LocalColumnStore extends SubscribeStore implements ColumnContract.Store {
-    private List<ColumnResponse.DataBean.ElementsBean> mColumns;
+    private List<ColumnResponse.DataBean.ColumnBean> mColumns;
 
-    public LocalColumnStore(List<ColumnResponse.DataBean.ElementsBean> columns) {
+    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns) {
         mColumns = columns;
     }
 

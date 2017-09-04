@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SubscribeStore implements SubscribeContract.Store {
     @Override
-    public Flowable getSubmitSubscribeFlowable(final ColumnResponse.DataBean.ElementsBean s) {
+    public Flowable getSubmitSubscribeFlowable(final ColumnResponse.DataBean.ColumnBean s) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
             @Override
             public Publisher<?> apply(@NonNull Long aLong) throws Exception {
@@ -37,8 +37,8 @@ public class SubscribeStore implements SubscribeContract.Store {
     }
 
     @Override
-    public APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ElementsBean> apiCallBack) {
-        return new APIPostTask<ColumnResponse.DataBean.ElementsBean>(apiCallBack) {
+    public APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ColumnBean> apiCallBack) {
+        return new APIPostTask<ColumnResponse.DataBean.ColumnBean>(apiCallBack) {
             @Override
             protected void onSetupParams(Object... params) {
                 put("column_id",params[0]);

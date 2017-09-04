@@ -66,8 +66,8 @@ public class MockResponse {
     }
 
 
-    public List<ColumnResponse.DataBean.ElementsBean> getRecommedResponse() {
-        List<ColumnResponse.DataBean.ElementsBean> recommends = new ArrayList<>();
+    public List<ColumnResponse.DataBean.ColumnBean> getRecommedResponse() {
+        List<ColumnResponse.DataBean.ColumnBean> recommends = new ArrayList<>();
         String[] names = {"发", "浙", "报", "人", "现", "锄", "额", "和"};
         String[] imags = {
                 "http://img3.imgtn.bdimg.com/it/u=826828499,2412343960&fm=26&gp=0.jpg",
@@ -78,7 +78,7 @@ public class MockResponse {
         };
         Random random = new Random();
         for (int i = 0; i < 30; i++) {
-            ColumnResponse.DataBean.ElementsBean recommend = new ColumnResponse.DataBean.ElementsBean();
+            ColumnResponse.DataBean.ColumnBean recommend = new ColumnResponse.DataBean.ColumnBean();
             recommend.article_count = random.nextInt(10000);
             recommend.name = "";
             for (int j = 0; j < 4; j++) {
@@ -185,7 +185,7 @@ public class MockResponse {
                 category.class_name = calssNames[random.nextInt(calssNames.length)] + integer;
                 category.columns = new ArrayList<>();
                 for (int i = 0; i < 100; i++) {
-                    ColumnResponse.DataBean.ElementsBean column = new ColumnResponse.DataBean.ElementsBean();
+                    ColumnResponse.DataBean.ColumnBean column = new ColumnResponse.DataBean.ColumnBean();
                     column.name = category.class_name + integer + i;
                     column.article_count = random.nextInt(1000);
                     column.pic_url = "";

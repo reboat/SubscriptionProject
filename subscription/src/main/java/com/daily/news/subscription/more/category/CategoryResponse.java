@@ -20,7 +20,7 @@ public class CategoryResponse {
             public int class_id;
             public long class_sort_number;
             public boolean is_selected = false;
-            public List<ColumnResponse.DataBean.ElementsBean> columns;
+            public List<ColumnResponse.DataBean.ColumnBean> columns;
         }
     }
 }
