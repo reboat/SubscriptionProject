@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
@@ -49,7 +50,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     TextView mTipView;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
-    private DetailColumn mDetailColumn;
+    private DetailResponse.DataBean.DetailBean mDetailColumn;
 
 
     public DetailFragment() {
@@ -82,7 +83,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe(mUid, String.valueOf(DEFAULT_PAGE_SIZE));
+        mPresenter.subscribe(mUid);
     }
 
     @Override
@@ -98,20 +99,25 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
-    public void updateValue(DetailColumn detailColumn) {
-        mDetailColumn = detailColumn;
-        Glide.with(this).load(detailColumn.pic_url).into(mImageView);
-        mTitleView.setText(detailColumn.name);
-        mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", detailColumn.subscribe_count, detailColumn.article_count));
-        mDescriptionView.setText(detailColumn.description);
-        String subscriptionText = detailColumn.subscribed ? "已经订阅" : "订阅";
+    public void updateValue(DetailResponse.DataBean data) {
+        mDetailColumn = data.detail;
+        RequestOptions options=new RequestOptions();
+        options.centerCrop();
+        options.placeholder(R.drawable.column_placeholder_big);
+        Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
+        mTitleView.setText(data.detail.name);
+        mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", data.detail.subscribe_count, data.detail.article_count));
+        mDescriptionView.setText(data.detail.description);
+        String subscriptionText = data.detail.subscribed ? "已经订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
-        mSubscriptionView.setSelected(detailColumn.subscribed);
-        Glide.with(this).load(detailColumn.background_url).into(mHeaderImageView);
+        mSubscriptionView.setSelected(data.detail.subscribed);
+
+        options.placeholder(R.drawable.detail_column_default);
+        Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
 
         ArticleFragment fragment = new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-        new ArticlePresenter(fragment, new DetailArticleStore(mUid,detailColumn.elements));
+        new ArticlePresenter(fragment, new DetailArticleStore(mUid,data.elements));
     }
 
     @Override

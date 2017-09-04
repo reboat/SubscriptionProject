@@ -21,6 +21,7 @@ public class SubscriptionResponse {
         public String doc_title;
         public String doc_url;
         public String pic_url;
-        public int sort_number;
+        public long sort_number;
+        public int channel_article_id;
     }
 }

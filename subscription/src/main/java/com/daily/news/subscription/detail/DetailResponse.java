@@ -1,5 +1,8 @@
 package com.daily.news.subscription.detail;
 
+import com.daily.news.subscription.article.ArticleResponse;
+import com.daily.news.subscription.more.column.ColumnResponse;
+
 import java.util.List;
 
 /**
@@ -7,8 +10,20 @@ import java.util.List;
  */
 
 public class DetailResponse {
-    private int code;
-    private String message;
-    private String request_id;
-    private List<DetailColumn> detailColumns;
+    public int code;
+    public String message;
+    public String request_id;
+    public DataBean data;
+
+    public static class DataBean {
+
+        public DetailBean detail;
+        public List<ArticleResponse.DataBean.Article> elements;
+
+        public static class DetailBean extends ColumnResponse.DataBean.ColumnBean {
+            public String background_url;
+            public String description;
+            public long sort_number;
+        }
+    }
 }
