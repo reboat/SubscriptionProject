@@ -1,6 +1,9 @@
 package com.daily.news.subscription.more.category;
 
 import com.daily.news.subscription.mock.MockResponse;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -36,5 +39,20 @@ public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
     @Override
     public String getUrl() {
         return MORE_URL;
+    }
+
+    @Override
+    public APIBaseTask<CategoryResponse.DataBean> getTask(APICallBack<CategoryResponse.DataBean> apiCallBack) {
+        return new APIGetTask<CategoryResponse.DataBean>(apiCallBack) {
+            @Override
+            protected void onSetupParams(Object... params) {
+
+            }
+
+            @Override
+            protected String getApi() {
+                return "/api/column_class/list";
+            }
+        };
     }
 }

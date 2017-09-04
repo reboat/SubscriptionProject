@@ -79,14 +79,14 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     }
 
     @Override
-    public void updateValues(CategoryResponse response) {
-        mCategoryAdapter.updateValue(response.data.elements);
-        response.data.elements.get(0).is_selected = true;
+    public void updateValues(CategoryResponse.DataBean dataBean) {
+        mCategoryAdapter.updateValue(dataBean.elements);
+        dataBean.elements.get(0).is_selected = true;
         ColumnFragment fragment = new ColumnFragment();
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.more_category_detail_container, fragment)
                 .commit();
-        new ColumnPresenter(fragment, new LocalColumnStore(response.data.elements.get(0).columns));
+        new ColumnPresenter(fragment, new LocalColumnStore(dataBean.elements.get(0).columns));
     }
 
     @Override
