@@ -2,7 +2,8 @@ package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.article.ArticleContract;
 import com.daily.news.subscription.article.ArticleResponse;
-import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.base.APIBaseTask;
+import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 
 import java.util.List;
@@ -32,8 +33,8 @@ public class DetailArticleStore implements ArticleContract.Store {
     }
 
     @Override
-    public APIPostTask getLoadMoreTask(LoadingCallBack callBack) {
-        return new APIPostTask(callBack) {
+    public APIBaseTask<ArticleResponse.DataBean> getLoadMoreTask(LoadingCallBack callBack) {
+         return new APIGetTask<ArticleResponse.DataBean>(callBack) {
 
             @Override
             protected void onSetupParams(Object... params) {

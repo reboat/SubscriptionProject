@@ -23,7 +23,7 @@ import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.idisfkj.loopview.LoopView;
 import com.idisfkj.loopview.entity.LoopViewEntity;
-import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.listener.LoadMoreListener;
@@ -182,7 +182,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
 
             @Override
             public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
-                APIPostTask task = new APIPostTask<ArticleResponse.DataBean>(callback) {
+                APIGetTask task = new APIGetTask<ArticleResponse.DataBean>(callback) {
                     @Override
                     protected void onSetupParams(Object... params) {
                         put("start", params[0]);
