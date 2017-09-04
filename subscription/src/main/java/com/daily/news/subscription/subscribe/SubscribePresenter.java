@@ -34,9 +34,9 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
 //            }
 //        });
 
-        mStore.getSubmitSubscribeTask(new APICallBack<String>() {
+        mStore.getSubmitSubscribeTask(new APICallBack<ColumnResponse.DataBean.ElementsBean>() {
             @Override
-            public void onSuccess(String data) {
+            public void onSuccess(ColumnResponse.DataBean.ElementsBean data) {
                 mView.subscribeSuc(column);
             }
 

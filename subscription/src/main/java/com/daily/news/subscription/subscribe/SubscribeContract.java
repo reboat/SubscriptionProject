@@ -24,6 +24,6 @@ public interface SubscribeContract {
     interface Store {
         Flowable<ColumnResponse.DataBean.ElementsBean> getSubmitSubscribeFlowable(ColumnResponse.DataBean.ElementsBean column);
 
-        APIBaseTask getSubmitSubscribeTask(APICallBack<String> apiCallBack);
+        APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ElementsBean> apiCallBack);
     }
 }
