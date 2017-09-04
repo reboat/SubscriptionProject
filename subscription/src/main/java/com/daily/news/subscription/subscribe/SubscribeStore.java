@@ -1,8 +1,8 @@
 package com.daily.news.subscription.subscribe;
 
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SubscribeStore implements SubscribeContract.Store {
     @Override
-    public Flowable getSubmitSubscribeFlowable(final Column s) {
+    public Flowable getSubmitSubscribeFlowable(final ColumnResponse.DataBean.ElementsBean s) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
             @Override
             public Publisher<?> apply(@NonNull Long aLong) throws Exception {
@@ -38,7 +38,7 @@ public class SubscribeStore implements SubscribeContract.Store {
 
     @Override
     public APIBaseTask getSubmitSubscribeTask(APICallBack<String> apiCallBack) {
-        return new APIGetTask(apiCallBack) {
+        return new APIPostTask(apiCallBack) {
             @Override
             protected void onSetupParams(Object... params) {
                 put("column_id",params[0]);

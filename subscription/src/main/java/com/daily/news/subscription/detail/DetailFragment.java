@@ -17,7 +17,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 
 import java.util.Locale;
 
@@ -133,12 +133,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
-    public void subscribeSuc(Column bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
         modifySubscribeBtnState(bean.subscribed);
     }
 
     @Override
-    public void subscribeFail(Column bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
         modifySubscribeBtnState(!bean.subscribed);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

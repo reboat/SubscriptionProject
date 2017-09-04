@@ -1,6 +1,6 @@
 package com.daily.news.subscription.subscribe;
 
-import com.daily.news.subscription.more.column.Column;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.api.callback.APICallBack;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,7 +21,7 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
     }
 
     @Override
-    public void submitSubscribe(final Column column) {
+    public void submitSubscribe(final ColumnResponse.DataBean.ElementsBean column) {
 //        mStore.getSubmitSubscribeFlowable(column).subscribe(new Consumer<Column>() {
 //            @Override
 //            public void accept(@NonNull Column column) throws Exception {

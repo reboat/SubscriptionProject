@@ -15,7 +15,7 @@ public interface ColumnContract {
     interface Presenter extends BasePresenter ,SubscribeContract.Presenter{
         void setItemId(String itemId);
 
-        void submitSubscribe(Column bean);
+        void submitSubscribe(ColumnResponse.DataBean.ElementsBean bean);
     }
 
     interface View extends UIBaseView<Presenter> ,SubscribeContract.View{

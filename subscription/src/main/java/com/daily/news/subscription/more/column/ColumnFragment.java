@@ -106,19 +106,19 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     }
 
     @Override
-    public void onSubscribe(Column bean) {
+    public void onSubscribe(ColumnResponse.DataBean.ElementsBean bean) {
         mPresenter.submitSubscribe(bean);
         bean.subscribed = !bean.subscribed;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void subscribeSuc(Column bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
 
     }
 
     @Override
-    public void subscribeFail(Column bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
         bean.subscribed = !bean.subscribed;
         mAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

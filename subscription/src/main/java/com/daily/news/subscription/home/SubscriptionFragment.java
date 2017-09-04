@@ -19,8 +19,8 @@ import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.daily.news.subscription.base.OnItemClickListener;
-import com.daily.news.subscription.more.column.Column;
 import com.daily.news.subscription.more.column.ColumnAdapter;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.idisfkj.loopview.LoopView;
 import com.idisfkj.loopview.entity.LoopViewEntity;
 import com.zjrb.core.api.base.APIPostTask;
@@ -220,15 +220,17 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         adapter.addHeaderView(moreSubscriptionView);
 //
         ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.recommend_list);
-        columnAdapter.setOnItemClickListener(new OnItemClickListener<Column>() {
+        columnAdapter.setOnItemClickListener(new OnItemClickListener<ColumnResponse.DataBean.ElementsBean>() {
             @Override
-            public void onItemClick(int position, Column item) {
-                Nav.with(getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", item.id).build(), 0);
+            public void onItemClick(int position, ColumnResponse.DataBean.ElementsBean item) {
+                Nav.with(getActivity())
+                        .to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(item.id))
+                        .build(), 0);
             }
         });
         columnAdapter.setOnSubscribeListener(new ColumnAdapter.OnSubscribeListener() {
             @Override
-            public void onSubscribe(Column bean) {
+            public void onSubscribe(ColumnResponse.DataBean.ElementsBean bean) {
                 mPresenter.submitSubscribe(bean);
                 bean.subscribed = !bean.subscribed;
                 mHeaderAdapter.notifyDataSetChanged();
@@ -239,12 +241,12 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     }
 
     @Override
-    public void subscribeSuc(Column bean) {
+    public void subscribeSuc(ColumnResponse.DataBean.ElementsBean bean) {
 
     }
 
     @Override
-    public void subscribeFail(Column bean, String message) {
+    public void subscribeFail(ColumnResponse.DataBean.ElementsBean bean, String message) {
         bean.subscribed = !bean.subscribed;
         mHeaderAdapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

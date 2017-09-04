@@ -70,7 +70,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
             @Override
             public void onClick(View v) {
                 if (mOnSubscribeListener != null) {
-//                    mOnSubscribeListener.onSubscribe(column);
+                    mOnSubscribeListener.onSubscribe(column);
                 }
             }
         });
@@ -97,7 +97,7 @@ public class ColumnAdapter extends RecyclerView.Adapter<ColumnAdapter.ColumnView
      * 点击和订阅回调
      */
     public interface OnSubscribeListener {
-        void onSubscribe(Column bean);
+        void onSubscribe(ColumnResponse.DataBean.ElementsBean bean);
     }
 
     protected static class ColumnViewHolder extends RecyclerView.ViewHolder {
