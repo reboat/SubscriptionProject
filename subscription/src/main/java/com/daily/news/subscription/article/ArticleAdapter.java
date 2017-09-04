@@ -65,7 +65,7 @@ public class ArticleAdapter extends BaseRecyclerAdapter {
         if (!TextUtils.isEmpty(article.video_url)) {
             return VIDEO_TYPE;
         }
-        if (article.list_pics.size() == 1) {
+        if (article.list_pics != null && article.list_pics.size() == 1) {
             return ARTICLE_TYPE;
         }
         return MULTIPLE_PICTURES;
