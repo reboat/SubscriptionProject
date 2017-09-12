@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="header_ic_refresh_search">@mipmap/module_core_ic_refresh_search</item>
         <item name="tc_a5a5a5">@color/tc_a5a5a5</item>
+        <item name="tc_484848">@color/tc_484848</item>
     </style>
 
 </resources>
