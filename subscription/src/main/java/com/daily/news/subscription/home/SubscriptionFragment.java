@@ -31,7 +31,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -169,6 +169,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @NonNull
     private ArticleAdapter createMySubscriptionAdapter(final SubscriptionResponse.DataBean subscriptionBean, LayoutInflater inflater) {
         View headerView = setupMySubscriptionHeaderView(inflater, (ViewGroup) getView());
+        subscriptionBean.article_list.removeAll(Collections.singleton(null));
         final List<ArticleResponse.DataBean.Article> articles = subscriptionBean.article_list;
         final ArticleAdapter articleAdapter = new ArticleAdapter(articles);
         articleAdapter.addHeaderView(mRefreshView.getItemView());
@@ -218,6 +219,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     private HeaderAdapter createRecommendAdapter(SubscriptionResponse.DataBean subscriptionBean, LayoutInflater inflater) {
         HeaderAdapter adapter = new HeaderAdapter();
 
+        subscriptionBean.focus_list.removeAll(Collections.singleton(null));
         final View bannerView = setupBannerView(inflater, (ViewGroup) getView(), subscriptionBean.focus_list);
         if (bannerView != null) {
             adapter.addHeaderView(bannerView);
@@ -226,19 +228,10 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         View moreSubscriptionView = setupMoreSubscriptionView(inflater, (ViewGroup) getView());
         adapter.addHeaderView(moreSubscriptionView);
 
-        List<ColumnResponse.DataBean.ColumnBean> temp=new ArrayList<>();
-        for (int i = 0; i < subscriptionBean.recommend_list.size(); i++) {
-            ColumnResponse.DataBean.ColumnBean bean = subscriptionBean.recommend_list.get(i);
-            if (bean != null) {
-                temp.add(bean);
-            }
-        }
-
-        //
-        ColumnAdapter columnAdapter = new ColumnAdapter(temp);
-        columnAdapter.setOnItemClickListener(new OnItemClickListener<ColumnResponse.DataBean.ColumnBean>()
-
-        {
+        //测试时服务端返回的数据会有null
+        subscriptionBean.recommend_list.removeAll(Collections.singleton(null));
+        ColumnAdapter columnAdapter = new ColumnAdapter(subscriptionBean.recommend_list);
+        columnAdapter.setOnItemClickListener(new OnItemClickListener<ColumnResponse.DataBean.ColumnBean>() {
             @Override
             public void onItemClick(int position, ColumnResponse.DataBean.ColumnBean item) {
                 Nav.with(getActivity())
@@ -246,9 +239,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
                                 .build(), 0);
             }
         });
-        columnAdapter.setOnSubscribeListener(new ColumnAdapter.OnSubscribeListener()
-
-        {
+        columnAdapter.setOnSubscribeListener(new ColumnAdapter.OnSubscribeListener() {
             @Override
             public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
                 mPresenter.submitSubscribe(bean);
