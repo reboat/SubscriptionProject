@@ -2,8 +2,7 @@ package com.daily.news.subscription.more;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +19,12 @@ import com.daily.news.subscription.more.category.CategoryStore;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.search.SearchColumnFragment;
 import com.daily.news.subscription.more.search.SearchStore;
+import com.zjrb.core.common.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoreActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
+public class MoreActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
 
     @BindView(R2.id.more_key_word)
     EditText mKeywordView;
@@ -35,12 +35,11 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.more_title);
-        }
+        getSupportActionBar().setTitle(R.string.more_title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);

@@ -24,7 +24,7 @@ public class ColumnResponse {
             public int article_count;
             public String subscribe_count_general;
             public String article_count_general;
-            public boolean subscribed=true;
+            public boolean subscribed = false;
         }
     }
 }

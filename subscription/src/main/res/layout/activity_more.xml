@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/activity_default_background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="@color/more_background"
     tools:context="com.daily.news.subscription.more.MoreActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/AppTheme.AppBarOverlay"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/tc_ffffff"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -20,14 +31,14 @@
             android:layout_weight="1">
 
             <EditText
-                android:layout_marginTop="7.5dp"
-                android:layout_marginBottom="7.5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/search_shape"
                 android:id="@+id/more_key_word"
                 android:layout_width="match_parent"
                 android:layout_height="39.5dp"
+                android:layout_marginBottom="7.5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="7.5dp"
+                android:background="@drawable/search_shape"
                 android:hint="请输入关键词"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
@@ -39,9 +50,9 @@
             android:id="@+id/more_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:lineSpacingExtra="6sp"
             android:text="搜索"
-            android:layout_marginRight="5dp"
             android:textColor="@color/search_btn_text_color"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -49,6 +60,7 @@
     <FrameLayout
         android:id="@+id/more_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:background="?attr/tc_ffffff"></FrameLayout>
 
 </LinearLayout>
