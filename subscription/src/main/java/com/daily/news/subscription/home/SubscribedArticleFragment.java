@@ -36,7 +36,6 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     private List<ArticleResponse.DataBean.Article> mArticles;
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,7 +104,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     @Override
     public void onRefreshError(String message) {
-
+        mArticleFragment.setRefreshing(false);
     }
 
     @Override
