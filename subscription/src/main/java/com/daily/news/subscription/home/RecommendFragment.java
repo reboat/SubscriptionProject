@@ -20,6 +20,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -54,7 +55,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         View view = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
         mColumnFragment.addHeaderView(view);
 
-        mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater,container));
+        mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
 
 
         return rootView;
@@ -101,6 +102,9 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
         RecommendFragment fragment = new RecommendFragment();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
+        focus_list.removeAll(Collections.singleton(null));
+        recommend_list.removeAll(Collections.singleton(null));
+
         Bundle args = new Bundle();
         args.putParcelableArrayList(RecommendFragment.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
         args.putParcelableArrayList(RecommendFragment.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
@@ -127,7 +131,6 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     public void showError(String message) {
 
     }
-
 
 
     @Override

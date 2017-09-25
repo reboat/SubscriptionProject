@@ -15,6 +15,7 @@ import com.daily.news.subscription.article.ArticleResponse;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -115,6 +116,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
         SubscribedArticleFragment fragment = new SubscribedArticleFragment();
+        article_list.removeAll(Collections.singleton(null));
         fragment.initArticles(article_list);
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
