@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.column.ColumnResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,15 +89,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mUnBinder.unbind();
     }
 
-    @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
 
-    }
-
-    @Override
-    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-
-    }
 
     public static Fragment newInstance() {
         SubscriptionFragment fragment = new SubscriptionFragment();

@@ -128,15 +128,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
 
     }
 
-    @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
 
-    }
-
-    @Override
-    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-
-    }
 
     @Override
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {

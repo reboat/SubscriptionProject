@@ -3,7 +3,6 @@ package com.daily.news.subscription.home;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
-import com.daily.news.subscription.subscribe.SubscribeContract;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.APICallBack;
 
@@ -15,11 +14,11 @@ import io.reactivex.Flowable;
 
 public class SubscriptionContract {
 
-    interface Presenter extends BasePresenter,SubscribeContract.Presenter {
+    interface Presenter extends BasePresenter {
         void onRefresh(Object... params);
     }
 
-    interface View extends UIBaseView<Presenter> ,SubscribeContract.View{
+    interface View extends UIBaseView<Presenter> {
         void updateValue(SubscriptionResponse.DataBean subscriptionResponse);
 
         void onRefreshComplete(SubscriptionResponse.DataBean dataBean);
@@ -28,7 +27,7 @@ public class SubscriptionContract {
 
     }
 
-    interface Store<T> extends BaseStore<T> ,SubscribeContract.Store{
+    interface Store<T> extends BaseStore<T> {
         Flowable<T> getRefreshFlowable(String url);
 
         APIBaseTask getTask(APICallBack<SubscriptionResponse.DataBean> apiCallBack);

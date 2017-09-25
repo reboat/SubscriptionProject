@@ -13,7 +13,6 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
-import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
@@ -116,15 +115,5 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         fragment.setArguments(args);
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
-    }
-
-    @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-
-    }
-
-    @Override
-    public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-
     }
 }

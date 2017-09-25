@@ -1,6 +1,5 @@
 package com.daily.news.subscription.home;
 
-import com.daily.news.subscription.subscribe.SubscribePresenter;
 import com.zjrb.core.api.callback.APICallBack;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -9,13 +8,12 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by lixinke on 2017/7/18.
  */
 
-public class SubscriptionPresenter extends SubscribePresenter implements SubscriptionContract.Presenter {
+public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
     private SubscriptionContract.View mView;
     private SubscriptionContract.Store mStore;
     private CompositeDisposable mCompositeDisposable;
 
     public SubscriptionPresenter(SubscriptionContract.View view, SubscriptionContract.Store store) {
-        super(view, store);
         mView = view;
         mView.setPresenter(this);
         mStore = store;
