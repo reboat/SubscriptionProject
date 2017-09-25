@@ -3,6 +3,8 @@ package com.daily.news.subscription.article;
 
 import com.zjrb.core.api.callback.LoadingCallBack;
 
+import java.util.List;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -47,6 +49,14 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     @Override
     public void loadMore(long sortNum,int size,LoadingCallBack<ArticleResponse.DataBean> callback) {
         mArticleStore.getLoadMoreTask(callback).exe(sortNum,size);
+    }
+
+    @Override
+    public void refreshData(List<ArticleResponse.DataBean.Article> article_list) {
+        ArticleResponse response=new ArticleResponse();
+        response.data=new ArticleResponse.DataBean();
+        response.data.elements=article_list;
+        mArticleView.updateValue(response);
     }
 
     @Override

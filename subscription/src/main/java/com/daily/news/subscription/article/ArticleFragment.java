@@ -16,6 +16,7 @@ import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
 
     private ArticleContract.Presenter mPresenter;
     private FooterLoadMore<ArticleResponse.DataBean> mLoadMore;
+
+    private HeaderRefresh mHeaderRefresh;
 
     public ArticleFragment() {
     }
@@ -109,10 +112,10 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
 
     @Override
     public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
-        if(mArticles==null || mArticles.size()==0){
+        if (mArticles == null || mArticles.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
-        }else{
-            mPresenter.loadMore(mArticles.get(mArticles.size()-1).sort_number,DEFAULT_PAGE_SIZE,callback);
+        } else {
+            mPresenter.loadMore(mArticles.get(mArticles.size() - 1).sort_number, DEFAULT_PAGE_SIZE, callback);
         }
     }
 
@@ -120,5 +123,22 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     public void onDetach() {
         super.onDetach();
         mPresenter.unsubscribe();
+    }
+
+    public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
+        return null;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
+    public void setOnRefreshListener(HeaderRefresh.OnRefreshListener onRefreshListener) {
+        mHeaderRefresh=new HeaderRefresh(mRecyclerView,onRefreshListener);
+        mArticleAdapter.addHeaderView(mHeaderRefresh.getItemView());
+    }
+
+    public void setRefreshing(boolean refresh) {
+        mHeaderRefresh.setRefreshing(refresh);
     }
 }

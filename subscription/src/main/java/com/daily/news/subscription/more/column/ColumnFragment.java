@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,9 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.base.HeaderAdapter;
 import com.daily.news.subscription.base.LinearLayoutColorDivider;
-import com.daily.news.subscription.base.OnItemClickListener;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.holder.HeaderRefresh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +25,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ColumnFragment extends Fragment implements ColumnContract.View,
-        ColumnAdapter.OnSubscribeListener,
-        OnItemClickListener<ColumnResponse.DataBean.ColumnBean> {
+public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener{
 
     @BindView(R2.id.column_recyclerView)
-    XRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     List<ColumnResponse.DataBean.ColumnBean> mColumns;
     ColumnAdapter mColumnAdapter;
-
-    HeaderAdapter mAdapter;
 
     @BindView(R2.id.column_tip_container)
     View mTipContainer;
@@ -49,6 +44,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
 
 
     private ColumnContract.Presenter mPresenter;
+    private HeaderRefresh mHeaderRefresh;
 
     public ColumnFragment() {
     }
@@ -56,7 +52,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new HeaderAdapter();
     }
 
     @Override
@@ -89,27 +84,20 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mColumnAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
-        mAdapter.setInternalAdapter(mColumnAdapter);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setPullRefreshEnabled(false);
-        mRecyclerView.setLoadingMoreEnabled(false);
+        mRecyclerView.setAdapter(mColumnAdapter);
         mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
     }
 
     public void addHeaderView(View headerView) {
-        mAdapter.addHeaderView(headerView);
+        mColumnAdapter.addHeaderView(headerView);
     }
 
-    @Override
-    public void onItemClick(int position, ColumnResponse.DataBean.ColumnBean bean) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(bean.id)).build().toString());
-    }
 
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         mPresenter.submitSubscribe(bean);
         bean.subscribed = !bean.subscribed;
-        mAdapter.notifyDataSetChanged();
+        mColumnAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -120,7 +108,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     public void removeItem(ColumnResponse.DataBean.ColumnBean bean) {
         if (mColumns != null && mColumns.size() > 0) {
             mColumns.remove(bean);
-            mAdapter.notifyDataSetChanged();
+            mColumnAdapter.notifyDataSetChanged();
         }
         checkEmpty();
     }
@@ -144,7 +132,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         bean.subscribed = !bean.subscribed;
-        mAdapter.notifyDataSetChanged();
+        mColumnAdapter.notifyDataSetChanged();
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -175,7 +163,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         }
 
         mColumnAdapter.updateValues(dataBean.elements);
-        mAdapter.notifyDataSetChanged();
+        mColumnAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -196,4 +184,24 @@ public class ColumnFragment extends Fragment implements ColumnContract.View,
         mPresenter.unsubscribe();
     }
 
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
+    public void setRefreshListener(HeaderRefresh.OnRefreshListener onRefreshListener) {
+        mHeaderRefresh = new HeaderRefresh(mRecyclerView, onRefreshListener);
+        mColumnAdapter.addHeaderView(mHeaderRefresh.getItemView());
+    }
+
+    public void setRefreshing(boolean refresh) {
+        if (mHeaderRefresh != null) {
+            mHeaderRefresh.setRefreshing(refresh);
+        }
+    }
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mColumns.get(position).id)).build().toString());
+
+    }
 }

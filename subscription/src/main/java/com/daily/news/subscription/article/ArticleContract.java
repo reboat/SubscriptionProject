@@ -6,6 +6,8 @@ import com.daily.news.subscription.base.UIBaseView;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 
+import java.util.List;
+
 /**
  * Created by lixinke on 2017/7/17.
  */
@@ -13,6 +15,8 @@ import com.zjrb.core.api.callback.LoadingCallBack;
 public interface ArticleContract {
     interface Presenter extends BasePresenter {
         void loadMore(long sortNum,int size,LoadingCallBack<ArticleResponse.DataBean> callback);
+
+        void refreshData(List<ArticleResponse.DataBean.Article> article_list);
     }
 
     interface View extends UIBaseView<Presenter> {

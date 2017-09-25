@@ -4,6 +4,8 @@ import com.daily.news.subscription.subscribe.SubscribePresenter;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.APICallBack;
 
+import java.util.List;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -69,5 +71,9 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     @Override
     public void unsubscribe() {
         mDisposable.clear();
+    }
+
+    public void refreshData(List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
+
     }
 }
