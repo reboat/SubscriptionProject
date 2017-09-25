@@ -29,33 +29,28 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile('cn.daily.android:loop-view:0.0.1-SNAPSHOT') {
-        transitive false
-    }
 
+
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.android:flexbox:0.3.0'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
+    //compile project(':core-library')
+    compile 'cn.daily.android:core-library:1.2.8.2-SNAPSHOT'
     compile ('cn.daily.android:module-news:1.0.3-SNAPSHOT') {
         exclude group: 'cn.daily.android', module: 'core-library'
     }
 
-    //    compile project(':core-library')
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.jakewharton:butterknife:8.6.0'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.google.android:flexbox:0.3.0'
-    compile 'cn.daily.android:core-library:1.2.8.2-SNAPSHOT'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     provided 'io.reactivex.rxjava2:rxjava:2.1.1'
     provided 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    provided 'com.jcodecraeer:xrecyclerview:1.3.2'
 }

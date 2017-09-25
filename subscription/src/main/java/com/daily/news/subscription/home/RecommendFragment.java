@@ -1,6 +1,7 @@
 package com.daily.news.subscription.home;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -8,14 +9,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.idisfkj.loopview.LoopView;
-import com.idisfkj.loopview.entity.LoopViewEntity;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.loader.ImageLoader;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
@@ -62,25 +67,48 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     }
 
     private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
-        if (focuses == null || focuses.size() == 0) {
-            return null;
-        }
-        final LoopView loopView = (LoopView) inflater.inflate(R.layout.item_focus, container, false);
-        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<LoopViewEntity>>() {
+
+        final Banner focusBanner = (Banner) inflater.inflate(R.layout.item_focus, container, false);
+        focusBanner.isAutoPlay(true);
+        focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
+        focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+
+        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<String>>() {
             @Override
-            public ObservableSource<LoopViewEntity> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
-                LoopViewEntity entity = new LoopViewEntity();
-                entity.setDescript(focus.doc_title);
-                entity.setImageUrl(focus.pic_url);
-                return Observable.just(entity);
+            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
+                return Observable.just(focus.doc_title);
             }
-        }).toList().subscribe(new Consumer<List<LoopViewEntity>>() {
+        }).toList().subscribe(new Consumer<List<String>>() {
             @Override
-            public void accept(@io.reactivex.annotations.NonNull List<LoopViewEntity> loopViewEntities) throws Exception {
-                loopView.setLoopData(loopViewEntities);
+            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
+                focusBanner.setBannerTitles(strings);
             }
         });
-        return loopView;
+
+        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
+                return Observable.just(focus.pic_url);
+            }
+        }).toList().subscribe(new Consumer<List<String>>() {
+            @Override
+            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
+                focusBanner.setImages(strings);
+            }
+        });
+
+        focusBanner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                RequestOptions options = new RequestOptions();
+                options.centerCrop();
+                options.placeholder(getResources().getDrawable(R.drawable.default_placeholder_big));
+                Glide.with(context).load(path).apply(options).into(imageView);
+            }
+        });
+
+        focusBanner.start();
+        return focusBanner;
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
@@ -151,7 +179,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
 
     @Override
     public void onRefreshError(String message) {
-
+        mColumnFragment.setRefreshing(false);
     }
 
     @Override
