@@ -1,5 +1,6 @@
 package com.daily.news.subscription.home;
 
+import com.daily.news.subscription.detail.RxException;
 import com.zjrb.core.api.callback.APICallBack;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -48,7 +49,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
             @Override
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
-                mView.showError(errMsg);
+                mView.showError(new RxException(errMsg,errCode));
                 mView.hideProgressBar();
             }
         }).exe(params[0]);

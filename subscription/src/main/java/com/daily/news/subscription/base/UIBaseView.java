@@ -9,5 +9,5 @@ public interface UIBaseView<T> extends BaseView<T> {
 
     void hideProgressBar();
 
-    void showError(String message);
+    void showError(Throwable message);
 }

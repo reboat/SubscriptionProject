@@ -98,13 +98,13 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
 
     }
 
     @Override
     public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
-        mArticleAdapter.addMore(data.elements);
+        mArticleAdapter.addData(data.elements, true);
         if (data.elements.size() < DEFAULT_PAGE_SIZE) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
@@ -134,7 +134,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     }
 
     public void setOnRefreshListener(HeaderRefresh.OnRefreshListener onRefreshListener) {
-        mHeaderRefresh=new HeaderRefresh(mRecyclerView,onRefreshListener);
+        mHeaderRefresh = new HeaderRefresh(mRecyclerView, onRefreshListener);
         mArticleAdapter.addHeaderView(mHeaderRefresh.getItemView());
     }
 

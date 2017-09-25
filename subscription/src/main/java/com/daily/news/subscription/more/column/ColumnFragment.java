@@ -172,10 +172,10 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
         mTipContainer.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
-        mTipView.setText(message);
+        mTipView.setText(message.getMessage());
     }
 
     @Override

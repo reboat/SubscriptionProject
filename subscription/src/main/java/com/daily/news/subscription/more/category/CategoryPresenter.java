@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.category;
 
+import com.daily.news.subscription.detail.RxException;
 import com.zjrb.core.api.callback.APICallBack;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,7 +51,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
             @Override
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
-                mMoreView.showError(errMsg);
+                mMoreView.showError(new RxException(errMsg,errCode));
                 mMoreView.hideProgressBar();
             }
         }).exe(params);

@@ -156,7 +156,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
 
     }
 

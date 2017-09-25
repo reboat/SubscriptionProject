@@ -16,8 +16,4 @@ public class ArticleAdapter extends NewsBaseAdapter {
     public void updateValue(List<ArticleResponse.DataBean.Article> elements) {
         getData().addAll(elements);
     }
-
-    public void addMore(List<ArticleResponse.DataBean.Article> elements) {
-        getData().addAll(elements);
-    }
 }

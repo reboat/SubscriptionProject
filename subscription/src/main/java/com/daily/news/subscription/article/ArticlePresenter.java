@@ -40,7 +40,7 @@ public class ArticlePresenter implements ArticleContract.Presenter {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
                         mArticleView.hideProgressBar();
-                        mArticleView.showError(throwable.getMessage());
+                        mArticleView.showError(throwable);
                     }
                 });
         mDisposable.add(disposable);

@@ -5,7 +5,13 @@ import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.APICallBack;
 
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -13,23 +19,8 @@ import io.reactivex.Flowable;
 
 public class DetailStore extends SubscribeStore implements DetailContract.Store {
 
-    public interface DetailService {
-//        @GET("/api/column/article_list")
-//        Flowable<DetailColumn> getDetail(@Query("column_id") String column_id, @Query("size") int size);
-    }
-
     @Override
     public Flowable getFlowable(String url) {
-
-//        return Flowable.timer(400, TimeUnit.MILLISECONDS)
-//                .flatMap(new Function<Long, Publisher<DetailColumn>>() {
-//                    @Override
-//                    public Publisher<DetailResponse.DataBean.DetailBean> apply(@NonNull Long aLong) throws Exception {
-//                        return Flowable.just(MockResponse.getInstance().getDetail(""));
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.newThread());
         return null;
     }
 
@@ -46,5 +37,39 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
                 return "/api/column/article_list";
             }
         };
+    }
+
+    @Override
+    public Flowable<DetailResponse.DataBean> getDetailResponse(final Object... params) {
+        return Flowable.create(new FlowableOnSubscribe<DetailResponse.DataBean>() {
+            @Override
+            public void subscribe(@NonNull final FlowableEmitter<DetailResponse.DataBean> e) throws Exception {
+                new APIGetTask<DetailResponse.DataBean>(new APICallBack<DetailResponse.DataBean>() {
+                    @Override
+                    public void onSuccess(DetailResponse.DataBean data) {
+                        if(!e.isCancelled()){
+                            e.onNext(data);
+                            e.onComplete();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        super.onError(errMsg, errCode);
+                        e.onError(new RxException(errMsg,errCode));
+                    }
+                }) {
+                    @Override
+                    protected void onSetupParams(Object... params) {
+                        put("column_id", params[0]);
+                    }
+
+                    @Override
+                    protected String getApi() {
+                        return "/api/column/article_list";
+                    }
+                }.exe(params);
+            }
+        }, BackpressureStrategy.BUFFER).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

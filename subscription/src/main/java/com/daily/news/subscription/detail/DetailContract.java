@@ -7,6 +7,8 @@ import com.daily.news.subscription.subscribe.SubscribeContract;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.APICallBack;
 
+import io.reactivex.Flowable;
+
 /**
  * Created by lixinke on 2017/7/17.
  */
@@ -21,5 +23,7 @@ public interface DetailContract {
 
     interface Store extends BaseStore, SubscribeContract.Store {
         APIBaseTask getTask(APICallBack<DetailResponse.DataBean> callBack);
+
+        Flowable<DetailResponse.DataBean> getDetailResponse(Object... params);
     }
 }

@@ -48,6 +48,11 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void initArticles(List<ArticleResponse.DataBean.Article> article_list) {
         mArticles = article_list;
     }
@@ -82,7 +87,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
 
     }
 

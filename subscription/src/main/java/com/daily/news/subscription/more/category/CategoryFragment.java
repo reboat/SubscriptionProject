@@ -90,10 +90,10 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
         mTipContainer.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
-        mTipView.setText(message);
+        mTipView.setText(message.getMessage());
     }
 
     @Override

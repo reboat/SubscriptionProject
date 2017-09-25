@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.column;
 
+import com.daily.news.subscription.detail.RxException;
 import com.daily.news.subscription.subscribe.SubscribePresenter;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.APICallBack;
@@ -59,7 +60,7 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
                 mDetailView.hideProgressBar();
-                mDetailView.showError(errMsg);
+                mDetailView.showError(new RxException(errMsg,errCode));
             }
         });
         if (task != null) {

@@ -58,8 +58,8 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     }
 
     @Override
-    public void showError(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+    public void showError(Throwable message) {
+        Toast.makeText(getContext(),message.getMessage(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

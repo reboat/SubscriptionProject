@@ -101,7 +101,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void updateValue(DetailResponse.DataBean data) {
         mDetailColumn = data.detail;
-        RequestOptions options=new RequestOptions();
+        RequestOptions options = new RequestOptions();
         options.centerCrop();
         options.placeholder(R.drawable.column_placeholder_big);
         Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
@@ -117,7 +117,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
         ArticleFragment fragment = new ArticleFragment();
         getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-        new ArticlePresenter(fragment, new DetailArticleStore(mUid,data.elements));
+        new ArticlePresenter(fragment, new DetailArticleStore(mUid, data.elements));
     }
 
     @Override
@@ -126,10 +126,18 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(Throwable message) {
         mProgressBarContainer.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
-        mTipView.setText(message);
+        if (message instanceof RxException) {
+            RxException exception = (RxException) message;
+            // TODO 栏目不存在显示页面 errCode 未确定
+            if (exception.errCode == 111) {
+
+            }
+        } else {
+            mTipView.setText(message.getMessage());
+        }
     }
 
     @OnClick(R2.id.detail_column_sub_btn)
