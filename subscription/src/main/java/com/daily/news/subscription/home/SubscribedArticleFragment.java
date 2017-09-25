@@ -1,7 +1,6 @@
 package com.daily.news.subscription.home;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import com.daily.news.subscription.article.ArticleResponse;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -30,21 +28,28 @@ import butterknife.Unbinder;
  */
 public class SubscribedArticleFragment extends Fragment implements SubscriptionContract.View, HeaderRefresh.OnRefreshListener {
 
-    private static final String ARTICLES = "Articles";
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
     private ArticlePresenter mArticlePresenter;
     private ArticleFragment mArticleFragment;
+    private List<ArticleResponse.DataBean.Article> mArticles;
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscribed_article, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
+
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);
-        mArticlePresenter = new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(getArguments().<ArticleResponse.DataBean.Article>getParcelableArrayList(ARTICLES)));
+        mArticlePresenter = new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
         mArticleFragment.setOnRefreshListener(this);
         return rootView;
+    }
+
+    private void initArticles(List<ArticleResponse.DataBean.Article> article_list) {
+        mArticles = article_list;
     }
 
     @Override
@@ -53,12 +58,12 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     }
 
     @OnClick(R2.id.my_sub_btn)
-    public void gotoMySubscription(){
+    public void gotoMySubscription() {
         Nav.with(getContext()).to("http://www.8531.cn/subscription/more/my/column");
     }
 
     @OnClick(R2.id.my_sub_more_btn)
-    public void gotoMore(){
+    public void gotoMore() {
         Nav.with(getContext()).to("http://www.8531.cn/subscription/more");
     }
 
@@ -110,9 +115,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
         SubscribedArticleFragment fragment = new SubscribedArticleFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(SubscribedArticleFragment.ARTICLES, (ArrayList<? extends Parcelable>) article_list);
-        fragment.setArguments(args);
+        fragment.initArticles(article_list);
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
     }

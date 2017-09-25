@@ -6,12 +6,32 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="tc_ffffff">@color/tc_ffffff</item>
+        <item name="tc_484848">@color/tc_484848</item>
+        <item name="tc_999999">@color/tc_999999</item>
+        <item name="tc_f44b50">@color/tc_f44b50</item>
+        <item name="tc_e85757">@color/tc_e85757</item>
+
+        <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag</item>
+        <item name="sl_tc_news_tag">@color/sl_tc_news_tag</item>
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
         <item name="colorPrimary">@color/colorPrimary_night</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="tc_ffffff">@color/tc_ffffff_night</item>
+        <item name="tc_484848">@color/tc_484848_night</item>
+        <item name="tc_999999">@color/tc_999999_night</item>
+        <item name="tc_f44b50">@color/tc_f44b50_night</item>
+        <item name="tc_e85757">@color/tc_e85757_night</item>
+        <item name="tc_ffffff_bababa">@color/tc_bababa</item>
+
+        <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag_night</item>
+        <item name="sl_tc_news_tag">@color/sl_tc_news_tag_night</item>
+
     </style>
 
 </resources>

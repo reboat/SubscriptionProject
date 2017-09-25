@@ -115,7 +115,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
         if (mArticles == null || mArticles.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
         } else {
-            mPresenter.loadMore(mArticles.get(mArticles.size() - 1).sort_number, DEFAULT_PAGE_SIZE, callback);
+            mPresenter.loadMore(mArticles.get(mArticles.size() - 1).getSort_number(), DEFAULT_PAGE_SIZE, callback);
         }
     }
 

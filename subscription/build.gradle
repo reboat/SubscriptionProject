@@ -35,6 +35,11 @@ dependencies {
     compile('cn.daily.android:loop-view:0.0.1-SNAPSHOT') {
         transitive false
     }
+
+    compile ('cn.daily.android:module-news:1.0.3-SNAPSHOT') {
+        exclude group: 'cn.daily.android', module: 'core-library'
+    }
+
     //    compile project(':core-library')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'

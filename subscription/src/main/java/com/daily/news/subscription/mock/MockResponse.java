@@ -123,32 +123,32 @@ public class MockResponse {
         String[] pics = new String[]{"http://p1.pstatp.com/list/190x124/2ecf0002377810ca0769", "http://p3.pstatp.com/list/190x124/2edd0001120271cbf71d", "http://p1.pstatp.com/list/190x124/2ecf000031175e9ca02b", "http://p1.pstatp.com/list/190x124/2ecf0001d84b708fbc4d", "https://p3.pstatp.com/list/190x124/2edc000118d8ca9fefe4", "http://img4.duitang.com/uploads/item/201407/26/20140726211046_iGBch.thumb.700_0.jpeg"};
 
         List<ArticleResponse.DataBean.Article> articles = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            ArticleResponse.DataBean.Article article = new ArticleResponse.DataBean.Article();
-            if (random.nextBoolean()) {
-                article.list_title = "习近平主持召开中央财经领导小组第十六次会议";
-            } else {
-                article.list_title = "习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议";
-            }
-
-            article.list_pics = new ArrayList<>();
-
-            if (random.nextBoolean()) {
-                article.list_pics.add(pics[random.nextInt(pics.length - 1)]);
-            } else {
-                for (int k = 0; k < 3; k++) {
-                    article.list_pics.add(pics[random.nextInt(pics.length - 1)]);
-                }
-            }
-            article.channel_name = "新闻热点";
-            article.read_count = Math.abs(random.nextInt());
-            article.like_count = Math.abs(random.nextInt());
-            if (random.nextBoolean()) {
-                article.video_url = "http://www.365yg.com/group/6437717271228973570/";
-                article.video_duration = Math.abs(random.nextInt(10000));
-            }
-            articles.add(article);
-        }
+//        for (int i = 0; i < 30; i++) {
+//            ArticleResponse.DataBean.Article article = new ArticleResponse.DataBean.Article();
+//            if (random.nextBoolean()) {
+//                article.list_title = "习近平主持召开中央财经领导小组第十六次会议";
+//            } else {
+//                article.list_title = "习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议习近平主持召开中央财经领导小组第十六次会议";
+//            }
+//
+//            article.list_pics = new ArrayList<>();
+//
+//            if (random.nextBoolean()) {
+//                article.list_pics.add(pics[random.nextInt(pics.length - 1)]);
+//            } else {
+//                for (int k = 0; k < 3; k++) {
+//                    article.list_pics.add(pics[random.nextInt(pics.length - 1)]);
+//                }
+//            }
+//            article.channel_name = "新闻热点";
+//            article.read_count = Math.abs(random.nextInt());
+//            article.like_count = Math.abs(random.nextInt());
+//            if (random.nextBoolean()) {
+//                article.video_url = "http://www.365yg.com/group/6437717271228973570/";
+//                article.video_duration = Math.abs(random.nextInt(10000));
+//            }
+//            articles.add(article);
+//        }
         return articles;
     }
 
