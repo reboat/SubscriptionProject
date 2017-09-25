@@ -15,6 +15,8 @@
 
         <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag</item>
         <item name="sl_tc_news_tag">@color/sl_tc_news_tag</item>
+        <item name="dc_dddddd">@color/dc_dddddd</item>
+
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
@@ -31,6 +33,7 @@
 
         <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag_night</item>
         <item name="sl_tc_news_tag">@color/sl_tc_news_tag_night</item>
+        <item name="dc_dddddd">@color/dc_dddddd_night</item>
 
     </style>
 
