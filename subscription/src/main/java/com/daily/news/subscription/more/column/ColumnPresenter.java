@@ -74,6 +74,8 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     }
 
     public void refreshData(List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
-
+        ColumnResponse.DataBean dataBean=new ColumnResponse.DataBean();
+        dataBean.elements=recommend_list;
+        mDetailView.updateValue(dataBean);
     }
 }

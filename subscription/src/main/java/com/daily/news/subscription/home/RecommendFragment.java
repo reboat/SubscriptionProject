@@ -44,6 +44,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     private SubscriptionContract.Presenter mPresenter;
     private ColumnPresenter mColumnPresenter;
     private ColumnFragment mColumnFragment;
+    private Banner focusBanner;
 
     public RecommendFragment() {
     }
@@ -57,16 +58,15 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         mColumnPresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
 
-        View view = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
-        mColumnFragment.addHeaderView(view);
-
+         focusBanner = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
+        mColumnFragment.addHeaderView(focusBanner);
         mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
 
 
         return rootView;
     }
 
-    private View setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
+    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
 
         final Banner focusBanner = (Banner) inflater.inflate(R.layout.item_focus, container, false);
         focusBanner.isAutoPlay(true);
@@ -173,7 +173,8 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else {
-            mColumnPresenter.refreshData(dataBean.recommend_list);
+            Fragment fragment=RecommendFragment.newInstance(dataBean.focus_list,dataBean.recommend_list);
+            getFragmentManager().beginTransaction().replace(R.id.subscription_container,fragment).commit();
         }
     }
 

@@ -94,7 +94,8 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         if (dataBean.has_subscribe) {
-            mArticlePresenter.refreshData(dataBean.article_list);
+            Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
+            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else {
             Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
