@@ -8,5 +8,6 @@
         <attr name="header_my_subscription_divider_color" format="reference"/>
         <attr name="more_subscription" format="reference"/>
         <attr name="subscription" format="reference"/>
+        <attr name="category_text_color" format="reference"/>
     </declare-styleable>
 </resources>

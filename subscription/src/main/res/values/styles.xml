@@ -33,6 +33,7 @@
         </item>
         <item name="more_subscription">@drawable/more_subscription</item>
         <item name="subscription">@drawable/subscription</item>
+        <item name="category_text_color">@color/category_text_color_selector</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight">
@@ -50,6 +51,7 @@
         </item>
         <item name="more_subscription">@drawable/more_subscription_night</item>
         <item name="subscription">@drawable/subscription_night</item>
+        <item name="category_text_color">@color/category_text_color_selector_night</item>
     </style>
 
 </resources>

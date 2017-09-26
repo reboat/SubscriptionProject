@@ -2,10 +2,9 @@ package com.daily.news.subscription.more;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -20,6 +19,7 @@ import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.search.SearchColumnFragment;
 import com.daily.news.subscription.more.search.SearchStore;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,11 +35,6 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle(R.string.more_title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);
@@ -98,11 +93,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected View onCreateTopBar(ViewGroup view) {
+        return TopBarFactory.createDefault(view,this,"订阅更多").getView();
     }
 }
