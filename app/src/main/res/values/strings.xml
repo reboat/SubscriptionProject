@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SubscriptionProject</string>
+    <string name="app_name">浙江新闻订阅</string>
     <string name="title_home">首页</string>
     <string name="title_dashboard">订阅</string>
     <string name="title_notifications">发现</string>
