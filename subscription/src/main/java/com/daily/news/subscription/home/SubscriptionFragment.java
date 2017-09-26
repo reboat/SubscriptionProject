@@ -1,8 +1,13 @@
 package com.daily.news.subscription.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,7 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.utils.SettingManager;
 
 import butterknife.BindView;
@@ -22,6 +28,7 @@ import butterknife.Unbinder;
  * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
  */
 public class SubscriptionFragment extends Fragment implements SubscriptionContract.View {
+    public static final String REFRESH = "refresh";
 
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
@@ -30,24 +37,30 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @BindView(R2.id.progressBar_container)
     View mProgressBarContainer;
 
+    private BroadcastReceiver mReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())){
+                mPresenter.subscribe("杭州");
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         mPresenter.subscribe("杭州");
     }
+
 
     @Override
     public void setPresenter(SubscriptionContract.Presenter presenter) {
@@ -105,6 +118,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     public void onDestroyView() {
         super.onDestroyView();
         mUnBinder.unbind();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
 

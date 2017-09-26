@@ -50,6 +50,11 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     TextView mTipView;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
+    @BindView(R2.id.detail_content_container)
+    View mContentContainer;
+    @BindView(R2.id.detail_empty_error_container)
+    View mEmptyErrorContainer;
+
     private DetailResponse.DataBean.DetailBean mDetailColumn;
 
 
@@ -133,7 +138,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             RxException exception = (RxException) message;
             // TODO 栏目不存在显示页面 errCode 未确定
             if (exception.errCode == 111) {
-
+                mContentContainer.setVisibility(View.GONE);
+                mEmptyErrorContainer.setVisibility(View.VISIBLE);
             }
         } else {
             mTipView.setText(message.getMessage());
@@ -162,6 +168,11 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mSubscriptionView.setSelected(mDetailColumn.subscribed);
         String subscriptionText = mDetailColumn.subscribed ? "已经订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
+    }
+
+    @OnClick(R2.id.detail_empty_back)
+    public void onBack() {
+        getActivity().finish();
     }
 
     @Override

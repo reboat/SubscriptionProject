@@ -29,6 +29,8 @@ import butterknife.Unbinder;
  */
 public class SubscribedArticleFragment extends Fragment implements SubscriptionContract.View, HeaderRefresh.OnRefreshListener {
 
+    private static final int REQUEST_CODE_MY = 1001;
+
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
     private ArticlePresenter mArticlePresenter;
@@ -64,12 +66,12 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     @OnClick(R2.id.my_sub_btn)
     public void gotoMySubscription() {
-        Nav.with(getContext()).to("http://www.8531.cn/subscription/more/my/column");
+        Nav.with(this).to("http://www.8531.cn/subscription/more/my/column", REQUEST_CODE_MY);
     }
 
     @OnClick(R2.id.my_sub_more_btn)
     public void gotoMore() {
-        Nav.with(getContext()).to("http://www.8531.cn/subscription/more");
+        Nav.with(this).to("http://www.8531.cn/subscription/more");
     }
 
 
