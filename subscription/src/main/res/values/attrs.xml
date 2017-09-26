@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SupportUiMode">
+        <attr name="subscription_arrow" format="reference"/>
+        <attr name="subscription_home_background" format="reference"/>
+        <attr name="column_subscription_text_color" format="reference"/>
+        <attr name="subscription_button_background" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.base.LinearLayoutColorDivider;
 import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new LinearLayoutColorDivider(getResources(), R.color.dddddd, R.dimen.divide_height, LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
     }
 
     public void addHeaderView(View headerView) {

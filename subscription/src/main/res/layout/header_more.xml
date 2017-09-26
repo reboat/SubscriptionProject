@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:lineSpacingExtra="6sp"
         android:text="@string/recommend_header_title1"
-        android:textColor="@color/recommend_header_title_color"
+        android:textColor="?attr/tc_484848"
         android:textSize="14sp"/>
 
     <LinearLayout
@@ -33,14 +33,15 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="9sp"
             android:text="@string/subscribe_more"
-            android:textColor="@color/recommend_header_title_color"
+            android:textColor="?attr/tc_484848"
             android:textSize="11sp"/>
 
         <ImageView
+            android:layout_marginLeft="5dp"
             android:id="@+id/recommend_header_image"
             android:layout_width="6.5dp"
             android:layout_height="11.5dp"
-            android:src="@drawable/arrow"/>
+            android:src="?attr/subscription_arrow"/>
     </LinearLayout>
 
 
