@@ -1,9 +1,11 @@
 package com.daily.news.subscription.detail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
+import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
 
 import java.util.Locale;
@@ -155,6 +158,9 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         modifySubscribeBtnState(bean.subscribed);
+        Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
+        intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override

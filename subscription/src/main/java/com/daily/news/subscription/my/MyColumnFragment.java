@@ -1,6 +1,10 @@
 package com.daily.news.subscription.my;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +20,37 @@ import com.daily.news.subscription.more.column.ColumnResponse;
  */
 
 public class MyColumnFragment extends ColumnFragment {
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                if (!intent.getBooleanExtra(Constants.Name.SUBSCRIBE, true)) {
+                    sendRequest("杭州");
+                }
+            }
+        }
+    };
+
     @Override
-    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-        removeItem(bean);
-        Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
-    public View emptyView(LayoutInflater inflater, ViewGroup parent){
-        return inflater.inflate(R.layout.my_subscription_empty,parent,false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
+        super.subscribeSuc(bean);
+        removeItem(bean);
+    }
+
+    @Override
+    public View emptyView(LayoutInflater inflater, ViewGroup parent) {
+        return inflater.inflate(R.layout.my_subscription_empty, parent, false);
     }
 }

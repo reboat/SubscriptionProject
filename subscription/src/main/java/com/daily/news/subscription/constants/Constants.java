@@ -8,4 +8,8 @@ public class Constants {
     public interface Action {
         String SUBSCRIBE_SUCCESS = "subscribe_success";
     }
+
+    public interface Name {
+        String SUBSCRIBE = "subscribe";
+    }
 }

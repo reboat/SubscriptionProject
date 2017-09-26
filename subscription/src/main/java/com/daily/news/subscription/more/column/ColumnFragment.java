@@ -1,9 +1,11 @@
 package com.daily.news.subscription.more.column;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.base.LinearLayoutColorDivider;
+import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 
@@ -102,7 +105,8 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-
+        Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     public void removeItem(ColumnResponse.DataBean.ColumnBean bean) {

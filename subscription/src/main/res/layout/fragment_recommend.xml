@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/column_fragment"
-        android:name="com.daily.news.subscription.more.column.ColumnFragment"
+        android:name="com.daily.news.subscription.home.RecommendColumnFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
