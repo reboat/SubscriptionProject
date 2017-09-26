@@ -28,7 +28,6 @@ import butterknife.Unbinder;
  * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
  */
 public class SubscriptionFragment extends Fragment implements SubscriptionContract.View {
-    public static final String REFRESH = "refresh";
 
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
