@@ -61,6 +61,11 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         mPresenter.subscribe("杭州");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
 
     @Override
     public void setPresenter(SubscriptionContract.Presenter presenter) {
@@ -97,10 +102,14 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            long lastRefreshTime = SettingManager.getInstance().getLastSubscriptionRefreshTime();
-            if (System.currentTimeMillis() - lastRefreshTime > DURATION_TIME) {
-                mPresenter.subscribe("杭州");
-            }
+            refreshData();
+        }
+    }
+
+    private void refreshData() {
+        long lastRefreshTime = SettingManager.getInstance().getLastSubscriptionRefreshTime();
+        if (System.currentTimeMillis() - lastRefreshTime > DURATION_TIME) {
+            mPresenter.subscribe("杭州");
         }
     }
 
