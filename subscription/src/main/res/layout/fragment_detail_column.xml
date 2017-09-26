@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -45,7 +44,7 @@
                 android:layout_toLeftOf="@+id/frameLayout"
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:lineSpacingExtra="1sp"
-                android:text="钱塘江"
+                tools:text="钱塘江"
                 android:textColor="@color/detail_column_title_color"
                 android:textSize="19sp"/>
 
@@ -57,7 +56,7 @@
                 android:layout_toLeftOf="@+id/frameLayout"
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:lineSpacingExtra="8sp"
-                android:text="23.7万订阅"
+                tools:text="23.7万订阅"
                 android:textColor="#c7c7c7"
                 android:textSize="11sp"/>
 
@@ -70,7 +69,7 @@
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:ellipsize="end"
                 android:lines="2"
-                android:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美"
+                tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美"
                 android:textColor="@color/detail_column_description_color"
                 android:textSize="11sp"/>
 
@@ -94,7 +93,7 @@
                     android:drawablePadding="0dp"
                     android:gravity="center"
                     android:padding="8.5dp"
-                    android:text="已订阅"
+                    tools:text="已订阅"
                     android:textColor="@color/detail_btn_text_color_selector"
                     android:textSize="14sp"
                     />
