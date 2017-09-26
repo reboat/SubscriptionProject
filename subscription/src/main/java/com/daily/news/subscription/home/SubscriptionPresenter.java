@@ -2,6 +2,7 @@ package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.detail.RxException;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.utils.SettingManager;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -53,6 +54,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 mView.hideProgressBar();
             }
         }).exe(params[0]);
+        SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 
     @Override
@@ -85,6 +87,6 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 super.onError(errMsg, errCode);
                 mView.onRefreshError(errMsg);}
         }).exe(params[0]);
-
+        SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 }

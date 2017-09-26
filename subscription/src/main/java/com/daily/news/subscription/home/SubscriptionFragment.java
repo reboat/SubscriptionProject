@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.zjrb.core.utils.SettingManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +23,7 @@ import butterknife.Unbinder;
  */
 public class SubscriptionFragment extends Fragment implements SubscriptionContract.View {
 
+    private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
 
@@ -31,7 +33,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subscription_home, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -39,6 +41,11 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.subscribe("杭州");
     }
 
@@ -59,7 +66,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
 
     @Override
     public void showError(Throwable message) {
-        Toast.makeText(getContext(),message.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -70,7 +77,18 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         } else {
             fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
-        getFragmentManager().beginTransaction().add(R.id.subscription_container, fragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            long lastRefreshTime = SettingManager.getInstance().getLastSubscriptionRefreshTime();
+            if (System.currentTimeMillis() - lastRefreshTime > DURATION_TIME) {
+                mPresenter.subscribe("杭州");
+            }
+        }
     }
 
     @Override
@@ -88,7 +106,6 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         super.onDestroyView();
         mUnBinder.unbind();
     }
-
 
 
     public static Fragment newInstance() {
