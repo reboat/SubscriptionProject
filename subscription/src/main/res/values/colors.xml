@@ -28,6 +28,7 @@
     <color name="recommend_header_title_color">#484848</color>
     <color name="my_sub_btn_color">#484848</color>
     <color name="header_my_subscription_divider_color">#d4d4d4</color>
+    <color name="header_my_subscription_divider_color_night">#343434</color>
     <color name="item_article_background">#ffffff</color>
     <color name="article_title_color">#484848</color>
     <color name="article_info_color">#999999</color>

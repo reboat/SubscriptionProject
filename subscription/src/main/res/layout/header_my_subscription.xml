@@ -14,11 +14,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/subscription"
+            android:drawableLeft="?attr/subscription"
             android:drawablePadding="3.5dp"
             android:lineSpacingExtra="5sp"
             android:text="@string/my_subscription_title"
-            android:textColor="@color/my_sub_btn_color"
+            android:textColor="?attr/tc_484848"
             android:textSize="15sp"
             />
     </LinearLayout>
@@ -27,7 +27,7 @@
         android:layout_width="1dp"
         android:layout_height="24dp"
         android:layout_gravity="center"
-        android:background="@color/header_my_subscription_divider_color"/>
+        android:background="?attr/header_my_subscription_divider_color"/>
 
     <LinearLayout
         android:id="@+id/my_sub_more_btn"
@@ -39,11 +39,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/more_subscription"
+            android:drawableLeft="?attr/more_subscription"
             android:drawablePadding="3.5dp"
             android:lineSpacingExtra="5sp"
             android:text="@string/my_sub_more_btn"
-            android:textColor="@color/my_sub_btn_color"
+            android:textColor="?attr/tc_484848"
             android:textSize="15sp"
             />
     </LinearLayout>

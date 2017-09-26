@@ -25,18 +25,31 @@
         <item name="sl_tc_news_tag">@color/sl_tc_news_tag</item>
         <item name="dc_dddddd">@color/dc_dddddd</item>
         <item name="subscription_home_background">@color/subscription_background_color</item>
-        <item name="column_subscription_text_color">@color/column_subscription_text_color_selector</item>
+        <item name="column_subscription_text_color">@color/column_subscription_text_color_selector
+        </item>
         <item name="subscription_button_background">@drawable/subscription_btn_selector</item>
-
+        <item name="header_my_subscription_divider_color">
+            @color/header_my_subscription_divider_color
+        </item>
+        <item name="more_subscription">@drawable/more_subscription</item>
+        <item name="subscription">@drawable/subscription</item>
     </style>
+
     <style name="SubscriptionThemeNight" parent="CoreThemeNight">
         <item name="subscription_arrow">@drawable/arrow_night</item>
         <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag_night</item>
         <item name="sl_tc_news_tag">@color/sl_tc_news_tag_night</item>
         <item name="dc_dddddd">@color/dc_dddddd_night</item>
         <item name="subscription_home_background">@color/subscription_background_color_night</item>
-        <item name="column_subscription_text_color">@color/column_subscription_text_color_selector_night</item>
+        <item name="column_subscription_text_color">
+            @color/column_subscription_text_color_selector_night
+        </item>
         <item name="subscription_button_background">@drawable/subscription_btn_selector_night</item>
+        <item name="header_my_subscription_divider_color">
+            @color/header_my_subscription_divider_color_night
+        </item>
+        <item name="more_subscription">@drawable/more_subscription_night</item>
+        <item name="subscription">@drawable/subscription_night</item>
     </style>
 
 </resources>
