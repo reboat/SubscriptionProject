@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTextMessage.setVisibility(View.VISIBLE);
-                    mTextMessage.setText(R.string.title_home);
+                    mTextMessage.setText("切换夜间模式");
                     if (recommend != null) {
                         transaction = fragmentManager.beginTransaction();
                         transaction.hide(recommend);
@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
 }

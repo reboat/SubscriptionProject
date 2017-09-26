@@ -19,6 +19,6 @@ public class SubscriptionApplication extends Application {
         UIUtils.init(this);
         ThemeMode.initTheme(R.style.AppTheme, R.style.NightAppTheme);
         UiModeManager.init(this, R.styleable.SupportUiMode);
-        ThemeMode.setUiMode(true);
+        ThemeMode.setUiMode(false);
     }
 }
