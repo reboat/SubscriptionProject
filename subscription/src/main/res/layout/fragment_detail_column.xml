@@ -45,7 +45,7 @@
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:lineSpacingExtra="1sp"
                 tools:text="钱塘江"
-                android:textColor="@color/detail_column_title_color"
+                android:textColor="?attr/detail_column_title_color"
                 android:textSize="19sp"/>
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:lineSpacingExtra="8sp"
                 tools:text="23.7万订阅"
-                android:textColor="#c7c7c7"
+                android:textColor="?attr/detail_column_info_color"
                 android:textSize="11sp"/>
 
             <TextView
@@ -70,7 +70,7 @@
                 android:ellipsize="end"
                 android:lines="2"
                 tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美"
-                android:textColor="@color/detail_column_description_color"
+                android:textColor="?attr/detail_column_description_color"
                 android:textSize="11sp"/>
 
             <LinearLayout
@@ -88,13 +88,13 @@
                     android:id="@+id/detail_column_sub_btn"
                     android:layout_width="76.5dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/detail_sub_btn"
-                    android:drawableLeft="@drawable/detail_sub_left_pic"
+                    android:background="?attr/detail_sub_btn"
+                    android:drawableLeft="?attr/detail_sub_left_pic"
                     android:drawablePadding="0dp"
                     android:gravity="center"
                     android:padding="8.5dp"
                     tools:text="已订阅"
-                    android:textColor="@color/detail_btn_text_color_selector"
+                    android:textColor="?attr/detail_btn_text_color"
                     android:textSize="14sp"
                     />
             </LinearLayout>

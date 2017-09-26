@@ -36,7 +36,12 @@
         <item name="category_text_color">@color/category_text_color_selector</item>
         <item name="search_shape">@drawable/search_shape</item>
         <item name="category_divider_color">@color/category_divider_color</item>
-
+        <item name="detail_column_description_color">@color/detail_column_description_color</item>
+        <item name="detail_column_title_color">@color/detail_column_title_color</item>
+        <item name="detail_btn_text_color">@color/detail_btn_text_color_selector</item>
+        <item name="detail_sub_btn">@drawable/detail_sub_btn</item>
+        <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic</item>
+        <item name="detail_column_info_color">@color/detail_column_info_color</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight">
@@ -57,6 +62,13 @@
         <item name="category_text_color">@color/category_text_color_selector_night</item>
         <item name="search_shape">@drawable/search_shape_night</item>
         <item name="category_divider_color">@color/category_divider_color_night</item>
+        <item name="detail_column_description_color">@color/detail_column_description_color_night
+        </item>
+        <item name="detail_column_title_color">@color/detail_column_title_color_night</item>
+        <item name="detail_btn_text_color">@color/detail_btn_text_color_selector_night</item>
+        <item name="detail_sub_btn">@drawable/detail_sub_btn_night</item>
+        <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic_night</item>
+        <item name="detail_column_info_color">@color/detail_column_info_color_night</item>
     </style>
 
 </resources>
