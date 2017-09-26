@@ -31,15 +31,15 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@color/category_divider_color"/>
+                android:background="?attr/category_divider_color"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/tc_ffffff"
         android:id="@+id/column_tip_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/tc_ffffff"
         android:gravity="center"
         android:orientation="vertical">
 

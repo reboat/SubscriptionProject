@@ -3,6 +3,7 @@ package com.daily.news;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.daily.news.subscription.home.SubscriptionFragment;
@@ -17,10 +18,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.night_model).setOnClickListener(new View.OnClickListener() {
+        final Button button = (Button) findViewById(R.id.night_model);
+        button.setText(ThemeMode.isNightMode()?"夜间模式":"正常模式");
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ThemeMode.setUiMode(!ThemeMode.isNightMode());
+                button.setText(ThemeMode.isNightMode()?"夜间模式":"正常模式");
             }
         });
 
