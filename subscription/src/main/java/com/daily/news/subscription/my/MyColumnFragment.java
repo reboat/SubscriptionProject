@@ -51,6 +51,6 @@ public class MyColumnFragment extends ColumnFragment {
 
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.my_subscription_empty, parent, false);
+        return inflater.inflate(R.layout.subscription_my_subscription_empty, parent, false);
     }
 }

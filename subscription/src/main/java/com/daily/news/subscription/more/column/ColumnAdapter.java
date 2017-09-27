@@ -40,7 +40,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_column, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.subscription_item_column, parent, false);
         return new ColumnViewHolder(itemView,mOnSubscribeListener);
     }
 

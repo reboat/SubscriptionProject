@@ -34,7 +34,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more);
+        setContentView(R.layout.subscription_activity_more);
 
         ButterKnife.bind(this);
         mSearchView.setOnClickListener(this);

@@ -53,7 +53,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recommend, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend, container, false);
         mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         mColumnPresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
@@ -68,7 +68,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
 
     private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
 
-        final Banner focusBanner = (Banner) inflater.inflate(R.layout.item_focus, container, false);
+        final Banner focusBanner = (Banner) inflater.inflate(R.layout.subscription_item_focus, container, false);
         focusBanner.isAutoPlay(true);
         focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
         focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
@@ -112,7 +112,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
-        View moreHeaderView = inflater.inflate(R.layout.header_more, container, false);
+        View moreHeaderView = inflater.inflate(R.layout.subscription_header_more, container, false);
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

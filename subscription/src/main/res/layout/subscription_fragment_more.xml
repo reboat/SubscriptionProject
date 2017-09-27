@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
             tools:context="com.daily.news.subscription.more.MoreListActivity"
-            tools:listitem="@layout/item_category"/>
+            tools:listitem="@layout/subscription_item_category"/>
 
         <LinearLayout
             android:id="@+id/more_category_detail_container"

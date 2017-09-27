@@ -61,7 +61,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mRootView = inflater.inflate(R.layout.fragment_article, container, false);
+        mRootView = inflater.inflate(R.layout.subscription_fragment_article, container, false);
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

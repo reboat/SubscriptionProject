@@ -30,6 +30,6 @@ public class SearchColumnFragment extends ColumnFragment {
 
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.search_empty,parent,false);
+        return inflater.inflate(R.layout.subscription_search_empty,parent,false);
     }
 }

@@ -54,7 +54,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_more, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_more, container, false);
         ButterKnife.bind(this, rootView);
         setupRecyclerView();
         return rootView;
@@ -131,7 +131,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         @Override
         public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_category, parent, false);
+                    .inflate(R.layout.subscription_item_category, parent, false);
             return new CategoryAdapter.ViewHolder(view);
         }
 

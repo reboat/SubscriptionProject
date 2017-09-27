@@ -6,13 +6,13 @@
               android:orientation="vertical"
               >
 
-    <include layout="@layout/header_my_subscription"/>
+    <include layout="@layout/subscription_header_my_subscription"/>
 
     <fragment
         android:id="@+id/article_fragment"
         android:name="com.daily.news.subscription.article.ArticleFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_article"/>
+        tools:layout="@layout/subscription_fragment_article"/>
 
 </LinearLayout>

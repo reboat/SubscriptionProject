@@ -48,7 +48,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subscription_home, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;

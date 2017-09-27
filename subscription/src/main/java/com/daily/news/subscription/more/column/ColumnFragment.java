@@ -74,7 +74,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_column, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_column, container, false);
         ButterKnife.bind(this, rootView);
         setupRecycleView();
         return rootView;

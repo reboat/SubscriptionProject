@@ -41,7 +41,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_subscribed_article, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_subscribed_article, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
 
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);

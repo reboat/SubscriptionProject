@@ -14,7 +14,7 @@ public class MyColumnActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_subscription);
+        setContentView(R.layout.subscription_activity_my_subscription);
 
         MyColumnFragment fragment = new MyColumnFragment();
         Bundle bundle = new Bundle();
