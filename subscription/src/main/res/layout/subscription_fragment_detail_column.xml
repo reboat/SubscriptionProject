@@ -99,6 +99,15 @@
                     />
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/detail_back"
+                android:src="@drawable/default_back_arrow"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </RelativeLayout>
 
         <FrameLayout

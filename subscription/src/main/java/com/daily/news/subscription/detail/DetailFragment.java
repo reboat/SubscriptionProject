@@ -176,7 +176,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mSubscriptionView.setText(subscriptionText);
     }
 
-    @OnClick(R2.id.detail_empty_back)
+    @OnClick({R2.id.detail_empty_back,R2.id.detail_back})
     public void onBack() {
         getActivity().finish();
     }
