@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.aliya.view.fitsys.FitWindowsLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/activity_default_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    app:fitType="bottom"
     tools:context="com.daily.news.subscription.more.MoreActivity">
 
     <LinearLayout
@@ -29,11 +31,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="7.5dp"
-                android:textColor="?attr/tc_484848"
                 android:background="?attr/search_shape"
                 android:hint="请输入关键词"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
+                android:textColor="?attr/tc_484848"
                 android:textColorHint="?attr/tc_999999"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -56,4 +58,4 @@
         android:background="?attr/subscription_home_background">
     </FrameLayout>
 
-</LinearLayout>
+</com.aliya.view.fitsys.FitWindowsLinearLayout>

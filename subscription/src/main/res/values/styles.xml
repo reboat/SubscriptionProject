@@ -44,7 +44,7 @@
         <item name="detail_column_info_color">@color/detail_column_info_color</item>
     </style>
 
-    <style name="SubscriptionThemeNight" parent="CoreThemeNight">
+    <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
         <item name="subscription_arrow">@drawable/arrow_night</item>
         <item name="module_news_bg_news_tag">@drawable/module_news_bg_news_tag_night</item>
         <item name="sl_tc_news_tag">@color/sl_tc_news_tag_night</item>

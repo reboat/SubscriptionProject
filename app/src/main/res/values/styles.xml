@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="CoreTheme">
+    <style name="AppTheme" parent="CoreTheme.Base">
         <item name="android:theme">@style/SubscriptionTheme</item>
     </style>
 
-    <style name="NightAppTheme" parent="CoreThemeNight">
+    <style name="NightAppTheme" parent="CoreThemeNight.Base">
         <item name="android:theme">@style/SubscriptionThemeNight</item>
     </style>
 
