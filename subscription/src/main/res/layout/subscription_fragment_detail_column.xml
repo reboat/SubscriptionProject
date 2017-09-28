@@ -111,6 +111,7 @@
         </RelativeLayout>
 
         <FrameLayout
+            android:background="?attr/subscription_home_background"
             android:id="@+id/detail_article_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
