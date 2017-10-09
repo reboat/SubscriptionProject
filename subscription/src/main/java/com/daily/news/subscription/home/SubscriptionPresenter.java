@@ -54,7 +54,6 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 mView.hideProgressBar();
             }
         }).exe(params[0]);
-        SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 
     @Override

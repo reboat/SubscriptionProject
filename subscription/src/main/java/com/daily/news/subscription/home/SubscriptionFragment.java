@@ -13,10 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
+import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.common.permission.AbsPermSingleCallBack;
+import com.zjrb.core.common.permission.Permission;
+import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.utils.SettingManager;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,11 +36,14 @@ import butterknife.Unbinder;
  * 1.有订阅时返回订阅的新闻，无订阅时返回推荐订阅栏目。
  * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
  */
-public class SubscriptionFragment extends Fragment implements SubscriptionContract.View {
+public class SubscriptionFragment extends BaseFragment implements SubscriptionContract.View {
 
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
+
+    private AMapLocationClient mAMapLocationClient;
+    private String mCity="杭州";
 
     @BindView(R2.id.progressBar_container)
     View mProgressBarContainer;
@@ -58,7 +70,31 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe("杭州");
+        SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
+        PermissionManager.get().request(this, new AbsPermSingleCallBack() {
+            @Override
+            public void onGranted(boolean isAlreadyDef) {
+                mAMapLocationClient=new AMapLocationClient(getActivity());
+                mAMapLocationClient.setLocationListener(new AMapLocationListener() {
+                    @Override
+                    public void onLocationChanged(AMapLocation aMapLocation) {
+                        if(aMapLocation.getProvince()!=null && aMapLocation.getProvince().contains("浙江")){
+                            mCity=aMapLocation.getCity();
+                            mPresenter.subscribe(mCity);
+                        }else{
+                            mPresenter.subscribe(mCity);
+                        }
+                        mAMapLocationClient.stopLocation();
+                    }
+                });
+                mAMapLocationClient.startLocation();
+            }
+
+            @Override
+            public void onDenied(List<String> neverAskPerms) {
+                mPresenter.subscribe(mCity);
+            }
+        }, Permission.LOCATION_COARSE);
     }
 
     @Override
@@ -109,7 +145,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
     private void refreshData() {
         long lastRefreshTime = SettingManager.getInstance().getLastSubscriptionRefreshTime();
         if (System.currentTimeMillis() - lastRefreshTime > DURATION_TIME) {
-            mPresenter.subscribe("杭州");
+            mPresenter.subscribe(mCity);
         }
     }
 
