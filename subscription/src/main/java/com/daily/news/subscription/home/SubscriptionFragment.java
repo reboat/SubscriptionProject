@@ -54,6 +54,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionContra
         return rootView;
     }
 
+    //TODO 订阅地址获取
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

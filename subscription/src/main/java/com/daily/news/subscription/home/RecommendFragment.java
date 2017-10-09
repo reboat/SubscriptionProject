@@ -66,6 +66,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         return rootView;
     }
 
+    //TODO 修改为通用的 Banner
     private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
 
         final Banner focusBanner = (Banner) inflater.inflate(R.layout.subscription_item_focus, container, false);
