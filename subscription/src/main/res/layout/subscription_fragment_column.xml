@@ -5,6 +5,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:textIsSelectable="true"
+             android:background="?attr/subscription_home_background"
              tools:context="com.daily.news.subscription.more.column.ColumnFragment">
 
     <LinearLayout
@@ -18,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="#484848"
+            android:textColor="?attr/tc_484848"
             android:text="暂无栏目上线\n敬请期待"/>
 
     </LinearLayout>
