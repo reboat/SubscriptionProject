@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -31,5 +32,10 @@ public class SearchColumnFragment extends ColumnFragment {
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
         return inflater.inflate(R.layout.subscription_search_empty,parent,false);
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
     }
 }

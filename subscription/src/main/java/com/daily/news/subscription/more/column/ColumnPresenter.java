@@ -34,21 +34,6 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     @Override
     public void subscribe(Object... params) {
         mView.showProgressBar();
-//        Disposable disposable = mStore.getFlowable("")
-//                .subscribe(new Consumer<List<Column>>() {
-//                    @Override
-//                    public void accept(@NonNull List<Column> columnsBeen) throws Exception {
-//                        mView.updateValue(columnsBeen);
-//                        mView.hideProgressBar();
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(@NonNull Throwable throwable) throws Exception {
-//                        mView.hideProgressBar();
-//                        mView.showError(throwable.getMessage());
-//                    }
-//                });
-//        mDisposable.add(disposable);
         APIBaseTask task = mStore.getTask(new APICallBack<ColumnResponse.DataBean>() {
             @Override
             public void onSuccess(ColumnResponse.DataBean data) {

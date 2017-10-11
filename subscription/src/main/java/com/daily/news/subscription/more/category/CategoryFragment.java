@@ -10,7 +10,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.daily.news.subscription.R;
@@ -30,17 +29,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     private CategoryContract.Presenter mPresenter;
 
+    @BindView(R2.id.category_container)
+    View mContainerView;
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
     CategoryAdapter mCategoryAdapter;
     List<CategoryResponse.DataBean.CategoryBean> mCategories;
 
-    @BindView(R2.id.column_tip_container)
-    View mTipContainer;
-    @BindView(R2.id.column_tip_view)
-    TextView mTipView;
-    @BindView(R2.id.column_progressBar)
-    ProgressBar mProgressBar;
 
     public CategoryFragment() {
     }
@@ -92,26 +87,19 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void showError(Throwable message) {
-        mTipContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
-        mTipView.setText(message.getMessage());
     }
 
     @Override
     public LoadViewHolder getProgressBar() {
-        return null;
+        return new LoadViewHolder(mContainerView, (ViewGroup) mContainerView.getParent());
     }
 
     @Override
     public void showProgressBar() {
-        mTipContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        mTipView.setText(R.string.loading);
     }
 
     @Override
     public void hideProgressBar() {
-        mTipContainer.setVisibility(View.GONE);
     }
 
     @Override
