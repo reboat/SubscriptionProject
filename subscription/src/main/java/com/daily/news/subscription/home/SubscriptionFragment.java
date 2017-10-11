@@ -23,6 +23,7 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.permission.AbsPermSingleCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 
 import java.util.List;
@@ -45,8 +46,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private AMapLocationClient mAMapLocationClient;
     private String mCity="杭州";
 
-    @BindView(R2.id.progressBar_container)
-    View mProgressBarContainer;
+    @BindView(R2.id.subscription_container)
+    View mContainerView;
+
 
     private BroadcastReceiver mReceiver=new BroadcastReceiver() {
         @Override
@@ -63,6 +65,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+
         return rootView;
     }
 
@@ -110,17 +113,20 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     @Override
     public void showProgressBar() {
-        mProgressBarContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
-        mProgressBarContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(Throwable message) {
         Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return new LoadViewHolder(mContainerView, (ViewGroup) mContainerView.getParent());
     }
 
     @Override

@@ -14,15 +14,15 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class ColumnPresenter extends SubscribePresenter implements ColumnContract.Presenter {
-    private ColumnContract.View mDetailView;
-    private ColumnContract.Store mDetailStore;
+    private ColumnContract.View mView;
+    private ColumnContract.Store mStore;
     private CompositeDisposable mDisposable;
 
-    public ColumnPresenter(ColumnContract.View detailView, ColumnContract.Store detailStore) {
-        super(detailView, detailStore);
-        mDetailView = detailView;
-        mDetailView.setPresenter(this);
-        mDetailStore = detailStore;
+    public ColumnPresenter(ColumnContract.View view, ColumnContract.Store store) {
+        super(view, store);
+        mView = view;
+        mView.setPresenter(this);
+        mStore = store;
         mDisposable = new CompositeDisposable();
     }
 
@@ -33,38 +33,38 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
 
     @Override
     public void subscribe(Object... params) {
-        mDetailView.showProgressBar();
-//        Disposable disposable = mDetailStore.getFlowable("")
+        mView.showProgressBar();
+//        Disposable disposable = mStore.getFlowable("")
 //                .subscribe(new Consumer<List<Column>>() {
 //                    @Override
 //                    public void accept(@NonNull List<Column> columnsBeen) throws Exception {
-//                        mDetailView.updateValue(columnsBeen);
-//                        mDetailView.hideProgressBar();
+//                        mView.updateValue(columnsBeen);
+//                        mView.hideProgressBar();
 //                    }
 //                }, new Consumer<Throwable>() {
 //                    @Override
 //                    public void accept(@NonNull Throwable throwable) throws Exception {
-//                        mDetailView.hideProgressBar();
-//                        mDetailView.showError(throwable.getMessage());
+//                        mView.hideProgressBar();
+//                        mView.showError(throwable.getMessage());
 //                    }
 //                });
 //        mDisposable.add(disposable);
-        APIBaseTask task = mDetailStore.getTask(new APICallBack<ColumnResponse.DataBean>() {
+        APIBaseTask task = mStore.getTask(new APICallBack<ColumnResponse.DataBean>() {
             @Override
             public void onSuccess(ColumnResponse.DataBean data) {
-                mDetailView.updateValue(data);
-                mDetailView.hideProgressBar();
+                mView.updateValue(data);
+                mView.hideProgressBar();
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
-                mDetailView.hideProgressBar();
-                mDetailView.showError(new RxException(errMsg,errCode));
+                mView.hideProgressBar();
+                mView.showError(new RxException(errMsg,errCode));
             }
         });
         if (task != null) {
-            task.exe(params);
+            task.bindLoadViewHolder(mView.getProgressBar()).exe(params);
         }
     }
 
@@ -77,6 +77,6 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
     public void refreshData(List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
         ColumnResponse.DataBean dataBean=new ColumnResponse.DataBean();
         dataBean.elements=recommend_list;
-        mDetailView.updateValue(dataBean);
+        mView.updateValue(dataBean);
     }
 }

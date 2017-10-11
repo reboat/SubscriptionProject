@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daily.news.subscription.R;
@@ -21,6 +19,7 @@ import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +30,11 @@ import butterknife.ButterKnife;
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
 
     @BindView(R2.id.column_recyclerView)
-    RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;
     List<ColumnResponse.DataBean.ColumnBean> mColumns;
     ColumnAdapter mColumnAdapter;
 
-    @BindView(R2.id.column_tip_container)
-    View mTipContainer;
-    @BindView(R2.id.column_tip_view)
-    TextView mTipView;
-    @BindView(R2.id.column_progressBar)
-    ProgressBar mProgressBar;
+
 
     @BindView(R2.id.column_empty_container)
     ViewGroup mEmptyContainer;
@@ -147,9 +141,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void showProgressBar() {
-        mTipContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        mTipView.setText(R.string.loading);
+
     }
 
     @Override
@@ -172,14 +164,16 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void hideProgressBar() {
-        mTipContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(Throwable message) {
-        mTipContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
-        mTipView.setText(message.getMessage());
+
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
     @Override

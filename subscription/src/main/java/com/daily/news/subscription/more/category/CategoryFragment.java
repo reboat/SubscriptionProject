@@ -18,6 +18,7 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.LocalColumnStore;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mTipContainer.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
         mTipView.setText(message.getMessage());
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
     @Override

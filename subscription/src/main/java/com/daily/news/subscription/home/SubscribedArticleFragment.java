@@ -14,6 +14,7 @@ import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.Collections;
 import java.util.List;
@@ -91,6 +92,11 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void showError(Throwable message) {
 
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
     @Override

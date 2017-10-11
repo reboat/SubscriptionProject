@@ -53,7 +53,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 mView.showError(new RxException(errMsg,errCode));
                 mView.hideProgressBar();
             }
-        }).exe(params[0]);
+        }).bindLoadViewHolder(mView.getProgressBar()).exe(params[0]);
     }
 
     @Override

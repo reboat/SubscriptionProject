@@ -22,6 +22,7 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.Locale;
 
@@ -147,6 +148,11 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         } else {
             mTipView.setText(message.getMessage());
         }
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
     @OnClick(R2.id.detail_column_sub_btn)

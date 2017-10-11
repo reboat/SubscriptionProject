@@ -23,6 +23,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -159,6 +160,11 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     @Override
     public void showError(Throwable message) {
 
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
 

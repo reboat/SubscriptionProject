@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +72,12 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mArticleAdapter.addFooterView(mLoadMore.getItemView());
+        mArticleAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                Nav.with(getContext()).to(mArticles.get(position).getUrl());
+            }
+        });
 
         return mRootView;
     }
@@ -100,6 +109,11 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     @Override
     public void showError(Throwable message) {
 
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return null;
     }
 
     @Override

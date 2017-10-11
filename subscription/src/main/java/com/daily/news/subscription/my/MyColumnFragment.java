@@ -14,6 +14,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -52,5 +53,11 @@ public class MyColumnFragment extends ColumnFragment {
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
         return inflater.inflate(R.layout.subscription_my_subscription_empty, parent, false);
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        LoadViewHolder holder=new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
+        return holder;
     }
 }
