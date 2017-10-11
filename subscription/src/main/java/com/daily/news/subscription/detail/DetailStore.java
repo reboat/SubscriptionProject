@@ -4,6 +4,7 @@ import com.daily.news.subscription.subscribe.SubscribeStore;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -40,15 +41,18 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
     }
 
     @Override
-    public Flowable<DetailResponse.DataBean> getDetailResponse(final Object... params) {
-        return Flowable.create(new FlowableOnSubscribe<DetailResponse.DataBean>() {
+    public Flowable<DetailResponse> getDetailResponse(final LoadViewHolder progressBar, final Object... params) {
+        return Flowable.create(new FlowableOnSubscribe<DetailResponse>() {
             @Override
-            public void subscribe(@NonNull final FlowableEmitter<DetailResponse.DataBean> e) throws Exception {
+            public void subscribe(@NonNull final FlowableEmitter<DetailResponse> e) throws Exception {
                 new APIGetTask<DetailResponse.DataBean>(new APICallBack<DetailResponse.DataBean>() {
                     @Override
                     public void onSuccess(DetailResponse.DataBean data) {
-                        if(!e.isCancelled()){
-                            e.onNext(data);
+                        if (!e.isCancelled()) {
+                            DetailResponse response = new DetailResponse();
+                            response.code = 200;
+                            response.data = data;
+                            e.onNext(response);
                             e.onComplete();
                         }
                     }
@@ -56,7 +60,13 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
                     @Override
                     public void onError(String errMsg, int errCode) {
                         super.onError(errMsg, errCode);
-                        e.onError(new RxException(errMsg,errCode));
+                        // FlowableEmitter 调用 onError和onComplete时，会被cancel。
+                        if (!e.isCancelled()) {
+                            DetailResponse response = new DetailResponse();
+                            response.code = errCode;
+                            response.message = errMsg;
+                            e.onNext(response);
+                        }
                     }
                 }) {
                     @Override
@@ -68,7 +78,7 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
                     protected String getApi() {
                         return "/api/column/article_list";
                     }
-                }.exe(params);
+                }.bindLoadViewHolder(progressBar).exe(params);
             }
         }, BackpressureStrategy.BUFFER).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }

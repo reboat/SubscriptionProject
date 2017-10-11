@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,12 +45,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     TextView mDescriptionView;
     @BindView(R2.id.detail_column_sub_btn)
     TextView mSubscriptionView;
-    @BindView(R2.id.detail_column_progressBar_container)
-    View mProgressBarContainer;
-    @BindView(R2.id.detail_column_progressBar)
-    ProgressBar mProgressBar;
-    @BindView(R2.id.detail_column_tip_view)
-    TextView mTipView;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
     @BindView(R2.id.detail_content_container)
@@ -102,57 +95,48 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showProgressBar() {
-        mProgressBarContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        mTipView.setText("加载中...");
     }
 
     @Override
-    public void updateValue(DetailResponse.DataBean data) {
-        mDetailColumn = data.detail;
-        RequestOptions options = new RequestOptions();
-        options.centerCrop();
-        options.placeholder(R.drawable.column_placeholder_big);
-        Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
-        mTitleView.setText(data.detail.name);
-        mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", data.detail.subscribe_count, data.detail.article_count));
-        mDescriptionView.setText(data.detail.description);
-        String subscriptionText = data.detail.subscribed ? "已经订阅" : "订阅";
-        mSubscriptionView.setText(subscriptionText);
-        mSubscriptionView.setSelected(data.detail.subscribed);
+    public void updateValue(DetailResponse response) {
+        if (response.code == 200) {
+            DetailResponse.DataBean data = response.data;
+            mDetailColumn = data.detail;
+            RequestOptions options = new RequestOptions();
+            options.centerCrop();
+            options.placeholder(R.drawable.column_placeholder_big);
+            Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
+            mTitleView.setText(data.detail.name);
+            mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", data.detail.subscribe_count, data.detail.article_count));
+            mDescriptionView.setText(data.detail.description);
+            String subscriptionText = data.detail.subscribed ? "已经订阅" : "订阅";
+            mSubscriptionView.setText(subscriptionText);
+            mSubscriptionView.setSelected(data.detail.subscribed);
 
-        options.placeholder(R.drawable.detail_column_default);
-        Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
+            options.placeholder(R.drawable.detail_column_default);
+            Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
 
-        ArticleFragment fragment = new ArticleFragment();
-        getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-        new ArticlePresenter(fragment, new DetailArticleStore(mUid, data.elements));
-    }
-
-    @Override
-    public void hideProgressBar() {
-        mProgressBarContainer.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError(Throwable message) {
-        mProgressBarContainer.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.GONE);
-        if (message instanceof RxException) {
-            RxException exception = (RxException) message;
+            ArticleFragment fragment = new ArticleFragment();
+            getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
+            new ArticlePresenter(fragment, new DetailArticleStore(mUid, data.elements));
+        } else if (response.code == 111) {
             // TODO 栏目不存在显示页面 errCode 未确定
-            if (exception.errCode == 111) {
-                mContentContainer.setVisibility(View.GONE);
-                mEmptyErrorContainer.setVisibility(View.VISIBLE);
-            }
-        } else {
-            mTipView.setText(message.getMessage());
+            mContentContainer.setVisibility(View.GONE);
+            mEmptyErrorContainer.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
+    public void hideProgressBar() {
+    }
+
+    @Override
+    public void showError(Throwable message) {
+    }
+
+    @Override
     public LoadViewHolder getProgressBar() {
-        return null;
+        return new LoadViewHolder(mContentContainer, (ViewGroup) mContentContainer.getParent());
     }
 
     @OnClick(R2.id.detail_column_sub_btn)
@@ -182,7 +166,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mSubscriptionView.setText(subscriptionText);
     }
 
-    @OnClick({R2.id.detail_empty_back,R2.id.detail_back})
+    @OnClick({R2.id.detail_empty_back, R2.id.detail_back})
     public void onBack() {
         getActivity().finish();
     }

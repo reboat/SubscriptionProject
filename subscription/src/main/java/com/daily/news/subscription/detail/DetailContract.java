@@ -6,6 +6,7 @@ import com.daily.news.subscription.base.UIBaseView;
 import com.daily.news.subscription.subscribe.SubscribeContract;
 import com.zjrb.core.api.base.APIBaseTask;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import io.reactivex.Flowable;
 
@@ -18,12 +19,12 @@ public interface DetailContract {
     }
 
     interface View extends UIBaseView<Presenter>, SubscribeContract.View {
-        void updateValue(DetailResponse.DataBean dataBean);
+        void updateValue(DetailResponse dataBean);
     }
 
     interface Store extends BaseStore, SubscribeContract.Store {
         APIBaseTask getTask(APICallBack<DetailResponse.DataBean> callBack);
 
-        Flowable<DetailResponse.DataBean> getDetailResponse(Object... params);
+        Flowable<DetailResponse> getDetailResponse(LoadViewHolder progressBar, Object... params);
     }
 }
