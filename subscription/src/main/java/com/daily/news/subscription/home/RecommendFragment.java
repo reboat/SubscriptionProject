@@ -20,6 +20,7 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
@@ -68,12 +69,18 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     }
 
     //TODO 修改为通用的 Banner
-    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, List<SubscriptionResponse.Focus> focuses) {
+    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, final List<SubscriptionResponse.Focus> focuses) {
 
         final Banner focusBanner = (Banner) inflater.inflate(R.layout.subscription_item_focus, container, false);
         focusBanner.isAutoPlay(true);
         focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
         focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        focusBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Nav.with(getActivity()).to(focuses.get(position).doc_url);
+            }
+        });
 
         Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<String>>() {
             @Override
