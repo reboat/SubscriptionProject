@@ -60,16 +60,20 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         mColumnPresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
 
-         focusBanner = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
-        mColumnFragment.addHeaderView(focusBanner);
+        focusBanner = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
+        if (focusBanner != null) {
+            mColumnFragment.addHeaderView(focusBanner);
+        }
         mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
-
-
         return rootView;
     }
 
     //TODO 修改为通用的 Banner
     private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, final List<SubscriptionResponse.Focus> focuses) {
+
+        if (focuses == null || focuses.size() == 0) {
+            return null;
+        }
 
         final Banner focusBanner = (Banner) inflater.inflate(R.layout.subscription_item_focus, container, false);
         focusBanner.isAutoPlay(true);
@@ -187,8 +191,8 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else {
-            Fragment fragment=RecommendFragment.newInstance(dataBean.focus_list,dataBean.recommend_list);
-            getFragmentManager().beginTransaction().replace(R.id.subscription_container,fragment).commit();
+            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
     }
 
