@@ -2,6 +2,7 @@ package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.zjrb.core.domain.base.BaseData;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class DetailResponse {
     public String request_id;
     public DataBean data;
 
-    public static class DataBean {
+    public static class DataBean extends BaseData{
 
         public DetailBean detail;
         public List<ArticleResponse.DataBean.Article> elements;

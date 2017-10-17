@@ -29,9 +29,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.icu.text.Normalizer.NO;
+
 public class DetailFragment extends Fragment implements DetailContract.View {
     private static final String UID = "id";
     private static final int DEFAULT_PAGE_SIZE = 10;
+    private static final int CODE_ALREADY_OFF_THE_SHELF = 50604;
     private String mUid;
     private DetailContract.Presenter mPresenter;
 
@@ -109,7 +112,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             mTitleView.setText(data.detail.name);
             mInfoView.setText(String.format(Locale.getDefault(), "%d万订阅 %d篇稿件", data.detail.subscribe_count, data.detail.article_count));
             mDescriptionView.setText(data.detail.description);
-            String subscriptionText = data.detail.subscribed ? "已经订阅" : "订阅";
+            String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
             mSubscriptionView.setSelected(data.detail.subscribed);
 
@@ -119,8 +122,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             ArticleFragment fragment = new ArticleFragment();
             getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
             new ArticlePresenter(fragment, new DetailArticleStore(mUid, data.elements));
-        } else if (response.code == 111) {
-            // TODO 栏目不存在显示页面 errCode 未确定
+        } else if (response.code == CODE_ALREADY_OFF_THE_SHELF) {
             mContentContainer.setVisibility(View.GONE);
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
         }
@@ -150,6 +152,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,7 +164,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     private void modifySubscribeBtnState(boolean subscribe) {
         mDetailColumn.subscribed = subscribe;
         mSubscriptionView.setSelected(mDetailColumn.subscribed);
-        String subscriptionText = mDetailColumn.subscribed ? "已经订阅" : "订阅";
+        String subscriptionText = mDetailColumn.subscribed ? "已订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
     }
 

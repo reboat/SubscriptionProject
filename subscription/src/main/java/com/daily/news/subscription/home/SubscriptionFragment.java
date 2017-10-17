@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,18 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 页面逻辑：
@@ -44,27 +53,46 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private SubscriptionContract.Presenter mPresenter;
 
     private AMapLocationClient mAMapLocationClient;
-    private String mCity="杭州";
+    private String mCity = "杭州";
 
     @BindView(R2.id.subscription_container)
     View mContainerView;
 
 
-    private BroadcastReceiver mReceiver=new BroadcastReceiver() {
+    private Disposable mDisposable;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            if(Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())){
-                mPresenter.subscribe("杭州");
+        public void onReceive(Context context, final Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                if (mEmitter != null && !mEmitter.isDisposed()) {
+                    mEmitter.onNext(intent.getAction());
+                }
             }
         }
     };
+    private ObservableEmitter<String> mEmitter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver,new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+
+        mDisposable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                mEmitter = e;
+            }
+        })
+                .debounce(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        mPresenter.subscribe(mCity);
+                    }
+                });
 
         return rootView;
     }
@@ -77,16 +105,20 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         PermissionManager.get().request(this, new AbsPermSingleCallBack() {
             @Override
             public void onGranted(boolean isAlreadyDef) {
-                mAMapLocationClient=new AMapLocationClient(getActivity());
+                mAMapLocationClient = new AMapLocationClient(getActivity());
                 mAMapLocationClient.setLocationListener(new AMapLocationListener() {
                     @Override
                     public void onLocationChanged(AMapLocation aMapLocation) {
-                        if(aMapLocation.getProvince()!=null && aMapLocation.getProvince().contains("浙江")){
-                            mCity=aMapLocation.getCity();
-                            mPresenter.subscribe(mCity);
-                        }else{
-                            mPresenter.subscribe(mCity);
+                        if (aMapLocation.getProvince() != null && aMapLocation.getProvince().contains("浙江")) {
+                            String temp = aMapLocation.getCity();
+                            if (temp.endsWith("市")) {
+                                temp.substring(0, temp.indexOf("市"));
+                                if(!TextUtils.isEmpty(temp)){
+                                    mCity = temp;
+                                }
+                            }
                         }
+                        mPresenter.subscribe(mCity);
                         mAMapLocationClient.stopLocation();
                     }
                 });
@@ -170,6 +202,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         super.onDestroyView();
         mUnBinder.unbind();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
     }
 
 

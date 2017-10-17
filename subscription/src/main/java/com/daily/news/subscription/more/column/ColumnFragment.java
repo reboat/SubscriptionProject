@@ -101,6 +101,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
     }
 
     public void removeItem(ColumnResponse.DataBean.ColumnBean bean) {
