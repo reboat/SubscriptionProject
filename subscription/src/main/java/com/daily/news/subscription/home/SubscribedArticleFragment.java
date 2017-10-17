@@ -3,6 +3,7 @@ package com.daily.news.subscription.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     private ArticlePresenter mArticlePresenter;
     private ArticleFragment mArticleFragment;
     private List<ArticleResponse.DataBean.Article> mArticles;
+    private String mCity = "杭州";
 
 
     @Nullable
@@ -48,6 +50,9 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);
         mArticlePresenter = new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
         mArticleFragment.setOnRefreshListener(this);
+
+        String city = getArguments() != null ? getArguments().getString("city") : "";
+        mCity = TextUtils.isEmpty(city) ? "杭州" : city;
         return rootView;
     }
 
@@ -107,10 +112,10 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         if (dataBean.has_subscribe) {
-            Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
+            Fragment fragment = SubscribedArticleFragment.newInstance(mCity, dataBean.article_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else {
-            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment.newInstance(mCity, dataBean.focus_list, dataBean.recommend_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
         mArticleFragment.setRefreshing(false);
@@ -127,8 +132,11 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mUnBinder.unbind();
     }
 
-    public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
+    public static Fragment newInstance(String city, List<ArticleResponse.DataBean.Article> article_list) {
         SubscribedArticleFragment fragment = new SubscribedArticleFragment();
+        Bundle args = new Bundle();
+        args.putString("city", city);
+        fragment.setArguments(args);
         article_list.removeAll(Collections.singleton(null));
         fragment.initArticles(article_list);
         new SubscriptionPresenter(fragment, new SubscriptionStore());

@@ -112,8 +112,8 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                         if (aMapLocation.getProvince() != null && aMapLocation.getProvince().contains("浙江")) {
                             String temp = aMapLocation.getCity();
                             if (temp.endsWith("市")) {
-                                temp.substring(0, temp.indexOf("市"));
-                                if(!TextUtils.isEmpty(temp)){
+                                temp = temp.substring(0, temp.indexOf("市"));
+                                if (!TextUtils.isEmpty(temp)) {
                                     mCity = temp;
                                 }
                             }
@@ -165,9 +165,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
         Fragment fragment;
         if (subscriptionResponse.has_subscribe) {
-            fragment = SubscribedArticleFragment.newInstance(subscriptionResponse.article_list);
+            fragment = SubscribedArticleFragment.newInstance(mCity,subscriptionResponse.article_list);
         } else {
-            fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+            fragment = RecommendFragment.newInstance(mCity,subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,12 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
 
     private static final String COLUMN_DATA = "column_data";
     private static final String FOCUS_DATA = "focus_data";
+    private static final String CITY = "city";
     private SubscriptionContract.Presenter mPresenter;
     private ColumnPresenter mColumnPresenter;
     private ColumnFragment mColumnFragment;
     private Banner focusBanner;
+    private String mCity;
 
     public RecommendFragment() {
     }
@@ -59,6 +62,8 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         mColumnPresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
+
+        mCity = TextUtils.isEmpty(getArguments().getString(CITY)) ? "杭州" : getArguments().getString(CITY);
 
         focusBanner = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
         if (focusBanner != null) {
@@ -140,13 +145,14 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         super.onActivityCreated(savedInstanceState);
     }
 
-    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
+    public static Fragment newInstance(String city, List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
         RecommendFragment fragment = new RecommendFragment();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         focus_list.removeAll(Collections.singleton(null));
         recommend_list.removeAll(Collections.singleton(null));
 
         Bundle args = new Bundle();
+        args.putString(RecommendFragment.CITY, city);
         args.putParcelableArrayList(RecommendFragment.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
         args.putParcelableArrayList(RecommendFragment.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         fragment.setArguments(args);
@@ -188,10 +194,10 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         mColumnFragment.setRefreshing(false);
         if (dataBean.has_subscribe) {
-            Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
+            Fragment fragment = SubscribedArticleFragment.newInstance(mCity, dataBean.article_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else {
-            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment.newInstance(mCity, dataBean.focus_list, dataBean.recommend_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
     }
@@ -204,6 +210,6 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     @Override
     public void onRefresh() {
         mColumnFragment.setRefreshing(true);
-        mPresenter.onRefresh("杭州");
+        mPresenter.onRefresh(mCity);
     }
 }
