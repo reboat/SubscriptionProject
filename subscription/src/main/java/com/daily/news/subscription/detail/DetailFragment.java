@@ -141,13 +141,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @OnClick(R2.id.detail_column_sub_btn)
     public void submitSubscribe() {
-        modifySubscribeBtnState(!mDetailColumn.subscribed);
         mPresenter.submitSubscribe(mDetailColumn);
+        modifySubscribeBtnState(!mDetailColumn.subscribed);
     }
 
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-        modifySubscribeBtnState(bean.subscribed);
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
@@ -155,7 +154,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-        modifySubscribeBtnState(!bean.subscribed);
+        modifySubscribeBtnState(!mDetailColumn.subscribed);
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 

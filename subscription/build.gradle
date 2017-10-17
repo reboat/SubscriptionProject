@@ -42,5 +42,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    compile 'cn.daily.android:daily-news:1.0.5-SNAPSHOT'
+    compile 'cn.daily.android:daily-news:5.0.0.4'
+    compile 'cn.daily.android:daily-db:5.0.0.1'
 }
