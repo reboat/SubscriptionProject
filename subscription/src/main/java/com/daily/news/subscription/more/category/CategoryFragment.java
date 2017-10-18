@@ -66,7 +66,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mCategories = new ArrayList<>();
         mCategoryAdapter = new CategoryAdapter(mCategories);
         mRecyclerView.setAdapter(mCategoryAdapter);
-        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     @Override
@@ -142,6 +142,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if (category.is_selected) {
+                        return;
+                    }
+
                     ColumnFragment fragment = new ColumnFragment();
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
