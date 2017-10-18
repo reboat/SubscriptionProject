@@ -1,12 +1,10 @@
 package com.daily.news.subscription.more;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +18,7 @@ import com.daily.news.subscription.more.search.SearchColumnFragment;
 import com.daily.news.subscription.more.search.SearchStore;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,8 +83,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
         }else{
             fragment.sendRequest(new Object[]{keyword});
         }
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        UIUtils.hideSoftInput(mKeywordView);
     }
 
     private boolean checkValid(String keyword) {
