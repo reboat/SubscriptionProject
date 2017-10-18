@@ -2,6 +2,7 @@ package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.detail.RxException;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.utils.SettingManager;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -25,21 +26,6 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
     @Override
     public void subscribe(Object... params) {
         mView.showProgressBar();
-//        mStore.getFlowable("").subscribe(new Consumer<SubscriptionResponse>() {
-//
-//            @Override
-//            public void accept(@NonNull SubscriptionResponse subscriptionResponse) throws Exception {
-//                mView.updateValue(subscriptionResponse.data);
-//                mView.hideProgressBar();
-//            }
-//        }, new Consumer<Throwable>() {
-//            @Override
-//            public void accept(@NonNull Throwable throwable) throws Exception {
-//                mView.hideProgressBar();
-//                mView.showError(throwable.getMessage());
-//            }
-//        });
-
         mStore.getTask(new APICallBack<SubscriptionResponse.DataBean>() {
             @Override
             public void onSuccess(SubscriptionResponse.DataBean data) {
@@ -63,18 +49,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
 
     @Override
     public void onRefresh(Object... params) {
-//        mStore.getRefreshFlowable("url").subscribe(new Consumer<SubscriptionResponse>() {
-//            @Override
-//            public void accept(@NonNull SubscriptionResponse subscriptionResponse) throws Exception {
-//                mView.onRefreshComplete(subscriptionResponse);
-//            }
-//        }, new Consumer<Throwable>() {
-//            @Override
-//            public void accept(@NonNull Throwable throwable) throws Exception {
-//                mView.onRefreshError(throwable.getMessage());
-//            }
-//        });
-
+        APICallManager.get().cancel(this);
         mStore.getTask(new APICallBack<SubscriptionResponse.DataBean>() {
             @Override
             public void onSuccess(SubscriptionResponse.DataBean data) {
@@ -85,7 +60,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
                 mView.onRefreshError(errMsg);}
-        }).exe(params[0]);
+        }).setTag(this).exe(params[0]);
         SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 }
