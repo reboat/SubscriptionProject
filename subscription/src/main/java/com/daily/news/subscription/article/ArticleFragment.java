@@ -57,7 +57,10 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe();
+        //TODO 重启时会为空，重现方法修改系统->显示->字体大小
+        if (mPresenter != null) {
+            mPresenter.subscribe();
+        }
     }
 
     @Override
@@ -136,7 +139,9 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     @Override
     public void onDetach() {
         super.onDetach();
-        mPresenter.unsubscribe();
+        if (mPresenter != null) {
+            mPresenter.unsubscribe();
+        }
     }
 
     public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
