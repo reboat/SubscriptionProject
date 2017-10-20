@@ -39,6 +39,8 @@
         <item name="detail_sub_btn">@drawable/detail_sub_btn</item>
         <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic</item>
         <item name="detail_column_info_color">@color/detail_column_info_color</item>
+        <item name="subscription_search_icon">@drawable/subscription_search</item>
+        <item name="subscription_search_background_color">#ffffff</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -63,6 +65,8 @@
         <item name="detail_sub_btn">@drawable/detail_sub_btn_night</item>
         <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic_night</item>
         <item name="detail_column_info_color">@color/detail_column_info_color_night</item>
+        <item name="subscription_search_icon">@drawable/subscription_search_night</item>
+        <item name="subscription_search_background_color">#2a2a2a</item>
     </style>
 
 </resources>

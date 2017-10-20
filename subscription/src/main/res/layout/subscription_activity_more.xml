@@ -12,32 +12,40 @@
     tools:context="com.daily.news.subscription.more.MoreActivity">
 
     <LinearLayout
+        android:background="?attr/bc_f5f5f5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/subscription_home_background"
         android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="?attr/search_shape"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="?attr/subscription_search_icon" />
 
             <EditText
                 android:id="@+id/more_key_word"
                 android:layout_width="match_parent"
-                android:layout_height="39.5dp"
-                android:layout_marginBottom="7.5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="7.5dp"
-                android:background="?attr/search_shape"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="?attr/subscription_search_background_color"
                 android:hint="请输入关键词"
                 android:imeOptions="actionSearch"
-                android:singleLine="true"
+                android:lines="1"
                 android:textColor="?attr/tc_484848"
                 android:textColorHint="?attr/tc_999999"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
@@ -48,7 +56,7 @@
             android:lineSpacingExtra="6sp"
             android:text="搜索"
             android:textColor="@color/search_btn_text_color"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
     </LinearLayout>
 
     <FrameLayout

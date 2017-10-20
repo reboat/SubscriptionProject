@@ -6,6 +6,6 @@
         android:width="@dimen/daily_1"
         android:color="#2a2a2a"/>
     <solid android:color="#2a2a2a"/>
-    <padding android:left="@dimen/daily_27"/>
+    <padding android:left="10dp"/>
 
 </shape>

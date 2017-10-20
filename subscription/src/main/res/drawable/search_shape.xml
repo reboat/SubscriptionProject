@@ -6,6 +6,6 @@
         android:width="@dimen/daily_1"
         android:color="@color/search_background_stroke_color"/>
     <solid android:color="@color/search_background_color"/>
-    <padding android:left="@dimen/daily_27"/>
+    <padding android:left="10dp"/>
 
 </shape>

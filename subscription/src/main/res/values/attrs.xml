@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SupportUiMode">
-        <attr name="subscription_arrow" format="reference"/>
-        <attr name="subscription_home_background" format="reference"/>
-        <attr name="column_subscription_text_color" format="reference"/>
-        <attr name="subscription_button_background" format="reference"/>
-        <attr name="header_my_subscription_divider_color" format="reference"/>
-        <attr name="more_subscription" format="reference"/>
-        <attr name="subscription" format="reference"/>
-        <attr name="category_text_color" format="reference"/>
-        <attr name="search_shape" format="reference"/>
-        <attr name="category_divider_color" format="reference"/>
-        <attr name="detail_column_info_color" format="reference"/>
-        <attr name="detail_column_description_color" format="reference"/>
-        <attr name="detail_column_title_color" format="reference"/>
-        <attr name="detail_btn_text_color" format="reference"/>
-        <attr name="detail_sub_btn" format="reference"/>
-        <attr name="detail_sub_left_pic" format="reference"/>
-        <attr name="detail_btn_text_color_selector" format="reference"/>
+        <attr name="subscription_arrow" format="reference" />
+        <attr name="subscription_home_background" format="reference" />
+        <attr name="column_subscription_text_color" format="reference" />
+        <attr name="subscription_button_background" format="reference" />
+        <attr name="header_my_subscription_divider_color" format="reference" />
+        <attr name="more_subscription" format="reference" />
+        <attr name="subscription" format="reference" />
+        <attr name="category_text_color" format="reference" />
+        <attr name="search_shape" format="reference" />
+        <attr name="category_divider_color" format="reference" />
+        <attr name="detail_column_info_color" format="reference" />
+        <attr name="detail_column_description_color" format="reference" />
+        <attr name="detail_column_title_color" format="reference" />
+        <attr name="detail_btn_text_color" format="reference" />
+        <attr name="detail_sub_btn" format="reference" />
+        <attr name="detail_sub_left_pic" format="reference" />
+        <attr name="detail_btn_text_color_selector" format="reference" />
+        <attr name="subscription_search_icon" format="reference" />
+        <attr name="subscription_search_background_color" format="color|reference"/>
     </declare-styleable>
 </resources>
