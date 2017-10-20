@@ -38,6 +38,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
 
     public CategoryFragment() {
+        new CategoryPresenter(this, new CategoryStore());
     }
 
 

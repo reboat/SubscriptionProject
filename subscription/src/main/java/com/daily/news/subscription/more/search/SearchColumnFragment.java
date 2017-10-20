@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 /**
@@ -15,6 +16,10 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 public class SearchColumnFragment extends ColumnFragment {
     private String mKeyword;
+
+    public SearchColumnFragment() {
+        new ColumnPresenter(this, new SearchStore());
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

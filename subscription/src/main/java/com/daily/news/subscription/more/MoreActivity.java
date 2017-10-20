@@ -11,11 +11,7 @@ import android.widget.TextView;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.category.CategoryFragment;
-import com.daily.news.subscription.more.category.CategoryPresenter;
-import com.daily.news.subscription.more.category.CategoryStore;
-import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.search.SearchColumnFragment;
-import com.daily.news.subscription.more.search.SearchStore;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.utils.UIUtils;
@@ -44,7 +40,6 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.more_container, fragment)
                 .commit();
-        new CategoryPresenter(fragment, new CategoryStore());
     }
 
     @Override
@@ -79,7 +74,6 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
                     .add(R.id.more_container, fragment,"search")
                     .addToBackStack("search")
                     .commit();
-            new ColumnPresenter(fragment, new SearchStore());
         }else{
             fragment.sendRequest(new Object[]{keyword});
         }

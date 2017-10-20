@@ -25,9 +25,5 @@ public class DetailActivity extends BaseActivity {
         DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("id"));
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
-
-        new DetailPresenter(detailFragment, new DetailStore());
-
     }
-
 }

@@ -72,6 +72,10 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     };
     private ObservableEmitter<String> mEmitter;
 
+    public SubscriptionFragment() {
+        new SubscriptionPresenter(this, new SubscriptionStore());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -210,7 +214,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     public static Fragment newInstance() {
         SubscriptionFragment fragment = new SubscriptionFragment();
-        new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
     }
 }

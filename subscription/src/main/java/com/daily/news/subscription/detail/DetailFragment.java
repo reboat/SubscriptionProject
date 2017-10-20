@@ -59,6 +59,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
 
     public DetailFragment() {
+        new DetailPresenter(this, new DetailStore());
     }
 
     public static DetailFragment newInstance(String uid) {
