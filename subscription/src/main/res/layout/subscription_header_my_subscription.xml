@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="45.5dp"
-              android:orientation="horizontal">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/my_sub_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_height="45.5dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="?attr/subscription"
-            android:drawablePadding="3.5dp"
-            android:lineSpacingExtra="5sp"
-            android:text="@string/my_subscription_title"
-            android:textColor="?attr/tc_000000"
-            android:textSize="15sp"
-            />
+        <LinearLayout
+            android:id="@+id/my_sub_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="?attr/subscription"
+                android:drawablePadding="3.5dp"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/my_subscription_title"
+                android:textColor="?attr/tc_000000"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="?attr/header_my_subscription_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/my_sub_more_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="?attr/more_subscription"
+                android:drawablePadding="3.5dp"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/my_sub_more_btn"
+                android:textColor="?attr/tc_000000"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <View
-        android:layout_width="1dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center"
-        android:background="?attr/header_my_subscription_divider_color"/>
-
-    <LinearLayout
-        android:id="@+id/my_sub_more_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="?attr/more_subscription"
-            android:drawablePadding="3.5dp"
-            android:lineSpacingExtra="5sp"
-            android:text="@string/my_sub_more_btn"
-            android:textColor="?attr/tc_000000"
-            android:textSize="15sp"
-            />
-    </LinearLayout>
-
+        android:layout_height="0.5dp"
+        android:background="?attr/header_my_subscription_divider_color" />
 </LinearLayout>
