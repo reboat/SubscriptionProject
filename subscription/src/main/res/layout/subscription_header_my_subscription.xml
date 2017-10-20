@@ -18,7 +18,7 @@
             android:drawablePadding="3.5dp"
             android:lineSpacingExtra="5sp"
             android:text="@string/my_subscription_title"
-            android:textColor="?attr/tc_484848"
+            android:textColor="?attr/tc_000000"
             android:textSize="15sp"
             />
     </LinearLayout>
@@ -43,7 +43,7 @@
             android:drawablePadding="3.5dp"
             android:lineSpacingExtra="5sp"
             android:text="@string/my_sub_more_btn"
-            android:textColor="?attr/tc_484848"
+            android:textColor="?attr/tc_000000"
             android:textSize="15sp"
             />
     </LinearLayout>

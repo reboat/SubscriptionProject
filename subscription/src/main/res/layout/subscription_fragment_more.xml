@@ -9,15 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAligned="false"
-        android:divider="?android:attr/dividerHorizontal"
         android:orientation="horizontal"
-        android:showDividers="middle"
         tools:context="com.daily.news.subscription.more.MoreActivity">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/more_category_list"
             android:name="com.daily.news.subscription.more.MoreListFragment"
-            android:layout_width="120dp"
+            android:layout_width="85dp"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
             tools:context="com.daily.news.subscription.more.MoreListActivity"

@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="文化印象"
-            android:textColor="?attr/tc_484848"
-            android:textSize="14sp"/>
+            android:textColor="?attr/tc_000000"
+            android:textSize="16sp"/>
 
         <TextView
             android:lines="1"

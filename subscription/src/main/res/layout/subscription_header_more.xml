@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_weight="1"
-        android:lineSpacingExtra="6sp"
         android:text="@string/recommend_header_title1"
-        android:textColor="?attr/tc_484848"
+        android:textStyle="bold"
+        android:textColor="?attr/tc_000000"
         android:textSize="14sp"/>
 
     <LinearLayout
@@ -31,9 +31,8 @@
             android:id="@+id/recommend_header_title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="9sp"
             android:text="@string/subscribe_more"
-            android:textColor="?attr/tc_484848"
+            android:textColor="?attr/tc_000000"
             android:textSize="11sp"/>
 
         <ImageView
