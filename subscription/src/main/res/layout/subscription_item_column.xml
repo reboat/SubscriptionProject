@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
+        app:radius="4dp"
         android:layout_marginRight="11dp"
         android:layout_toRightOf="@+id/padding_view"
         app:srcCompat="@drawable/column_placeholder_big" />
