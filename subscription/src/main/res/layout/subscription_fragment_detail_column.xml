@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/detail_column_imageView"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="9dp"
@@ -69,6 +69,7 @@
                 android:layout_toRightOf="@+id/detail_column_imageView"
                 android:ellipsize="end"
                 android:lines="2"
+                android:layout_marginRight="20dp"
                 tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美"
                 android:textColor="?attr/detail_column_description_color"
                 android:textSize="11sp"/>
