@@ -2,21 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:paddingTop="11dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="11dp"
-                android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="11dp">
+
+    <View
+        android:id="@+id/padding_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@color/colorPrimary"
+        android:visibility="invisible" />
 
     <ImageView
-        android:layout_marginRight="11dp"
         android:id="@+id/column_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/column_placeholder_big"/>
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginRight="11dp"
+        android:layout_toRightOf="@+id/padding_view"
+        app:srcCompat="@drawable/column_placeholder_big" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,25 +35,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:lines="1"
-            android:ellipsize="end"
             android:id="@+id/column_title_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
             android:text="文化印象"
             android:textColor="?attr/tc_000000"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <TextView
-            android:lines="1"
-            android:ellipsize="end"
             android:id="@+id/column_info_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
+            android:ellipsize="end"
+            android:lines="1"
             android:text="72万订阅"
             android:textColor="?attr/tc_999999"
-            android:textSize="11sp"/>
+            android:textSize="11sp" />
     </LinearLayout>
 
     <TextView
@@ -61,6 +67,6 @@
         android:gravity="center"
         android:text="@string/subscription"
         android:textColor="?attr/column_subscription_text_color"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
 </RelativeLayout>

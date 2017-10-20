@@ -36,10 +36,12 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
         mKeywordView.clearFocus();
         mKeywordView.setOnEditorActionListener(this);
 
-        CategoryFragment fragment = new CategoryFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.more_container, fragment)
-                .commit();
+        if (getSupportFragmentManager().findFragmentByTag("category") == null) {
+            CategoryFragment fragment = new CategoryFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.more_container, fragment, "category")
+                    .commit();
+        }
     }
 
     @Override
@@ -64,17 +66,17 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
             return;
         }
 
-        SearchColumnFragment fragment= (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
+        SearchColumnFragment fragment = (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
         if (fragment == null) {
             fragment = new SearchColumnFragment();
-            Bundle args=new Bundle();
-            args.putString("keyword",keyword);
+            Bundle args = new Bundle();
+            args.putString("keyword", keyword);
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.more_container, fragment,"search")
+                    .add(R.id.more_container, fragment, "search")
                     .addToBackStack("search")
                     .commit();
-        }else{
+        } else {
             fragment.sendRequest(new Object[]{keyword});
         }
         UIUtils.hideSoftInput(mKeywordView);
@@ -86,6 +88,6 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view,this,"订阅更多").getView();
+        return TopBarFactory.createDefault(view, this, "订阅更多").getView();
     }
 }

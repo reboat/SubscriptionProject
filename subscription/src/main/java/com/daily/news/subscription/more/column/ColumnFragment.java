@@ -76,13 +76,17 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     private void setupRecycleView() {
         mColumns = new ArrayList<>();
-        mColumnAdapter = new ColumnAdapter(mColumns);
+        mColumnAdapter = createColumnAdapter(mColumns);
         mColumnAdapter.setOnSubscribeListener(this);
         mColumnAdapter.setOnItemClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+    }
+
+    protected ColumnAdapter createColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columns){
+        return new ColumnAdapter(columns);
     }
 
     public void addHeaderView(View headerView) {

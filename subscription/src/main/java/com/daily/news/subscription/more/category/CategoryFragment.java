@@ -2,6 +2,7 @@ package com.daily.news.subscription.more.category;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,6 @@ import android.widget.TextView;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.column.ColumnFragment;
-import com.daily.news.subscription.more.column.ColumnPresenter;
-import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.ArrayList;
@@ -79,11 +78,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public void updateValues(CategoryResponse.DataBean dataBean) {
         mCategoryAdapter.updateValue(dataBean.elements);
         dataBean.elements.get(0).is_selected = true;
-        ColumnFragment fragment = new ColumnFragment();
+        ColumnFragment fragment = new CategoryColumnFragment();
+        Bundle args=new Bundle();
+        args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
+        fragment.setArguments(args);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.more_category_detail_container, fragment)
                 .commit();
-        new ColumnPresenter(fragment, new LocalColumnStore(dataBean.elements.get(0).columns));
     }
 
     @Override
@@ -148,11 +149,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                         return;
                     }
 
-                    ColumnFragment fragment = new ColumnFragment();
+                    ColumnFragment fragment = new CategoryColumnFragment();
+                    Bundle args=new Bundle();
+                    args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
+                    fragment.setArguments(args);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commit();
-                    new ColumnPresenter(fragment, new LocalColumnStore(category.columns));
                     category.is_selected = true;
                     notifyItemChanged(position);
                     mValues.get(mCurPosition).is_selected = false;

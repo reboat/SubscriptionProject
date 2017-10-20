@@ -65,6 +65,8 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
         TextView mColumnInfoView;
         @BindView(R2.id.column_subscribe_btn)
         TextView mSubscribeBtn;
+        @BindView(R2.id.padding_view)
+        View mPaddingView;
         private OnSubscribeListener mOnSubscribeListener;
 
         public ColumnViewHolder(View itemView, OnSubscribeListener onSubscribeListener) {
@@ -78,6 +80,10 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
             if (mOnSubscribeListener != null) {
                 mOnSubscribeListener.onSubscribe(getData());
             }
+        }
+
+        public void hidePadingView(){
+            mPaddingView.setVisibility(View.GONE);
         }
 
         @Override
