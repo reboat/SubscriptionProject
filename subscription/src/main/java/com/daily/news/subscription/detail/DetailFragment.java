@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,13 +154,13 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         modifySubscribeBtnState(!mDetailColumn.subscribed);
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "请求失败!", Toast.LENGTH_SHORT).show();
     }
 
     private void modifySubscribeBtnState(boolean subscribe) {
