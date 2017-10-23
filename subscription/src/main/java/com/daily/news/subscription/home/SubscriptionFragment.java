@@ -205,6 +205,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onDestroyView() {
         super.onDestroyView();
         mUnBinder.unbind();
+        if(mAMapLocationClient!=null){
+            mAMapLocationClient.onDestroy();
+        }
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         if (mDisposable != null) {
             mDisposable.dispose();
