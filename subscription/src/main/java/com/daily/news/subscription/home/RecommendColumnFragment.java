@@ -1,7 +1,5 @@
 package com.daily.news.subscription.home;
 
-import android.widget.Toast;
-
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
 
@@ -12,6 +10,6 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 public class RecommendColumnFragment extends ColumnFragment {
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
     }
 }
