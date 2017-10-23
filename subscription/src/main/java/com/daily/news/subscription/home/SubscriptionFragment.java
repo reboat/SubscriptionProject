@@ -53,7 +53,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private SubscriptionContract.Presenter mPresenter;
 
     private AMapLocationClient mAMapLocationClient;
-    private String mCity = "杭州";
+    private String mCity = "";
 
     @BindView(R2.id.subscription_container)
     View mContainerView;
