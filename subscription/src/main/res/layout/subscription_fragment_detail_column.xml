@@ -18,6 +18,10 @@
             android:layout_height="180dp"
             android:scaleType="centerCrop"
             android:src="@drawable/detail_column_default"/>
+        <View
+            android:background="#7f000000"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
 
         <RelativeLayout
             android:id="@+id/detail_column_header"
@@ -95,8 +99,9 @@
                     android:background="?attr/detail_sub_btn"
                     android:drawableLeft="?attr/detail_sub_left_pic"
                     android:drawablePadding="0dp"
+                    android:paddingLeft="8.5dp"
+                    android:paddingRight="8.5dp"
                     android:gravity="center"
-                    android:padding="8.5dp"
                     tools:text="已订阅"
                     android:textColor="?attr/detail_btn_text_color"
                     android:textSize="14sp"
