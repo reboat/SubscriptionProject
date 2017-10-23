@@ -45,7 +45,7 @@ public class DetailArticleStore implements ArticleContract.Store {
 
             @Override
             protected String getApi() {
-                return "/api/column/my_article_list";
+                return "/api/column/article_list";
             }
         };
     }
