@@ -112,7 +112,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
             options.placeholder(R.drawable.column_placeholder_big);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
             mTitleView.setText(data.detail.name);
-            mInfoView.setText(String.format(Locale.getDefault(), "%d订阅 %d篇稿件", data.detail.subscribe_count, data.detail.article_count));
+            mInfoView.setText(String.format(Locale.getDefault(), "%d订阅 %d份稿件", data.detail.subscribe_count, data.detail.article_count));
             mDescriptionView.setText(data.detail.description);
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
