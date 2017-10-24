@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
                     case R.id.home:
                         break;
                     case R.id.sub:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, SubscriptionFragment.newInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, SubscriptionFragment.newInstance()).commitAllowingStateLoss();
                         break;
                     case R.id.develop:
                         break;

@@ -8,19 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationListener;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.common.location.DailyLocation;
 import com.zjrb.core.common.permission.AbsPermSingleCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
@@ -38,6 +35,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -51,15 +49,8 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
-
-    private AMapLocationClient mAMapLocationClient;
     private String mCity = "";
-
-    @BindView(R2.id.subscription_container)
-    View mContainerView;
-
-
-    private Disposable mDisposable;
+    private CompositeDisposable mDisposable;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, final Intent intent) {
@@ -72,8 +63,12 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     };
     private ObservableEmitter<String> mEmitter;
 
+    @BindView(R2.id.subscription_container)
+    View mContainerView;
+
     public SubscriptionFragment() {
         new SubscriptionPresenter(this, new SubscriptionStore());
+        mDisposable = new CompositeDisposable();
     }
 
     @Nullable
@@ -82,8 +77,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
-
-        mDisposable = Observable.create(new ObservableOnSubscribe<String>() {
+        Disposable disposable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                 mEmitter = e;
@@ -97,11 +91,11 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                         mPresenter.subscribe(mCity);
                     }
                 });
+        mDisposable.add(disposable);
 
         return rootView;
     }
 
-    //TODO 订阅地址获取
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -109,29 +103,40 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         PermissionManager.get().request(this, new AbsPermSingleCallBack() {
             @Override
             public void onGranted(boolean isAlreadyDef) {
-                mAMapLocationClient = new AMapLocationClient(getActivity());
-                mAMapLocationClient.setLocationListener(new AMapLocationListener() {
-                    @Override
-                    public void onLocationChanged(AMapLocation aMapLocation) {
-                        if (aMapLocation.getProvince() != null && aMapLocation.getProvince().contains("浙江")) {
-                            String temp = aMapLocation.getCity();
-                            if (temp.endsWith("市")) {
-                                temp = temp.substring(0, temp.indexOf("市"));
-                                if (!TextUtils.isEmpty(temp)) {
-                                    mCity = temp;
-                                }
+                Disposable disposable = DailyLocation.createLocationObservale(getContext())
+                        .defaultIfEmpty("")
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                mCity = s;
+                                mPresenter.subscribe(mCity);
                             }
-                        }
-                        mPresenter.subscribe(mCity);
-                        mAMapLocationClient.stopLocation();
-                    }
-                });
-                mAMapLocationClient.startLocation();
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                mPresenter.subscribe(mCity);
+                            }
+                        });
+                mDisposable.add(disposable);
             }
 
             @Override
             public void onDenied(List<String> neverAskPerms) {
-                mPresenter.subscribe(mCity);
+                Disposable disposable = DailyLocation.getIpObservable()
+                        .defaultIfEmpty("")
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                mCity = s;
+                                mPresenter.subscribe(mCity);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                mPresenter.subscribe(mCity);
+                            }
+                        });
+                mDisposable.add(disposable);
             }
         }, Permission.LOCATION_COARSE);
     }
@@ -169,9 +174,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
         Fragment fragment;
         if (subscriptionResponse.has_subscribe) {
-            fragment = SubscribedArticleFragment.newInstance(mCity,subscriptionResponse.article_list);
+            fragment = SubscribedArticleFragment.newInstance(mCity, subscriptionResponse.article_list);
         } else {
-            fragment = RecommendFragment.newInstance(mCity,subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+            fragment = RecommendFragment.newInstance(mCity, subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
     }
@@ -204,13 +209,10 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnBinder.unbind();
-        if(mAMapLocationClient!=null){
-            mAMapLocationClient.onDestroy();
-        }
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        mUnBinder.unbind();
         if (mDisposable != null) {
-            mDisposable.dispose();
+            mDisposable.clear();
         }
     }
 
