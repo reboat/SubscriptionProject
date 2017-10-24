@@ -35,7 +35,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     ColumnAdapter mColumnAdapter;
 
 
-
     @BindView(R2.id.column_empty_container)
     ViewGroup mEmptyContainer;
 
@@ -85,7 +84,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
     }
 
-    protected ColumnAdapter createColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columns){
+    protected ColumnAdapter createColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columns) {
         return new ColumnAdapter(columns);
     }
 
@@ -136,7 +135,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         bean.subscribed = !bean.subscribed;
         mColumnAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), "请求失败!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), bean.subscribed ? "取消订阅失败!" : "订阅失败!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

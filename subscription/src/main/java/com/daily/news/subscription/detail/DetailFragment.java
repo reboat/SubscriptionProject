@@ -160,7 +160,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         modifySubscribeBtnState(!mDetailColumn.subscribed);
-        Toast.makeText(getContext(), "请求失败!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), mDetailColumn.subscribed ? "取消订阅失败!" : "订阅失败!", Toast.LENGTH_SHORT).show();
     }
 
     private void modifySubscribeBtnState(boolean subscribe) {
