@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,14 @@ import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.GuideView;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.UIUtils;
 
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -35,10 +39,13 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
-    private ArticlePresenter mArticlePresenter;
     private ArticleFragment mArticleFragment;
     private List<ArticleResponse.DataBean.Article> mArticles;
     private String mCity = "杭州";
+    @BindView(R2.id.my_sub_guide)
+    View mMySubscribedView;
+    @BindView(R2.id.my_more_guide)
+    View mMoreSubscribedView;
 
 
     @Nullable
@@ -48,11 +55,28 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mUnBinder = ButterKnife.bind(this, rootView);
 
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);
-        mArticlePresenter = new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
+        new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
         mArticleFragment.setOnRefreshListener(this);
 
         String city = getArguments() != null ? getArguments().getString("city") : "";
         mCity = TextUtils.isEmpty(city) ? "杭州" : city;
+
+
+        GuideView.Builder builder = new GuideView.Builder(getActivity())
+                .setTag("moreSubscription")
+                .setGuidePadding(0, UIUtils.dip2px(13), UIUtils.dip2px(9), 0)
+                .setGravity(Gravity.RIGHT)
+                .setAnchorView(mMoreSubscribedView)
+                .setGuideResource(R.drawable.subscription_more_guide);
+        new GuideView.Builder(getActivity())
+                .setTag("mySubscription")
+                .setNext(builder)
+                .setGuidePadding(UIUtils.dip2px(20), UIUtils.dip2px(8), 0, 0)
+                .setGravity(Gravity.LEFT)
+                .setGuideResource(R.drawable.subscription_guide)
+                .setAnchorView(mMySubscribedView)
+                .build();
+
         return rootView;
     }
 

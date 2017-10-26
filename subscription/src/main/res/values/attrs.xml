@@ -20,5 +20,6 @@
         <attr name="detail_btn_text_color_selector" format="reference" />
         <attr name="subscription_search_icon" format="reference" />
         <attr name="subscription_search_background_color" format="color|reference"/>
+        <attr name="tc_000000" format="color|reference"/>
     </declare-styleable>
 </resources>
