@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+
 /**
  * 页面逻辑：
  * 1.有订阅时返回订阅的新闻，无订阅时返回推荐订阅栏目。
@@ -47,6 +49,8 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @BindView(R2.id.my_more_guide)
     View mMoreSubscribedView;
 
+    private GuideView.Builder mStep1;
+
 
     @Nullable
     @Override
@@ -62,27 +66,30 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mCity = TextUtils.isEmpty(city) ? "杭州" : city;
 
 
-        GuideView.Builder builder = new GuideView.Builder(getActivity())
+        GuideView.Builder step2 = new GuideView.Builder(getActivity())
                 .setTag("moreSubscription")
                 .setGuidePadding(0, UIUtils.dip2px(13), UIUtils.dip2px(9), 0)
                 .setGravity(Gravity.RIGHT)
                 .setAnchorView(mMoreSubscribedView)
                 .setGuideResource(R.drawable.subscription_more_guide);
-        new GuideView.Builder(getActivity())
+        mStep1 = new GuideView.Builder(getActivity())
                 .setTag("mySubscription")
-                .setNext(builder)
+                .setNext(step2)
                 .setGuidePadding(UIUtils.dip2px(20), UIUtils.dip2px(8), 0, 0)
                 .setGravity(Gravity.LEFT)
                 .setGuideResource(R.drawable.subscription_guide)
-                .setAnchorView(mMySubscribedView)
-                .build();
-
+                .setAnchorView(mMySubscribedView);
+//        mStep1.build();
+        mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mStep1.build();
+                if (mMoreSubscribedView != null) {
+                    mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void initArticles(List<ArticleResponse.DataBean.Article> article_list) {
@@ -121,6 +128,25 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void showError(Throwable message) {
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        mStep1.hide(hidden);
+        mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mStep1.build();
+                if (mMoreSubscribedView != null) {
+                    mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

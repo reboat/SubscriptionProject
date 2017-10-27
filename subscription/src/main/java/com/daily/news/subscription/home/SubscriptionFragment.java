@@ -25,7 +25,6 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +64,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     @BindView(R2.id.subscription_container)
     View mContainerView;
+    private Fragment fragment;
 
     public SubscriptionFragment() {
         new SubscriptionPresenter(this, new SubscriptionStore());
@@ -77,21 +77,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
-        Disposable disposable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
-                mEmitter = e;
-            }
-        })
-                .debounce(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        mPresenter.subscribe(mCity);
-                    }
-                });
-        mDisposable.add(disposable);
+
 
         return rootView;
     }
@@ -145,6 +131,28 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onResume() {
         super.onResume();
         refreshData();
+        if (mEmitter != null && !mEmitter.isDisposed()) {
+            mEmitter.onComplete();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
+                mEmitter = e;
+            }
+        })
+                .takeLast(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        mPresenter.subscribe(mCity);
+                    }
+                });
     }
 
     @Override
@@ -172,7 +180,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     @Override
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
-        Fragment fragment;
         if (subscriptionResponse.has_subscribe) {
             fragment = SubscribedArticleFragment.newInstance(mCity, subscriptionResponse.article_list);
         } else {
@@ -186,6 +193,10 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         super.onHiddenChanged(hidden);
         if (!hidden) {
             refreshData();
+        }
+
+        if (fragment instanceof SubscribedArticleFragment && fragment.isAdded()) {
+            fragment.onHiddenChanged(hidden);
         }
     }
 
