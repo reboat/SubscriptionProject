@@ -38,7 +38,8 @@ import io.reactivex.functions.Function;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecommendFragment extends Fragment implements SubscriptionContract.View, HeaderRefresh.OnRefreshListener {
+public class RecommendFragment extends Fragment implements SubscriptionContract.View,
+        HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
 
     private static final String COLUMN_DATA = "column_data";

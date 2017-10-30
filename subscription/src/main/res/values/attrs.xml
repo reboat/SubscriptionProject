@@ -19,7 +19,9 @@
         <attr name="detail_sub_left_pic" format="reference" />
         <attr name="detail_btn_text_color_selector" format="reference" />
         <attr name="subscription_search_icon" format="reference" />
-        <attr name="subscription_search_background_color" format="color|reference"/>
-        <attr name="tc_000000" format="color|reference"/>
+        <attr name="subscription_search_background_color" format="color|reference" />
+        <attr name="tc_000000" format="color|reference" />
+        <attr name="column_subscribe_success_notify_background_color" format="color|reference" />
+        <attr name="column_subscribe_success_notify_icon" format="reference"/>
     </declare-styleable>
 </resources>

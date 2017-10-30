@@ -34,7 +34,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     List<ColumnResponse.DataBean.ColumnBean> mColumns;
     ColumnAdapter mColumnAdapter;
 
-
     @BindView(R2.id.column_empty_container)
     ViewGroup mEmptyContainer;
 
@@ -105,6 +104,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
 //        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
+    }
+
+    protected boolean isHasSubscribe() {
+        for (int i = 0, count = mColumns.size(); i < count; i++) {
+            if (mColumns.get(i).subscribed) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void removeItem(ColumnResponse.DataBean.ColumnBean bean) {

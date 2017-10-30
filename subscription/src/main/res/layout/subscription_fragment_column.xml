@@ -1,26 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:id="@+id/more_detail"
-             style="?android:attr/textAppearanceLarge"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:textIsSelectable="true"
              android:background="?attr/subscription_home_background"
+             android:textIsSelectable="true"
              tools:context="com.daily.news.subscription.more.column.ColumnFragment">
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/column_empty_container"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:text="暂无栏目上线\n敬请期待"
             android:textColor="?attr/tc_484848"
-            android:text="暂无栏目上线\n敬请期待"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -29,4 +28,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/column_subscribe_success_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/column_subscribe_success_notify_background_color"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="9dp"
+            android:drawableRight="?attr/column_subscribe_success_notify_icon"
+            android:padding="6dp"
+            android:text="订阅成功，去阅读"
+            android:textColor="?attr/tc_ffffff"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
 </FrameLayout>

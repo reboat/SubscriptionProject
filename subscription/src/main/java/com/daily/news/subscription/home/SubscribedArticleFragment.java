@@ -3,7 +3,6 @@ package com.daily.news.subscription.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,9 +60,6 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
         mArticleFragment.setOnRefreshListener(this);
 
-        String city = getArguments() != null ? getArguments().getString("city") : "";
-
-
         GuideView.Builder step2 = new GuideView.Builder(getActivity())
                 .setTag("moreSubscription")
                 .setGuidePadding(0, UIUtils.dip2px(13), UIUtils.dip2px(9), 0)
@@ -77,7 +73,6 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
                 .setGravity(Gravity.LEFT)
                 .setGuideResource(R.drawable.subscription_guide)
                 .setAnchorView(mMySubscribedView);
-//        mStep1.build();
         mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

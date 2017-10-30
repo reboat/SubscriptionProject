@@ -42,6 +42,8 @@
         <item name="subscription_search_icon">@drawable/subscription_search</item>
         <item name="subscription_search_background_color">#ffffff</item>
         <item name="tc_000000">#000000</item>
+        <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color</item>
+        <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_icon</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -69,6 +71,8 @@
         <item name="subscription_search_icon">@drawable/subscription_search_night</item>
         <item name="subscription_search_background_color">#2a2a2a</item>
         <item name="tc_000000">#7a7b7d</item>
+        <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color_night</item>
+        <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_night_icon</item>
     </style>
 
 </resources>

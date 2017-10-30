@@ -49,4 +49,6 @@
     <color name="video_info_color">#999999</color>
     <color name="subscription_background_color">#ffffff</color>
     <color name="subscription_background_color_night">#202124</color>
+    <color name="column_subscribe_success_notify_background_color">#7f000000</color>
+    <color name="column_subscribe_success_notify_background_color_night">#7f484848</color>
 </resources>
