@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import java.util.Locale;
@@ -30,9 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.icu.text.Normalizer.NO;
-
-public class DetailFragment extends Fragment implements DetailContract.View {
+public class DetailFragment extends Fragment implements DetailContract.View, HeaderRefresh.OnRefreshListener {
     private static final String UID = "id";
     private static final int DEFAULT_PAGE_SIZE = 10;
     private static final int CODE_ALREADY_OFF_THE_SHELF = 50604;
@@ -57,6 +55,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     View mEmptyErrorContainer;
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
+    private ArticleFragment mArticleFragment;
+    private ArticlePresenter mArticlePresenter;
 
 
     public DetailFragment() {
@@ -84,6 +84,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.subscription_fragment_detail_column, container, false);
         ButterKnife.bind(this, rootView);
+        mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
+        mArticleFragment.setOnRefreshListener(this);
         return rootView;
     }
 
@@ -103,7 +105,16 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
+    public void onRefresh() {
+        mArticleFragment.setRefreshing(true);
+        mPresenter.onRefresh(mUid);
+    }
+
+    @Override
     public void updateValue(DetailResponse response) {
+        if (mArticleFragment != null) {
+            mArticleFragment.setRefreshing(false);
+        }
         if (response.code == 200) {
             DetailResponse.DataBean data = response.data;
             mDetailColumn = data.detail;
@@ -120,13 +131,22 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
             options.placeholder(R.drawable.detail_column_default);
             Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
-
-            ArticleFragment fragment = new ArticleFragment();
-            getChildFragmentManager().beginTransaction().add(R.id.detail_article_container, fragment).commit();
-            new ArticlePresenter(fragment, new DetailArticleStore(mUid, data.elements));
+            if (mArticlePresenter != null) {
+                mArticlePresenter.refreshData(data.elements);
+            } else {
+                mArticlePresenter = new ArticlePresenter(mArticleFragment, new DetailArticleStore(mUid, data.elements));
+                mArticlePresenter.refreshData(data.elements);
+            }
         } else if (response.code == CODE_ALREADY_OFF_THE_SHELF) {
             mContentContainer.setVisibility(View.GONE);
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onRefreshComplete() {
+        if (mArticleFragment != null) {
+            mArticleFragment.setRefreshing(false);
         }
     }
 
@@ -178,7 +198,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override

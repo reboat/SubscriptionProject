@@ -16,10 +16,13 @@ import io.reactivex.Flowable;
 
 public interface DetailContract {
     interface Presenter extends BasePresenter, SubscribeContract.Presenter {
+        void onRefresh(String uid);
     }
 
     interface View extends UIBaseView<Presenter>, SubscribeContract.View {
         void updateValue(DetailResponse dataBean);
+
+        void onRefreshComplete();
     }
 
     interface Store extends BaseStore, SubscribeContract.Store {

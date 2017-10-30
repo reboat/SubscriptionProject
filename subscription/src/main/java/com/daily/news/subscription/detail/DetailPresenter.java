@@ -47,4 +47,20 @@ public class DetailPresenter extends SubscribePresenter implements DetailContrac
     public void unsubscribe() {
         mDisposable.clear();
     }
+
+    @Override
+    public void onRefresh(String uid) {
+        mDetailStore.getDetailResponse(null,uid).subscribe(new Consumer<DetailResponse>() {
+            @Override
+            public void accept(DetailResponse detailResponse) throws Exception {
+                mDetailView.updateValue(detailResponse);
+                mDetailView.onRefreshComplete();
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                mDetailView.showError(throwable);
+            }
+        });
+    }
 }
