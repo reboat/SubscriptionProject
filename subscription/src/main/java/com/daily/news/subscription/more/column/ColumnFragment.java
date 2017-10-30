@@ -205,6 +205,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     public void setRefreshing(boolean refresh) {
         if (mHeaderRefresh != null) {
+            mRecyclerView.scrollToPosition(0);
             mHeaderRefresh.setRefreshing(refresh);
         }
     }
