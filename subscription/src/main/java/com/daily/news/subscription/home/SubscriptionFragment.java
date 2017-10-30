@@ -17,14 +17,8 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.location.DailyLocation;
-import com.zjrb.core.common.permission.AbsPermSingleCallBack;
-import com.zjrb.core.common.permission.Permission;
-import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +29,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -48,7 +41,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;
     private SubscriptionContract.Presenter mPresenter;
-    private String mCity = "";
     private CompositeDisposable mDisposable;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -77,8 +69,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscription_home, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
-
-
         return rootView;
     }
 
@@ -86,45 +76,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
-        PermissionManager.get().request(this, new AbsPermSingleCallBack() {
-            @Override
-            public void onGranted(boolean isAlreadyDef) {
-                Disposable disposable = DailyLocation.createLocationObservale(getContext())
-                        .defaultIfEmpty("")
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                mCity = s;
-                                mPresenter.subscribe(mCity);
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                mPresenter.subscribe(mCity);
-                            }
-                        });
-                mDisposable.add(disposable);
-            }
-
-            @Override
-            public void onDenied(List<String> neverAskPerms) {
-                Disposable disposable = DailyLocation.getIpObservable()
-                        .defaultIfEmpty("")
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(String s) throws Exception {
-                                mCity = s;
-                                mPresenter.subscribe(mCity);
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                mPresenter.subscribe(mCity);
-                            }
-                        });
-                mDisposable.add(disposable);
-            }
-        }, Permission.LOCATION_COARSE);
+        mPresenter.subscribe();
     }
 
     @Override
@@ -150,7 +102,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        mPresenter.subscribe(mCity);
+                        mPresenter.subscribe();
                     }
                 });
     }
@@ -181,9 +133,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
         if (subscriptionResponse.has_subscribe) {
-            fragment = SubscribedArticleFragment.newInstance(mCity, subscriptionResponse.article_list);
+            fragment = SubscribedArticleFragment.newInstance(subscriptionResponse.article_list);
         } else {
-            fragment = RecommendFragment.newInstance(mCity, subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+            fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
     }
@@ -203,7 +155,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     private void refreshData() {
         long lastRefreshTime = SettingManager.getInstance().getLastSubscriptionRefreshTime();
         if (System.currentTimeMillis() - lastRefreshTime > DURATION_TIME) {
-            mPresenter.subscribe(mCity);
+            mPresenter.subscribe();
         }
     }
 

@@ -43,7 +43,6 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     private SubscriptionContract.Presenter mPresenter;
     private ArticleFragment mArticleFragment;
     private List<ArticleResponse.DataBean.Article> mArticles;
-    private String mCity = "杭州";
     @BindView(R2.id.my_sub_guide)
     View mMySubscribedView;
     @BindView(R2.id.my_more_guide)
@@ -63,7 +62,6 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mArticleFragment.setOnRefreshListener(this);
 
         String city = getArguments() != null ? getArguments().getString("city") : "";
-        mCity = TextUtils.isEmpty(city) ? "杭州" : city;
 
 
         GuideView.Builder step2 = new GuideView.Builder(getActivity())
@@ -98,7 +96,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
 
     @Override
     public void onRefresh() {
-        mPresenter.onRefresh("杭州");
+        mPresenter.onRefresh();
     }
 
     @OnClick(R2.id.my_sub_btn)
@@ -162,7 +160,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         if (!dataBean.has_subscribe) {
-            Fragment fragment = RecommendFragment.newInstance(mCity, dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
         mArticleFragment.setRefreshing(false);
@@ -179,10 +177,9 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
         mUnBinder.unbind();
     }
 
-    public static Fragment newInstance(String city, List<ArticleResponse.DataBean.Article> article_list) {
+    public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
         SubscribedArticleFragment fragment = new SubscribedArticleFragment();
         Bundle args = new Bundle();
-        args.putString("city", city);
         fragment.setArguments(args);
         article_list.removeAll(Collections.singleton(null));
         fragment.initArticles(article_list);

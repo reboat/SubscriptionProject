@@ -50,7 +50,6 @@ public class SubscriptionStore extends SubscribeStore implements SubscriptionCon
         return  new APIGetTask<SubscriptionResponse.DataBean>(apiCallBack) {
             @Override
             protected void onSetupParams(Object... params) {
-                put("area", params[0]);
             }
 
             @Override

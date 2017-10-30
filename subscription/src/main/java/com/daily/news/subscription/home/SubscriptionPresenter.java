@@ -39,7 +39,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 mView.showError(new RxException(errMsg,errCode));
                 mView.hideProgressBar();
             }
-        }).bindLoadViewHolder(mView.getProgressBar()).exe(params[0]);
+        }).bindLoadViewHolder(mView.getProgressBar()).exe();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
                 mView.onRefreshError(errMsg);}
-        }).setTag(this).exe(params[0]);
+        }).setTag(this).exe();
         SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 }
