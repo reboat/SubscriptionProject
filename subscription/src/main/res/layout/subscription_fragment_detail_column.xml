@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="?attr/tc_ffffff">
+             android:background="?attr/subscription_home_background">
 
     <RelativeLayout
         android:id="@+id/detail_content_container"
@@ -126,7 +126,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/detail_column_header"
-            android:background="?attr/subscription_home_background"
             android:layout="@layout/subscription_fragment_article" />
     </RelativeLayout>
 
