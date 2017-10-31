@@ -11,5 +11,6 @@ public class Constants {
 
     public interface Name {
         String SUBSCRIBE = "subscribe";
+        String ID = "id";
     }
 }

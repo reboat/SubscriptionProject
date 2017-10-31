@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.column;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
+
+    private static final int REQUEST_CODE_TO_DETAIL = 1110;
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
@@ -211,8 +214,28 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_TO_DETAIL) {
+            long id = data.getLongExtra(Constants.Name.ID, 0);
+            boolean subscribe = data.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+            for (int i = 0, size = mColumns.size(); i < size; i++) {
+                if (id == mColumns.get(i).id) {
+                    mColumns.get(i).subscribed = subscribe;
+                    mColumnAdapter.notifyItemChanged(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public void onItemClick(View itemView, int position) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mColumns.get(position).id)).build().toString());
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail")
+                .buildUpon()
+                .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
+                .build()
+                .toString(), REQUEST_CODE_TO_DETAIL);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.daily.news.subscription.detail;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -173,8 +174,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
+        intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-//        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
+        getActivity().setResult(Activity.RESULT_OK,intent);
     }
 
     @Override
