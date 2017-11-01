@@ -1,7 +1,6 @@
 package com.daily.news.subscription.home;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -10,31 +9,21 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.daily.news.bean.FocusBean;
+import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +36,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     private static final String FOCUS_DATA = "focus_data";
     private SubscriptionContract.Presenter mPresenter;
     private ColumnFragment mColumnFragment;
-    private Banner focusBanner;
+    private View mHeaderBanner;
 
     public RecommendFragment() {
     }
@@ -61,68 +50,32 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
 
-        focusBanner = setupBannerView(inflater, container, getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
-        if (focusBanner != null) {
-            mColumnFragment.addHeaderView(focusBanner);
+        mHeaderBanner = setupBannerView(getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
+        if (mHeaderBanner != null) {
+            mColumnFragment.addHeaderView(mHeaderBanner);
         }
         mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
         return rootView;
     }
 
-    //TODO 修改为通用的 Banner
-    private Banner setupBannerView(LayoutInflater inflater, ViewGroup container, final List<SubscriptionResponse.Focus> focuses) {
-
+    private View setupBannerView(List<SubscriptionResponse.Focus> focuses) {
         if (focuses == null || focuses.size() == 0) {
             return null;
         }
-
-        final Banner focusBanner = (Banner) inflater.inflate(R.layout.subscription_item_focus, container, false);
-        focusBanner.isAutoPlay(true);
-        focusBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        focusBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        focusBanner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Nav.with(getActivity()).to(focuses.get(position).doc_url);
-            }
-        });
-
-        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
-                return Observable.just(focus.doc_title);
-            }
-        }).toList().subscribe(new Consumer<List<String>>() {
-            @Override
-            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
-                focusBanner.setBannerTitles(strings);
-            }
-        });
-
-        Observable.fromIterable(focuses).flatMap(new Function<SubscriptionResponse.Focus, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(@io.reactivex.annotations.NonNull SubscriptionResponse.Focus focus) throws Exception {
-                return Observable.just(focus.pic_url);
-            }
-        }).toList().subscribe(new Consumer<List<String>>() {
-            @Override
-            public void accept(@io.reactivex.annotations.NonNull List<String> strings) throws Exception {
-                focusBanner.setImages(strings);
-            }
-        });
-
-        focusBanner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                RequestOptions options = new RequestOptions();
-                options.centerCrop();
-                options.placeholder(getResources().getDrawable(R.drawable.default_placeholder_big));
-                Glide.with(context).load(path).apply(options).into(imageView);
-            }
-        });
-
-        focusBanner.start();
-        return focusBanner;
+        List<FocusBean> focusBeans = new ArrayList<>();
+        for (int i = 0; i < focuses.size(); i++) {
+            FocusBean bean = new FocusBean();
+            SubscriptionResponse.Focus focus = focuses.get(i);
+            bean.setId(focus.channel_article_id);
+            bean.setImage_url(focus.pic_url);
+            bean.setUrl(focus.doc_url);
+            bean.setSort_number(focus.sort_number);
+            bean.setTitle(focus.doc_title);
+            focusBeans.add(bean);
+        }
+        HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView());
+        bannerHolder.setData(focusBeans);
+        return bannerHolder.getItemView();
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
