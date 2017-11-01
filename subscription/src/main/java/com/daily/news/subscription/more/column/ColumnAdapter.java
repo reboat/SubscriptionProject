@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.column;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +90,11 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
         public void bindView() {
             final ColumnResponse.DataBean.ColumnBean column = getData();
             mTitleView.setText(column.name);
-            mColumnInfoView.setText(String.format(Locale.getDefault(), itemView.getContext().getString(R.string.column_info_format), column.subscribe_count, column.article_count));
+
+            String info = TextUtils.isEmpty(column.subscribe_count_general) ? "" : column.subscribe_count_general + "订阅  ";
+            info += TextUtils.isEmpty(column.article_count_general) ? "" : column.article_count_general + "份稿件";
+
+            mColumnInfoView.setText(info);
             String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
             mSubscribeBtn.setText(subscriptionText);
             mSubscribeBtn.setSelected(column.subscribed);

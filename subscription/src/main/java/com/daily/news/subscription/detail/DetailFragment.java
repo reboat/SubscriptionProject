@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,6 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,7 +123,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             options.placeholder(R.drawable.column_placeholder_big);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
             mTitleView.setText(data.detail.name);
-            mInfoView.setText(String.format(Locale.getDefault(), "%d订阅 %d份稿件", data.detail.subscribe_count, data.detail.article_count));
+
+            String info = TextUtils.isEmpty(data.detail.subscribe_count_general) ? "" : data.detail.subscribe_count_general + "订阅  ";
+            info += TextUtils.isEmpty(data.detail.article_count_general) ? "" : data.detail.article_count_general + "份稿件";
+            mInfoView.setText(info);
             mDescriptionView.setText(data.detail.description);
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
