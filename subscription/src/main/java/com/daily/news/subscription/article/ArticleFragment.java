@@ -122,17 +122,17 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
     @Override
     public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
         mArticleAdapter.addData(data.elements, true);
-        if (data.elements.size() < DEFAULT_PAGE_SIZE) {
+        if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
     }
 
     @Override
     public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
-        if (mArticles == null || mArticles.size() == 0) {
-            mLoadMore.setState(LoadMore.TYPE_NO_MORE);
-        } else {
+        if (mArticles != null && mArticles.size() > 0) {
             mPresenter.loadMore(mArticles.get(mArticles.size() - 1).getSort_number(), DEFAULT_PAGE_SIZE, callback);
+        }else{
+            mLoadMore.setState(LoadMore.TYPE_IDLE);
         }
     }
 
