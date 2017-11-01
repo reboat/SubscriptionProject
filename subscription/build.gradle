@@ -51,6 +51,6 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile 'cn.daily.android:daily-db:5.0.0.1'
-    compile 'cn.daily.android:core-library:5.0.0.17.2-SNAPSHOT'
+    compile 'cn.daily.android:core-library:5.0.0.24'
 //    compile project(':core-library')
 }

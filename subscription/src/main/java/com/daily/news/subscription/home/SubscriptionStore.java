@@ -56,6 +56,6 @@ public class SubscriptionStore extends SubscribeStore implements SubscriptionCon
             protected String getApi() {
                 return "/api/column/first_page_info";
             }
-        }.setShortestTime(300);
+        }.setShortestTime(400);
     }
 }

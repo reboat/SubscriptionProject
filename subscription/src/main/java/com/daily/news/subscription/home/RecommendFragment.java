@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,9 +188,13 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         mColumnFragment.setRefreshing(false);
-        if (dataBean.has_subscribe) {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
-            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
+        } else if (dataBean.has_subscribe && fragmentManager != null) {
+            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
     }
 

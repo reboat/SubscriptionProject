@@ -3,6 +3,7 @@ package com.daily.news.subscription.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,13 +156,15 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
         mArticleFragment.setRefreshing(false);
-        if (!dataBean.has_subscribe) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if (!dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
-        } else {
+        } else if (dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
             Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
-            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
     }
 
