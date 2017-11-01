@@ -192,7 +192,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         if (dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
-        } else if (dataBean.has_subscribe && fragmentManager != null) {
+        } else if (!dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
