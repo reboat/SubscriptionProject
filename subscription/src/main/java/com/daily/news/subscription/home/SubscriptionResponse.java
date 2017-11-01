@@ -26,6 +26,7 @@ public class SubscriptionResponse {
         public String pic_url;
         public long sort_number;
         public int channel_article_id;
+        public String tag;
 
         @Override
         public int describeContents() {
@@ -39,6 +40,7 @@ public class SubscriptionResponse {
             dest.writeString(this.pic_url);
             dest.writeLong(this.sort_number);
             dest.writeInt(this.channel_article_id);
+            dest.writeString(this.tag);
         }
 
         public Focus() {
@@ -50,6 +52,7 @@ public class SubscriptionResponse {
             this.pic_url = in.readString();
             this.sort_number = in.readLong();
             this.channel_article_id = in.readInt();
+            this.tag = in.readString();
         }
 
         public static final Parcelable.Creator<Focus> CREATOR = new Parcelable.Creator<Focus>() {
