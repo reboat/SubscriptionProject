@@ -47,10 +47,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/detail_column_imageView"
-                android:layout_toEndOf="@+id/detail_column_imageView"
                 android:layout_toLeftOf="@+id/frameLayout"
                 android:layout_toRightOf="@+id/detail_column_imageView"
-                android:lineSpacingExtra="1sp"
+                android:lines="1"
+                android:layout_marginRight="5dp"
                 android:textColor="?attr/detail_column_title_color"
                 android:textSize="19sp"
                 tools:text="钱塘江" />
