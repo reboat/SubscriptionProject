@@ -84,6 +84,12 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     @Override
     public void onItemClick(View itemView, int position) {
         Nav.with(getContext()).to(mArticles.get(position).getUrl());
+        onItemClick(mArticles.get(position));
+    }
+
+    //用户埋点
+    protected void onItemClick(ArticleResponse.DataBean.Article article){
+
     }
 
     public void addHeaderView(View headerView) {

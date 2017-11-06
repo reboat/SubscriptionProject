@@ -23,12 +23,14 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 public class DetailFragment extends Fragment implements DetailContract.View, HeaderRefresh.OnRefreshListener {
     private static final String UID = "id";
@@ -170,6 +172,17 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     public void submitSubscribe() {
         mPresenter.submitSubscribe(mDetailColumn);
         modifySubscribeBtnState(!mDetailColumn.subscribed);
+
+        if (mDetailColumn.subscribed) {
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114")
+                    .setObjectID(String.valueOf(mDetailColumn.id))
+                    .setObjectName(mDetailColumn.name)
+                    .setEvenName("“取消订阅”栏目")
+                    .setPageType("栏目详情页")
+                    .setObjectType(ObjectType.NewsType)
+                    .build()
+                    .send();
+        }
     }
 
     @Override
@@ -179,6 +192,17 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getActivity().setResult(Activity.RESULT_OK,intent);
+
+        if (bean.subscribed) {
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014")
+                    .setObjectID(String.valueOf(bean.id))
+                    .setObjectName(bean.name)
+                    .setObjectType(ObjectType.NewsType)
+                    .setPageType("栏目详情页")
+                    .setEvenName("“订阅”栏目")
+                    .build()
+                    .send();
+        }
     }
 
     @Override

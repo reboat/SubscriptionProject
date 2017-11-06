@@ -133,7 +133,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
         if (subscriptionResponse.has_subscribe) {
-            fragment = SubscribedArticleFragment.newInstance(subscriptionResponse.article_list);
+            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
         } else {
             fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
@@ -147,7 +147,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
             refreshData();
         }
 
-        if (fragment instanceof SubscribedArticleFragment && fragment.isAdded()) {
+        if (fragment instanceof MySubscribedFragment && fragment.isAdded()) {
             fragment.onHiddenChanged(hidden);
         }
     }

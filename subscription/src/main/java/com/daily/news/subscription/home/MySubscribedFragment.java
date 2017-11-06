@@ -37,7 +37,7 @@ import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
  * 1.有订阅时返回订阅的新闻，无订阅时返回推荐订阅栏目。
  * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
  */
-public class SubscribedArticleFragment extends Fragment implements SubscriptionContract.View, HeaderRefresh.OnRefreshListener {
+public class MySubscribedFragment extends Fragment implements SubscriptionContract.View, HeaderRefresh.OnRefreshListener {
 
     private static final int REQUEST_CODE_MY = 1001;
 
@@ -187,7 +187,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
             getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
         } else if (dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
-            Fragment fragment = SubscribedArticleFragment.newInstance(dataBean.article_list);
+            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
         }
     }
@@ -204,7 +204,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     }
 
     public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
-        SubscribedArticleFragment fragment = new SubscribedArticleFragment();
+        MySubscribedFragment fragment = new MySubscribedFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         article_list.removeAll(Collections.singleton(null));

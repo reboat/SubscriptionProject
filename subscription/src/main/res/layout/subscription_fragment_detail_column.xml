@@ -122,7 +122,7 @@
 
         <fragment
             android:id="@+id/detail_article_fragment"
-            android:name="com.daily.news.subscription.article.ArticleFragment"
+            android:name="com.daily.news.subscription.detail.DetailArticleFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/detail_column_header"

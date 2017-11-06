@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/article_fragment"
-        android:name="com.daily.news.subscription.article.ArticleFragment"
+        android:name="com.daily.news.subscription.home.MySubscribedArticleFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/subscription_fragment_article"/>
