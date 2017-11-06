@@ -15,6 +15,7 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
@@ -24,6 +25,8 @@ import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +61,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         return rootView;
     }
 
-    private View setupBannerView(List<SubscriptionResponse.Focus> focuses) {
+    private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
         if (focuses == null || focuses.size() == 0) {
             return null;
         }
@@ -74,7 +77,21 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             bean.setTag(focus.tag);
             focusBeans.add(bean);
         }
-        HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView());
+        HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
+            @Override
+            public void onItemClick(View item, int position) {
+                super.onItemClick(item, position);
+                SubscriptionResponse.Focus focus = focuses.get(position);
+                new AnalyticsBuilder(getContext(), "200005", "200005")
+                        .setClassifyID(String.valueOf(focus.channel_article_id))
+                        .setPageType("订阅首页")
+                        .setEvenName("焦点图点击")
+                        .setObjectName(focus.doc_title)
+                        .setObjectType(ObjectType.NewsType)
+                        .build()
+                        .send();
+            }
+        };
         bannerHolder.setData(focusBeans);
         return bannerHolder.getItemView();
     }
@@ -85,6 +102,11 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             @Override
             public void onClick(View v) {
                 Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                new AnalyticsBuilder(getContext(), "500002", "500002")
+                        .setPageType("订阅首页")
+                        .setEvenName("点击订阅更多")
+                        .build()
+                        .send();
             }
         });
         return moreHeaderView;

@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
@@ -79,7 +80,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mCategoryAdapter.updateValue(dataBean.elements);
         dataBean.elements.get(0).is_selected = true;
         ColumnFragment fragment = new CategoryColumnFragment();
-        Bundle args=new Bundle();
+        Bundle args = new Bundle();
         args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
         fragment.setArguments(args);
         getChildFragmentManager().beginTransaction()
@@ -150,7 +151,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     }
 
                     ColumnFragment fragment = new CategoryColumnFragment();
-                    Bundle args=new Bundle();
+                    Bundle args = new Bundle();
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
                     fragment.setArguments(args);
                     getChildFragmentManager().beginTransaction()
@@ -161,6 +162,12 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     mValues.get(mCurPosition).is_selected = false;
                     notifyItemChanged(mCurPosition);
                     mCurPosition = position;
+
+                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005")
+                            .setEvenName("点击栏目分类")
+                            .setPageType("订阅更多页面")
+                            .build()
+                            .send();
                 }
             });
         }

@@ -7,6 +7,8 @@ import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
 
+import cn.daily.news.analytics.AnalyticsManager;
+
 /**
  * Created by lixinke on 2017/9/26.
  */
@@ -20,5 +22,7 @@ public class SubscriptionApplication extends Application {
         ThemeMode.initTheme(R.style.AppTheme, R.style.AppThemeNight);
         UiModeManager.init(this, R.styleable.SupportUiMode);
         ThemeMode.setUiMode(false);
+
+        AnalyticsManager.initAnalytics(this,"");
     }
 }

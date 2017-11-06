@@ -1,3 +1,5 @@
 include ':app', ':subscription'
 //include(':core-library')
 //project(":core-library").projectDir = new File('/Users/lixinke/Documents/workspace/daily/CoreProject/core')
+include(':analytics')
+project(":analytics").projectDir = new File('/Users/lixinke/Documents/workspace/daily/AnalyticsProject/analytics')

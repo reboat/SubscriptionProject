@@ -18,6 +18,7 @@ import com.zjrb.core.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 public class MoreActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -79,6 +80,13 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
         } else {
             fragment.sendRequest(new Object[]{keyword});
         }
+
+        new AnalyticsBuilder(this, "A0013", "A0013")
+                .setPageType("订阅更多页面")
+                .setEvenName("关键词搜索")
+                .setSearch(keyword)
+                .build()
+                .send();
         UIUtils.hideSoftInput(mKeywordView);
     }
 

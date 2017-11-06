@@ -28,7 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleFragment extends Fragment implements ArticleContract.View, LoadMoreListener<ArticleResponse.DataBean> {
+public class ArticleFragment extends Fragment implements ArticleContract.View,
+        LoadMoreListener<ArticleResponse.DataBean>,OnItemClickListener{
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     @BindView(R2.id.article_recyclerView)
@@ -75,14 +76,14 @@ public class ArticleFragment extends Fragment implements ArticleContract.View, L
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mArticleAdapter.addFooterView(mLoadMore.getItemView());
-        mArticleAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                Nav.with(getContext()).to(mArticles.get(position).getUrl());
-            }
-        });
+        mArticleAdapter.setOnItemClickListener(this);
 
         return mRootView;
+    }
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        Nav.with(getContext()).to(mArticles.get(position).getUrl());
     }
 
     public void addHeaderView(View headerView) {

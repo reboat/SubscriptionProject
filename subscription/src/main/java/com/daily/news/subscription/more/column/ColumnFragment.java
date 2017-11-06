@@ -106,7 +106,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-//        Toast.makeText(getContext(),bean.subscribed?"订阅成功":"取消订阅成功",Toast.LENGTH_SHORT).show();
     }
 
     protected boolean isHasSubscribe() {
@@ -124,6 +123,13 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
             mColumnAdapter.notifyDataSetChanged();
         }
         checkEmpty();
+    }
+
+    public ColumnResponse.DataBean.ColumnBean getItem(int position) {
+        if (mColumns != null && mColumns.size() > position) {
+            return mColumns.get(position);
+        }
+        return null;
     }
 
     private void checkEmpty() {
@@ -236,6 +242,5 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);
-
     }
 }

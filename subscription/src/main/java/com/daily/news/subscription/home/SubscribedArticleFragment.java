@@ -28,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 
 /**
@@ -49,6 +51,7 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     View mMoreSubscribedView;
 
     private GuideView.Builder mStep1;
+    private Analytics mAnalytics;
 
 
     @Nullable
@@ -98,11 +101,22 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @OnClick(R2.id.my_sub_btn)
     public void gotoMySubscription() {
         Nav.with(this).to("http://www.8531.cn/subscription/more/my/column", REQUEST_CODE_MY);
+        new AnalyticsBuilder(getContext(), "500006", "500006")
+                .setEvenName("点击“我的订阅”")
+                .setPageType("订阅首页")
+                .build()
+                .send();
+
     }
 
     @OnClick(R2.id.my_sub_more_btn)
     public void gotoMore() {
         Nav.with(this).to("http://www.8531.cn/subscription/more");
+        new AnalyticsBuilder(getContext(), "500007", "500007")
+                .setEvenName("点击“订阅更多”")
+                .setPageType("订阅首页")
+                .build()
+                .send();
     }
 
 
@@ -141,6 +155,16 @@ public class SubscribedArticleFragment extends Fragment implements SubscriptionC
     @Override
     public void onResume() {
         super.onResume();
+        mAnalytics = new AnalyticsBuilder(getContext(), "A0010", "500001")
+                .setEvenName("页面停留时长")
+                .setPageType("订阅首页")
+                .build();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAnalytics.sendWithDuration();
     }
 
     @Override
