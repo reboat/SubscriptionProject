@@ -3,6 +3,10 @@ package com.daily.news.subscription.home;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.utils.JsonUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.daily.news.analytics.Analytics;
 
@@ -15,6 +19,10 @@ public class MySubscribedArticleFragment extends ArticleFragment {
     @Override
     public void onItemClick(ArticleResponse.DataBean.Article article) {
         super.onItemClick(article);
+        Map<String, String> otherInfo = new HashMap<>();
+        otherInfo.put("relatedColumn", String.valueOf(article.getColumn_id()));
+        otherInfo.put("customObjectType", "RelatedColumnType");
+        String otherInfoStr = JsonUtils.toJsonString(otherInfo);
         new Analytics.AnalyticsBuilder(getContext(),"200007","200007")
                 .setEvenName("新闻列表点击")
                 .setPageType("订阅首页")
@@ -23,6 +31,7 @@ public class MySubscribedArticleFragment extends ArticleFragment {
                 .setClassifyID(article.getChannel_id())
                 .setClassifyName(article.getChannel_name())
                 .setObjectType(ObjectType.NewsType)
+                .setOtherInfo(otherInfoStr)
                 .build()
                 .send();
     }

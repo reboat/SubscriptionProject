@@ -7,6 +7,10 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.utils.JsonUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,12 +34,17 @@ public class RecommendColumnFragment extends ColumnFragment {
         }
 
         if (bean.subscribed) {
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("relatedColumn", String.valueOf(bean.id));
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "A0014", "A0014")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setObjectType(ObjectType.NewsType)
                     .setPageType("订阅首页")
                     .setEvenName("点击订阅栏目，订阅成功")
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }
@@ -44,12 +53,17 @@ public class RecommendColumnFragment extends ColumnFragment {
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         if (bean.subscribed) {
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("relatedColumn", String.valueOf(bean.id));
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "A0114", "A0114")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("点击“取消订阅”栏目")
                     .setPageType("订阅首页")
                     .setObjectType(ObjectType.NewsType)
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }
@@ -63,12 +77,17 @@ public class RecommendColumnFragment extends ColumnFragment {
         super.onItemClick(itemView, position);
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("relatedColumn", String.valueOf(bean.id));
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "500003", "500003")
                     .setEvenName("点击推荐栏目列表（头像+标题）")
                     .setObjectType(ObjectType.NewsType)
                     .setPageType("订阅首页")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }

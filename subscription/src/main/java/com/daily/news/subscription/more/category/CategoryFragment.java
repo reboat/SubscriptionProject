@@ -166,6 +166,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     new Analytics.AnalyticsBuilder(getContext(), "500005", "500005")
                             .setEvenName("点击栏目分类")
                             .setPageType("订阅更多页面")
+                            .setObjectID(String.valueOf(category.class_id))
+                            .setObjectName(category.class_name)
                             .build()
                             .send();
                 }
