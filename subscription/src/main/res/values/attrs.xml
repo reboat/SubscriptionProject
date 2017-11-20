@@ -23,5 +23,6 @@
         <attr name="tc_000000" format="color|reference" />
         <attr name="column_subscribe_success_notify_background_color" format="color|reference" />
         <attr name="column_subscribe_success_notify_icon" format="reference"/>
+        <attr name="more_key_word_delete_icon" format="reference"/>
     </declare-styleable>
 </resources>

@@ -12,9 +12,9 @@
     tools:context="com.daily.news.subscription.more.MoreActivity">
 
     <LinearLayout
-        android:background="?attr/bc_f5f5f5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/bc_f5f5f5"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -27,7 +27,8 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="?attr/search_shape"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="?attr/subscription_search_background_color"
                 android:hint="请输入关键词"
                 android:imeOptions="actionSearch"
@@ -46,6 +48,15 @@
                 android:textColor="?attr/tc_484848"
                 android:textColorHint="?attr/tc_999999"
                 android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/more_key_word_delete"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:scaleType="center"
+                android:src="?attr/more_key_word_delete_icon"
+                android:visibility="invisible"
+                app:iv_maskColor="@android:color/transparent" />
         </LinearLayout>
 
         <TextView

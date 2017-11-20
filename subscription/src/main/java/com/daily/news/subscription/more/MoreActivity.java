@@ -1,7 +1,9 @@
 package com.daily.news.subscription.more;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +22,18 @@ import com.zjrb.core.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
-public class MoreActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
+public class MoreActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener, TextWatcher {
 
     @BindView(R2.id.more_key_word)
     EditText mKeywordView;
     @BindView(R2.id.more_search)
     View mSearchView;
+
+    @BindView(R2.id.more_key_word_delete)
+    View mDeletedView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
         mSearchView.setOnClickListener(this);
         mKeywordView.clearFocus();
         mKeywordView.setOnEditorActionListener(this);
+        mKeywordView.addTextChangedListener(this);
 
         if (getSupportFragmentManager().findFragmentByTag("category") == null) {
             CategoryFragment fragment = new CategoryFragment();
@@ -56,6 +63,11 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
             return true;
         }
         return false;
+    }
+
+    @OnClick(R2.id.more_key_word_delete)
+    public void onDeletedKeyword() {
+        mKeywordView.setText("");
     }
 
     @Override
@@ -103,5 +115,21 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         return TopBarFactory.createDefault(view, this, "订阅更多").getView();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (s != null) {
+            mDeletedView.setVisibility(s.length() > 0 ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

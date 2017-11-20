@@ -44,6 +44,7 @@
         <item name="tc_000000">#000000</item>
         <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color</item>
         <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_icon</item>
+        <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -73,6 +74,7 @@
         <item name="tc_000000">#7a7b7d</item>
         <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color_night</item>
         <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_night_icon</item>
+        <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon_night</item>
     </style>
 
 </resources>
