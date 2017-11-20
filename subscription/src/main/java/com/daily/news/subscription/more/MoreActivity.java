@@ -1,12 +1,14 @@
 package com.daily.news.subscription.more;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -91,6 +93,10 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private boolean checkValid(String keyword) {
+        if (TextUtils.isEmpty(keyword)) {
+            Toast.makeText(this, "请输入查询内容!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
