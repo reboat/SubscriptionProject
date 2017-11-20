@@ -1,17 +1,22 @@
 package com.daily.news.subscription.more.category;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -25,6 +30,8 @@ import cn.daily.news.analytics.Analytics;
  */
 
 public class CategoryColumnFragment extends ColumnFragment {
+    private static final int REQUEST_CODE_TO_DETAIL = 1110;
+
     public CategoryColumnFragment() {
     }
 
@@ -44,6 +51,22 @@ public class CategoryColumnFragment extends ColumnFragment {
     @Override
     protected ColumnAdapter createColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columns) {
         return new CategoryColumnAdapter(columns);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_TO_DETAIL) {
+            long id = data.getLongExtra(Constants.Name.ID, 0);
+            boolean subscribe = data.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+            for (int i = 0, size = getItemCount(); i < size; i++) {
+                if (id == getItem(i).id) {
+                    getItem(i).subscribed = subscribe;
+                    getColumnAdapter().notifyItemChanged(i);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -68,7 +91,12 @@ public class CategoryColumnFragment extends ColumnFragment {
 
     @Override
     public void onItemClick(View itemView, int position) {
-        super.onItemClick(itemView, position);
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail")
+                .buildUpon()
+                .appendQueryParameter("id", String.valueOf(getItem(position).id))
+                .build()
+                .toString(),REQUEST_CODE_TO_DETAIL);
+
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
             Map<String, String> otherInfo = new HashMap<>();
