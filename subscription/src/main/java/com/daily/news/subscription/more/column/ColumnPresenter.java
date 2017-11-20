@@ -55,6 +55,7 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
 
     @Override
     public void unsubscribe() {
+        super.unsubscribe();
         APICallManager.get().cancel(COLUMN_TASK_TAG);
     }
 

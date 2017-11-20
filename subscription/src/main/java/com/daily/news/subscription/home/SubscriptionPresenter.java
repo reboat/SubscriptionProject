@@ -12,6 +12,9 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
+    private static final String TAG_DETAIL="tag_detail";
+    private static final String TAG_REFRESH="tag_refresh";
+
     private SubscriptionContract.View mView;
     private SubscriptionContract.Store mStore;
     private CompositeDisposable mCompositeDisposable;
@@ -39,12 +42,14 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
                 mView.showError(new RxException(errMsg,errCode));
                 mView.hideProgressBar();
             }
-        }).bindLoadViewHolder(mView.getProgressBar()).exe();
+        }).setTag(TAG_DETAIL).bindLoadViewHolder(mView.getProgressBar()).exe();
     }
 
     @Override
     public void unsubscribe() {
         mCompositeDisposable.clear();
+        APICallManager.get().cancel(TAG_DETAIL);
+        APICallManager.get().cancel(TAG_REFRESH);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class SubscriptionPresenter  implements SubscriptionContract.Presenter {
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
                 mView.onRefreshError(errMsg);}
-        }).setTag(this).exe();
+        }).setTag(TAG_REFRESH).exe();
         SettingManager.getInstance().setSubscriptionRefreshTime(System.currentTimeMillis());
     }
 }

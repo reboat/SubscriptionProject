@@ -45,12 +45,13 @@ public class DetailPresenter extends SubscribePresenter implements DetailContrac
 
     @Override
     public void unsubscribe() {
+        super.unsubscribe();
         mDisposable.clear();
     }
 
     @Override
     public void onRefresh(String uid) {
-        mDetailStore.getDetailResponse(null,uid).subscribe(new Consumer<DetailResponse>() {
+        Disposable disposable = mDetailStore.getDetailResponse(null, uid).subscribe(new Consumer<DetailResponse>() {
             @Override
             public void accept(DetailResponse detailResponse) throws Exception {
                 mDetailView.updateValue(detailResponse);
@@ -62,5 +63,6 @@ public class DetailPresenter extends SubscribePresenter implements DetailContrac
                 mDetailView.showError(throwable);
             }
         });
+        mDisposable.add(disposable);
     }
 }

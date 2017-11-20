@@ -13,6 +13,7 @@ import io.reactivex.Flowable;
 public interface SubscribeContract {
     interface Presenter {
         void submitSubscribe(ColumnResponse.DataBean.ColumnBean column);
+        void unsubscribe();
     }
 
     interface View {
