@@ -76,15 +76,17 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void updateValues(CategoryResponse.DataBean dataBean) {
-        mCategoryAdapter.updateValue(dataBean.elements);
-        dataBean.elements.get(0).is_selected = true;
-        ColumnFragment fragment = new CategoryColumnFragment();
-        Bundle args=new Bundle();
-        args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
-        fragment.setArguments(args);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.more_category_detail_container, fragment)
-                .commit();
+        if (dataBean != null && dataBean.elements != null && dataBean.elements.size() > 0) {
+            mCategoryAdapter.updateValue(dataBean.elements);
+            dataBean.elements.get(0).is_selected = true;
+            ColumnFragment fragment = new CategoryColumnFragment();
+            Bundle args = new Bundle();
+            args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
+            fragment.setArguments(args);
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.more_category_detail_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
