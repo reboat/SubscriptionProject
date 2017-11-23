@@ -120,8 +120,12 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
         RecommendFragment fragment = new RecommendFragment();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
-        focus_list.removeAll(Collections.singleton(null));
-        recommend_list.removeAll(Collections.singleton(null));
+        if (focus_list != null && focus_list.size() > 0) {
+            focus_list.removeAll(Collections.singleton(null));
+        }
+        if (recommend_list != null && recommend_list.size() > 0) {
+            recommend_list.removeAll(Collections.singleton(null));
+        }
 
         Bundle args = new Bundle();
         args.putParcelableArrayList(RecommendFragment.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);

@@ -207,7 +207,9 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         MySubscribedFragment fragment = new MySubscribedFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        article_list.removeAll(Collections.singleton(null));
+        if (article_list != null && article_list.size() > 0) {
+            article_list.removeAll(Collections.singleton(null));
+        }
         fragment.initArticles(article_list);
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
