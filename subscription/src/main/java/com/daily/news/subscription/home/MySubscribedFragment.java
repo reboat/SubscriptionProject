@@ -184,11 +184,11 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
         if (!dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
-            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
-            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         }
     }
 
