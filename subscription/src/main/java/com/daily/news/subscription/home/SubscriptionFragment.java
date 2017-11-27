@@ -177,6 +177,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         if (mDisposable != null) {
             mDisposable.clear();
         }
+        if (mPresenter != null) {
+            mPresenter.unsubscribe();
+        }
     }
 
 

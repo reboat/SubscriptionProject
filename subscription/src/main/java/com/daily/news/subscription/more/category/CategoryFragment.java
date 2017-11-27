@@ -158,7 +158,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     fragment.setArguments(args);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
-                            .commit();
+                            .commitAllowingStateLoss();
                     category.is_selected = true;
                     notifyItemChanged(position);
                     mValues.get(mCurPosition).is_selected = false;
