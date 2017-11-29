@@ -122,7 +122,9 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     @Override
     public void showError(Throwable message) {
-        Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -171,7 +173,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         mUnBinder.unbind();
         if (mDisposable != null) {
@@ -180,6 +181,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         if (mPresenter != null) {
             mPresenter.unsubscribe();
         }
+        super.onDestroyView();
     }
 
 
