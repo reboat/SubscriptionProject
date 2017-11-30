@@ -21,15 +21,13 @@ public class MySubscribedArticleFragment extends ArticleFragment {
         super.onItemClick(article);
         Map<String, String> otherInfo = new HashMap<>();
         otherInfo.put("relatedColumn", String.valueOf(article.getColumn_id()));
-        otherInfo.put("customObjectType", "RelatedColumnType");
         String otherInfoStr = JsonUtils.toJsonString(otherInfo);
         new Analytics.AnalyticsBuilder(getContext(),"200007","200007")
                 .setEvenName("新闻列表点击")
                 .setPageType("订阅首页")
                 .setObjectID(article.getMlf_id())
-                .setObjectName(article.getColumn_name())
-                .setClassifyID(article.getChannel_id())
-                .setClassifyName(article.getChannel_name())
+                .setObjectName(article.getDoc_title())
+                .setSelfObjectID(article.getId())
                 .setObjectType(ObjectType.NewsType)
                 .setOtherInfo(otherInfoStr)
                 .build()
