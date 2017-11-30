@@ -26,7 +26,7 @@ public class MySubscribedArticleFragment extends ArticleFragment {
         new Analytics.AnalyticsBuilder(getContext(),"200007","200007")
                 .setEvenName("新闻列表点击")
                 .setPageType("订阅首页")
-                .setObjectID(article.getColumn_id())
+                .setObjectID(article.getMlf_id())
                 .setObjectName(article.getColumn_name())
                 .setClassifyID(article.getChannel_id())
                 .setClassifyName(article.getChannel_name())
