@@ -204,9 +204,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
         mPresenter.unsubscribe();
+        super.onDestroyView();
     }
 
     public RecyclerView getRecyclerView() {

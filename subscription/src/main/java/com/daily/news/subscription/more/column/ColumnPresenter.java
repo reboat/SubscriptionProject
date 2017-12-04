@@ -47,8 +47,9 @@ public class ColumnPresenter extends SubscribePresenter implements ColumnContrac
             }
         });
         if (task != null) {
-            task.bindLoadViewHolder(mView.getProgressBar()).exe(params);
-            task.setTag(COLUMN_TASK_TAG);
+            task.bindLoadViewHolder(mView.getProgressBar())
+                    .setTag(COLUMN_TASK_TAG)
+                    .exe(params);
         }
     }
 
