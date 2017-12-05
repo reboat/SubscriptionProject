@@ -126,7 +126,7 @@ public class CategoryColumnFragment extends ColumnFragment {
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("“取消订阅”栏目")
-                    .setPageType("订阅首页")
+                    .setPageType("订阅更多页面")
                     .setObjectType(ObjectType.NewsType)
                     .setOtherInfo(otherInfoStr)
                     .build()
