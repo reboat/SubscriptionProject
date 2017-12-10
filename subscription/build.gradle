@@ -39,18 +39,18 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.google.android:flexbox:0.3.0'
-    compile('cn.daily.android:daily-news:5.0.0.36') {
+    compile('cn.daily.android:daily-news:5.0.0') {
         transitive false
     }
-    compile('cn.daily.android:daily-local:5.0.0.8') {
+    compile('cn.daily.android:daily-local:5.0.0') {
         transitive false
     }
     compile('com.aliya:android-player:0.1.4') {
         exclude group: 'com.android.support'
     }
     compile 'cn.daily.android:daily-db:5.0.0.1'
-    compile 'cn.daily.android:core-library:5.0.0.50'
-    compile 'cn.daily.android:analytics:5.0.0.1'
+    compile 'cn.daily.android:core-library:5.0.2'
+    compile 'cn.daily.android:analytics:5.0.1'
     //compile project(':core-library')
     //compile project(':analytics')
 }

@@ -49,6 +49,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     TextView mDescriptionView;
     @BindView(R2.id.detail_column_sub_btn)
     TextView mSubscriptionView;
+    @BindView(R2.id.subscribe_container)
+    ViewGroup mSubscribeContainer;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
     @BindView(R2.id.detail_content_container)
@@ -168,7 +170,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         return new LoadViewHolder(mContentContainer, (ViewGroup) mContentContainer.getParent());
     }
 
-    @OnClick(R2.id.detail_column_sub_btn)
+    @OnClick(R2.id.subscribe_container)
     public void submitSubscribe() {
         mPresenter.submitSubscribe(mDetailColumn);
         modifySubscribeBtnState(!mDetailColumn.subscribed);
@@ -213,9 +215,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     private void modifySubscribeBtnState(boolean subscribe) {
         mDetailColumn.subscribed = subscribe;
-        mSubscriptionView.setSelected(mDetailColumn.subscribed);
         String subscriptionText = mDetailColumn.subscribed ? "已订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
+        mSubscribeContainer.setSelected(subscribe);
     }
 
     @OnClick({R2.id.detail_empty_back, R2.id.detail_back})

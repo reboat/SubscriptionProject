@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.aliya.uimode.UiModeManager;
 import com.zjrb.core.db.ThemeMode;
+import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
 
@@ -22,6 +23,7 @@ public class SubscriptionApplication extends Application {
         ThemeMode.initTheme(R.style.AppTheme, R.style.AppThemeNight);
         UiModeManager.init(this, R.styleable.SupportUiMode);
         ThemeMode.setUiMode(false);
+        AppUtils.setChannel("bianfeng");
 
         AnalyticsManager.initAnalytics(this,"");
     }
