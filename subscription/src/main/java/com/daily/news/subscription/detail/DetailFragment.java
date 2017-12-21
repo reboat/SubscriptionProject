@@ -134,7 +134,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mDescriptionView.setText(data.detail.description);
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
-            mSubscriptionView.setSelected(data.detail.subscribed);
+            mSubscribeContainer.setSelected(data.detail.subscribed);
 
             options.placeholder(R.drawable.detail_column_default);
             Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
