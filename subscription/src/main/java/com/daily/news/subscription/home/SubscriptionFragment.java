@@ -23,13 +23,10 @@ import com.zjrb.core.utils.SettingManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.processors.PublishProcessor;
 
 /**
  * 页面逻辑：
@@ -46,17 +43,17 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         @Override
         public void onReceive(Context context, final Intent intent) {
             if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
-                if (mEmitter != null && !mEmitter.isDisposed()) {
+                if (mEmitter != null) {
                     mEmitter.onNext(intent.getAction());
                 }
             }
         }
     };
-    private ObservableEmitter<String> mEmitter;
 
     @BindView(R2.id.subscription_container)
     View mContainerView;
     private Fragment fragment;
+    private PublishProcessor<String> mEmitter;
 
     public SubscriptionFragment() {
         new SubscriptionPresenter(this, new SubscriptionStore());
@@ -83,7 +80,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onResume() {
         super.onResume();
         refreshData();
-        if (mEmitter != null && !mEmitter.isDisposed()) {
+        if (mEmitter != null) {
             mEmitter.onComplete();
         }
     }
@@ -91,13 +88,8 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void onPause() {
         super.onPause();
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
-                mEmitter = e;
-            }
-        })
-                .takeLast(1)
+        mEmitter = PublishProcessor.create();
+        mEmitter.takeLast(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
