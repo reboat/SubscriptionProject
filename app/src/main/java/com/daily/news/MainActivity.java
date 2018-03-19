@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import com.daily.news.subscription.home.SubscriptionFragment;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.db.ThemeMode;
+import com.zjrb.core.nav.Nav;
 
 public class MainActivity extends BaseActivity {
 
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
                     case R.id.home:
+                        Nav.with(MainActivity.this).to("http://www.8531.cn/subscription/more");
                         break;
                     case R.id.sub:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, SubscriptionFragment.newInstance()).commitAllowingStateLoss();

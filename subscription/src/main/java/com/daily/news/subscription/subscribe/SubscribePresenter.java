@@ -34,7 +34,9 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
                 super.onError(errMsg, errCode);
                 mView.subscribeFail(column,errMsg);
             }
-        }).setTag(this).exe(column.id,!column.subscribed);
+        })
+                .setTag(this)
+                .exe(column.id,!column.subscribed);
     }
 
     @Override

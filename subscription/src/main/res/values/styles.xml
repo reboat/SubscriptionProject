@@ -45,6 +45,9 @@
         <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color</item>
         <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_icon</item>
         <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon</item>
+        <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout</item>
+        <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
+        <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -75,6 +78,10 @@
         <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color_night</item>
         <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_night_icon</item>
         <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon_night</item>
+
+        <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout_night</item>
+        <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
+        <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab_night</item>
     </style>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.daily.news.subscription.more.category;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -8,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
 
-public class CategoryFragment extends Fragment implements CategoryContract.View {
+/**
+ * Created by gaoyangzhen on 2018/3/13.
+ * 红船号分类列表
+ */
+
+public class CategoryRedFragment  extends Fragment implements CategoryContract.View {
 
     private CategoryContract.Presenter mPresenter;
 
@@ -37,13 +42,12 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     View mContainerView;
     @BindView(R2.id.more_category_list)
     RecyclerView mRecyclerView;
-    CategoryAdapter mCategoryAdapter;
+    CategoryRedFragment.CategoryAdapter mCategoryAdapter;
     List<CategoryResponse.DataBean.CategoryBean> mCategories;
-
     ColumnFragment fragment;
 
 
-    public CategoryFragment() {
+    public CategoryRedFragment() {
         new CategoryPresenter(this, new CategoryStore());
     }
 
@@ -66,12 +70,13 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe(2);
+        mPresenter.subscribe(1);
+
     }
 
     private void setupRecyclerView() {
         mCategories = new ArrayList<>();
-        mCategoryAdapter = new CategoryAdapter(mCategories);
+        mCategoryAdapter = new CategoryRedFragment.CategoryAdapter(mCategories);
         mRecyclerView.setAdapter(mCategoryAdapter);
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
@@ -98,6 +103,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     @Override
     public void showError(Throwable message) {
+        Log.e("CategoryRedFragment", message.toString());
     }
 
     @Override
@@ -119,7 +125,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mPresenter.unsubscribe();
     }
 
-    public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+    public class CategoryAdapter extends RecyclerView.Adapter<CategoryRedFragment.CategoryAdapter.ViewHolder> {
 
         private final List<CategoryResponse.DataBean.CategoryBean> mValues;
 
@@ -134,16 +140,16 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         }
 
         @Override
-        public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public CategoryRedFragment.CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.subscription_item_category, parent, false);
-            return new CategoryAdapter.ViewHolder(view);
+            return new CategoryRedFragment.CategoryAdapter.ViewHolder(view);
         }
 
         int mCurPosition = 0;
 
         @Override
-        public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final CategoryRedFragment.CategoryAdapter.ViewHolder holder, final int position) {
             final CategoryResponse.DataBean.CategoryBean category = mValues.get(position);
             holder.mItem = mValues.get(position);
             int textSize = category.is_selected ? 20 : 17;
@@ -204,7 +210,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             }
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

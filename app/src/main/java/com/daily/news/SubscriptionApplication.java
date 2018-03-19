@@ -25,6 +25,6 @@ public class SubscriptionApplication extends Application {
         ThemeMode.setUiMode(false);
         AppUtils.setChannel("bianfeng");
 
-        AnalyticsManager.initAnalytics(this,"");
+        AnalyticsManager.initAnalytics(this,"", null, null);
     }
 }

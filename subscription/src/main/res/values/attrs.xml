@@ -24,5 +24,8 @@
         <attr name="column_subscribe_success_notify_background_color" format="color|reference" />
         <attr name="column_subscribe_success_notify_icon" format="reference"/>
         <attr name="more_key_word_delete_icon" format="reference"/>
+        <attr name="module_sub_tc_tab" format="color|reference" />
+        <attr name="module_sub_bg_tab_layout" format="color|reference" />
+        <attr name="module_sub_bg_tab_item" format="color|reference" />
     </declare-styleable>
 </resources>

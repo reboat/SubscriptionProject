@@ -47,11 +47,12 @@ public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
             @Override
             protected void onSetupParams(Object... params) {
 
+                put("type", params[0]);
             }
 
             @Override
             protected String getApi() {
-                return "/api/column_class/list";
+                return "/api/red_boat/class_list";
             }
         };
     }

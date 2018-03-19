@@ -11,12 +11,93 @@
     app:fitType="bottom"
     tools:context="com.daily.news.subscription.more.MoreActivity">
 
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        app:fitType="top">
+
+        <ImageView
+            android:id="@+id/iv_top_bar_back"
+            android:layout_width="42dp"
+            android:layout_height="@dimen/toolbar_normal_height"
+            android:background="?attr/actionBarItemBackground"
+            android:paddingRight="7dp"
+            android:scaleType="center"
+            android:src="?attr/top_bar_back_white"
+            app:iv_maskColor="@android:color/transparent" />
+
+        <LinearLayout
+            android:layout_width="184dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/module_sub_bg_tab_layout"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/tab_red_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="?attr/module_sub_bg_tab_item">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="红船号"
+                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textSize="@dimen/ts_15sp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/tab_my_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="?attr/module_sub_bg_tab_item">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="栏目号"
+                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textSize="@dimen/ts_15sp" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_top_bar_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="10dp"
+            android:src="@mipmap/launcher_main_bar_search"
+            app:iv_maskColor="@android:color/transparent" />
+
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/bc_f5f5f5"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
