@@ -1,4 +1,4 @@
-include ':app', ':subscription'
+include ':app', ':subscription', ':core'
 //include(':core-library')
 //project(":core-library").projectDir = new File('/Users/lixinke/Documents/workspace/daily/CoreProject/core')
 //include(':analytics')

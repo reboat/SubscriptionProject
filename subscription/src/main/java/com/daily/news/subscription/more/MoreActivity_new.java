@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,13 +19,21 @@ import com.daily.news.subscription.more.category.CategoryRedFragment;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.nav.Nav;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
 
-public class MoreActivity extends BaseActivity{
+/**
+ * Created by gaoyangzhen on 2018/3/21.
+ */
+
+public class MoreActivity_new extends BaseActivity {
+
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
 
@@ -47,10 +53,12 @@ public class MoreActivity extends BaseActivity{
     @BindView(R2.id.iv_top_bar_search)
     ImageView ivTopBarSearch;
     @BindView(R2.id.more_container)
-    FrameLayout moreContainer;
+    ViewPager moreContainer;
 
-    private FragmentManager mFragmentManager;
 
+
+
+    List<Fragment> fragmentList = new ArrayList<>();
     CategoryRedFragment red_fragment;
     CategoryFragment sub_fragment;
 
@@ -61,17 +69,33 @@ public class MoreActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.subscription_activity_more);
+        setContentView(R.layout.subscription_activity_more_new);
 
         unbinder = ButterKnife.bind(this);
 
-        mFragmentManager = getSupportFragmentManager();
         red_fragment = new CategoryRedFragment();
         sub_fragment = new CategoryFragment();
 
-        mFragmentManager.beginTransaction().add(R.id.more_container, red_fragment, "category_red").commit();
-        mFragmentManager.beginTransaction().add(R.id.more_container, sub_fragment, "category").commit();
+        fragmentList.add(red_fragment);
+        fragmentList.add(sub_fragment);
 
+        moreContainer.setAdapter(new MoreFragmentAdapter(getSupportFragmentManager(), fragmentList));
+        moreContainer.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //Do Nothing
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                onViewClicked(position == 0? tabRedSub : tabMySub);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //Do Nothing
+            }
+        });
 
         onViewClicked(tabRedSub);
 
@@ -83,16 +107,16 @@ public class MoreActivity extends BaseActivity{
         view.setSelected(true);
         if (view.getId() == R.id.tab_red_sub) {
             tabMySub.setSelected(false);
-            switchFragment(view, red_fragment, sub_fragment);
-            new Analytics.AnalyticsBuilder(MoreActivity.this, "500008", "500008")
+            moreContainer.setCurrentItem(0);
+            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500008", "500008")
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"红船号\"tab")
                     .build()
                     .send();
         } else if (view.getId() == R.id.tab_my_sub) {
             tabRedSub.setSelected(false);
-            switchFragment(view, sub_fragment, red_fragment);
-            new Analytics.AnalyticsBuilder(MoreActivity.this, "500009", "500009")
+            moreContainer.setCurrentItem(1);
+            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500009", "500009")
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"栏目号\"tab")
                     .build()
@@ -101,7 +125,6 @@ public class MoreActivity extends BaseActivity{
             finish();
         } else if (view.getId() == R.id.iv_top_bar_search) {
 
-//            Nav.with(this).to("http://www.8531.cn/subscription/more/search");
             Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/more/search")
                     .buildUpon()
                     .build()
@@ -119,14 +142,6 @@ public class MoreActivity extends BaseActivity{
 
     }
 
-    private void switchFragment(View v, Fragment show, Fragment hide) {
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.show(show);
-        if (hide != null) {
-            transaction.hide(hide);
-        }
-        transaction.commit();
-    }
 
 
     @Override
@@ -134,7 +149,6 @@ public class MoreActivity extends BaseActivity{
         super.onDestroy();
         unbinder.unbind();
     }
-
 
 
 }

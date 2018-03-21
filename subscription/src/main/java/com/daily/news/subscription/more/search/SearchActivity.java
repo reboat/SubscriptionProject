@@ -131,6 +131,12 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();

@@ -111,7 +111,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
     @OnClick(R2.id.my_sub_more_btn)
     public void gotoMore() {
-        Nav.with(this).to("http://www.8531.cn/subscription/more");
+        Nav.with(this).to("http://www.8531.cn/subscription/more_new");
         new AnalyticsBuilder(getContext(), "500007", "500007")
                 .setEvenName("点击“订阅更多”")
                 .setPageType("订阅首页")

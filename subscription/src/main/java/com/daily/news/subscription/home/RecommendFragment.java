@@ -101,7 +101,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more_new");
                 new AnalyticsBuilder(getContext(), "500002", "500002")
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")

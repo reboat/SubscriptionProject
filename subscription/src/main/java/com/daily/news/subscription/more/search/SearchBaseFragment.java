@@ -333,7 +333,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "500003", "500003")
-                    .setEvenName("点击推荐栏目列表（头像+标题）")
+                    .setEvenName("搜索页面")
                     .setObjectType(ObjectType.NewsType)
                     .setPageType("订阅更多页面")
                     .setObjectID(String.valueOf(bean.id))
@@ -343,4 +343,6 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
                     .send();
         }
     }
+
+
 }

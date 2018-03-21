@@ -104,7 +104,7 @@ public class CategoryColumnFragment extends ColumnFragment {
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "500003", "500003")
-                    .setEvenName("点击推荐栏目列表（头像+标题）")
+                    .setEvenName("点击栏目条目（头像+标题）")
                     .setObjectType(ObjectType.NewsType)
                     .setPageType("订阅更多页面")
                     .setObjectID(String.valueOf(bean.id))
