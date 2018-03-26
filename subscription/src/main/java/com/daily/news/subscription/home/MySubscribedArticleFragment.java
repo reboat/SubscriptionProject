@@ -22,15 +22,32 @@ public class MySubscribedArticleFragment extends ArticleFragment {
         Map<String, String> otherInfo = new HashMap<>();
         otherInfo.put("relatedColumn", String.valueOf(article.getColumn_id()));
         String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-        new Analytics.AnalyticsBuilder(getContext(),"200007","200007")
-                .setEvenName("新闻列表点击")
-                .setPageType("订阅首页")
-                .setObjectID(article.getMlf_id())
-                .setObjectName(article.getDoc_title())
-                .setSelfObjectID(article.getId())
-                .setObjectType(ObjectType.NewsType)
-                .setOtherInfo(otherInfoStr)
-                .build()
-                .send();
+        //红船号稿件
+        if(article.getDoc_type() == 10)
+        {
+            new Analytics.AnalyticsBuilder(getContext(), "200007", "200007")
+                    .setEvenName("新闻列表点击")
+                    .setPageType("订阅首页")
+                    .setObjectID(article.guid)
+                    .setObjectName(article.getDoc_title())
+                    .setSelfObjectID(article.getId())
+                    .setObjectType(ObjectType.NewsType)
+                    .setOtherInfo(otherInfoStr)
+                    .build()
+                    .send();
+        }
+        else {
+            //普通稿件
+            new Analytics.AnalyticsBuilder(getContext(), "200007", "200007")
+                    .setEvenName("新闻列表点击")
+                    .setPageType("订阅首页")
+                    .setObjectID(article.getMlf_id())
+                    .setObjectName(article.getDoc_title())
+                    .setSelfObjectID(article.getId())
+                    .setObjectType(ObjectType.NewsType)
+                    .setOtherInfo(otherInfoStr)
+                    .build()
+                    .send();
+        }
     }
 }

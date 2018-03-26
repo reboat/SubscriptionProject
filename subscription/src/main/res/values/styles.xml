@@ -48,6 +48,7 @@
         <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout</item>
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab</item>
+        <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -82,6 +83,7 @@
         <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout_night</item>
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab_night</item>
+        <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
     </style>
 
 </resources>

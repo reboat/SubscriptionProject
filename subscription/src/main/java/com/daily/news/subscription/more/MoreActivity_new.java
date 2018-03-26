@@ -29,6 +29,7 @@ import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
 
 /**
+ * viewPager实现加载fragment，包含点击tab和滑动切换
  * Created by gaoyangzhen on 2018/3/21.
  */
 
