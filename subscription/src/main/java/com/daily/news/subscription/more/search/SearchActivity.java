@@ -47,7 +47,6 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_activity_search);
         unbinder = ButterKnife.bind(this);
-        etInput.clearFocus();
         etInput.setOnEditorActionListener(this);
         etInput.addTextChangedListener(this);
     }
@@ -125,6 +124,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         }
         else if(view.getId() == R.id.tv_cancel)
         {
+            UIUtils.hideSoftInput(etInput); // 手动隐藏软键盘
             finish();
         }
 

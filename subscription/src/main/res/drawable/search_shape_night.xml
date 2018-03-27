@@ -5,7 +5,7 @@
     <!--<stroke-->
         <!--android:width="@dimen/daily_1"-->
         <!--android:color="#2a2a2a"/>-->
-    <solid android:color="#2a2a2a"/>
+    <solid android:color="#7a7b7d"/>
     <padding android:left="10dp"/>
 
 </shape>

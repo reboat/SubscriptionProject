@@ -163,6 +163,8 @@
         <item name="module_video_bg_tab_layout">@drawable/module_sub_bg_tab_layout_night</item>
         <item name="module_video_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
         <item name="android:theme">@style/SubscriptionThemeNight</item>
+
+
     </style>
 
 </resources>

@@ -85,7 +85,7 @@
             android:background="?attr/actionBarItemBackground"
             android:padding="10dp"
             android:src="@mipmap/launcher_main_bar_search"
-            app:iv_maskColor="@android:color/transparent" />
+            app:iv_maskColor="@color/tc_ffffff_night" />
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>
 

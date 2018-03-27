@@ -49,6 +49,10 @@
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab</item>
         <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
+        <item name="module_news_color_999999_484848">#999999</item>
+        <item name="cancel_color_ffffff_7a7b7d">#ffffff</item>
+        <item name="module_news_ic_search">@drawable/module_news_ic_search</item>
+        <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_cross</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -84,6 +88,12 @@
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab_night</item>
         <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
+
+        <item name="module_news_color_999999_484848">#484848</item>
+        <item name="cancel_color_ffffff_7a7b7d">#7a7b7d</item>
+
+        <item name="module_news_ic_search">@drawable/module_news_ic_search_night</item>
+        <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_search_cross_night</item>
     </style>
 
 </resources>

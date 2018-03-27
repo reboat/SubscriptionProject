@@ -209,7 +209,9 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        fragment.onActivityResult(requestCode, resultCode, data);
+        {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
 

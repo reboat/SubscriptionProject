@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aliya.view.ratio.RatioRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    app:ratio_w2h="360:88">
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/place_holder_zhe_small"
+        app:ratio_w2h="117:78" />
+
+    <ImageView
+        android:id="@+id/iv_tag"
+        android:layout_width="26dp"
+        android:layout_height="18.5dp"
+        android:layout_alignBottom="@id/iv_picture"
+        android:layout_alignRight="@id/iv_picture"
+        android:layout_margin="5dp"
+        android:background="#cc2a2a2a"
+        android:scaleType="center"
+        android:visibility="invisible"
+        app:iv_maskColor="@color/tc_999999" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_picture"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_toRightOf="@id/iv_picture"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="@dimen/module_news_title_line_spacing_multiplier"
+        android:maxLines="2"
+        android:textColor="?attr/module_news_tc_item_title"
+        android:textSize="@dimen/ts_16sp" />
+
+    <TextView
+        android:id="@+id/tv_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_picture"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_toRightOf="@id/iv_picture"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textColor="?attr/module_news_color_999999_5c5c5c"
+        android:textSize="@dimen/ts_11sp"
+        android:gravity="right"
+        />
+
+</com.aliya.view.ratio.RatioRelativeLayout>

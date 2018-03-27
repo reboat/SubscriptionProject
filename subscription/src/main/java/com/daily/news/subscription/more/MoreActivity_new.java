@@ -138,8 +138,10 @@ public class MoreActivity_new extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        red_fragment.onActivityResult(requestCode, resultCode, data);
-        sub_fragment.onActivityResult(requestCode, resultCode, data);
+        if(data != null) {
+            red_fragment.onActivityResult(requestCode, resultCode, data);
+            sub_fragment.onActivityResult(requestCode, resultCode, data);
+        }
 
     }
 
