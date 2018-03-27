@@ -8,7 +8,7 @@
     android:background="?attr/activity_default_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    app:fitType="top"
+    app:fitType="both"
     tools:context="com.daily.news.subscription.more.search.SearchActivity">
 
     <LinearLayout
