@@ -89,6 +89,7 @@
             android:name=".more.search.SearchActivity"
             android:label="@string/title_more_list"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateVisible"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DAILY"/>

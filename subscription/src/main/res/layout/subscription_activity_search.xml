@@ -48,7 +48,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/fragment_recommend_background"
-                android:textColorHint="?attr/module_news_color_999999_5c5c5c"
+                android:textColorHint="?attr/module_news_color_999999_484848"
                 android:textSize="@dimen/ts_11sp"
                 />
 
