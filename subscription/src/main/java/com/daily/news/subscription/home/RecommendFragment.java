@@ -16,6 +16,8 @@ import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.biz.ResourceBiz;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
@@ -101,7 +103,37 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more_new");
+                //判断红船号开关，如果没有开关数据，默认是关闭的
+                ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+                if (resourceBiz != null && resourceBiz.feature_list != null) {
+                    int i = 0;
+                    for(ResourceBiz.FeatureListBean bean : resourceBiz.feature_list)
+                    {
+                        if(bean.name.equals("hch"))
+                        {
+                            i = 1;
+                            if(bean.enabled)
+                            {
+                                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more_new");
+                            }
+                            else
+                            {
+                                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                            }
+                            break;
+                        }
+                    }
+                    if(i == 0)
+                    {
+                        Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                    }
+                }
+                else
+                {
+                    Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                }
+
+//                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 new AnalyticsBuilder(getContext(), "500002", "500002")
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")

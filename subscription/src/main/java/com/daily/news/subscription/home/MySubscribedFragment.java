@@ -15,6 +15,8 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
+import com.zjrb.core.common.biz.ResourceBiz;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.GuideView;
@@ -30,6 +32,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
+
+import static java.lang.System.in;
 
 
 /**
@@ -111,7 +115,37 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
     @OnClick(R2.id.my_sub_more_btn)
     public void gotoMore() {
-        Nav.with(this).to("http://www.8531.cn/subscription/more_new");
+        //判断红船号开关，如果没有开关数据，默认是关闭的
+        ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        if (resourceBiz != null && resourceBiz.feature_list != null) {
+            int i = 0;
+            for(ResourceBiz.FeatureListBean bean : resourceBiz.feature_list)
+            {
+                if(bean.name.equals("hch"))
+                {
+                    i = 1;
+                    if(bean.enabled)
+                    {
+                        Nav.with(this).to("http://www.8531.cn/subscription/more_new");
+                    }
+                    else
+                    {
+                        Nav.with(this).to("http://www.8531.cn/subscription/more");
+                    }
+                    break;
+                }
+            }
+            if(i == 0)
+            {
+                Nav.with(this).to("http://www.8531.cn/subscription/more");
+            }
+            }
+            else
+        {
+            Nav.with(this).to("http://www.8531.cn/subscription/more");
+        }
+
+//        Nav.with(this).to("http://www.8531.cn/subscription/more");
         new AnalyticsBuilder(getContext(), "500007", "500007")
                 .setEvenName("点击“订阅更多”")
                 .setPageType("订阅首页")

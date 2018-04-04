@@ -128,6 +128,7 @@ public class MoreActivity_new extends BaseActivity {
 
             Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/more/search")
                     .buildUpon()
+                    .appendQueryParameter("type", "more_new")
                     .build()
                     .toString(),REQUEST_CODE_TO_DETAIL);
 

@@ -1,5 +1,7 @@
 package com.daily.news.subscription.more.search;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -42,6 +44,8 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
 
     Unbinder unbinder;
 
+    String type; // 判断是从more还是more_new跳过来的
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,19 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         unbinder = ButterKnife.bind(this);
         etInput.setOnEditorActionListener(this);
         etInput.addTextChangedListener(this);
+
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        type = data.getQueryParameter("type");
+        if(type != null && type.equals("more_new"))
+        {
+            etInput.setHint("搜索红船号、栏目号");
+
+        }
+        else if(type != null && type.equals("more"))
+        {
+            etInput.setHint("搜索栏目号");
+        }
     }
 
     @Override
