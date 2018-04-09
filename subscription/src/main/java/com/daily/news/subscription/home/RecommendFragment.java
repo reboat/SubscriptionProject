@@ -15,6 +15,7 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
+import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.db.SPHelper;
@@ -36,6 +37,7 @@ import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 public class RecommendFragment extends Fragment implements SubscriptionContract.View,
         HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
+    private static final String TAG_INITIALIZE_RESOURCE = "initialize_resource";
 
     private static final String COLUMN_DATA = "column_data";
     private static final String FOCUS_DATA = "focus_data";
@@ -104,34 +106,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             @Override
             public void onClick(View v) {
                 //判断红船号开关，如果没有开关数据，默认是关闭的
-                ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-                if (resourceBiz != null && resourceBiz.feature_list != null) {
-                    int i = 0;
-                    for(ResourceBiz.FeatureListBean bean : resourceBiz.feature_list)
-                    {
-                        if(bean.name.equals("hch"))
-                        {
-                            i = 1;
-                            if(bean.enabled)
-                            {
-                                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more_new");
-                            }
-                            else
-                            {
-                                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                            }
-                            break;
-                        }
-                    }
-                    if(i == 0)
-                    {
-                        Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                    }
-                }
-                else
-                {
-                    Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                }
+                GetInitializeResourceTask.createTask(RecommendFragment.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 new AnalyticsBuilder(getContext(), "500002", "500002")
