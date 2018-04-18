@@ -130,6 +130,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
             fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
         } else {
             fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//            fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
         }
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
     }

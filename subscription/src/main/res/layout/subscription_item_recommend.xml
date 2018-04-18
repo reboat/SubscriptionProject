@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    >
+
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        >
+
+
+        <LinearLayout
+            android:layout_width="184dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/module_sub_bg_tab_layout"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/tab_red_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="?attr/module_sub_bg_tab_item">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="红船号"
+                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textSize="@dimen/ts_15sp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/tab_my_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:background="?attr/module_sub_bg_tab_item">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="栏目号"
+                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textSize="@dimen/ts_15sp" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/more_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/subscription_home_background"
+        />
+
+</LinearLayout>

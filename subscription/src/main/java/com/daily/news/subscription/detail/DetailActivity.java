@@ -22,7 +22,7 @@ public class DetailActivity extends BaseActivity {
         Log.e("TAG",id);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("id"));
+        DetailFragment_new detailFragment = DetailFragment_new.newInstance(data.getQueryParameter("id"));
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
     }
