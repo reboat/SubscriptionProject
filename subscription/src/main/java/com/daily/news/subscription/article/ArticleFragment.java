@@ -172,4 +172,9 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     public void setRefreshing(boolean refresh) {
         mHeaderRefresh.setRefreshing(refresh);
     }
+
+    public void canRefresh(boolean canrefresh)
+    {
+        mHeaderRefresh.setCanrfresh(canrefresh);
+    }
 }

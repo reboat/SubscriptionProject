@@ -1,19 +1,15 @@
 package com.daily.news.subscription.home;
 
-
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -34,47 +30,56 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
+import butterknife.Unbinder;
+import cn.daily.news.analytics.Analytics;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by gaoyangzhen on 2018/4/19.
+ * behavior + CoordinatorLayout实现的滑动效果，暂时没有用到这个页面
  */
-public class RecommendFragment extends Fragment implements SubscriptionContract.View,
+
+public class RecommendFragment_new extends Fragment implements SubscriptionContract.View,
         HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
     private static final String TAG_INITIALIZE_RESOURCE = "initialize_resource";
 
     private static final String COLUMN_DATA = "column_data";
     private static final String FOCUS_DATA = "focus_data";
-    @BindView(R2.id.no_subscription_more_view)
-    LinearLayout noSubscriptionMoreView;
-    @BindView(R2.id.header_rel)
-    RelativeLayout headerRel;
+    @BindView(R2.id.bannerHolder)
+    FrameLayout bannerHolder;
+    @BindView(R2.id.moreView)
+    FrameLayout moreView;
+    Unbinder unbinder;
+    @BindView(R2.id.main_content)
+    CoordinatorLayout mainContent;
     private SubscriptionContract.Presenter mPresenter;
     private ColumnFragment mColumnFragment;
     private View mHeaderBanner;
-    private int firstItemPosition = 0;
 
-    public RecommendFragment() {
+    private HeaderRefresh mHeaderRefresh;
+
+    public RecommendFragment_new() {
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend, container, false);
-        ButterKnife.bind(this, rootView);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_new, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
-        setScrollListener();
+        mColumnFragment.canRefresh(false);
 
+//        setRefreshListener(this);
+
+        moreView.addView(setupMoreSubscriptionView(inflater, container));
         mHeaderBanner = setupBannerView(getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
         if (mHeaderBanner != null) {
-            mColumnFragment.addHeaderView(mHeaderBanner);
+            bannerHolder.addView(mHeaderBanner);
         }
-        mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
+
         return rootView;
     }
 
@@ -99,7 +104,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             public void onItemClick(View item, int position) {
                 super.onItemClick(item, position);
                 SubscriptionResponse.Focus focus = focuses.get(position);
-                new AnalyticsBuilder(getContext(), "200005", "200005")
+                new Analytics.AnalyticsBuilder(getContext(), "200005", "200005")
                         .setClassifyID(String.valueOf(focus.channel_article_id))
                         .setPageType("订阅首页")
                         .setEvenName("焦点图点击")
@@ -119,10 +124,10 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             @Override
             public void onClick(View v) {
                 //判断红船号开关，如果没有开关数据，默认是关闭的
-                GetInitializeResourceTask.createTask(RecommendFragment.this, TAG_INITIALIZE_RESOURCE);
+                GetInitializeResourceTask.createTask(RecommendFragment_new.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                new AnalyticsBuilder(getContext(), "500002", "500002")
+                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002")
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")
                         .build()
@@ -132,13 +137,18 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         return moreHeaderView;
     }
 
+    public void setRefreshListener(HeaderRefresh.OnRefreshListener onRefreshListener) {
+        mHeaderRefresh = new HeaderRefresh(mColumnFragment.getRecyclerView(), onRefreshListener);
+        mainContent.addView(mHeaderRefresh.getItemView(), 0);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
 
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
-        RecommendFragment fragment = new RecommendFragment();
+        RecommendFragment_new fragment = new RecommendFragment_new();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
             focus_list.removeAll(Collections.singleton(null));
@@ -148,8 +158,8 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         }
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList(RecommendFragment.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
-        args.putParcelableArrayList(RecommendFragment.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
+        args.putParcelableArrayList(RecommendFragment_new.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
+        args.putParcelableArrayList(RecommendFragment_new.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -193,7 +203,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment_new.newInstance(dataBean.focus_list, dataBean.recommend_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         }
     }
@@ -209,49 +219,10 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         mPresenter.onRefresh();
     }
 
-    /**
-     * recycleview设置滑动监听，控制headview的置顶
-     */
-    public void setScrollListener() {
-        mColumnFragment.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                //判断是当前layoutManager是否为LinearLayoutManager
-                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
-                if (layoutManager instanceof LinearLayoutManager) {
-                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                    //获取最后一个可见view的位置
-//                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
-                    //获取第一个可见view的位置
-                    firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                    if (firstItemPosition >= 2) {
-                        headerRel.setVisibility(View.VISIBLE);
-                    } else {
-                        headerRel.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    @OnClick(R2.id.no_subscription_more_view)
-    public void onViewClicked() {
-        //判断红船号开关，如果没有开关数据，默认是关闭的
-        GetInitializeResourceTask.createTask(RecommendFragment.this, TAG_INITIALIZE_RESOURCE);
-
-//                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-        new AnalyticsBuilder(getContext(), "500002", "500002")
-                .setPageType("订阅首页")
-                .setEvenName("点击订阅更多")
-                .build()
-                .send();
+        unbinder.unbind();
     }
 }
+

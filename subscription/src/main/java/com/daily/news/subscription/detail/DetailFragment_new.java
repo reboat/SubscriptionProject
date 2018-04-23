@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.constants.Constants;
+import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
@@ -47,6 +51,18 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     Toolbar toolbar;
     @BindView(R2.id.main)
     CoordinatorLayout main;
+    @BindView(R2.id.appbar)
+    AppBarLayout appbar;
+    @BindView(R2.id.toolbar_detail_back)
+    ImageView toolbarDetailBack;
+    @BindView(R2.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R2.id.toolbar_detail_column_sub_btn)
+    TextView toolbarDetailColumnSubBtn;
+    @BindView(R2.id.toolbar_subscribe_container)
+    LinearLayout toolbarSubscribeContainer;
+    @BindView(R2.id.toolbar_rel)
+    RelativeLayout toolbarRel;
     private String mUid;
     private DetailContract.Presenter mPresenter;
 
@@ -100,6 +116,32 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
         mArticleFragment.setOnRefreshListener(this);
 
+        appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                Log.e("STATE", state.name());
+                if (state == State.EXPANDED) {
+
+                    //展开状态
+                    mArticleFragment.canRefresh(true);
+                    toolbarRel.setVisibility(View.INVISIBLE);
+
+                } else if (state == State.COLLAPSED) {
+
+                    //折叠状态
+                    mArticleFragment.canRefresh(false);
+                    toolbarRel.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    //中间状态
+                    mArticleFragment.canRefresh(false);
+                    toolbarRel.setVisibility(View.INVISIBLE);
+
+                }
+
+            }
+        });
 
         return rootView;
     }
@@ -138,6 +180,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
             options.placeholder(R.drawable.column_placeholder_big);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
             mTitleView.setText(data.detail.name);
+            toolbarTitle.setText(data.detail.name);
 
             String info = TextUtils.isEmpty(data.detail.subscribe_count_general) ? "" : data.detail.subscribe_count_general + "订阅  ";
             info += TextUtils.isEmpty(data.detail.article_count_general) ? "" : data.detail.article_count_general + "份稿件";
@@ -146,6 +189,8 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
             mSubscribeContainer.setSelected(data.detail.subscribed);
+            toolbarDetailColumnSubBtn.setText(subscriptionText);
+            toolbarSubscribeContainer.setSelected(data.detail.subscribed);
 
             options.placeholder(R.drawable.detail_column_default);
             Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
@@ -181,7 +226,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         return new LoadViewHolder(main, (ViewGroup) main.getParent());
     }
 
-    @OnClick(R2.id.subscribe_container)
+    @OnClick({R2.id.subscribe_container, R2.id.toolbar_subscribe_container})
     public void submitSubscribe() {
         mPresenter.submitSubscribe(mDetailColumn);
         modifySubscribeBtnState(!mDetailColumn.subscribed);
@@ -229,9 +274,13 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         String subscriptionText = mDetailColumn.subscribed ? "已订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
         mSubscribeContainer.setSelected(subscribe);
+        toolbarDetailColumnSubBtn.setText(subscriptionText);
+        toolbarSubscribeContainer.setSelected(subscribe);
+
+
     }
 
-    @OnClick({R2.id.detail_empty_back, R2.id.detail_back})
+    @OnClick({R2.id.detail_empty_back, R2.id.detail_back, R2.id.toolbar_detail_back})
     public void onBack() {
         getActivity().finish();
     }
@@ -246,5 +295,11 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         super.onDetach();
         mPresenter.unsubscribe();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
 
 }

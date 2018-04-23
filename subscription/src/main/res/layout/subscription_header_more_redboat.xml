@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recommend_header_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/recommend_header_title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:text="@string/recommend_header_title1"
+        android:textStyle="bold"
+        android:textColor="?attr/tc_000000"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/no_subscription_more_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="10.5dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10.5dp">
+
+        <TextView
+            android:id="@+id/recommend_header_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subscribe_more"
+            android:textColor="?attr/tc_000000"
+            android:textSize="11sp"/>
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/recommend_header_image"
+            android:layout_width="6.5dp"
+            android:layout_height="11.5dp"
+            android:src="?attr/subscription_arrow"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="184dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/recommend_header_title1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="?attr/module_sub_bg_tab_layout"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <FrameLayout
+            android:id="@+id/tab_red_sub_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/module_sub_bg_tab_item_new">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="红船号"
+                android:textColor="?attr/module_sub_tc_tab_new"
+                android:textSize="@dimen/ts_15sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/tab_my_sub_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/module_sub_bg_tab_item_new">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="栏目号"
+                android:textColor="?attr/module_sub_tc_tab_new"
+                android:textSize="@dimen/ts_15sp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

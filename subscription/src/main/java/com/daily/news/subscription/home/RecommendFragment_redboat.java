@@ -1,5 +1,6 @@
 package com.daily.news.subscription.home;
 
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -7,17 +8,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
@@ -28,13 +36,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.daily.news.analytics.Analytics;
+import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 /**
- * Created by gaoyangzhen on 2018/4/16.
+ * A simple {@link Fragment} subclass.
  */
-
 public class RecommendFragment_redboat extends Fragment implements SubscriptionContract.View,
         HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
@@ -42,15 +49,21 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
     private static final String COLUMN_DATA = "column_data";
     private static final String FOCUS_DATA = "focus_data";
-    @BindView(R2.id.recyclerView_new)
-    RecyclerView recyclerViewNew;
-    Unbinder unbinder;
+    @BindView(R2.id.no_subscription_more_view)
+    LinearLayout noSubscriptionMoreView;
+    @BindView(R2.id.header_rel)
+    RelativeLayout headerRel;
+    @BindView(R2.id.tab_red_sub)
+    FrameLayout tabRedSub;
+    @BindView(R2.id.tab_my_sub)
+    FrameLayout tabMySub;
     private SubscriptionContract.Presenter mPresenter;
+    private ColumnFragment mColumnFragment;
     private View mHeaderBanner;
-    private HeaderRefresh mHeaderRefresh;
+    private int firstItemPosition = 0;
 
-    RecommendAdapter recommendAdapter;
-    List<ColumnResponse.DataBean.ColumnBean> mColumns;
+    FrameLayout tabRedSub_bar;
+    FrameLayout tabMySub_bar;
 
     public RecommendFragment_redboat() {
     }
@@ -59,53 +72,21 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_redboat, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        setupRecycleView();
+        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend, container, false);
+        ButterKnife.bind(this, rootView);
+        mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
+        new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
+        mColumnFragment.setRefreshListener(this);
+        setScrollListener();
+
         mHeaderBanner = setupBannerView(getArguments().<SubscriptionResponse.Focus>getParcelableArrayList(FOCUS_DATA));
+
         if (mHeaderBanner != null) {
-            addHeaderView(mHeaderBanner);
+            mColumnFragment.addHeaderView(mHeaderBanner);
         }
-        setRefreshListener(this);
-        addHeaderView(setupMoreSubscriptionView(inflater, container));
-
-        addHeaderView(setupRecommendView(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
-
+        mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
+        onViewClicked(tabRedSub);
         return rootView;
-    }
-
-    private void setupRecycleView() {
-        mColumns = new ArrayList<>();
-        recommendAdapter = createRecommendAdapter(mColumns);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerViewNew.setLayoutManager(manager);
-        recyclerViewNew.setAdapter(recommendAdapter);
-        recyclerViewNew.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
-    }
-
-    protected RecommendAdapter createRecommendAdapter(List<ColumnResponse.DataBean.ColumnBean> columns) {
-        return new RecommendAdapter(getActivity(), columns);
-    }
-
-    public void addHeaderView(View headerView) {
-
-        recommendAdapter.addHeaderView(headerView);
-    }
-
-    public RecyclerView getRecyclerView() {
-        return recyclerViewNew;
-    }
-
-    public void setRefreshListener(HeaderRefresh.OnRefreshListener onRefreshListener) {
-        mHeaderRefresh = new HeaderRefresh(recyclerViewNew, onRefreshListener);
-        recommendAdapter.addHeaderView(mHeaderRefresh.getItemView());
-    }
-
-    public void setRefreshing(boolean refresh) {
-        if (mHeaderRefresh != null) {
-            recyclerViewNew.scrollToPosition(0);
-            mHeaderRefresh.setRefreshing(refresh);
-        }
     }
 
     private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
@@ -124,12 +105,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             bean.setTag(focus.tag);
             focusBeans.add(bean);
         }
-        HeaderBannerHolder bannerHolder = new HeaderBannerHolder(getRecyclerView()) {
+        HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
             @Override
             public void onItemClick(View item, int position) {
                 super.onItemClick(item, position);
                 SubscriptionResponse.Focus focus = focuses.get(position);
-                new Analytics.AnalyticsBuilder(getContext(), "200005", "200005")
+                new AnalyticsBuilder(getContext(), "200005", "200005")
                         .setClassifyID(String.valueOf(focus.channel_article_id))
                         .setPageType("订阅首页")
                         .setEvenName("焦点图点击")
@@ -144,7 +125,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
-        View moreHeaderView = inflater.inflate(R.layout.subscription_header_more, container, false);
+        View moreHeaderView = inflater.inflate(R.layout.subscription_header_more_redboat, container, false);
         moreHeaderView.findViewById(R.id.no_subscription_more_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,23 +133,31 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002")
+                new AnalyticsBuilder(getContext(), "500002", "500002")
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")
                         .build()
                         .send();
             }
         });
+        tabRedSub_bar = (FrameLayout) moreHeaderView.findViewById(R.id.tab_red_sub_bar);
+        tabRedSub_bar.setSelected(true);
+        tabRedSub_bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onViewClicked(tabRedSub);
+            }
+        });
+        tabMySub_bar = (FrameLayout) moreHeaderView.findViewById(R.id.tab_my_sub_bar);
+        tabMySub_bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onViewClicked(tabMySub);
+            }
+        });
+
+
         return moreHeaderView;
-    }
-
-
-    private View setupRecommendView(final List<ColumnResponse.DataBean.ColumnBean> recommend_list)
-    {
-        RecommendViewHolder recommendViewHolder = new RecommendViewHolder(getRecyclerView(), getActivity(), recommend_list);
-
-        return recommendViewHolder.getItemView();
-
     }
 
     @Override
@@ -226,7 +215,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
     @Override
     public void onRefreshComplete(SubscriptionResponse.DataBean dataBean) {
-        setRefreshing(false);
+        mColumnFragment.setRefreshing(false);
         FragmentManager fragmentManager = getFragmentManager();
         if (dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
@@ -239,19 +228,77 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
     @Override
     public void onRefreshError(String message) {
-        setRefreshing(false);
+        mColumnFragment.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
-        setRefreshing(true);
+        mColumnFragment.setRefreshing(true);
         mPresenter.onRefresh();
+    }
+
+    /**
+     * recycleview设置滑动监听，控制headview的置顶
+     */
+    public void setScrollListener() {
+        mColumnFragment.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                //判断是当前layoutManager是否为LinearLayoutManager
+                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                    //获取最后一个可见view的位置
+//                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                    //获取第一个可见view的位置
+                    firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                        if (firstItemPosition < 2) {
+                            headerRel.setVisibility(View.GONE);
+                        } else {
+                            headerRel.setVisibility(View.VISIBLE);
+                        }
+                }
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+    }
+
+
+
+    @OnClick({R2.id.tab_red_sub, R2.id.tab_my_sub, R2.id.no_subscription_more_view})
+    public void onViewClicked(View view) {
+
+        if (view.getId() == R.id.tab_red_sub) {
+            tabRedSub.setSelected(true);
+            tabRedSub_bar.setSelected(true);
+            tabMySub.setSelected(false);
+            tabMySub_bar.setSelected(false);
+
+        }
+        if (view.getId() == R.id.tab_my_sub) {
+            tabMySub.setSelected(true);
+            tabMySub_bar.setSelected(true);
+            tabRedSub.setSelected(false);
+            tabRedSub_bar.setSelected(false);
+        }
+        if (view.getId() == R.id.no_subscription_more_view) {
+            //判断红船号开关，如果没有开关数据，默认是关闭的
+            GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
+
+//                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+            new AnalyticsBuilder(getContext(), "500002", "500002")
+                    .setPageType("订阅首页")
+                    .setEvenName("点击订阅更多")
+                    .build()
+                    .send();
+        }
+
     }
 }
-

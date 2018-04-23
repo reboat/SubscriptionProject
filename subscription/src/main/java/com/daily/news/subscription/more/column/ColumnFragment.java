@@ -82,6 +82,12 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+
+    }
+
+    public void setOnScrollListener(RecyclerView.OnScrollListener listener)
+    {
+        mRecyclerView.addOnScrollListener(listener);
     }
 
     protected ColumnAdapter createColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columns) {
@@ -223,6 +229,11 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
             mRecyclerView.scrollToPosition(0);
             mHeaderRefresh.setRefreshing(refresh);
         }
+    }
+
+    public void canRefresh(boolean canrefresh)
+    {
+        mHeaderRefresh.setCanrfresh(canrefresh);
     }
 
     @Override
