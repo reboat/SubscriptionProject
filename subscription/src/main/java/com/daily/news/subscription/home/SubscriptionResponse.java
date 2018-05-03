@@ -18,6 +18,7 @@ public class SubscriptionResponse {
         public boolean has_subscribe;
         public List<Focus> focus_list;
         public List<ColumnResponse.DataBean.ColumnBean> recommend_list;
+        public List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list;
         public List<ArticleResponse.DataBean.Article> article_list;
     }
     public static class Focus implements Parcelable {

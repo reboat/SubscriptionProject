@@ -214,7 +214,7 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null) {
+        if(data != null && fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }

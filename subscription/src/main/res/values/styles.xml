@@ -37,6 +37,7 @@
         <item name="detail_column_title_color">@color/detail_column_title_color</item>
         <item name="detail_btn_text_color">@color/detail_btn_text_color_selector</item>
         <item name="detail_sub_btn">@drawable/detail_sub_btn</item>
+        <item name="detail_sub_btn_toolbar">@drawable/detail_sub_btn_toolbar</item>
         <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic</item>
         <item name="detail_column_info_color">@color/detail_column_info_color</item>
         <item name="subscription_search_icon">@drawable/subscription_search</item>
@@ -48,6 +49,7 @@
         <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout</item>
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
         <item name="module_sub_bg_tab_item_new">@drawable/module_sub_bg_tab_item_new</item>
+        <item name="module_sub_bg_tab_item_new_right">@drawable/module_sub_bg_tab_item_new_right</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab</item>
         <item name="module_sub_tc_tab_new">@color/module_sub_tab_new</item>
         <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
@@ -55,7 +57,7 @@
         <item name="cancel_color_ffffff_7a7b7d">#ffffff</item>
         <item name="module_news_ic_search">@drawable/module_news_ic_search</item>
         <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_cross</item>
-        <item name="module_sub_sl_tc_tab">@color/module_sub_sl_tc_tab</item>
+        <item name="detail_arrow_back">@drawable/detail_back_arrow</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -78,6 +80,7 @@
         <item name="detail_column_title_color">@color/detail_column_title_color_night</item>
         <item name="detail_btn_text_color">@color/detail_btn_text_color_selector_night</item>
         <item name="detail_sub_btn">@drawable/detail_sub_btn_night</item>
+        <item name="detail_sub_btn_toolbar">@drawable/detail_sub_btn_night</item>
         <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic_night</item>
         <item name="detail_column_info_color">@color/detail_column_info_color_night</item>
         <item name="subscription_search_icon">@drawable/subscription_search_night</item>
@@ -90,6 +93,7 @@
         <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout_night</item>
         <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
         <item name="module_sub_bg_tab_item_new">@drawable/module_sub_bg_tab_item_new_night</item>
+        <item name="module_sub_bg_tab_item_new_right">@drawable/module_sub_bg_tab_item_new_right_night</item>
         <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab_night</item>
         <item name="module_sub_tc_tab_new">@color/module_sub_tab_new_night</item>
         <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
@@ -100,6 +104,7 @@
         <item name="module_news_ic_search">@drawable/module_news_ic_search_night</item>
         <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_search_cross_night</item>
         <item name="module_sub_sl_tc_tab">@color/module_sub_sl_tc_tab_night</item>
+        <item name="detail_arrow_back">@drawable/detail_back_arrow_night</item>
     </style>
 
     <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">

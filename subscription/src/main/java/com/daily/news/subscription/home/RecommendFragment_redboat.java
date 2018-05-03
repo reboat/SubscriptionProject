@@ -48,6 +48,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     private static final String TAG_INITIALIZE_RESOURCE = "initialize_resource";
 
     private static final String COLUMN_DATA = "column_data";
+    private static final String COLUMN_DATA_REDBOAT = "column_data_redboat";
     private static final String FOCUS_DATA = "focus_data";
     @BindView(R2.id.no_subscription_more_view)
     LinearLayout noSubscriptionMoreView;
@@ -58,12 +59,16 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     @BindView(R2.id.tab_my_sub)
     FrameLayout tabMySub;
     private SubscriptionContract.Presenter mPresenter;
+    private ColumnPresenter mColumnresenter;
     private ColumnFragment mColumnFragment;
     private View mHeaderBanner;
     private int firstItemPosition = 0;
 
     FrameLayout tabRedSub_bar;
     FrameLayout tabMySub_bar;
+
+
+    boolean isRedboatChecked = true;
 
     public RecommendFragment_redboat() {
     }
@@ -72,10 +77,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_redboat, container, false);
         ButterKnife.bind(this, rootView);
         mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
-        new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
+        isRedboatChecked = getArguments().getBoolean("isRedboatChecked");
+        mColumnresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(isRedboatChecked ? COLUMN_DATA_REDBOAT : COLUMN_DATA)));
+
         mColumnFragment.setRefreshListener(this);
         setScrollListener();
 
@@ -85,7 +92,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             mColumnFragment.addHeaderView(mHeaderBanner);
         }
         mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
-        onViewClicked(tabRedSub);
+        onViewClicked(isRedboatChecked ? tabRedSub : tabMySub);
         return rootView;
     }
 
@@ -165,7 +172,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         super.onActivityCreated(savedInstanceState);
     }
 
-    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
+    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked) {
         RecommendFragment_redboat fragment = new RecommendFragment_redboat();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
@@ -174,10 +181,16 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         if (recommend_list != null && recommend_list.size() > 0) {
             recommend_list.removeAll(Collections.singleton(null));
         }
+        if (redboat_recommend_list != null && redboat_recommend_list.size() > 0) {
+            redboat_recommend_list.removeAll(Collections.singleton(null));
+        }
+
 
         Bundle args = new Bundle();
         args.putParcelableArrayList(RecommendFragment_redboat.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
+        args.putParcelableArrayList(RecommendFragment_redboat.COLUMN_DATA_REDBOAT, (ArrayList<? extends Parcelable>) redboat_recommend_list);
         args.putParcelableArrayList(RecommendFragment_redboat.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
+        args.putBoolean("isRedboatChecked", isRedboatChecked);
         fragment.setArguments(args);
         return fragment;
     }
@@ -221,7 +234,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         }
     }
@@ -255,11 +268,11 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 //                    int lastItemPosition = linearManager.findLastVisibleItemPosition();
                     //获取第一个可见view的位置
                     firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                        if (firstItemPosition < 2) {
-                            headerRel.setVisibility(View.GONE);
-                        } else {
-                            headerRel.setVisibility(View.VISIBLE);
-                        }
+                    if (firstItemPosition < 2) {
+                        headerRel.setVisibility(View.GONE);
+                    } else {
+                        headerRel.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -271,11 +284,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     }
 
 
-
     @OnClick({R2.id.tab_red_sub, R2.id.tab_my_sub, R2.id.no_subscription_more_view})
     public void onViewClicked(View view) {
 
         if (view.getId() == R.id.tab_red_sub) {
+            isRedboatChecked = true;
+            mColumnresenter.refreshData(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA_REDBOAT));
             tabRedSub.setSelected(true);
             tabRedSub_bar.setSelected(true);
             tabMySub.setSelected(false);
@@ -283,6 +297,8 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
         }
         if (view.getId() == R.id.tab_my_sub) {
+            isRedboatChecked = false;
+            mColumnresenter.refreshData(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA));
             tabMySub.setSelected(true);
             tabMySub_bar.setSelected(true);
             tabRedSub.setSelected(false);

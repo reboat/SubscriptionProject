@@ -124,19 +124,19 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
 
                     //展开状态
                     mArticleFragment.canRefresh(true);
-                    toolbarRel.setVisibility(View.INVISIBLE);
+                    toolbar.setVisibility(View.GONE);
 
                 } else if (state == State.COLLAPSED) {
 
                     //折叠状态
                     mArticleFragment.canRefresh(false);
-                    toolbarRel.setVisibility(View.VISIBLE);
+                    toolbar.setVisibility(View.VISIBLE);
 
                 } else {
 
                     //中间状态
                     mArticleFragment.canRefresh(false);
-                    toolbarRel.setVisibility(View.INVISIBLE);
+                    toolbar.setVisibility(View.GONE);
 
                 }
 

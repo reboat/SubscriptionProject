@@ -16,6 +16,7 @@
         <attr name="detail_column_title_color" format="reference" />
         <attr name="detail_btn_text_color" format="reference" />
         <attr name="detail_sub_btn" format="reference" />
+        <attr name="detail_sub_btn_toolbar" format="reference" />
         <attr name="detail_sub_left_pic" format="reference" />
         <attr name="detail_btn_text_color_selector" format="reference" />
         <attr name="subscription_search_icon" format="reference" />
@@ -29,6 +30,7 @@
         <attr name="module_sub_bg_tab_layout" format="color|reference" />
         <attr name="module_sub_bg_tab_item" format="color|reference" />
         <attr name="module_sub_bg_tab_item_new" format="color|reference" />
+        <attr name="module_sub_bg_tab_item_new_right" format="color|reference" />
         <attr name="module_news_color_999999_484848" format="color|reference" />
         <attr name="cancel_color_ffffff_7a7b7d" format="color|reference" />
 
@@ -36,5 +38,7 @@
         <attr name="module_sub_ic_search_cross" format="reference" />
 
         <attr name="module_sub_sl_tc_tab" format="reference" />
+
+        <attr name="detail_arrow_back" format="reference" />
     </declare-styleable>
 </resources>

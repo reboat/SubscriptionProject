@@ -60,55 +60,7 @@
                 android:src="?attr/subscription_arrow" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="184dp"
-            android:layout_height="32dp"
-            android:layout_below="@+id/recommend_header_title1"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="?attr/module_sub_bg_tab_layout"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            >
 
-            <FrameLayout
-                android:id="@+id/tab_red_sub"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/module_sub_bg_tab_item_new">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:text="红船号"
-                    android:textColor="?attr/module_sub_tc_tab_new"
-                    android:textSize="@dimen/ts_15sp" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/tab_my_sub"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/module_sub_bg_tab_item_new">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:text="栏目号"
-                    android:textColor="?attr/module_sub_tc_tab_new"
-                    android:textSize="@dimen/ts_15sp" />
-
-            </FrameLayout>
-
-        </LinearLayout>
 
 
 

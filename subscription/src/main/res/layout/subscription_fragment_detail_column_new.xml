@@ -57,7 +57,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="40dp"
-                    android:src="@drawable/default_back_arrow" />
+                    android:src="@drawable/default_back_arrow"
+                    />
 
                 <RelativeLayout
                     android:id="@+id/detail_column_header"
@@ -155,23 +156,25 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
+
                 <RelativeLayout
                     android:id="@+id/toolbar_rel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    >
                     <ImageView
                         android:id="@+id/toolbar_detail_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/detail_back_arrow" />
+                        android:src="?attr/detail_arrow_back" />
 
                     <TextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="栏目号"
-                        android:textColor="@color/tc_000000"
+                        android:textColor="?attr/tc_000000"
                         android:textSize="19sp"
                         android:layout_centerInParent="true"
 
@@ -183,29 +186,29 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:background="?attr/detail_sub_btn"
+                        android:layout_marginRight="11.5dp"
+                        android:background="?attr/detail_sub_btn_toolbar"
                         android:gravity="center"
-                        android:minWidth="75dp"
+                        android:minWidth="47dp"
                         android:orientation="horizontal"
-                        android:paddingLeft="8.5dp"
-                        android:paddingRight="8.5dp"
+                        android:paddingLeft="9dp"
+                        android:paddingRight="9dp"
                         >
 
                         <View
                             android:id="@+id/toolbar_subscribe_icon"
-                            android:layout_width="13.5dp"
-                            android:layout_height="13.5dp"
+                            android:layout_width="7.5dp"
+                            android:layout_height="7.5dp"
                             android:background="?attr/detail_sub_left_pic" />
 
                         <TextView
                             android:id="@+id/toolbar_detail_column_sub_btn"
                             android:layout_width="wrap_content"
-                            android:layout_height="35dp"
+                            android:layout_height="21dp"
                             android:layout_marginLeft="2dp"
                             android:gravity="center"
                             android:textColor="?attr/detail_btn_text_color"
-                            android:textSize="14sp"
+                            android:textSize="10sp"
                             tools:text="已订阅" />
                     </LinearLayout>
 
@@ -218,6 +221,13 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <include
+        android:id="@+id/detail_empty_error_container"
+        layout="@layout/subscription_detail_empty_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <fragment
         android:id="@+id/detail_article_fragment"
         android:name="com.daily.news.subscription.detail.DetailArticleFragment"
@@ -228,12 +238,5 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
         />
-
-    <include
-        android:id="@+id/detail_empty_error_container"
-        layout="@layout/subscription_detail_empty_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>
