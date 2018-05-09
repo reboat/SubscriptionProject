@@ -119,7 +119,6 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                Log.e("STATE", state.name());
                 if (state == State.EXPANDED) {
 
                     //展开状态

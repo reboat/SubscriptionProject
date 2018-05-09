@@ -295,6 +295,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabMySub.setSelected(false);
             tabMySub_bar.setSelected(false);
 
+            new AnalyticsBuilder(getContext(), "500008", "500008")
+                    .setPageType("订阅首页")
+                    .setEvenName("点击\"红船号\"tab")
+                    .build()
+                    .send();
+
         }
         if (view.getId() == R.id.tab_my_sub) {
             isRedboatChecked = false;
@@ -303,6 +309,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabMySub_bar.setSelected(true);
             tabRedSub.setSelected(false);
             tabRedSub_bar.setSelected(false);
+
+            new AnalyticsBuilder(getContext(), "500009", "500009")
+                    .setPageType("订阅首页")
+                    .setEvenName("点击\"栏目号\"tab")
+                    .build()
+                    .send();
         }
         if (view.getId() == R.id.no_subscription_more_view) {
             //判断红船号开关，如果没有开关数据，默认是关闭的
