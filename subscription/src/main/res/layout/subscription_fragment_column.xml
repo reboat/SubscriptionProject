@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:text="暂无栏目上线\n敬请期待"
             android:textColor="?attr/tc_484848"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 
