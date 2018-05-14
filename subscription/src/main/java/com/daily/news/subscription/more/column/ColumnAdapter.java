@@ -31,15 +31,11 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
 
     public ColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columnBeen) {
         super(columnBeen);
-        if (columnBeen == null || columnBeen.size() == 0)
-            mColumnBeen = new ArrayList<>();
-        else
-            mColumnBeen = columnBeen;
+        mColumnBeen = columnBeen;
     }
 
     public void updateValues(List<ColumnResponse.DataBean.ColumnBean> columnsBeens) {
         mColumnBeen.clear();
-        if(columnsBeens != null)
         mColumnBeen.addAll(columnsBeens);
     }
 
