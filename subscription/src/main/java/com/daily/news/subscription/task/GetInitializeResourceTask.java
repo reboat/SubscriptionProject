@@ -10,6 +10,7 @@ import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.StringUtils;
 
 
 /**
@@ -59,7 +60,7 @@ public class GetInitializeResourceTask extends APIGetTask<ResourceBiz> {
                         if(bean.name.equals("hch"))
                         {
                             i = 1;
-                            if(bean.enabled)
+                            if(bean.enabled && !StringUtils.isEmpty(bean.desc))
                             {
                                 Nav.with(mFragment).to("http://www.8531.cn/subscription/more_new");
                             }
