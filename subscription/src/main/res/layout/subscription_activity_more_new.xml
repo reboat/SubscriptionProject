@@ -51,7 +51,7 @@
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:text="红船号测试一下"
+                    android:text="红船号"
                     android:textColor="?attr/module_sub_tc_tab"
                     android:textSize="@dimen/ts_15sp"
                     android:maxLines="1"
