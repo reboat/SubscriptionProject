@@ -4,19 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.category.CategoryFragment;
 import com.daily.news.subscription.more.category.CategoryRedFragment;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.biz.ResourceBiz;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 
 import java.util.ArrayList;
@@ -57,14 +58,13 @@ public class MoreActivity_new extends BaseActivity {
     ViewPager moreContainer;
 
 
-
-
     List<Fragment> fragmentList = new ArrayList<>();
     CategoryRedFragment red_fragment;
     CategoryFragment sub_fragment;
 
     Unbinder unbinder;
-
+    @BindView(R2.id.tab_red_sub_txt)
+    TextView tabRedSubTxt;
 
 
     @Override
@@ -73,6 +73,8 @@ public class MoreActivity_new extends BaseActivity {
         setContentView(R.layout.subscription_activity_more_new);
 
         unbinder = ButterKnife.bind(this);
+
+        initView();
 
         red_fragment = new CategoryRedFragment();
         sub_fragment = new CategoryFragment();
@@ -89,7 +91,7 @@ public class MoreActivity_new extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                onViewClicked(position == 0? tabRedSub : tabMySub);
+                onViewClicked(position == 0 ? tabRedSub : tabMySub);
             }
 
             @Override
@@ -100,6 +102,27 @@ public class MoreActivity_new extends BaseActivity {
 
         onViewClicked(tabRedSub);
 
+    }
+
+    //动态获取tab的名字，最长4个字符
+    private void initView() {
+        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        if (biz != null && biz.feature_list != null) {
+            for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
+                if (bean.name.equals("hch")) {
+                    String text = bean.desc;
+                    if (text != null && text != "") {
+
+                        if(text.length() > 4)
+                        {
+                            text = text.substring(0, 4) + "...";
+                        }
+                        tabRedSubTxt.setText(text);
+                    }
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -130,7 +153,7 @@ public class MoreActivity_new extends BaseActivity {
                     .buildUpon()
                     .appendQueryParameter("type", "more_new")
                     .build()
-                    .toString(),REQUEST_CODE_TO_DETAIL);
+                    .toString(), REQUEST_CODE_TO_DETAIL);
 
         }
 
@@ -139,13 +162,12 @@ public class MoreActivity_new extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null) {
+        if (data != null) {
             red_fragment.onActivityResult(requestCode, resultCode, data);
             sub_fragment.onActivityResult(requestCode, resultCode, data);
         }
 
     }
-
 
 
     @Override
