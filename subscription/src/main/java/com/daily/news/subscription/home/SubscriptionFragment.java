@@ -130,36 +130,32 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
 
-        //根据缓存中的红船号开关判断跳到哪个页面
-        ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-        if (resourceBiz != null && resourceBiz.feature_list != null) {
-            int i = 0;
-            for(ResourceBiz.FeatureListBean bean : resourceBiz.feature_list)
-            {
-                if(bean.name.equals("hch"))
-                {
-                    i = 1;
-                    if(bean.enabled)
-                    {
-                        fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
-                    }
-                    else
-                    {
-                        fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
-                    }
-                    break;
-                }
-            }
-            if(i == 0)
-            {
-                fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
-            }
-        }
-        else
-        {
+        if (subscriptionResponse.has_subscribe) {
             fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
-        }
+        } else {
+            //根据缓存中的红船号开关判断跳到哪个页面
+            ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+            if (resourceBiz != null && resourceBiz.feature_list != null) {
+                int i = 0;
+                for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
+                    if (bean.name.equals("hch")) {
+                        i = 1;
+                        if (bean.enabled) {
+                            fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
+                        } else {
+                            fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+                        }
+                        break;
+                    }
+                }
+                if (i == 0) {
+                    fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+                }
+            } else {
+                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+            }
 
+        }
 
         //根据返回数据中是否有红船号内容判断跳到哪个页面
 //        if (subscriptionResponse.has_subscribe) {

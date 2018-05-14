@@ -14,6 +14,7 @@ import com.daily.news.subscription.R2;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,18 +31,22 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
 
     public ColumnAdapter(List<ColumnResponse.DataBean.ColumnBean> columnBeen) {
         super(columnBeen);
-        mColumnBeen = columnBeen;
+        if (columnBeen == null || columnBeen.size() == 0)
+            mColumnBeen = new ArrayList<>();
+        else
+            mColumnBeen = columnBeen;
     }
 
     public void updateValues(List<ColumnResponse.DataBean.ColumnBean> columnsBeens) {
         mColumnBeen.clear();
+        if(columnsBeens != null)
         mColumnBeen.addAll(columnsBeens);
     }
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.subscription_item_column, parent, false);
-        return new ColumnViewHolder(itemView,mOnSubscribeListener);
+        return new ColumnViewHolder(itemView, mOnSubscribeListener);
     }
 
 
@@ -82,7 +87,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
             }
         }
 
-        public void hidePadingView(){
+        public void hidePadingView() {
             mPaddingView.setVisibility(View.GONE);
         }
 
