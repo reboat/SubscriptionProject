@@ -80,11 +80,11 @@
                 android:background="?attr/module_sub_bg_tab_item_new">
 
                 <TextView
+                    android:id="@+id/tab_red_sub_txt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:text="红船号"
                     android:textColor="?attr/module_sub_tc_tab_new"
                     android:textSize="@dimen/ts_15sp" />
 

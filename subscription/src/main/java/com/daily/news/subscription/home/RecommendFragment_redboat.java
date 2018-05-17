@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -23,6 +24,8 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.biz.ResourceBiz;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.daily.news.bean.FocusBean;
@@ -56,6 +59,8 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     FrameLayout tabRedSub;
     @BindView(R2.id.tab_my_sub)
     FrameLayout tabMySub;
+    @BindView(R2.id.tab_red_sub_txt)
+    TextView tabRedSubTxt;
     private SubscriptionContract.Presenter mPresenter;
     private ColumnPresenter mColumnresenter;
     private ColumnFragment mColumnFragment;
@@ -68,6 +73,8 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
     boolean isRedboatChecked = true;
 
+    String redTitle;
+
     public RecommendFragment_redboat() {
     }
 
@@ -77,6 +84,9 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_redboat, container, false);
         ButterKnife.bind(this, rootView);
+
+        initTitle();
+        tabRedSubTxt.setText(redTitle);
         mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         isRedboatChecked = getArguments().getBoolean("isRedboatChecked");
         mColumnresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(isRedboatChecked ? COLUMN_DATA_REDBOAT : COLUMN_DATA)));
@@ -92,6 +102,26 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         mColumnFragment.addHeaderView(setupMoreSubscriptionView(inflater, container));
         onViewClicked(isRedboatChecked ? tabRedSub : tabMySub);
         return rootView;
+    }
+
+    private void initTitle() {
+        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        if (biz != null && biz.feature_list != null) {
+            for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
+                if (bean.name.equals("hch")) {
+                    redTitle = bean.desc;
+                    if (redTitle != null && redTitle != "") {
+
+                        if(redTitle.length() > 4)
+                        {
+                            redTitle = redTitle.substring(0, 4) + "...";
+                        }
+
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
@@ -147,6 +177,8 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         });
         tabRedSub_bar = (FrameLayout) moreHeaderView.findViewById(R.id.tab_red_sub_bar);
         tabRedSub_bar.setSelected(true);
+        TextView bartitle = (TextView) moreHeaderView.findViewById(R.id.tab_red_sub_bar_txt);
+        bartitle.setText(redTitle);
         tabRedSub_bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +213,16 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         }
         if (redboat_recommend_list != null && redboat_recommend_list.size() > 0) {
             redboat_recommend_list.removeAll(Collections.singleton(null));
+        }
+        if(recommend_list == null)
+        {
+            recommend_list = new ArrayList<>();
+        }
+
+
+        if(redboat_recommend_list == null)
+        {
+            redboat_recommend_list = new ArrayList<>();
         }
 
 

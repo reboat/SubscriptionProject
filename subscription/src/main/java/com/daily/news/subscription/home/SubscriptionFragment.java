@@ -140,7 +140,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                 for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
                     if (bean.name.equals("hch")) {
                         i = 1;
-                        if (bean.enabled) {
+                        if (bean.enabled && bean.desc != null && bean.desc != "") {
                             fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
                         } else {
                             fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
