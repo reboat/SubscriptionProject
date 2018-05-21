@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.RedboatUtils;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 
 import butterknife.BindView;
@@ -57,13 +59,10 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         Intent intent = getIntent();
         Uri data = intent.getData();
         type = data.getQueryParameter("type");
-        if(type != null && type.equals("more_new"))
-        {
-            etInput.setHint("搜索红船号、栏目号");
+        if (type != null && type.equals("more_new") && !StringUtils.isEmpty(RedboatUtils.getRedboatTitle())) {
+            etInput.setHint("搜索" + RedboatUtils.getRedboatTitle() + "、栏目号");
 
-        }
-        else if(type != null && type.equals("more"))
-        {
+        } else {
             etInput.setHint("搜索栏目号");
         }
     }
@@ -123,6 +122,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
                 .send();
         UIUtils.hideSoftInput(etInput);
     }
+
     private boolean checkValid(String keyword) {
         if (TextUtils.isEmpty(keyword)) {
             Toast.makeText(this, "请输入查询内容!", Toast.LENGTH_SHORT).show();
@@ -134,13 +134,10 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
 
     @OnClick({R2.id.iv_cross, R2.id.tv_cancel})
     public void onViewClicked(View view) {
-        if(view.getId() == R.id.iv_cross)
-        {
+        if (view.getId() == R.id.iv_cross) {
 
             etInput.setText("");
-        }
-        else if(view.getId() == R.id.tv_cancel)
-        {
+        } else if (view.getId() == R.id.tv_cancel) {
             UIUtils.hideSoftInput(etInput); // 手动隐藏软键盘
             finish();
         }
