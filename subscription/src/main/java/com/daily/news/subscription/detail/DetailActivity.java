@@ -16,13 +16,21 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_activity_detail);
 
+        String id = "";
         Intent intent = getIntent();
-        Uri data = intent.getData();
-        String id = data.getQueryParameter("id");
-        Log.e("TAG",id);
+
+        Bundle bundle = intent.getExtras();
+        if(bundle != null)
+        {
+            id = bundle.getString("id");
+        }else {
+
+            Uri data = intent.getData();
+            id = data.getQueryParameter("id");
+        }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment_new detailFragment = DetailFragment_new.newInstance(data.getQueryParameter("id"));
+        DetailFragment_new detailFragment = DetailFragment_new.newInstance(id);
 //        DetailFragment detailFragment = DetailFragment.newInstance(data.getQueryParameter("id"));
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
