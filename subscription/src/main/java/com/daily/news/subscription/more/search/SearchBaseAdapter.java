@@ -11,8 +11,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.RedboatUtils;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.utils.StringUtils;
 
 import java.util.List;
 
@@ -107,9 +109,9 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
 
             final SearchResponse.DataBean.ColumnBean column = getData();
-            if(firstId == column.id)
+            if(firstId == column.id && !StringUtils.isEmpty(RedboatUtils.getRedboatTitle()))
             {
-                searchTitle.setText("红船号");
+                searchTitle.setText(RedboatUtils.getRedboatTitle());
                 searchTitle.setVisibility(View.VISIBLE);
             }else if(secondId == column.id)
             {
