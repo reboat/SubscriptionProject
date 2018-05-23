@@ -28,12 +28,15 @@ import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -361,9 +364,13 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "500002", "500002")
                     .setPageType("订阅首页")
-                    .setEvenName("点击订阅更多")
+                    .setEvenName("点击\"订阅更多\"")
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }

@@ -26,6 +26,10 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.JsonUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -176,12 +180,15 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         modifySubscribeBtnState(!mDetailColumn.subscribed);
 
         if (mDetailColumn.subscribed) {
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114")
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
                     .setEvenName("“取消订阅”栏目")
                     .setPageType("栏目详情页")
-                    .setObjectType(ObjectType.NewsType)
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }
@@ -196,12 +203,15 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         getActivity().setResult(Activity.RESULT_OK,intent);
 
         if (bean.subscribed) {
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
-                    .setObjectType(ObjectType.NewsType)
                     .setPageType("栏目详情页")
                     .setEvenName("“订阅”栏目")
+                    .setOtherInfo(otherInfoStr)
                     .build()
                     .send();
         }
