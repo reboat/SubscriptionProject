@@ -175,7 +175,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-        getActivity().setResult(Activity.RESULT_OK,intent);
+//        getActivity().setResult(Activity.RESULT_OK,intent);
     }
 
     protected boolean isHasSubscribe() {
@@ -307,10 +307,10 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
                 if (id == getItem(i).id) {
                     getItem(i).subscribed = subscribe;
                     getColumnAdapter().notifyItemChanged(i);
-                    Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-                    intent.putExtra(Constants.Name.SUBSCRIBE, subscribe);
-                    intent.putExtra(Constants.Name.ID, id);
-                    getActivity().setResult(Activity.RESULT_OK,intent);
+//                    Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
+//                    intent.putExtra(Constants.Name.SUBSCRIBE, subscribe);
+//                    intent.putExtra(Constants.Name.ID, id);
+//                    getActivity().setResult(Activity.RESULT_OK,intent);
                     break;
                 }
             }

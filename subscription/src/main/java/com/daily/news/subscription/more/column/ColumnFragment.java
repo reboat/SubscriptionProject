@@ -1,6 +1,9 @@
 package com.daily.news.subscription.more.column;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,6 +33,26 @@ import butterknife.ButterKnife;
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
 
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                long id = intent.getLongExtra(Constants.Name.ID, 0);
+                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+
+                for (int i = 0; i < mColumns.size(); i++) {
+                    if(mColumns.get(i).id == id)
+                    {
+                        mColumns.get(i).subscribed = subscribe;
+                        getColumnAdapter().notifyItemChanged(i);
+                    }
+                }
+
+
+            }
+        }
+    };
+
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
     List<ColumnResponse.DataBean.ColumnBean> mColumns;
@@ -43,6 +66,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     private HeaderRefresh mHeaderRefresh;
 
     public ColumnFragment() {
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
     @Override
@@ -85,8 +109,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     }
 
-    public void setOnScrollListener(RecyclerView.OnScrollListener listener)
-    {
+    public void setOnScrollListener(RecyclerView.OnScrollListener listener) {
         mRecyclerView.addOnScrollListener(listener);
     }
 
@@ -109,6 +132,8 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
+        intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
+        intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
@@ -213,6 +238,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void onDestroyView() {
         mPresenter.unsubscribe();
         super.onDestroyView();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     public RecyclerView getRecyclerView() {
@@ -231,8 +257,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         }
     }
 
-    public void canRefresh(boolean canrefresh)
-    {
+    public void canRefresh(boolean canrefresh) {
         mHeaderRefresh.setCanrfresh(canrefresh);
     }
 

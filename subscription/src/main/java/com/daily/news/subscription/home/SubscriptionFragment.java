@@ -19,7 +19,6 @@ import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 
@@ -128,11 +127,57 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     }
 
     @Override
-    public void updateValue(SubscriptionResponse.DataBean subscriptionResponse) {
+    public void updateValue(final SubscriptionResponse.DataBean subscriptionResponse) {
 
         if (subscriptionResponse.has_subscribe) {
             fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
         } else {
+
+//            GetInitializeResourceTask_home.cancelTask(new APICallBack<ResourceBiz>() {
+//
+//                @Override
+//                public void onSuccess(ResourceBiz resourceBiz) {
+//                    if (resourceBiz != null && resourceBiz.feature_list != null) {
+//                        int i = 0;
+//                        for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
+//                            if (bean.name.equals("hch")) {
+//                                i = 1;
+//                                if (bean.enabled && bean.desc != null && bean.desc != "") {
+//                                    fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
+//                                } else {
+//                                    fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//                                }
+//                                break;
+//                            }
+//                        }
+//                        if (i == 0) {
+//                            fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//                        }
+//                    } else {
+//                        fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//                    }
+//
+//                    getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+//
+//                }
+//
+//                @Override
+//                public void onError(String errMsg, int errCode) {
+//                    fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//                    getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+//                }
+//
+//                @Override
+//                public void onCancel() {
+//                    fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//                    getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+//                }
+//            });
+//
+//        }
+
+
+
             //根据缓存中的红船号开关判断跳到哪个页面
             ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
             if (resourceBiz != null && resourceBiz.feature_list != null) {
@@ -157,16 +202,16 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
         }
 
-        //根据返回数据中是否有红船号内容判断跳到哪个页面
-//        if (subscriptionResponse.has_subscribe) {
-//            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
-//        } else {
-//            if(subscriptionResponse.redboat_recommend_list != null && subscriptionResponse.redboat_recommend_list.size() > 0) {
-//                fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
-//            }else{
-//                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
-//            }
-//        }
+//        根据返回数据中是否有红船号内容判断跳到哪个页面
+        if (subscriptionResponse.has_subscribe) {
+            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
+        } else {
+            if(subscriptionResponse.redboat_recommend_list != null && subscriptionResponse.redboat_recommend_list.size() > 0) {
+                fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
+            }else{
+                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+            }
+        }
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
     }
 

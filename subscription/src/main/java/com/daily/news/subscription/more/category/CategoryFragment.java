@@ -1,11 +1,15 @@
 package com.daily.news.subscription.more.category;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.TypedValue;
@@ -16,7 +20,9 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 
@@ -30,6 +36,30 @@ import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
+
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                long id = intent.getLongExtra(Constants.Name.ID, 0);
+                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+
+                for(int i=0 ; i < mCategories.size() ; i++)
+                {
+                    for(int j=0 ; j< mCategories.get(i).columns.size() ; j++)
+                    {
+                        if(mCategories.get(i).columns.get(j).id == id)
+                        {
+                            mCategories.get(i).columns.get(j).subscribed = subscribe;
+                        }
+                    }
+                }
+
+
+            }
+        }
+    };
 
     private CategoryContract.Presenter mPresenter;
 
@@ -45,6 +75,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     public CategoryFragment() {
         new CategoryPresenter(this, new CategoryStore());
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
 
@@ -117,6 +148,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public void onDestroy() {
         super.onDestroy();
         mPresenter.unsubscribe();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
