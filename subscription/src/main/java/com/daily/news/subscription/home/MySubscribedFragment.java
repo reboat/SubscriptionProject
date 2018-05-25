@@ -22,6 +22,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.GuideView;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 
 import java.util.Collections;
@@ -192,13 +193,18 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         mArticleFragment.setRefreshing(false);
         FragmentManager fragmentManager = getFragmentManager();
 
-        if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
-            getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
-        } else if (dataBean.has_subscribe && fragmentManager != null) {
-            //解决切换用户的问题
+        if (dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+        } else if (!dataBean.has_subscribe && fragmentManager != null) {
+            //解决切换用户的问题
+            if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
+                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            } else {
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            }
         }
     }
 

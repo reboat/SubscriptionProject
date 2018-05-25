@@ -25,6 +25,7 @@ import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -193,8 +194,13 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
-            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
+                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            } else {
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            }
         }
     }
 

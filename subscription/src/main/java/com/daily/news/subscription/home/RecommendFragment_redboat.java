@@ -29,6 +29,7 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -277,8 +278,14 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked);
-            fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
+                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            } else {
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
+                fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
+            }
+
         }
     }
 
