@@ -16,6 +16,8 @@ public class SubscriptionResponse {
 
     public static class DataBean {
         public boolean has_subscribe;
+        public boolean hch_switch;
+        public String hch_name;
         public List<Focus> focus_list;
         public List<ColumnResponse.DataBean.ColumnBean> recommend_list;
         public List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list;
