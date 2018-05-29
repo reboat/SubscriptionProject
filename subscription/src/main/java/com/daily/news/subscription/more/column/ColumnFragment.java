@@ -44,7 +44,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                     if(mColumns.get(i).id == id)
                     {
                         mColumns.get(i).subscribed = subscribe;
-                        getColumnAdapter().notifyItemChanged(i);
+                        getColumnAdapter().notifyDataSetChanged();
                     }
                 }
 

@@ -19,7 +19,7 @@ public class DetailArticleFragment extends ArticleFragment {
             new Analytics.AnalyticsBuilder(getContext(),"200007","200007")
                     .setEvenName("新闻列表点击")
                     .setPageType("栏目详情页")
-                    .setObjectID(article.guid)
+                    .setObjectID(String.valueOf(article.guid))
                     .setObjectName(article.getList_title())
                     .setClassifyID(article.getColumn_id())
                     .setClassifyName(article.getColumn_name())

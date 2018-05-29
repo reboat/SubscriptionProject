@@ -1,8 +1,10 @@
 package com.daily.news.subscription.detail;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -88,8 +90,30 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     private ArticlePresenter mArticlePresenter;
 
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                long id = intent.getLongExtra(Constants.Name.ID, 0);
+                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+
+                if(String.valueOf(id).equals(mUid)) {
+                    String subscriptionText = subscribe ? "已订阅" : "订阅";
+                    mSubscriptionView.setText(subscriptionText);
+                    mSubscribeContainer.setSelected(subscribe);
+                    toolbarDetailColumnSubBtn.setText(subscriptionText);
+                    toolbarSubscribeContainer.setSelected(subscribe);
+                }
+
+
+            }
+        }
+    };
+
+
     public DetailFragment_new() {
         new DetailPresenter(this, new DetailStore());
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
     public static DetailFragment_new newInstance(String uid) {
@@ -298,6 +322,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
 
