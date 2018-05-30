@@ -221,12 +221,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/detail_empty_error_container"
-        layout="@layout/subscription_detail_empty_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+
 
     <fragment
         android:id="@+id/detail_article_fragment"
@@ -237,6 +232,13 @@
         android:layout="@layout/subscription_fragment_article"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
+        />
+    <include
+        android:id="@+id/detail_empty_error_container"
+        layout="@layout/subscription_detail_empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
         />
 
 </android.support.design.widget.CoordinatorLayout>

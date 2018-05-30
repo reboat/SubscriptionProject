@@ -16,7 +16,9 @@
         android:layout_alignParentTop="true"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
-        android:src="@drawable/detail_back_arrow"/>
+        android:src="@drawable/detail_back_arrow"
+        android:layout_marginTop="26dp"
+        />
 
     <View
         android:layout_below="@+id/detail_empty_back"

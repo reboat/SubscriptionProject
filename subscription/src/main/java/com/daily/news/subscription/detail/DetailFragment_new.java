@@ -35,6 +35,7 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.L;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -224,8 +225,9 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
                 mArticlePresenter.refreshData(data.elements);
             }
         } else if (response.code == CODE_ALREADY_OFF_THE_SHELF) {
-            main.setVisibility(View.GONE);
+            appbar.setVisibility(View.GONE);
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
+            L.e("栏目下线");
         }
     }
 
