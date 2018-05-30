@@ -56,7 +56,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
     @BindView(R2.id.main_content)
     CoordinatorLayout mainContent;
     private SubscriptionContract.Presenter mPresenter;
-    private ColumnFragment mColumnFragment;
+    private ColumnFragment_home mColumnFragment;
     private View mHeaderBanner;
 
     private HeaderRefresh mHeaderRefresh;
@@ -70,7 +70,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_new, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
+        mColumnFragment = (ColumnFragment_home) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(COLUMN_DATA)));
         mColumnFragment.setRefreshListener(this);
         mColumnFragment.canRefresh(false);

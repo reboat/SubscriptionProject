@@ -37,8 +37,8 @@ public  class RecommendViewHolder extends PageItem {
     @BindView(R2.id.more_container)
     ViewPager mMoreContainer;
 
-    private ColumnFragment redFragment;
-    private ColumnFragment myFragment;
+    private ColumnFragment_home redFragment;
+    private ColumnFragment_home myFragment;
     List<Fragment> fragmentList = new ArrayList<>();
 
 

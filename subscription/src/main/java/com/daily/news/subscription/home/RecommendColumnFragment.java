@@ -20,7 +20,7 @@ import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
  * Created by lixinke on 2017/9/26.
  */
 
-public class RecommendColumnFragment extends ColumnFragment {
+public class RecommendColumnFragment extends ColumnFragment_home {
 
     @BindView(R2.id.column_subscribe_success_notify)
     View mSucNotifyView;

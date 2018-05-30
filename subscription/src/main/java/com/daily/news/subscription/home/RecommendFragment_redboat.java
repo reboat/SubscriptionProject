@@ -67,7 +67,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     TextView tabRedSubTxt;
     private SubscriptionContract.Presenter mPresenter;
     private ColumnPresenter mColumnresenter;
-    private ColumnFragment mColumnFragment;
+    private ColumnFragment_home mColumnFragment;
     private View mHeaderBanner;
     private int firstItemPosition = 0;
 
@@ -91,7 +91,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
         initTitle();
         tabRedSubTxt.setText(redTitle);
-        mColumnFragment = (ColumnFragment) getChildFragmentManager().findFragmentById(R.id.column_fragment);
+        mColumnFragment = (ColumnFragment_home) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         isRedboatChecked = getArguments().getBoolean("isRedboatChecked");
         mColumnresenter = new ColumnPresenter(mColumnFragment, new LocalColumnStore(getArguments().<ColumnResponse.DataBean.ColumnBean>getParcelableArrayList(isRedboatChecked ? COLUMN_DATA_REDBOAT : COLUMN_DATA)));
 
