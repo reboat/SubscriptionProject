@@ -177,6 +177,9 @@
                         android:textColor="?attr/tc_000000"
                         android:textSize="19sp"
                         android:layout_centerInParent="true"
+                        android:lines="1"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
 
                         />
 

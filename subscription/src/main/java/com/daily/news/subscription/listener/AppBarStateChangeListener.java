@@ -2,6 +2,8 @@ package com.daily.news.subscription.listener;
 
 import android.support.design.widget.AppBarLayout;
 
+import com.zjrb.core.utils.L;
+
 /**
  * Created by gaoyangzhen on 2018/4/18.
  * AppBarLayout展开压缩监听类
@@ -19,6 +21,7 @@ public abstract class AppBarStateChangeListener implements AppBarLayout.OnOffset
 
     @Override
     public final void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+
         if (i == 0) {
             if (mCurrentState != State.EXPANDED) {
                 onStateChanged(appBarLayout, State.EXPANDED);
