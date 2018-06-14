@@ -199,7 +199,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true);
+                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
                 Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);

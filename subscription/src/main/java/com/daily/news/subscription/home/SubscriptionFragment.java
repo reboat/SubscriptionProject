@@ -135,7 +135,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         } else {
 
             if (subscriptionResponse.hch_switch && !StringUtils.isEmpty(subscriptionResponse.hch_name)) {
-                fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true);
+                fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
             } else {
                 fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
             }

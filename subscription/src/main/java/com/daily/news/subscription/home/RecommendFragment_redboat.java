@@ -89,7 +89,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         View rootView = inflater.inflate(R.layout.subscription_fragment_recommend_redboat, container, false);
         ButterKnife.bind(this, rootView);
 
-        initTitle();
+        initTitle(getArguments().getString("hch_name"));
         tabRedSubTxt.setText(redTitle);
         mColumnFragment = (ColumnFragment_home) getChildFragmentManager().findFragmentById(R.id.column_fragment);
         isRedboatChecked = getArguments().getBoolean("isRedboatChecked");
@@ -108,22 +108,33 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         return rootView;
     }
 
-    private void initTitle() {
-        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-        if (biz != null && biz.feature_list != null) {
-            for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
-                if (bean.name.equals("hch")) {
-                    redTitle = bean.desc;
-                    if (redTitle != null && redTitle != "") {
+    private void initTitle(String title) {
+        if (StringUtils.isEmpty(title)) {
+            ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+            if (biz != null && biz.feature_list != null) {
+                for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
+                    if (bean.name.equals("hch")) {
+                        redTitle = bean.desc;
+                        if (redTitle != null && redTitle != "") {
 
-                        if(redTitle.length() > 4)
-                        {
-                            redTitle = redTitle.substring(0, 4) + "...";
+                            if (redTitle.length() > 4) {
+                                redTitle = redTitle.substring(0, 4) + "...";
+                            }
+
                         }
-
+                        break;
                     }
-                    break;
                 }
+            }
+        }
+        else{
+            redTitle = title;
+            if (redTitle != null && redTitle != "") {
+
+                if (redTitle.length() > 4) {
+                    redTitle = redTitle.substring(0, 4) + "...";
+                }
+
             }
         }
     }
@@ -206,7 +217,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         super.onActivityCreated(savedInstanceState);
     }
 
-    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked) {
+    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked, String hch_name) {
         RecommendFragment_redboat fragment = new RecommendFragment_redboat();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
@@ -218,14 +229,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         if (redboat_recommend_list != null && redboat_recommend_list.size() > 0) {
             redboat_recommend_list.removeAll(Collections.singleton(null));
         }
-        if(recommend_list == null)
-        {
+        if (recommend_list == null) {
             recommend_list = new ArrayList<>();
         }
 
 
-        if(redboat_recommend_list == null)
-        {
+        if (redboat_recommend_list == null) {
             redboat_recommend_list = new ArrayList<>();
         }
 
@@ -235,6 +244,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         args.putParcelableArrayList(RecommendFragment_redboat.COLUMN_DATA_REDBOAT, (ArrayList<? extends Parcelable>) redboat_recommend_list);
         args.putParcelableArrayList(RecommendFragment_redboat.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         args.putBoolean("isRedboatChecked", isRedboatChecked);
+        args.putString("hch_name", hch_name);
         fragment.setArguments(args);
         return fragment;
     }
@@ -279,7 +289,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked);
+                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
                 Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
