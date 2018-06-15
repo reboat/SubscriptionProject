@@ -30,6 +30,7 @@ import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.StringUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -109,25 +110,6 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     }
 
     private void initTitle(String title) {
-        if (StringUtils.isEmpty(title)) {
-            ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-            if (biz != null && biz.feature_list != null) {
-                for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
-                    if (bean.name.equals("hch")) {
-                        redTitle = bean.desc;
-                        if (redTitle != null && redTitle != "") {
-
-                            if (redTitle.length() > 4) {
-                                redTitle = redTitle.substring(0, 4) + "...";
-                            }
-
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        else{
             redTitle = title;
             if (redTitle != null && redTitle != "") {
 
@@ -136,7 +118,6 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 }
 
             }
-        }
     }
 
     private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
@@ -378,18 +359,20 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         }
         if (view.getId() == R.id.no_subscription_more_view) {
             //判断红船号开关，如果没有开关数据，默认是关闭的
-            GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
+            if (!ClickTracker.isDoubleClick()) {
+                GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "500002", "500002")
-                    .setPageType("订阅首页")
-                    .setEvenName("点击\"订阅更多\"")
-                    .setOtherInfo(otherInfoStr)
-                    .build()
-                    .send();
+                Map<String, String> otherInfo = new HashMap<>();
+                otherInfo.put("customObjectType", "RelatedColumnType");
+                String otherInfoStr = JsonUtils.toJsonString(otherInfo);
+                new AnalyticsBuilder(getContext(), "500002", "500002")
+                        .setPageType("订阅首页")
+                        .setEvenName("点击\"订阅更多\"")
+                        .setOtherInfo(otherInfoStr)
+                        .build()
+                        .send();
+            }
         }
 
     }

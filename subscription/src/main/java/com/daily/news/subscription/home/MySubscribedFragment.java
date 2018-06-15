@@ -24,6 +24,7 @@ import com.zjrb.core.ui.widget.GuideView;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 
 import java.util.Collections;
 import java.util.List;
@@ -119,15 +120,17 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     @OnClick(R2.id.my_sub_more_btn)
     public void gotoMore() {
         //判断红船号开关，如果没有开关数据，默认是关闭的
-        GetInitializeResourceTask.createTask(this, TAG_INITIALIZE_RESOURCE);
+        if(!ClickTracker.isDoubleClick()) {
+            GetInitializeResourceTask.createTask(this, TAG_INITIALIZE_RESOURCE);
 //        ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
 
 //        Nav.with(this).to("http://www.8531.cn/subscription/more");
-        new AnalyticsBuilder(getContext(), "500007", "500007")
-                .setEvenName("点击“订阅更多”")
-                .setPageType("订阅首页")
-                .build()
-                .send();
+            new AnalyticsBuilder(getContext(), "500007", "500007")
+                    .setEvenName("点击“订阅更多”")
+                    .setPageType("订阅首页")
+                    .build()
+                    .send();
+        }
     }
 
 
