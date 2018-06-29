@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,13 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.FocusBean;
+import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
 import java.util.ArrayList;
@@ -105,8 +109,14 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
         HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
             @Override
             public void onItemClick(View item, int position) {
-                super.onItemClick(item, position);
+//                super.onItemClick(item, position);
+                if (ClickTracker.isDoubleClick()) return;
+
                 SubscriptionResponse.Focus focus = focuses.get(position);
+                if (!TextUtils.isEmpty(focus.doc_url)) {
+                    Nav.with(item.getContext()).to(focus.doc_url);
+                }
+
                 new Analytics.AnalyticsBuilder(getContext(), "200005", "200005")
                         .setClassifyID(String.valueOf(focus.channel_article_id))
                         .setPageType("订阅首页")

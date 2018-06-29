@@ -29,8 +29,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-//                txt.setLines(1);
-                txt.setText("分类测试测");
+                txt.setText("分类测试测" + " ");
 
             }
         });
