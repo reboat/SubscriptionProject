@@ -23,7 +23,8 @@ public class SubscriptionApplication extends Application {
         ThemeMode.initTheme(R.style.AppTheme, R.style.AppThemeNight);
         UiModeManager.init(this, R.styleable.SupportUiMode);
         ThemeMode.setUiMode(false);
-        AppUtils.setChannel("bianfeng");
+        AppUtils.setChannel("update");
+//        AppUtils.setChannel("bianfeng");
 
         AnalyticsManager.initAnalytics(this,"", null, null);
     }
