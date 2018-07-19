@@ -132,7 +132,7 @@ public class MoreActivity_new extends BaseActivity {
         if (view.getId() == R.id.tab_red_sub) {
             tabMySub.setSelected(false);
             moreContainer.setCurrentItem(0);
-            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500008", "500008")
+            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500008", "500008", "", false)
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"红船号\"tab")
                     .build()
@@ -140,7 +140,7 @@ public class MoreActivity_new extends BaseActivity {
         } else if (view.getId() == R.id.tab_my_sub) {
             tabRedSub.setSelected(false);
             moreContainer.setCurrentItem(1);
-            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500009", "500009")
+            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500009", "500009", "", false)
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"栏目号\"tab")
                     .build()

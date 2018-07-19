@@ -37,12 +37,16 @@ public class RecommendColumnFragment extends ColumnFragment_home {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "A0014", "A0014")
+            new AnalyticsBuilder(getContext(), "A0014", "A0014", "subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("订阅首页")
                     .setEvenName("点击\"订阅\"栏目")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅首页")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("订阅")
                     .build()
                     .send();
         }
@@ -54,12 +58,16 @@ public class RecommendColumnFragment extends ColumnFragment_home {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "A0114", "A0114")
+            new AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("点击“取消订阅”栏目")
                     .setPageType("订阅首页")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅首页")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("取消订阅")
                     .build()
                     .send();
         }
@@ -76,12 +84,15 @@ public class RecommendColumnFragment extends ColumnFragment_home {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "500003", "500003")
+            new AnalyticsBuilder(getContext(), "500003", "500003", "RecommendAreaClick", false)
                     .setEvenName("点击推荐栏目列表（头像+标题）")
                     .setPageType("订阅首页")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅首页")
+                    .recommendContentID(String.valueOf(bean.id))
+                    .recommendContentName(bean.name)
                     .build()
                     .send();
         }

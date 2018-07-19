@@ -26,6 +26,6 @@ public class SubscriptionApplication extends Application {
         AppUtils.setChannel("update");
 //        AppUtils.setChannel("bianfeng");
 
-        AnalyticsManager.initAnalytics(this,"", null, null);
+        AnalyticsManager.initAnalytics(this,"", null, null, null);
     }
 }

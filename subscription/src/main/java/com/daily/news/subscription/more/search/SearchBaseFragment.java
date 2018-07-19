@@ -331,12 +331,15 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003")
-                    .setEvenName("搜索页面")
-                    .setPageType("订阅更多页面")
+            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "toDetailColumn", false)
+                    .setEvenName("点击栏目条目（头像+标题）")
+                    .setPageType("搜索页面")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setOtherInfo(otherInfoStr)
+                    .pageType("搜索页面")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
                     .build()
                     .send();
         }

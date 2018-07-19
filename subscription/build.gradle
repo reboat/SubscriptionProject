@@ -50,7 +50,7 @@ dependencies {
     }
     compile 'cn.daily.android:daily-db:5.1.0'
     compile 'cn.daily.android:core-library:5.3.5.22-SNAPSHOT'
-    compile 'cn.daily.android:analytics:5.0.3.3-SNAPSHOT'
+    compile 'cn.daily.android:analytics:5.4.0.3-SNAPSHOT'
 //    compile project(':core')
     //compile project(':analytics')
 }

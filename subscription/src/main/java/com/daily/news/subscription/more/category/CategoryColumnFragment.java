@@ -76,12 +76,16 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014")
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("订阅更多页面")
                     .setEvenName("“订阅”栏目")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅更多页面")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("订阅")
                     .build()
                     .send();
         }
@@ -100,12 +104,15 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003")
+            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "toDetailColumn", false)
                     .setEvenName("点击栏目条目（头像+标题）")
                     .setPageType("订阅更多页面")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅更多页面")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
                     .build()
                     .send();
         }
@@ -117,12 +124,16 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114")
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("“取消订阅”栏目")
                     .setPageType("订阅更多页面")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("订阅更多页面")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("取消订阅")
                     .build()
                     .send();
         }

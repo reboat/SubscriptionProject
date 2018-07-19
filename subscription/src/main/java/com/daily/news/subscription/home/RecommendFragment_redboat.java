@@ -37,6 +37,9 @@ import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -149,12 +152,18 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 if (!TextUtils.isEmpty(focus.doc_url)) {
                     Nav.with(item.getContext()).to(focus.doc_url);
                 }
-                new AnalyticsBuilder(getContext(), "200005", "200005")
+
+                new AnalyticsBuilder(getContext(), "200005", "200005", "AppContentClick", false)
                         .setClassifyID(String.valueOf(focus.channel_article_id))
                         .setPageType("订阅首页")
                         .setEvenName("焦点图点击")
                         .setObjectName(focus.doc_title)
                         .setObjectType(ObjectType.NewsType)
+                        .selfNewsID(String.valueOf(focus.channel_article_id))
+                        .newsTitle(focus.doc_title)
+                        .pageType("订阅首页")
+                        .objectType("焦点图")
+                        .pubUrl(focus.doc_url)
                         .build()
                         .send();
             }
@@ -172,9 +181,11 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                new AnalyticsBuilder(getContext(), "500002", "500002")
+                new AnalyticsBuilder(getContext(), "500002", "500002", "appTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")
+                        .pageType("订阅首页")
+                        .clickTabName("订阅更多")
                         .build()
                         .send();
             }
@@ -344,7 +355,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabMySub.setSelected(false);
             tabMySub_bar.setSelected(false);
 
-            new AnalyticsBuilder(getContext(), "500008", "500008")
+            new AnalyticsBuilder(getContext(), "500008", "500008", "", false)
                     .setPageType("订阅首页")
                     .setEvenName("点击\"红船号\"tab")
                     .build()
@@ -359,7 +370,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabRedSub.setSelected(false);
             tabRedSub_bar.setSelected(false);
 
-            new AnalyticsBuilder(getContext(), "500009", "500009")
+            new AnalyticsBuilder(getContext(), "500009", "500009", "", false)
                     .setPageType("订阅首页")
                     .setEvenName("点击\"栏目号\"tab")
                     .build()
@@ -374,10 +385,12 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 Map<String, String> otherInfo = new HashMap<>();
                 otherInfo.put("customObjectType", "RelatedColumnType");
                 String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                new AnalyticsBuilder(getContext(), "500002", "500002")
+                new AnalyticsBuilder(getContext(), "500002", "500002", "appTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击\"订阅更多\"")
                         .setOtherInfo(otherInfoStr)
+                        .pageType("订阅首页")
+                        .clickTabName("订阅更多")
                         .build()
                         .send();
             }

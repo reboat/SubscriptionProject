@@ -257,12 +257,16 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         modifySubscribeBtnState(!mDetailColumn.subscribed);
 
         if (mDetailColumn.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114")
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
                     .setEvenName("“取消订阅”栏目")
                     .setPageType("栏目详情页")
                     .setObjectType(ObjectType.NewsType)
+                    .pageType("栏目详情页")
+                    .columnID(String.valueOf(mDetailColumn.id))
+                    .columnName(mDetailColumn.name)
+                    .operationType("订阅")
                     .build()
                     .send();
         }
@@ -277,12 +281,16 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         getActivity().setResult(Activity.RESULT_OK, intent);
 
         if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014")
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setObjectType(ObjectType.NewsType)
                     .setPageType("栏目详情页")
                     .setEvenName("“订阅”栏目")
+                    .pageType("栏目详情页")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("取消订阅")
                     .build()
                     .send();
         }

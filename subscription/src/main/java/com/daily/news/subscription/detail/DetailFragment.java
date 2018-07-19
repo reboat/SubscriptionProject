@@ -183,12 +183,16 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114")
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
                     .setEvenName("“取消订阅”栏目")
                     .setPageType("栏目详情页")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("栏目详情页")
+                    .columnID(String.valueOf(mDetailColumn.id))
+                    .columnName(mDetailColumn.name)
+                    .operationType("取消订阅")
                     .build()
                     .send();
         }
@@ -206,12 +210,16 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014")
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","subColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("栏目详情页")
                     .setEvenName("“订阅”栏目")
                     .setOtherInfo(otherInfoStr)
+                    .pageType("栏目详情页")
+                    .columnID(String.valueOf(bean.id))
+                    .columnName(bean.name)
+                    .operationType("订阅")
                     .build()
                     .send();
         }

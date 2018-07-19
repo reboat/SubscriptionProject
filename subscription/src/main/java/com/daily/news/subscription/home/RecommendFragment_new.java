@@ -29,6 +29,9 @@ import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -117,12 +120,17 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
                     Nav.with(item.getContext()).to(focus.doc_url);
                 }
 
-                new Analytics.AnalyticsBuilder(getContext(), "200005", "200005")
+                new Analytics.AnalyticsBuilder(getContext(), "200005", "200005", "AppContentClick", false)
                         .setClassifyID(String.valueOf(focus.channel_article_id))
                         .setPageType("订阅首页")
                         .setEvenName("焦点图点击")
                         .setObjectName(focus.doc_title)
                         .setObjectType(ObjectType.NewsType)
+                        .selfNewsID(String.valueOf(focus.channel_article_id))
+                        .newsTitle(focus.doc_title)
+                        .pageType("订阅首页")
+                        .objectType("焦点图")
+                        .pubUrl(focus.doc_url)
                         .build()
                         .send();
             }
@@ -143,10 +151,12 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
                 Map<String, String> otherInfo = new HashMap<>();
                 otherInfo.put("customObjectType", "RelatedColumnType");
                 String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002")
+                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002","appTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击\"订阅更多\"")
                         .setOtherInfo(otherInfoStr)
+                        .pageType("订阅首页")
+                        .clickTabName("订阅更多")
                         .build()
                         .send();
             }

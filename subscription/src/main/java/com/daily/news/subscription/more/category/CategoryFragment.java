@@ -190,6 +190,23 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                         return;
                     }
 
+                    Map<String, String> otherInfo = new HashMap<>();
+                    otherInfo.put("customObjectType", "RelatedClassType");
+                    String otherInfoStr = JsonUtils.toJsonString(otherInfo);
+                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005", "classNavigationSwitch", false)
+                            .setEvenName("点击栏目分类")
+                            .setPageType("订阅更多页面")
+                            .setObjectID(String.valueOf(category.class_id))
+                            .setObjectName(category.class_name)
+                            .setOtherInfo(otherInfoStr)
+                            .pageType("订阅更多页面")
+                            .classID(String.valueOf(category.class_id))
+                            .className(category.class_name)
+                            .referClassID(String.valueOf(mValues.get(mCurPosition).class_id))
+                            .referClassName(mValues.get(mCurPosition).class_name)
+                            .build()
+                            .send();
+
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
@@ -202,18 +219,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     mValues.get(mCurPosition).is_selected = false;
                     notifyItemChanged(mCurPosition);
                     mCurPosition = position;
-
-                    Map<String, String> otherInfo = new HashMap<>();
-                    otherInfo.put("customObjectType", "RelatedClassType");
-                    String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005")
-                            .setEvenName("点击栏目分类")
-                            .setPageType("订阅更多页面")
-                            .setObjectID(String.valueOf(category.class_id))
-                            .setObjectName(category.class_name)
-                            .setOtherInfo(otherInfoStr)
-                            .build()
-                            .send();
                 }
             });
         }
