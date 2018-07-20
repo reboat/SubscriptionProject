@@ -76,7 +76,7 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","subColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("订阅更多页面")
@@ -104,7 +104,7 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "toDetailColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "ToDetailColumn", false)
                     .setEvenName("点击栏目条目（头像+标题）")
                     .setPageType("订阅更多页面")
                     .setObjectID(String.valueOf(bean.id))
@@ -124,7 +124,7 @@ public class CategoryColumnFragment extends ColumnFragment {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("“取消订阅”栏目")

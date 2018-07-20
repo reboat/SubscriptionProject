@@ -112,7 +112,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     @OnClick(R2.id.my_sub_btn)
     public void gotoMySubscription() {
         Nav.with(this).to("http://www.8531.cn/subscription/more/my/column", REQUEST_CODE_MY);
-        new AnalyticsBuilder(getContext(), "500006", "500006", "appTabClick", false)
+        new AnalyticsBuilder(getContext(), "500006", "500006", "AppTabClick", false)
                 .setEvenName("点击“我的订阅”")
                 .setPageType("订阅首页")
                 .pageType("订阅首页")
@@ -130,7 +130,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 //        ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
 
 //        Nav.with(this).to("http://www.8531.cn/subscription/more");
-            new AnalyticsBuilder(getContext(), "500007", "500007", "appTabClick", false)
+            new AnalyticsBuilder(getContext(), "500007", "500007", "AppTabClick", false)
                     .setEvenName("点击“订阅更多”")
                     .setPageType("订阅首页")
                     .pageType("订阅首页")
@@ -176,8 +176,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     @Override
     public void onResume() {
         super.onResume();
-        JSONObject jsonObject = new JSONObject();
-        mAnalytics = new AnalyticsBuilder(getContext(), "A0010", "500001", "subPageStay", true)
+        mAnalytics = new AnalyticsBuilder(getContext(), "A0010", "500001", "SubPageStay", true)
                 .setEvenName("页面停留时长")
                 .setPageType("订阅首页")
                 .pageType("订阅首页")

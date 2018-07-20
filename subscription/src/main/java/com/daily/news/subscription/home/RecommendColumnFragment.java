@@ -37,7 +37,7 @@ public class RecommendColumnFragment extends ColumnFragment_home {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "A0014", "A0014", "subColumn", false)
+            new AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("订阅首页")
@@ -58,7 +58,7 @@ public class RecommendColumnFragment extends ColumnFragment_home {
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
+            new AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName("点击“取消订阅”栏目")

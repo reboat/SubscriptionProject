@@ -151,7 +151,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
                 Map<String, String> otherInfo = new HashMap<>();
                 otherInfo.put("customObjectType", "RelatedColumnType");
                 String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002","appTabClick", false)
+                new Analytics.AnalyticsBuilder(getContext(), "500002", "500002","AppTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击\"订阅更多\"")
                         .setOtherInfo(otherInfoStr)

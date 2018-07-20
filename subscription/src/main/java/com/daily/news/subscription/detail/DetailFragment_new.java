@@ -257,7 +257,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         modifySubscribeBtnState(!mDetailColumn.subscribed);
 
         if (mDetailColumn.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","subColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
                     .setEvenName("“取消订阅”栏目")
@@ -281,7 +281,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         getActivity().setResult(Activity.RESULT_OK, intent);
 
         if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","subColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setObjectType(ObjectType.NewsType)

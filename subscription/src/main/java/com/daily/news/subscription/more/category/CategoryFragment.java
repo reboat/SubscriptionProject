@@ -193,7 +193,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     Map<String, String> otherInfo = new HashMap<>();
                     otherInfo.put("customObjectType", "RelatedClassType");
                     String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005", "classNavigationSwitch", false)
+                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005", "ClassNavigationSwitch", false)
                             .setEvenName("点击栏目分类")
                             .setPageType("订阅更多页面")
                             .setObjectID(String.valueOf(category.class_id))

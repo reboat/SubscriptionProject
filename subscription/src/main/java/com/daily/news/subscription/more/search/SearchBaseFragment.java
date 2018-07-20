@@ -331,7 +331,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "toDetailColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "ToDetailColumn", false)
                     .setEvenName("点击栏目条目（头像+标题）")
                     .setPageType("搜索页面")
                     .setObjectID(String.valueOf(bean.id))

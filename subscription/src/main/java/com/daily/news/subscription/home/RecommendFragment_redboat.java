@@ -181,7 +181,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
-                new AnalyticsBuilder(getContext(), "500002", "500002", "appTabClick", false)
+                new AnalyticsBuilder(getContext(), "500002", "500002", "AppTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")
                         .pageType("订阅首页")
@@ -385,7 +385,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
                 Map<String, String> otherInfo = new HashMap<>();
                 otherInfo.put("customObjectType", "RelatedColumnType");
                 String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                new AnalyticsBuilder(getContext(), "500002", "500002", "appTabClick", false)
+                new AnalyticsBuilder(getContext(), "500002", "500002", "AppTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击\"订阅更多\"")
                         .setOtherInfo(otherInfoStr)
