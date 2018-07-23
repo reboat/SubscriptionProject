@@ -253,9 +253,6 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
 
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_subscribe_container})
     public void submitSubscribe() {
-        mPresenter.submitSubscribe(mDetailColumn);
-        modifySubscribeBtnState(!mDetailColumn.subscribed);
-
         if (mDetailColumn.subscribed) {
             new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
@@ -266,10 +263,14 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
                     .pageType("栏目详情页")
                     .columnID(String.valueOf(mDetailColumn.id))
                     .columnName(mDetailColumn.name)
-                    .operationType("订阅")
+                    .operationType("取消订阅")
                     .build()
                     .send();
         }
+        mPresenter.submitSubscribe(mDetailColumn);
+        modifySubscribeBtnState(!mDetailColumn.subscribed);
+
+
     }
 
     @Override
@@ -290,7 +291,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
                     .pageType("栏目详情页")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
-                    .operationType("取消订阅")
+                    .operationType("订阅")
                     .build()
                     .send();
         }
