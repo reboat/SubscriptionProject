@@ -62,7 +62,6 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     View mMoreSubscribedView;
 
     private GuideView.Builder mStep1;
-    private Analytics mAnalytics;
 
 
     @Nullable
@@ -176,17 +175,11 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     @Override
     public void onResume() {
         super.onResume();
-        mAnalytics = new AnalyticsBuilder(getContext(), "A0010", "500001", "SubPageStay", true)
-                .setEvenName("页面停留时长")
-                .setPageType("订阅首页")
-                .pageType("订阅首页")
-                .build();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mAnalytics.sendWithDuration();
     }
 
     @Override

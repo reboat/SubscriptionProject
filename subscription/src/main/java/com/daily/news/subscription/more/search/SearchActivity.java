@@ -118,6 +118,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
                 .setPageType("订阅更多页面")
                 .setEvenName("关键词搜索")
                 .setSearch(keyword)
+                .pageType("订阅更多页面")
                 .searchWord(keyword)
                 .isHotWordUsed(false)
                 .isHistoryWordUsed(false)
