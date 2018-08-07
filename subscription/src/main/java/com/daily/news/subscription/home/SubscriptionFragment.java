@@ -89,7 +89,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "SubPageStay", true)
                 .setEvenName("页面停留时长")
                 .setPageType("订阅首页")
-                .pageType("订阅首页")
+                .pageType("订阅页面")
                 .build();
         if (mEmitter != null) {
             mEmitter.onComplete();
