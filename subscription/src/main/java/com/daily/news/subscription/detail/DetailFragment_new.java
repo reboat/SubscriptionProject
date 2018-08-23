@@ -344,43 +344,61 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     @OnClick({R2.id.detail_share, R2.id.toolbar_detail_share})
     public void onViewClicked(View view) {
 
-        if(mDetailColumn != null){
+        if (mDetailColumn != null) {
             String shareName = mDetailColumn.name != null ? mDetailColumn.name : "浙江新闻";
             String shareDes = mDetailColumn.description != null ? mDetailColumn.description : "下载浙江新闻，查看更多身边新闻";
             String shareUrl = mDetailColumn.share_url != null ? mDetailColumn.share_url : "https://zj.zjol.com.cn/";
             //        //分享专用bean
-        OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                .setObjectID(mDetailColumn.id + "")
-                .setObjectName(shareName)
-                .setObjectType(ObjectType.ColumnType)
-                .setPageType("栏目详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", mDetailColumn.id + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfobjectID(mDetailColumn.id + "");
+            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                    .setObjectID(mDetailColumn.id + "")
+                    .setObjectName(shareName)
+                    .setObjectType(ObjectType.ColumnType)
+                    .setPageType("栏目详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mDetailColumn.id + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfobjectID(mDetailColumn.id + "");
 
-            if(mDetailColumn.pic_url != null){
+            if (mDetailColumn.pic_url != null) {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
                         .setTextContent(shareDes)
                         .setImgUri(mDetailColumn.pic_url)
                         .setTargetUrl(shareUrl)
-                        .setAnalyticsBean(bean));
-            }else{
+                        .setAnalyticsBean(bean)
+                        .setEventName("PageShare")
+                        .setShareContentID(mDetailColumn.id + "")
+                        .setShareType("栏目")
+                );
+            } else {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
                         .setTextContent(shareDes)
                         .setPicId(R.mipmap.ic_launcher)
                         .setTargetUrl(shareUrl)
-                        .setAnalyticsBean(bean));
+                        .setAnalyticsBean(bean)
+                        .setEventName("PageShare")
+                        .setShareContentID(mDetailColumn.id + "")
+                        .setShareType("栏目")
+                );
             }
         }
 
 
         //点击分享操作
-        // TODO: 2018/8/16 埋点
+        new Analytics.AnalyticsBuilder(getContext(), "800018", "800018", "AppTabClick", false)
+                .setObjectID(mDetailColumn.id + "")
+                .setObjectName(mDetailColumn.name)
+                .setObjectType(ObjectType.ColumnType)
+                .setPageType("栏目详情页")
+                .setEvenName("点击“分享”")
+                .pageType("栏目详情页")
+                .clickTabName("分享")
+                .build()
+                .send();
+
     }
 }
