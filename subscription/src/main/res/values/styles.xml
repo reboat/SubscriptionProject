@@ -58,6 +58,8 @@
         <item name="module_news_ic_search">@drawable/module_news_ic_search</item>
         <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_cross</item>
         <item name="detail_arrow_back">@drawable/detail_back_arrow</item>
+
+        <item name="share_white">@drawable/share_white</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
@@ -105,6 +107,8 @@
         <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_search_cross_night</item>
         <item name="module_sub_sl_tc_tab">@color/module_sub_sl_tc_tab_night</item>
         <item name="detail_arrow_back">@drawable/detail_back_arrow_night</item>
+
+        <item name="share_white">@drawable/share_white_night</item>
     </style>
 
     <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">

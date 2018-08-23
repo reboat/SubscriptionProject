@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,9 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.L;
@@ -41,6 +43,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * Created by gaoyangzhen on 2018/4/16.
@@ -98,7 +102,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
                 long id = intent.getLongExtra(Constants.Name.ID, 0);
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
-                if(String.valueOf(id).equals(mUid)) {
+                if (String.valueOf(id).equals(mUid)) {
                     String subscriptionText = subscribe ? "已订阅" : "订阅";
                     mSubscriptionView.setText(subscriptionText);
                     mSubscribeContainer.setSelected(subscribe);
@@ -254,7 +258,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_subscribe_container})
     public void submitSubscribe() {
         if (mDetailColumn.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114", "SubColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
                     .setEvenName("“取消订阅”栏目")
@@ -282,7 +286,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         getActivity().setResult(Activity.RESULT_OK, intent);
 
         if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","SubColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setObjectType(ObjectType.NewsType)
@@ -337,4 +341,46 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     }
 
 
+    @OnClick({R2.id.detail_share, R2.id.toolbar_detail_share})
+    public void onViewClicked(View view) {
+
+        if(mDetailColumn != null){
+            String shareName = mDetailColumn.name != null ? mDetailColumn.name : "浙江新闻";
+            String shareDes = mDetailColumn.description != null ? mDetailColumn.description : "下载浙江新闻，查看更多身边新闻";
+            String shareUrl = mDetailColumn.share_url != null ? mDetailColumn.share_url : "https://zj.zjol.com.cn/";
+            //        //分享专用bean
+        OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                .setObjectID(mDetailColumn.id + "")
+                .setObjectName(shareName)
+                .setObjectType(ObjectType.ColumnType)
+                .setPageType("栏目详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", mDetailColumn.id + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfobjectID(mDetailColumn.id + "");
+
+            if(mDetailColumn.pic_url != null){
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setTitle(shareName)
+                        .setTextContent(shareDes)
+                        .setImgUri(mDetailColumn.pic_url)
+                        .setTargetUrl(shareUrl)
+                        .setAnalyticsBean(bean));
+            }else{
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setTitle(shareName)
+                        .setTextContent(shareDes)
+                        .setPicId(R.mipmap.ic_launcher)
+                        .setTargetUrl(shareUrl)
+                        .setAnalyticsBean(bean));
+            }
+        }
+
+
+        //点击分享操作
+        // TODO: 2018/8/16 埋点
+    }
 }

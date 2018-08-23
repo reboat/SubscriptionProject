@@ -75,6 +75,9 @@
         <item name="module_video_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
 
         <item name="android:theme">@style/SubscriptionTheme</item>
+
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag</item>
     </style>
 
     <!-- 夜间主题 -->
@@ -164,7 +167,8 @@
         <item name="module_video_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
         <item name="android:theme">@style/SubscriptionThemeNight</item>
 
-
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>
     </style>
 
 </resources>

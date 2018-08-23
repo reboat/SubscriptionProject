@@ -25,6 +25,7 @@ public class DetailResponse {
             public String background_url;
             public String description;
             public long sort_number;
+            public String share_url;
         }
     }
 }

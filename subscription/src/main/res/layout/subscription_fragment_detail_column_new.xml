@@ -60,6 +60,18 @@
                     android:src="@drawable/default_back_arrow"
                     />
 
+                <ImageView
+                    android:id="@+id/detail_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="11.5dp"
+                    android:layout_marginTop="40dp"
+                    android:scaleType="center"
+                    android:src="?attr/share_white"
+                    app:iv_maskColor="@android:color/transparent"
+                    />
+
                 <RelativeLayout
                     android:id="@+id/detail_column_header"
                     android:layout_width="match_parent"
@@ -85,6 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/detail_column_imageView"
                         android:layout_marginRight="5dp"
+                        android:layout_marginTop="0dp"
                         android:layout_toLeftOf="@+id/subscribe_container"
                         android:layout_toRightOf="@+id/detail_column_imageView"
                         android:lines="1"
@@ -183,13 +196,25 @@
 
                         />
 
-                    <LinearLayout
-                        android:id="@+id/toolbar_subscribe_container"
+                    <ImageView
+                        android:id="@+id/toolbar_detail_share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="11.5dp"
+                        android:scaleType="center"
+                        android:src="?attr/top_bar_share_dark"
+                        app:iv_maskColor="@android:color/transparent"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/toolbar_subscribe_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/toolbar_detail_share"
+                        android:layout_marginRight="20dp"
                         android:background="?attr/detail_sub_btn_toolbar"
                         android:gravity="center"
                         android:minWidth="47dp"

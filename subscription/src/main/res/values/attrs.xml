@@ -40,5 +40,7 @@
         <attr name="module_sub_sl_tc_tab" format="reference" />
 
         <attr name="detail_arrow_back" format="reference" />
+
+        <attr name="share_white" format="reference" />
     </declare-styleable>
 </resources>
