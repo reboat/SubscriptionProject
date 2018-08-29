@@ -38,6 +38,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.L;
+import com.zjrb.core.utils.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -345,9 +346,9 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     public void onViewClicked(View view) {
 
         if (mDetailColumn != null) {
-            String shareName = mDetailColumn.name != null ? mDetailColumn.name : "浙江新闻";
-            String shareDes = mDetailColumn.description != null ? mDetailColumn.description : "下载浙江新闻，查看更多身边新闻";
-            String shareUrl = mDetailColumn.share_url != null ? mDetailColumn.share_url : "https://zj.zjol.com.cn/";
+            String shareName = StringUtils.isEmpty(mDetailColumn.name) ? "浙江新闻" : mDetailColumn.name ;
+            String shareDes = StringUtils.isEmpty(mDetailColumn.description) ?"下载浙江新闻，查看更多身边新闻" :  mDetailColumn.description;
+            String shareUrl = StringUtils.isEmpty(mDetailColumn.share_url) ? "https://zj.zjol.com.cn/":  mDetailColumn.share_url;
             //        //分享专用bean
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mDetailColumn.id + "")
@@ -360,7 +361,7 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
                             .toString())
                     .setSelfobjectID(mDetailColumn.id + "");
 
-            if (mDetailColumn.pic_url != null) {
+            if (!StringUtils.isEmpty(mDetailColumn.share_url)) {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
