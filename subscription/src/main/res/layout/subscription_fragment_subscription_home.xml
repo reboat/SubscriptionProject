@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="?attr/subscription_home_background">
+             android:background="@color/subscription_background_color">
     <FrameLayout
         android:id="@+id/subscription_container"
         android:layout_width="match_parent"

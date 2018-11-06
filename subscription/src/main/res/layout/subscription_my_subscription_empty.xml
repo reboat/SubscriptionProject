@@ -17,6 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="目前没有任何订阅"
-        android:textColor="?tc_484848"
+        android:textColor="@color/_484848_7a7b7d"
         android:textSize="14sp"/>
 </LinearLayout>

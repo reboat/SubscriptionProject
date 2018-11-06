@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,95 +22,11 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="SubscriptionTheme" parent="CoreTheme.Base">
-        <item name="subscription_arrow">@drawable/arrow</item>
-        <item name="subscription_home_background">@color/subscription_background_color</item>
-        <item name="column_subscription_text_color">@color/column_subscription_text_color_selector
-        </item>
-        <item name="subscription_button_background">@drawable/subscription_btn_selector</item>
-        <item name="header_my_subscription_divider_color">
-            @color/header_my_subscription_divider_color
-        </item>
-        <item name="more_subscription">@drawable/more_subscription</item>
-        <item name="subscription">@drawable/subscription_icon</item>
-        <item name="category_text_color">@color/category_text_color_selector</item>
-        <item name="search_shape">@drawable/search_shape</item>
-        <item name="category_divider_color">@color/category_divider_color</item>
-        <item name="detail_column_description_color">@color/detail_column_description_color</item>
-        <item name="detail_column_title_color">@color/detail_column_title_color</item>
-        <item name="detail_btn_text_color">@color/detail_btn_text_color_selector</item>
-        <item name="detail_sub_btn">@drawable/detail_sub_btn</item>
-        <item name="detail_sub_btn_toolbar">@drawable/detail_sub_btn_toolbar</item>
-        <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic</item>
-        <item name="detail_column_info_color">@color/detail_column_info_color</item>
-        <item name="subscription_search_icon">@drawable/subscription_search</item>
-        <item name="subscription_search_background_color">#ffffff</item>
-        <item name="tc_000000">#000000</item>
-        <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color</item>
-        <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_icon</item>
-        <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon</item>
-        <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout</item>
-        <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item</item>
-        <item name="module_sub_bg_tab_item_new">@drawable/module_sub_bg_tab_item_new</item>
-        <item name="module_sub_bg_tab_item_new_right">@drawable/module_sub_bg_tab_item_new_right</item>
-        <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab</item>
-        <item name="module_sub_tc_tab_new">@color/module_sub_tab_new</item>
-        <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
-        <item name="module_news_color_999999_484848">#999999</item>
-        <item name="cancel_color_ffffff_7a7b7d">#ffffff</item>
-        <item name="module_news_ic_search">@drawable/module_news_ic_search</item>
-        <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_cross</item>
-        <item name="detail_arrow_back">@drawable/detail_back_arrow</item>
-
-        <item name="share_white">@drawable/share_white</item>
+        <item name="dc_dddddd">@color/dc_dddddd</item>
     </style>
 
     <style name="SubscriptionThemeNight" parent="CoreThemeNight.Base">
-        <item name="subscription_arrow">@drawable/arrow_night</item>
-        <item name="subscription_home_background">@color/subscription_background_color_night</item>
-        <item name="column_subscription_text_color">
-            @color/column_subscription_text_color_selector_night
-        </item>
-        <item name="subscription_button_background">@drawable/subscription_btn_selector_night</item>
-        <item name="header_my_subscription_divider_color">
-            @color/header_my_subscription_divider_color_night
-        </item>
-        <item name="more_subscription">@drawable/more_subscription_night</item>
-        <item name="subscription">@drawable/subscription_icon_night</item>
-        <item name="category_text_color">@color/category_text_color_selector_night</item>
-        <item name="search_shape">@drawable/search_shape_night</item>
-        <item name="category_divider_color">@color/category_divider_color_night</item>
-        <item name="detail_column_description_color">@color/detail_column_description_color_night
-        </item>
-        <item name="detail_column_title_color">@color/detail_column_title_color_night</item>
-        <item name="detail_btn_text_color">@color/detail_btn_text_color_selector_night</item>
-        <item name="detail_sub_btn">@drawable/detail_sub_btn_night</item>
-        <item name="detail_sub_btn_toolbar">@drawable/detail_sub_btn_night</item>
-        <item name="detail_sub_left_pic">@drawable/detail_sub_left_pic_night</item>
-        <item name="detail_column_info_color">@color/detail_column_info_color_night</item>
-        <item name="subscription_search_icon">@drawable/subscription_search_night</item>
-        <item name="subscription_search_background_color">#2a2a2a</item>
-        <item name="tc_000000">#7a7b7d</item>
-        <item name="column_subscribe_success_notify_background_color">@color/column_subscribe_success_notify_background_color_night</item>
-        <item name="column_subscribe_success_notify_icon">@drawable/column_subscribe_success_notify_night_icon</item>
-        <item name="more_key_word_delete_icon">@drawable/more_key_word_delete_icon_night</item>
 
-        <item name="module_sub_bg_tab_layout">@drawable/module_sub_bg_tab_layout_night</item>
-        <item name="module_sub_bg_tab_item">@drawable/module_sub_bg_tab_item_night</item>
-        <item name="module_sub_bg_tab_item_new">@drawable/module_sub_bg_tab_item_new_night</item>
-        <item name="module_sub_bg_tab_item_new_right">@drawable/module_sub_bg_tab_item_new_right_night</item>
-        <item name="module_sub_tc_tab">@color/module_video_sl_tc_tab_night</item>
-        <item name="module_sub_tc_tab_new">@color/module_sub_tab_new_night</item>
-        <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
-
-        <item name="module_news_color_999999_484848">#484848</item>
-        <item name="cancel_color_ffffff_7a7b7d">#7a7b7d</item>
-
-        <item name="module_news_ic_search">@drawable/module_news_ic_search_night</item>
-        <item name="module_sub_ic_search_cross">@drawable/module_sub_ic_search_cross_night</item>
-        <item name="module_sub_sl_tc_tab">@color/module_sub_sl_tc_tab_night</item>
-        <item name="detail_arrow_back">@drawable/detail_back_arrow_night</item>
-
-        <item name="share_white">@drawable/share_white_night</item>
     </style>
 
     <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/activity_default_background"
+    android:background="@drawable/activity_default_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:fitType="both"
@@ -23,7 +23,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:background="?attr/search_shape"
+            android:background="@drawable/search_shape"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -33,8 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="7dp"
-                android:src="?attr/module_news_ic_search"
-                app:iv_maskColor="@color/color_5c5c5c" />
+                android:src="@drawable/module_news_ic_search"
+                app:maskColor="@color/color_5c5c5c" />
 
             <EditText
                 android:id="@+id/et_input"
@@ -47,7 +47,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/fragment_recommend_background"
-                android:textColorHint="?attr/module_news_color_999999_484848"
+                android:textColorHint="@color/_999999_484848"
                 android:textSize="@dimen/ts_11sp"
                 />
 
@@ -57,9 +57,9 @@
                 android:layout_height="26dp"
                 android:background="?attr/actionBarItemBackground"
                 android:scaleType="center"
-                android:src="?attr/module_sub_ic_search_cross"
+                android:src="@drawable/module_sub_ic_search_cross"
                 android:visibility="invisible"
-                app:iv_maskColor="@android:color/transparent" />
+                app:maskColor="@android:color/transparent" />
 
         </LinearLayout>
 
@@ -72,7 +72,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/cancel"
-            android:textColor="?attr/cancel_color_ffffff_7a7b7d"
+            android:textColor="@color/_ffffff_7a7b7d"
             android:textSize="@dimen/ts_14sp" />
 
     </LinearLayout>
@@ -81,7 +81,7 @@
         android:id="@+id/more_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/subscription_home_background">
+        android:background="@color/subscription_background_color">
     </FrameLayout>
 
 

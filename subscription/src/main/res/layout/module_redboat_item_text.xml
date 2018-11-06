@@ -16,7 +16,7 @@
         android:ellipsize="end"
         android:lineSpacingMultiplier="@dimen/module_news_title_line_spacing_multiplier"
         android:maxLines="2"
-        android:textColor="?attr/module_news_tc_item_title"
+        android:textColor="@color/module_news_tc_item_title"
         android:textSize="@dimen/ts_16sp" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:textColor="?attr/module_news_color_999999_5c5c5c"
+        android:textColor="@color/_999999_5c5c5c"
         android:textSize="@dimen/ts_11sp" />
 
 </LinearLayout>

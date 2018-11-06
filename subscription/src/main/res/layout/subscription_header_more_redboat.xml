@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:text="@string/recommend_header_title1"
         android:textStyle="bold"
-        android:textColor="?attr/tc_000000"
+        android:textColor="@color/_000000_7a7b7d"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
         />
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/subscribe_more"
-            android:textColor="?attr/tc_000000"
+            android:textColor="@color/_000000_7a7b7d"
             android:textSize="11sp"/>
 
         <ImageView
@@ -43,7 +43,7 @@
             android:id="@+id/recommend_header_image"
             android:layout_width="6.5dp"
             android:layout_height="11.5dp"
-            android:src="?attr/subscription_arrow"/>
+            android:src="@drawable/arrow"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +53,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="?attr/module_sub_bg_tab_layout"
+        android:background="@drawable/module_sub_bg_tab_layout"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
         >
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/module_sub_bg_tab_item_new">
+            android:background="@drawable/module_sub_bg_tab_item_new">
 
             <TextView
                 android:id="@+id/tab_red_sub_bar_txt"
@@ -71,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:textColor="?attr/module_sub_tc_tab_new"
+                android:textColor="@color/module_sub_tab_new"
                 android:textSize="@dimen/ts_15sp" />
 
         </FrameLayout>
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/module_sub_bg_tab_item_new_right">
+            android:background="@drawable/module_sub_bg_tab_item_new_right">
 
             <TextView
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:text="栏目号"
-                android:textColor="?attr/module_sub_tc_tab_new"
+                android:textColor="@color/module_sub_tab_new"
                 android:textSize="@dimen/ts_15sp" />
 
         </FrameLayout>

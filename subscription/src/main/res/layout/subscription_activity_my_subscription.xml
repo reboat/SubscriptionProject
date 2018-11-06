@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/activity_default_background"
+    android:background="@drawable/activity_default_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:fitType="bottom"
@@ -15,6 +15,6 @@
         android:id="@+id/my_subscription_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/subscription_home_background"></FrameLayout>
+        android:background="@color/subscription_background_color"></FrameLayout>
 
 </com.aliya.view.fitsys.FitWindowsLinearLayout>

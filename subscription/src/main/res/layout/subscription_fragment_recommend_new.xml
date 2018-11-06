@@ -8,7 +8,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/subscription_home_background"
+        android:background="@color/subscription_background_color"
         >
 
         <FrameLayout
@@ -25,7 +25,7 @@
             android:id="@+id/moreView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/subscription_home_background"
+            android:background="@color/subscription_background_color"
             >
 
         </FrameLayout>

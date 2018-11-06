@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/activity_default_background"
+    android:background="@drawable/activity_default_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:fitType="bottom"
@@ -25,14 +25,14 @@
             android:background="?attr/actionBarItemBackground"
             android:paddingRight="7dp"
             android:scaleType="center"
-            android:src="?attr/top_bar_back_white"
-            app:iv_maskColor="@android:color/transparent" />
+            android:src="@mipmap/ic_top_bar_back_white"
+            app:maskColor="@android:color/transparent" />
 
         <TextView
             android:id="@+id/tv_top_bar_title"
             style="@style/ToolbarTitle"
             android:text="订阅更多"
-            android:textColor="?attr/tc_ffffff"
+            android:textColor="@color/_ffffff_aaaaaa"
             >
 
 
@@ -48,7 +48,7 @@
             android:background="?attr/actionBarItemBackground"
             android:padding="10dp"
             android:src="@mipmap/launcher_main_bar_search"
-            app:iv_maskColor="@color/tc_ffffff_night" />
+            app:maskColor="@color/_aaaaaa" />
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
@@ -56,7 +56,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bc_f5f5f5"
+        android:background="@color/_f5f5f5_343434"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone"
@@ -70,14 +70,14 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:background="?attr/search_shape"
+            android:background="@drawable/search_shape"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="?attr/subscription_search_icon" />
+                android:src="@drawable/subscription_search" />
 
             <EditText
                 android:id="@+id/more_key_word"
@@ -85,12 +85,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="?attr/subscription_search_background_color"
+                android:background="@color/_ffffff_2a2a2a"
                 android:hint="请输入关键词"
                 android:imeOptions="actionSearch"
                 android:lines="1"
-                android:textColor="?attr/tc_484848"
-                android:textColorHint="?attr/tc_999999"
+                android:textColor="@color/_484848_7a7b7d"
+                android:textColorHint="@color/_999999_5c5c5c"
                 android:textSize="14sp" />
 
             <ImageView
@@ -98,9 +98,9 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:scaleType="center"
-                android:src="?attr/more_key_word_delete_icon"
+                android:src="@drawable/more_key_word_delete_icon"
                 android:visibility="invisible"
-                app:iv_maskColor="@android:color/transparent" />
+                app:maskColor="@android:color/transparent" />
         </LinearLayout>
 
         <TextView
@@ -118,7 +118,7 @@
         android:id="@+id/more_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/subscription_home_background">
+        android:background="@color/subscription_background_color">
     </FrameLayout>
 
 </com.aliya.view.fitsys.FitWindowsLinearLayout>

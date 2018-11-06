@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     app:fitType="bottom"
-    android:background="?attr/activity_default_background"
+    android:background="@drawable/activity_default_background"
     tools:context="com.daily.news.subscription.detail.DetailActivity">
 
     <FrameLayout

@@ -31,7 +31,7 @@
                 android:layout_marginRight="11dp"
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="?attr/category_divider_color"/>
+                android:background="@color/category_divider_color"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

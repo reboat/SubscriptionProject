@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:background="?attr/module_sub_bg_tab_layout"
+            android:background="@drawable/module_sub_bg_tab_layout"
             android:orientation="horizontal">
 
             <FrameLayout
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="?attr/module_sub_bg_tab_item">
+                android:background="@drawable/module_sub_bg_tab_item">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="红船号"
-                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textColor="@color/module_sub_tc_tab"
                     android:textSize="@dimen/ts_15sp" />
 
             </FrameLayout>
@@ -49,7 +49,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="0.5dp"
                 android:layout_weight="1"
-                android:background="?attr/module_sub_bg_tab_item">
+                android:background="@drawable/module_sub_bg_tab_item">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="栏目号"
-                    android:textColor="?attr/module_sub_tc_tab"
+                    android:textColor="@color/module_sub_tc_tab"
                     android:textSize="@dimen/ts_15sp" />
 
             </FrameLayout>
@@ -73,7 +73,7 @@
         android:id="@+id/more_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/subscription_home_background"
+        android:background="@color/subscription_background_color"
         />
 
 </LinearLayout>

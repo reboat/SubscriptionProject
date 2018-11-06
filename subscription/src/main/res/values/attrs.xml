@@ -1,46 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SupportUiMode">
-        <attr name="subscription_arrow" format="reference" />
-        <attr name="subscription_home_background" format="reference" />
-        <attr name="column_subscription_text_color" format="reference" />
-        <attr name="subscription_button_background" format="reference" />
-        <attr name="header_my_subscription_divider_color" format="reference" />
-        <attr name="more_subscription" format="reference" />
-        <attr name="subscription" format="reference" />
-        <attr name="category_text_color" format="reference" />
-        <attr name="search_shape" format="reference" />
-        <attr name="category_divider_color" format="reference" />
-        <attr name="detail_column_info_color" format="reference" />
-        <attr name="detail_column_description_color" format="reference" />
-        <attr name="detail_column_title_color" format="reference" />
-        <attr name="detail_btn_text_color" format="reference" />
-        <attr name="detail_sub_btn" format="reference" />
-        <attr name="detail_sub_btn_toolbar" format="reference" />
-        <attr name="detail_sub_left_pic" format="reference" />
-        <attr name="detail_btn_text_color_selector" format="reference" />
-        <attr name="subscription_search_icon" format="reference" />
-        <attr name="subscription_search_background_color" format="color|reference" />
-        <attr name="tc_000000" format="color|reference" />
-        <attr name="column_subscribe_success_notify_background_color" format="color|reference" />
-        <attr name="column_subscribe_success_notify_icon" format="reference"/>
-        <attr name="more_key_word_delete_icon" format="reference"/>
-        <attr name="module_sub_tc_tab" format="color|reference" />
-        <attr name="module_sub_tc_tab_new" format="color|reference" />
-        <attr name="module_sub_bg_tab_layout" format="color|reference" />
-        <attr name="module_sub_bg_tab_item" format="color|reference" />
-        <attr name="module_sub_bg_tab_item_new" format="color|reference" />
-        <attr name="module_sub_bg_tab_item_new_right" format="color|reference" />
-        <attr name="module_news_color_999999_484848" format="color|reference" />
-        <attr name="cancel_color_ffffff_7a7b7d" format="color|reference" />
 
-        <attr name="module_news_ic_search" format="reference" />
-        <attr name="module_sub_ic_search_cross" format="reference" />
-
-        <attr name="module_sub_sl_tc_tab" format="reference" />
-
-        <attr name="detail_arrow_back" format="reference" />
-
-        <attr name="share_white" format="reference" />
+        <attr name="dc_dddddd" format="reference" />
     </declare-styleable>
 </resources>
