@@ -49,6 +49,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 /**
@@ -354,10 +355,11 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabRedSub_bar.setSelected(true);
             tabMySub.setSelected(false);
             tabMySub_bar.setSelected(false);
-
-            new AnalyticsBuilder(getContext(), "500008", "500008", "", false)
+            new AnalyticsBuilder(getContext(), "500008", "500008", "AppTabClick", false)
                     .setPageType("订阅首页")
-                    .setEvenName("点击\"红船号\"tab")
+                    .setEvenName("点击\"之江号\"tab")
+                    .pageType("订阅首页")
+                    .clickTabName("之江号")
                     .build()
                     .send();
 
@@ -370,9 +372,11 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             tabRedSub.setSelected(false);
             tabRedSub_bar.setSelected(false);
 
-            new AnalyticsBuilder(getContext(), "500009", "500009", "", false)
+            new AnalyticsBuilder(getContext(), "500009", "500009", "AppTabClick", false)
                     .setPageType("订阅首页")
                     .setEvenName("点击\"栏目号\"tab")
+                    .pageType("订阅首页")
+                    .clickTabName("栏目号")
                     .build()
                     .send();
         }
@@ -397,4 +401,6 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         }
 
     }
+
+
 }
