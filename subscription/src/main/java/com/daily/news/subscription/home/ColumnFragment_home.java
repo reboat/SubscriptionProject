@@ -112,7 +112,7 @@ public class ColumnFragment_home extends Fragment implements ColumnContract.View
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
 
     }
 

@@ -155,7 +155,7 @@
                             android:layout_height="35dp"
                             android:layout_marginLeft="2dp"
                             android:gravity="center"
-                            android:textColor="@color/detail_btn_text_color"
+                            android:textColor="@color/detail_btn_text_color_selector"
                             android:textSize="14sp"
                             tools:text="已订阅" />
                     </LinearLayout>
@@ -215,7 +215,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/toolbar_detail_share"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/detail_sub_btn"
+                        android:background="@drawable/detail_sub_btn_toolbar"
                         android:gravity="center"
                         android:minWidth="47dp"
                         android:orientation="horizontal"
@@ -235,7 +235,7 @@
                             android:layout_height="21dp"
                             android:layout_marginLeft="2dp"
                             android:gravity="center"
-                            android:textColor="@color/detail_btn_text_color"
+                            android:textColor="@color/detail_btn_text_color_selector"
                             android:textSize="10sp"
                             tools:text="已订阅" />
                     </LinearLayout>

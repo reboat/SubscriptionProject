@@ -34,7 +34,7 @@
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="7dp"
                 android:src="@drawable/module_news_ic_search"
-                app:maskColor="@color/color_5c5c5c" />
+                app:maskColor="@color/_5c5c5c" />
 
             <EditText
                 android:id="@+id/et_input"

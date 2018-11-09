@@ -73,7 +73,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mArticleAdapter);
-        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mArticleAdapter.addFooterView(mLoadMore.getItemView());
         mArticleAdapter.setOnItemClickListener(this);
