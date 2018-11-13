@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
@@ -26,11 +25,7 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.FocusBean;
-import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +43,7 @@ import cn.daily.news.analytics.Analytics;
  * behavior + CoordinatorLayout实现的滑动效果，暂时没有用到这个页面
  */
 
-public class RecommendFragment_new extends Fragment implements SubscriptionContract.View,
+public class RecommendFragment_Behavior extends Fragment implements SubscriptionContract.View,
         HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
     private static final String TAG_INITIALIZE_RESOURCE = "initialize_resource";
@@ -68,7 +63,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
 
     private HeaderRefresh mHeaderRefresh;
 
-    public RecommendFragment_new() {
+    public RecommendFragment_Behavior() {
     }
 
 
@@ -145,7 +140,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
             @Override
             public void onClick(View v) {
                 //判断红船号开关，如果没有开关数据，默认是关闭的
-                GetInitializeResourceTask.createTask(RecommendFragment_new.this, TAG_INITIALIZE_RESOURCE);
+                GetInitializeResourceTask.createTask(RecommendFragment_Behavior.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 Map<String, String> otherInfo = new HashMap<>();
@@ -175,7 +170,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
     }
 
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
-        RecommendFragment_new fragment = new RecommendFragment_new();
+        RecommendFragment_Behavior fragment = new RecommendFragment_Behavior();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
             focus_list.removeAll(Collections.singleton(null));
@@ -185,8 +180,8 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
         }
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList(RecommendFragment_new.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
-        args.putParcelableArrayList(RecommendFragment_new.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
+        args.putParcelableArrayList(RecommendFragment_Behavior.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
+        args.putParcelableArrayList(RecommendFragment_Behavior.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -230,7 +225,7 @@ public class RecommendFragment_new extends Fragment implements SubscriptionContr
             Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = RecommendFragment_new.newInstance(dataBean.focus_list, dataBean.recommend_list);
+            Fragment fragment = RecommendFragment_Behavior.newInstance(dataBean.focus_list, dataBean.recommend_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         }
     }

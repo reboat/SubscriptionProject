@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.RelativeLayout;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
@@ -30,11 +28,7 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.FocusBean;
-import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -215,7 +209,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
                 Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);

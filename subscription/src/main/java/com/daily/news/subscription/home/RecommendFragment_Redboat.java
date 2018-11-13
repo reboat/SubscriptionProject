@@ -19,14 +19,11 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
@@ -34,11 +31,7 @@ import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.FocusBean;
-import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,13 +42,12 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecommendFragment_redboat extends Fragment implements SubscriptionContract.View,
+public class RecommendFragment_Redboat extends Fragment implements SubscriptionContract.View,
         HeaderRefresh.OnRefreshListener, RecommendColumnFragment.OnRefresh {
 
     private static final String TAG_INITIALIZE_RESOURCE = "initialize_resource";
@@ -87,7 +79,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
     String redTitle;
 
-    public RecommendFragment_redboat() {
+    public RecommendFragment_Redboat() {
     }
 
 
@@ -146,7 +138,6 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
             @Override
             public void onItemClick(View item, int position) {
-//                super.onItemClick(item, position);
                 if (ClickTracker.isDoubleClick()) return;
 
                 SubscriptionResponse.Focus focus = focuses.get(position);
@@ -179,7 +170,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             @Override
             public void onClick(View v) {
                 //判断红船号开关，如果没有开关数据，默认是关闭的
-                GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
+                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 new AnalyticsBuilder(getContext(), "500002", "500002", "AppTabClick", false)
@@ -219,7 +210,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
     }
 
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked, String hch_name) {
-        RecommendFragment_redboat fragment = new RecommendFragment_redboat();
+        RecommendFragment_Redboat fragment = new RecommendFragment_Redboat();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
             focus_list.removeAll(Collections.singleton(null));
@@ -241,9 +232,9 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
 
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList(RecommendFragment_redboat.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
-        args.putParcelableArrayList(RecommendFragment_redboat.COLUMN_DATA_REDBOAT, (ArrayList<? extends Parcelable>) redboat_recommend_list);
-        args.putParcelableArrayList(RecommendFragment_redboat.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
+        args.putParcelableArrayList(RecommendFragment_Redboat.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
+        args.putParcelableArrayList(RecommendFragment_Redboat.COLUMN_DATA_REDBOAT, (ArrayList<? extends Parcelable>) redboat_recommend_list);
+        args.putParcelableArrayList(RecommendFragment_Redboat.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         args.putBoolean("isRedboatChecked", isRedboatChecked);
         args.putString("hch_name", hch_name);
         fragment.setArguments(args);
@@ -290,7 +281,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked, dataBean.hch_name);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
                 Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
@@ -383,7 +374,7 @@ public class RecommendFragment_redboat extends Fragment implements SubscriptionC
         if (view.getId() == R.id.no_subscription_more_view) {
             //判断红船号开关，如果没有开关数据，默认是关闭的
             if (!ClickTracker.isDoubleClick()) {
-                GetInitializeResourceTask.createTask(RecommendFragment_redboat.this, TAG_INITIALIZE_RESOURCE);
+                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
 
 //                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 Map<String, String> otherInfo = new HashMap<>();

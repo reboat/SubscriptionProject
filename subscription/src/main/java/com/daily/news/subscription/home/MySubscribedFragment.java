@@ -16,8 +16,6 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.GuideView;
@@ -26,9 +24,6 @@ import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -36,10 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
-
-import static java.lang.System.in;
 
 
 /**
@@ -203,7 +195,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
                 Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);

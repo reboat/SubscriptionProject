@@ -17,8 +17,6 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.StringUtils;
@@ -144,7 +142,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         } else {
 
             if (subscriptionResponse.hch_switch && !StringUtils.isEmpty(subscriptionResponse.hch_name)) {
-                fragment = RecommendFragment_redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
+                fragment = RecommendFragment_Redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
             } else {
                 fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
             }

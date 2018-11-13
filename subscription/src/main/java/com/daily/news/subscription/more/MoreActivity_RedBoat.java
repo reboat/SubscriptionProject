@@ -34,7 +34,7 @@ import cn.daily.news.analytics.Analytics;
  * Created by gaoyangzhen on 2018/3/21.
  */
 
-public class MoreActivity_new extends BaseActivity {
+public class MoreActivity_RedBoat extends BaseActivity {
 
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
@@ -132,7 +132,7 @@ public class MoreActivity_new extends BaseActivity {
         if (view.getId() == R.id.tab_red_sub) {
             tabMySub.setSelected(false);
             moreContainer.setCurrentItem(0);
-            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500008", "500008", "AppTabClick", false)
+            new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500008", "500008", "AppTabClick", false)
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"之江号\"tab")
                     .pageType("订阅更多页面")
@@ -142,7 +142,7 @@ public class MoreActivity_new extends BaseActivity {
         } else if (view.getId() == R.id.tab_my_sub) {
             tabRedSub.setSelected(false);
             moreContainer.setCurrentItem(1);
-            new Analytics.AnalyticsBuilder(MoreActivity_new.this, "500009", "500009", "AppTabClick", false)
+            new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500009", "500009", "AppTabClick", false)
                     .setPageType("订阅更多页面")
                     .setEvenName("点击\"栏目号\"tab")
                     .pageType("订阅更多页面")

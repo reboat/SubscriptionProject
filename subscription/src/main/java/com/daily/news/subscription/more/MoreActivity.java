@@ -27,12 +27,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
 
-/**
- * framelayout + fragmentManager  hide(),show()的方式加载fragment，不适合滑动切换
- *
- * @author zhengy
- *         create at 2018/3/22 上午10:30
- **/
 public class MoreActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
@@ -87,14 +81,6 @@ public class MoreActivity extends BaseActivity {
 
     }
 
-    private void switchFragment(View v, Fragment show, Fragment hide) {
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.show(show);
-        if (hide != null) {
-            transaction.hide(hide);
-        }
-        transaction.commit();
-    }
 
 
     @Override

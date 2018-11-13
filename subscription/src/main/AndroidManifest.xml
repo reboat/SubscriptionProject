@@ -53,7 +53,7 @@
         </activity>
 
         <activity
-            android:name=".more.MoreActivity_new"
+            android:name=".more.MoreActivity_RedBoat"
             android:configChanges="uiMode"
             android:label="@string/title_more_list"
             android:screenOrientation="portrait"
@@ -67,7 +67,7 @@
 
                 <data
                     android:host="www.8531.cn"
-                    android:path="/subscription/more_new"
+                    android:path="/subscription/more_redboat"
                     android:scheme="http"/>
             </intent-filter>
         </activity>

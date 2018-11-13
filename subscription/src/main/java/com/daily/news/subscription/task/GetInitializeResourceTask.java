@@ -62,7 +62,7 @@ public class GetInitializeResourceTask extends APIGetTask<ResourceBiz> {
                             i = 1;
                             if(bean.enabled && bean.desc != null && bean.desc != "")
                             {
-                                Nav.with(mFragment).to("http://www.8531.cn/subscription/more_new");
+                                Nav.with(mFragment).to("http://www.8531.cn/subscription/more_redboat");
                             }
                             else
                             {
