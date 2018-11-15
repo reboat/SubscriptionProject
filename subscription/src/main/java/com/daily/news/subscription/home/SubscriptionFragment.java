@@ -125,7 +125,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void showError(Throwable message) {
         if (getContext() != null) {
-            Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
