@@ -57,7 +57,7 @@
                 android:layout_height="26dp"
                 android:background="?attr/actionBarItemBackground"
                 android:scaleType="center"
-                android:src="@drawable/module_sub_ic_search_cross"
+                android:src="@drawable/module_sub_ic_cross"
                 android:visibility="invisible"
                 app:maskColor="@android:color/transparent" />
 

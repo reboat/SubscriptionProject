@@ -87,8 +87,8 @@
             android:layout_gravity="center_vertical|right"
             android:background="?attr/actionBarItemBackground"
             android:padding="10dp"
-            android:src="@mipmap/launcher_main_bar_search"
-            app:maskColor="@color/_aaaaaa" />
+            android:src="@mipmap/module_core_ic_main_bar_search"
+            app:maskColor="@color/_00000000_7a7b7c" />
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
