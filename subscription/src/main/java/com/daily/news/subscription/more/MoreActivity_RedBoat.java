@@ -92,6 +92,25 @@ public class MoreActivity_RedBoat extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 onViewClicked(position == 0 ? tabRedSub : tabMySub);
+                if(position == 0){
+                    tabMySub.setSelected(false);
+                    new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500008", "500008", "AppTabClick", false)
+                            .setPageType("订阅更多页面")
+                            .setEvenName("点击\"之江号\"tab")
+                            .pageType("订阅更多页面")
+                            .clickTabName("之江号")
+                            .build()
+                            .send();
+                }else {
+                    tabRedSub.setSelected(false);
+                    new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500009", "500009", "AppTabClick", false)
+                            .setPageType("订阅更多页面")
+                            .setEvenName("点击\"栏目号\"tab")
+                            .pageType("订阅更多页面")
+                            .clickTabName("栏目号")
+                            .build()
+                            .send();
+                }
             }
 
             @Override
@@ -130,25 +149,9 @@ public class MoreActivity_RedBoat extends BaseActivity {
     public void onViewClicked(View view) {
         view.setSelected(true);
         if (view.getId() == R.id.tab_red_sub) {
-            tabMySub.setSelected(false);
             moreContainer.setCurrentItem(0);
-            new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500008", "500008", "AppTabClick", false)
-                    .setPageType("订阅更多页面")
-                    .setEvenName("点击\"之江号\"tab")
-                    .pageType("订阅更多页面")
-                    .clickTabName("之江号")
-                    .build()
-                    .send();
         } else if (view.getId() == R.id.tab_my_sub) {
-            tabRedSub.setSelected(false);
             moreContainer.setCurrentItem(1);
-            new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500009", "500009", "AppTabClick", false)
-                    .setPageType("订阅更多页面")
-                    .setEvenName("点击\"栏目号\"tab")
-                    .pageType("订阅更多页面")
-                    .clickTabName("栏目号")
-                    .build()
-                    .send();
         } else if (view.getId() == R.id.iv_top_bar_back) {
             finish();
         } else if (view.getId() == R.id.iv_top_bar_search) {
