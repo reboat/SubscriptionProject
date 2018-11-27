@@ -115,10 +115,10 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
             fragment.sendRequest(new Object[]{keyword});
         }
         new Analytics.AnalyticsBuilder(this, "A0013", "A0013", "Search", false)
-                .setPageType("订阅更多页面")
+                .setPageType("之江号/栏目号分类检索页面")
                 .setEvenName("关键词搜索")
                 .setSearch(keyword)
-                .pageType("订阅更多页面")
+                .pageType("之江号/栏目号分类检索页面")
                 .searchWord(keyword)
                 .isHotWordUsed(false)
                 .isHistoryWordUsed(false)

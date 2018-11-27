@@ -23,7 +23,7 @@ public class MySubscribedArticleFragment extends ArticleFragment {
         otherInfo.put("relatedColumn", String.valueOf(article.getColumn_id()));
         String otherInfoStr = JsonUtils.toJsonString(otherInfo);
         //红船号稿件
-        if(article.getDoc_type() == 10)
+        if(article.doc_category == 2)
         {
             new Analytics.AnalyticsBuilder(getContext(), "200007", "200007", "AppContentClick", false)
                     .setEvenName("新闻列表点击")

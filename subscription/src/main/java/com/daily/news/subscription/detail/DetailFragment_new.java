@@ -37,8 +37,12 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -259,13 +263,23 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_subscribe_container})
     public void submitSubscribe() {
         if (mDetailColumn.subscribed) {
+            String pageType = "栏目详情页";
+            String eventName = "“取消订阅”栏目";
+            if(mDetailColumn.red_boat_column){
+                pageType = "之江号详情页";
+                eventName = "之江号取消订阅";
+            }
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114", "SubColumn", false)
                     .setObjectID(String.valueOf(mDetailColumn.id))
                     .setObjectName(mDetailColumn.name)
-                    .setEvenName("“取消订阅”栏目")
-                    .setPageType("栏目详情页")
+                    .setEvenName(eventName)
+                    .setPageType(pageType)
                     .setObjectType(ObjectType.NewsType)
-                    .pageType("栏目详情页")
+                    .setOtherInfo(otherInfoStr)
+                    .pageType(pageType)
                     .columnID(String.valueOf(mDetailColumn.id))
                     .columnName(mDetailColumn.name)
                     .operationType("取消订阅")
@@ -287,13 +301,23 @@ public class DetailFragment_new extends Fragment implements DetailContract.View,
         getActivity().setResult(Activity.RESULT_OK, intent);
 
         if (bean.subscribed) {
+            String pageType = "栏目详情页";
+            String eventName = "“订阅”栏目";
+            if(bean.red_boat_column){
+                pageType = "之江号详情页";
+                eventName = "之江号订阅";
+            }
+            Map<String, String> otherInfo = new HashMap<>();
+            otherInfo.put("customObjectType", "RelatedColumnType");
+            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setObjectType(ObjectType.NewsType)
-                    .setPageType("栏目详情页")
-                    .setEvenName("“订阅”栏目")
-                    .pageType("栏目详情页")
+                    .setPageType(pageType)
+                    .setEvenName(eventName)
+                    .setOtherInfo(otherInfoStr)
+                    .pageType(pageType)
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
                     .operationType("订阅")

@@ -28,6 +28,7 @@ public class ColumnResponse {
             public String subscribe_count_general;
             public String article_count_general;
             public boolean subscribed = false;
+            public boolean red_boat_column = false;
 
             @Override
             public int describeContents() {
@@ -44,6 +45,7 @@ public class ColumnResponse {
                 dest.writeString(this.subscribe_count_general);
                 dest.writeString(this.article_count_general);
                 dest.writeByte(this.subscribed ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.red_boat_column ? (byte) 1 : (byte) 0);
             }
 
             public ColumnBean() {
@@ -58,6 +60,7 @@ public class ColumnResponse {
                 this.subscribe_count_general = in.readString();
                 this.article_count_general = in.readString();
                 this.subscribed = in.readByte() != 0;
+                this.red_boat_column = in.readByte() != 0;
             }
 
             public static final Parcelable.Creator<ColumnBean> CREATOR = new Parcelable.Creator<ColumnBean>() {

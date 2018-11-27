@@ -195,11 +195,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     String otherInfoStr = JsonUtils.toJsonString(otherInfo);
                     new Analytics.AnalyticsBuilder(getContext(), "500005", "500005", "ClassNavigationSwitch", false)
                             .setEvenName("点击栏目分类")
-                            .setPageType("订阅更多页面")
+                            .setPageType("之江号/栏目号分类检索页面")
                             .setObjectID(String.valueOf(category.class_id))
                             .setObjectName(category.class_name)
                             .setOtherInfo(otherInfoStr)
-                            .pageType("订阅更多页面")
+                            .pageType("之江号/栏目号分类检索页面")
                             .classID(String.valueOf(category.class_id))
                             .className(category.class_name)
                             .referClassID(String.valueOf(mValues.get(mCurPosition).class_id))

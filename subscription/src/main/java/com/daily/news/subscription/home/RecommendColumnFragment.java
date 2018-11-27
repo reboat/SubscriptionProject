@@ -34,6 +34,10 @@ public class RecommendColumnFragment extends ColumnFragment_home {
         }
 
         if (bean.subscribed) {
+            String eventName = "点击\"订阅\"栏目";
+            if(bean.red_boat_column){
+                eventName = "之江号订阅";
+            }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
@@ -41,7 +45,7 @@ public class RecommendColumnFragment extends ColumnFragment_home {
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType("订阅首页")
-                    .setEvenName("点击\"订阅\"栏目")
+                    .setEvenName(eventName)
                     .setOtherInfo(otherInfoStr)
                     .pageType("订阅首页")
                     .columnID(String.valueOf(bean.id))
@@ -55,13 +59,17 @@ public class RecommendColumnFragment extends ColumnFragment_home {
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         if (bean.subscribed) {
+            String eventName = "点击“取消订阅”栏目";
+            if(bean.red_boat_column){
+                eventName = "之江号订阅";
+            }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
-                    .setEvenName("点击“取消订阅”栏目")
+                    .setEvenName(eventName)
                     .setPageType("订阅首页")
                     .setOtherInfo(otherInfoStr)
                     .pageType("订阅首页")
@@ -81,11 +89,15 @@ public class RecommendColumnFragment extends ColumnFragment_home {
         super.onItemClick(itemView, position);
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
+            String eventName = "点击栏目条目（头像+标题）";
+            if(bean.red_boat_column){
+                eventName = "点击之江号条目（头像+标题）";
+            }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new AnalyticsBuilder(getContext(), "500003", "500003", "RecommendAreaClick", false)
-                    .setEvenName("点击推荐栏目列表（头像+标题）")
+                    .setEvenName(eventName)
                     .setPageType("订阅首页")
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
