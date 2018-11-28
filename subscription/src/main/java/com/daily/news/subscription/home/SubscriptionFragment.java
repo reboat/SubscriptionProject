@@ -84,11 +84,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onResume() {
         super.onResume();
         refreshData();
-        mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "PageStay", true)
-                .setEvenName("页面停留时长")
-                .setPageType("订阅首页")
-                .pageType("订阅页面")
-                .build();
+
         if (mEmitter != null) {
             mEmitter.onComplete();
         }
@@ -97,7 +93,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void onPause() {
         super.onPause();
-        mAnalytics.sendWithDuration();
+
         mEmitter = PublishProcessor.create();
         mEmitter.takeLast(1)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -108,6 +104,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                     }
                 });
     }
+
 
     @Override
     public void setPresenter(SubscriptionContract.Presenter presenter) {
@@ -157,6 +154,13 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         super.onHiddenChanged(hidden);
         if (!hidden) {
             refreshData();
+            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "PageStay", true)
+                    .setEvenName("页面停留时长")
+                    .setPageType("订阅首页")
+                    .pageType("订阅页面")
+                    .build();
+        }else {
+            mAnalytics.sendWithDuration();
         }
 
         if (fragment instanceof MySubscribedFragment && fragment.isAdded()) {

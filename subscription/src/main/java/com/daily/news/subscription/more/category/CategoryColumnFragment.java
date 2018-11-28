@@ -74,8 +74,11 @@ public class CategoryColumnFragment extends ColumnFragment {
         super.subscribeSuc(bean);
         if (bean.subscribed) {
             String eventName = "“订阅”栏目";
+            String pageType = "栏目号分类检索页面";
             if(bean.red_boat_column){
                 eventName = "之江号订阅";
+                pageType = "之江号分类检索页面";
+
             }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
@@ -83,10 +86,10 @@ public class CategoryColumnFragment extends ColumnFragment {
             new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
-                    .setPageType("之江号/栏目号分类检索页面")
+                    .setPageType(pageType)
                     .setEvenName(eventName)
                     .setOtherInfo(otherInfoStr)
-                    .pageType("之江号/栏目号分类检索页面")
+                    .pageType(pageType)
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
                     .operationType("订阅")
@@ -106,19 +109,21 @@ public class CategoryColumnFragment extends ColumnFragment {
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
             String eventName = "点击栏目条目（头像+标题）";
+            String pageType = "栏目号分类检索页面";
             if(bean.red_boat_column){
                 eventName = "点击之江号条目（头像+标题）";
+                pageType = "之江号分类检索页面";
             }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
             new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "ToDetailColumn", false)
                     .setEvenName(eventName)
-                    .setPageType("之江号/栏目号分类检索页面")
+                    .setPageType(pageType)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setOtherInfo(otherInfoStr)
-                    .pageType("之江号/栏目号分类检索页面")
+                    .pageType(pageType)
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
                     .build()
@@ -130,8 +135,10 @@ public class CategoryColumnFragment extends ColumnFragment {
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         if (bean.subscribed) {
             String eventName = "“取消订阅”栏目";
+            String pageType = "栏目号分类检索页面";
             if(bean.red_boat_column){
                 eventName = "之江号取消订阅";
+                pageType = "之江号分类检索页面";
             }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
@@ -140,9 +147,9 @@ public class CategoryColumnFragment extends ColumnFragment {
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName(eventName)
-                    .setPageType("之江号/栏目号分类检索页面")
+                    .setPageType(pageType)
                     .setOtherInfo(otherInfoStr)
-                    .pageType("之江号/栏目号分类检索页面")
+                    .pageType(pageType)
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
                     .operationType("取消订阅")

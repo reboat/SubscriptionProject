@@ -95,18 +95,18 @@ public class MoreActivity_RedBoat extends BaseActivity {
                 if(position == 0){
                     tabMySub.setSelected(false);
                     new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500008", "500008", "AppTabClick", false)
-                            .setPageType("之江号/栏目号分类检索页面")
+                            .setPageType("之江号分类检索页面")
                             .setEvenName("点击\"之江号\"tab")
-                            .pageType("之江号/栏目号分类检索页面")
+                            .pageType("之江号分类检索页面")
                             .clickTabName("之江号")
                             .build()
                             .send();
                 }else {
                     tabRedSub.setSelected(false);
                     new Analytics.AnalyticsBuilder(MoreActivity_RedBoat.this, "500009", "500009", "AppTabClick", false)
-                            .setPageType("之江号/栏目号分类检索页面")
+                            .setPageType("栏目号分类检索页面")
                             .setEvenName("点击\"栏目号\"tab")
-                            .pageType("之江号/栏目号分类检索页面")
+                            .pageType("栏目号分类检索页面")
                             .clickTabName("栏目号")
                             .build()
                             .send();

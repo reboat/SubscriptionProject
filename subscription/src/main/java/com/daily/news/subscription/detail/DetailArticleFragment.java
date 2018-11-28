@@ -37,7 +37,7 @@ public class DetailArticleFragment extends ArticleFragment {
                     .setOtherInfo(otherInfoStr)
                     .newsTitle(article.getDoc_title())
                     .pageType("之江号详情页")
-                    .objectType("栏目新闻列表")
+                    .objectType("订阅新闻列表")
                     .pubUrl(article.getUrl())
                     .build()
                     .send();
