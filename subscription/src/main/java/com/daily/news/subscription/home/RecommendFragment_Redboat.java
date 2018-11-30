@@ -347,9 +347,9 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
             tabMySub.setSelected(false);
             tabMySub_bar.setSelected(false);
             new AnalyticsBuilder(getContext(), "500008", "500008", "AppTabClick", false)
-                    .setPageType("之江号首页")
+                    .setPageType("订阅首页")
                     .setEvenName("点击\"之江号\"tab")
-                    .pageType("之江号首页")
+                    .pageType("订阅首页")
                     .clickTabName("之江号")
                     .build()
                     .send();
