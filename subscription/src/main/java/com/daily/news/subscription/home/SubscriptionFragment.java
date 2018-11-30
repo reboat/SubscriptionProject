@@ -84,7 +84,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void onResume() {
         super.onResume();
         refreshData();
-        mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "PageStay", true)
+        mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "SubPageStay", true)
                 .setEvenName("页面停留时长")
                 .setPageType("订阅首页")
                 .pageType("订阅页面")
