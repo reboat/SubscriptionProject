@@ -37,6 +37,8 @@ import cn.daily.news.analytics.Analytics;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
+    private boolean isVisibleToUser;
+    private Analytics mAnalytics;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -45,12 +47,9 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                 long id = intent.getLongExtra(Constants.Name.ID, 0);
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
-                for(int i=0 ; i < mCategories.size() ; i++)
-                {
-                    for(int j=0 ; j< mCategories.get(i).columns.size() ; j++)
-                    {
-                        if(mCategories.get(i).columns.get(j).id == id)
-                        {
+                for (int i = 0; i < mCategories.size(); i++) {
+                    for (int j = 0; j < mCategories.get(i).columns.size(); j++) {
+                        if (mCategories.get(i).columns.get(j).id == id) {
                             mCategories.get(i).columns.get(j).subscribed = subscribe;
                         }
                     }
@@ -98,6 +97,32 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPresenter.subscribe(2);
+    }
+
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if(isVisibleToUser && mAnalytics == null){
+            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
+                    .setEvenName("页面停留时长")
+                    .setPageType("栏目号分类检索页面")
+                    .pageType("栏目号分类检索页面")
+                    .build();
+        }
+        if (!isVisibleToUser && mAnalytics != null) {
+            mAnalytics.sendWithDuration();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isVisibleToUser && mAnalytics != null) {
+            mAnalytics.sendWithDuration();
+        }
     }
 
     private void setupRecyclerView() {
@@ -246,7 +271,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null && fragment != null) {
+        if (data != null && fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }

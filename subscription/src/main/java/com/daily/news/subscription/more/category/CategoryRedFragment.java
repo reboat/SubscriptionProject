@@ -41,6 +41,8 @@ import cn.daily.news.analytics.Analytics;
 
 public class CategoryRedFragment  extends Fragment implements CategoryContract.View {
 
+    private boolean isVisibleToUser;
+    private Analytics mAnalytics;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -101,6 +103,34 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
         super.onActivityCreated(savedInstanceState);
         mPresenter.subscribe(1);
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if(isVisibleToUser && mAnalytics == null){
+            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
+                    .setEvenName("页面停留时长")
+                    .setPageType("之江号分类检索页面")
+                    .pageType("之江号分类检索页面")
+                    .build();
+        }
+        if (!isVisibleToUser && mAnalytics != null) {
+            mAnalytics.sendWithDuration();
+        }
+    }
+
+    /**
+     * 页面销毁时，不会调用setUserVisibleHint方法，故在此判断并结束一次时长统计
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isVisibleToUser && mAnalytics != null) {
+            mAnalytics.sendWithDuration();
+        }
     }
 
     private void setupRecyclerView() {
