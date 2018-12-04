@@ -160,6 +160,15 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         super.onHiddenChanged(hidden);
         if (!hidden) {
             refreshData();
+            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500001", "SubPageStay", true)
+                    .setEvenName("页面停留时长")
+                    .setPageType("订阅首页")
+                    .pageType("订阅页面")
+                    .build();
+        }else {
+            if(mAnalytics != null) {
+                mAnalytics.sendWithDuration();
+            }
         }
 
         if (fragment instanceof MySubscribedFragment && fragment.isAdded()) {
