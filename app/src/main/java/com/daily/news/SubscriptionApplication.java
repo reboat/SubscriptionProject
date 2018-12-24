@@ -7,6 +7,7 @@ import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.daily.ad.AdManager;
 
 import cn.daily.news.analytics.AnalyticsManager;
 

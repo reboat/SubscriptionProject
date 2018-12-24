@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-apply from: 'http://10.100.62.98:8086/nexus/service/local/artifact/maven/redirect?r=releases&g=cn.daily.android&a=publish&e=gradle&v=0.0.6'
+apply from: 'http://10.100.62.98:8086/nexus/service/local/artifact/maven/redirect?r=releases&g=cn.daily.android&a=publish&e=gradle&v=0.0.8'
 
 android {
     compileSdkVersion 28
@@ -52,7 +52,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api 'cn.daily.android:daily-db:5.1.0'
-    api 'cn.daily.android:core-library:5.6.0.6'
+    api 'cn.daily.android:core-library:5.6.0.24'
     api 'cn.daily.android:analytics:5.5.1'
 //    compile project(':core')
     //compile project(':analytics')

@@ -3,6 +3,7 @@ package com.daily.news;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,6 @@ import com.zjrb.core.nav.Nav;
 import org.w3c.dom.Text;
 
 public class MainActivity extends BaseActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,4 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
-
 }
