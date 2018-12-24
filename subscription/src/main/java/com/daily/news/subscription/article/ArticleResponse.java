@@ -17,6 +17,7 @@ public class ArticleResponse {
 
     public static class DataBean {
         public List<Article> elements;
+        public List<Article> adBeans;
 
         public static class Article extends ArticleItemBean {
 

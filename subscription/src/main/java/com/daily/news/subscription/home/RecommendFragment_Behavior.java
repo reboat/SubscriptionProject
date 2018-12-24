@@ -222,7 +222,7 @@ public class RecommendFragment_Behavior extends Fragment implements Subscription
         mColumnFragment.setRefreshing(false);
         FragmentManager fragmentManager = getFragmentManager();
         if (dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
+            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list, dataBean.adv_places);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             Fragment fragment = RecommendFragment_Behavior.newInstance(dataBean.focus_list, dataBean.recommend_list);

@@ -28,5 +28,18 @@ public class SubscriptionApplication extends Application {
 //        AppUtils.setChannel("bianfeng");
 
         AnalyticsManager.initAnalytics(this,"", null, null, null);
+
+        AdManager.getInstance().init(this);
+        AdManager.getInstance().setSspId(1);
+
+        //        开发环境
+//        SettingManager.getInstance().setOpenHttps(false);
+//        SettingManager.getInstance().setHost("10.100.62.206:8085");
+
+//        SettingManager.getInstance().setOpenHttps(true);
+//        SettingManager.getInstance().setHost("api-new.8531.cn");
+//        测试环境
+        SettingManager.getInstance().setOpenHttps(true);
+        SettingManager.getInstance().setHost("apibeta.8531.cn");
     }
 }
