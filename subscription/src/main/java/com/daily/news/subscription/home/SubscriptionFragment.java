@@ -21,7 +21,6 @@ import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.daily.ad.fragment.BumperAdFragment;
 import com.zjrb.daily.ad.fragment.InsertAdFragment;
-import com.zjrb.daily.news.bean.AdBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,7 +160,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
         }
         //底部横幅
         if (subscriptionResponse.adv_places != null && subscriptionResponse.adv_places.getBanner() != null && subscriptionResponse.adv_places.getBanner().size() > 0) {
-            BumperAdFragment.newInstance("" + subscriptionResponse.adv_places.getBanner().get(0).getId()).showDialog(getChildFragmentManager());
+            BumperAdFragment.newInstance("" + subscriptionResponse.adv_places.getBanner().get(0).getId(), SettingManager.getInstance().getMainTabHeight()).showDialog(getChildFragmentManager());
         }
 
     }
