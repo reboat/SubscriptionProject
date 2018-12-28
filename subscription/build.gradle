@@ -57,5 +57,5 @@ dependencies {
 //    compile project(':core')
     //compile project(':analytics')
     api 'com.aliya:android-uimode:2.0.8'
-    api 'cn.daily.android:ad:0.0.12'
+    api 'cn.daily.android:ad:0.0.13'
 }

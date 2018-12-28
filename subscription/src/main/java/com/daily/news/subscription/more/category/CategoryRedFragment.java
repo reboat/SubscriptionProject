@@ -22,6 +22,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
+import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 
@@ -153,6 +154,9 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
             fragment = new CategoryColumnFragment();
             Bundle args = new Bundle();
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
+            args.putInt("type", 1);
+            args.putInt("id", dataBean.elements.get(0).class_id);
+            fragment.setFeedbackDataListener(mCategoryAdapter);
             fragment.setArguments(args);
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.more_category_detail_container, fragment)
@@ -185,7 +189,9 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
-    public class CategoryAdapter extends RecyclerView.Adapter<CategoryRedFragment.CategoryAdapter.ViewHolder> {
+
+
+    public class CategoryAdapter extends RecyclerView.Adapter<CategoryRedFragment.CategoryAdapter.ViewHolder> implements ColumnFragment.FeedbackDataListener{
 
         private final List<CategoryResponse.DataBean.CategoryBean> mValues;
 
@@ -243,7 +249,10 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
+                    args.putInt("type", 2);
+                    args.putInt("id", category.class_id);
                     fragment.setArguments(args);
+                    fragment.setFeedbackDataListener(CategoryAdapter.this);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commitAllowingStateLoss();
@@ -274,6 +283,16 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
                 super(view);
                 mView = view;
                 ButterKnife.bind(this, view);
+            }
+        }
+
+        @Override
+        public void feedback(ColumnResponse.DataBean dataBean) {
+            List<ColumnResponse.DataBean.ColumnBean> list = mValues.get(mCurPosition).columns;
+            if (list == null || list.size() == 0) {
+                mValues.get(mCurPosition).columns = dataBean.elements;
+            } else if (list.get(0).id != dataBean.elements.get(0).id) {
+                mValues.get(mCurPosition).columns.addAll(dataBean.elements);
             }
         }
     }

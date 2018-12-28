@@ -100,12 +100,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     }
 
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        if(isVisibleToUser && mAnalytics == null){
+        if (isVisibleToUser && mAnalytics == null) {
             mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
                     .setEvenName("页面停留时长")
                     .setPageType("栏目号分类检索页面")
@@ -145,7 +144,10 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             fragment = new CategoryColumnFragment();
             Bundle args = new Bundle();
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
+            args.putInt("type", 2);
+            args.putInt("id", dataBean.elements.get(0).class_id);
             fragment.setArguments(args);
+            fragment.setFeedbackDataListener(mCategoryAdapter);
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.more_category_detail_container, fragment)
                     .commit();
@@ -176,7 +178,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
-    public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+    public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> implements ColumnFragment.FeedbackDataListener {
 
         private final List<CategoryResponse.DataBean.CategoryBean> mValues;
 
@@ -235,7 +237,10 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
+                    args.putInt("type", 2);
+                    args.putInt("id", category.class_id);
                     fragment.setArguments(args);
+                    fragment.setFeedbackDataListener(CategoryAdapter.this);
                     getChildFragmentManager().beginTransaction()
                             .replace(R.id.more_category_detail_container, fragment)
                             .commitAllowingStateLoss();
@@ -263,6 +268,16 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                 super(view);
                 mView = view;
                 ButterKnife.bind(this, view);
+            }
+        }
+
+        @Override
+        public void feedback(ColumnResponse.DataBean dataBean) {
+            List<ColumnResponse.DataBean.ColumnBean> list = mValues.get(mCurPosition).columns;
+            if (list == null || list.size() == 0) {
+                mValues.get(mCurPosition).columns = dataBean.elements;
+            } else if (list.get(0).id != dataBean.elements.get(0).id) {
+                mValues.get(mCurPosition).columns.addAll(dataBean.elements);
             }
         }
     }

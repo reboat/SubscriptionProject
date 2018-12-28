@@ -33,13 +33,13 @@ public class SubscriptionApplication extends Application {
         AdManager.getInstance().setSspId(1);
 
         //        开发环境
-//        SettingManager.getInstance().setOpenHttps(false);
-//        SettingManager.getInstance().setHost("10.100.62.206:8085");
+        SettingManager.getInstance().setOpenHttps(false);
+        SettingManager.getInstance().setHost("10.100.62.206:8085");
 
 //        SettingManager.getInstance().setOpenHttps(true);
 //        SettingManager.getInstance().setHost("api-new.8531.cn");
 //        测试环境
-        SettingManager.getInstance().setOpenHttps(true);
-        SettingManager.getInstance().setHost("apibeta.8531.cn");
+//        SettingManager.getInstance().setOpenHttps(true);
+//        SettingManager.getInstance().setHost("apibeta.8531.cn");
     }
 }

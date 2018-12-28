@@ -52,7 +52,7 @@ public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
 
             @Override
             protected String getApi() {
-                return "/api/red_boat/class_list";
+                return "/api/red_boat/columnclass_list";
             }
         };
     }

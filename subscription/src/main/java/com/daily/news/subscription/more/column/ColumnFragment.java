@@ -14,11 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -30,9 +32,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
+public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, OnItemClickListener {
 
 
+    @BindView(R2.id.tv_tips)
+    protected
+    TextView tvTips;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -41,8 +46,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
                 for (int i = 0; i < mColumns.size(); i++) {
-                    if(mColumns.get(i).id == id)
-                    {
+                    if (mColumns.get(i).id == id) {
                         mColumns.get(i).subscribed = subscribe;
                         getColumnAdapter().notifyDataSetChanged();
                     }
@@ -56,7 +60,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
     List<ColumnResponse.DataBean.ColumnBean> mColumns;
-    ColumnAdapter mColumnAdapter;
+    public ColumnAdapter mColumnAdapter;
 
     @BindView(R2.id.column_empty_container)
     ViewGroup mEmptyContainer;
@@ -64,6 +68,12 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     private ColumnContract.Presenter mPresenter;
     private HeaderRefresh mHeaderRefresh;
+
+    public FeedbackDataListener feedbackDataListener;
+
+    public void setFeedbackDataListener(FeedbackDataListener feedbackDataListener) {
+        this.feedbackDataListener = feedbackDataListener;
+    }
 
     public ColumnFragment() {
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
@@ -214,6 +224,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
             mEmptyContainer.setVisibility(View.VISIBLE);
         } else {
             mEmptyContainer.setVisibility(View.GONE);
+            if (feedbackDataListener != null) {
+                feedbackDataListener.feedback(dataBean);
+            }
         }
 
         mColumnAdapter.updateValues(dataBean.elements);
@@ -268,5 +281,10 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString());
+    }
+
+
+    public interface FeedbackDataListener {
+        void feedback(ColumnResponse.DataBean dataBean);
     }
 }

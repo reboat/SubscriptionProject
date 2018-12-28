@@ -18,6 +18,7 @@ public class ColumnResponse {
 
     public static class DataBean {
         public List<ColumnBean> elements;
+        public boolean has_more;
 
         public static class ColumnBean implements Parcelable {
             public long id;

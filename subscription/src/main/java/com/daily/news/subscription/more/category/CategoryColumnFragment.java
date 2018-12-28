@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,14 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.biz.ResourceBiz;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -29,8 +37,13 @@ import cn.daily.news.analytics.Analytics;
  * Created by lixinke on 2017/10/20.
  */
 
-public class CategoryColumnFragment extends ColumnFragment {
+public class CategoryColumnFragment extends ColumnFragment implements LoadMoreListener<ColumnResponse.DataBean> {
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
+
+    private FooterLoadMore<ColumnResponse.DataBean> mLoadMore;
+    List<ColumnResponse.DataBean.ColumnBean> columnBeen;
+    int type;
+    int id;
 
     public CategoryColumnFragment() {
     }
@@ -38,14 +51,24 @@ public class CategoryColumnFragment extends ColumnFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        List<ColumnResponse.DataBean.ColumnBean> columnBeen = getArguments().getParcelableArrayList("columns");
-        new ColumnPresenter(this, new LocalColumnStore(columnBeen));
+        columnBeen = getArguments().getParcelableArrayList("columns");
+        type = getArguments().getInt("type");
+        id = getArguments().getInt("id");
+        new ColumnPresenter(this, new LocalColumnStore(columnBeen, type, id));
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
+        mColumnAdapter.addFooterView(mLoadMore.getItemView());
     }
 
     @Override
@@ -158,5 +181,74 @@ public class CategoryColumnFragment extends ColumnFragment {
         }
         //说明:点击时父类会取反,作为参数传给服务端，所以要放在super前
         super.onSubscribe(bean);
+    }
+
+    @Override
+    public void updateValue(ColumnResponse.DataBean dataBean) {
+        if(type == 1){
+            tvTips.setText("暂无"+ getRedName() +"上线\n    敬请期待");
+        }else {
+            tvTips.setText("暂无栏目上线\n    敬请期待");
+        }
+        super.updateValue(dataBean);
+        if(dataBean.elements == null || dataBean.elements.size() == 0){
+            mLoadMore.setState(LoadMore.TYPE_IDLE);
+        }else if(!dataBean.has_more){
+            mLoadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+    }
+
+    private String getRedName(){
+        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        if (biz != null && biz.feature_list != null) {
+            for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
+                if (bean.name.equals("hch")) {
+                    String text = bean.desc;
+                    if (text != null && text != "") {
+
+                        if(text.length() > 4)
+                        {
+                            text = text.substring(0, 4) + "...";
+                        }
+                        return text;
+                    }
+                    break;
+                }
+            }
+        }
+        return "栏目";
+    }
+
+    @Override
+    public void onLoadMoreSuccess(ColumnResponse.DataBean data, LoadMore loadMore) {
+        mColumnAdapter.addData(data.elements, true);
+        if (data.elements == null || data.elements.size() == 0) {
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }else if(feedbackDataListener != null){
+            feedbackDataListener.feedback(data);
+        }
+    }
+
+    @Override
+    public void onLoadMore(LoadingCallBack<ColumnResponse.DataBean> callback) {
+        if(columnBeen != null && columnBeen.size() > 0) {
+            new APIGetTask<ColumnResponse.DataBean>(callback) {
+                @Override
+                protected void onSetupParams(Object... params) {
+                    put("type", type);
+                    put("class_id", id);
+                    put("start", columnBeen.get(columnBeen.size() - 1).id);
+                }
+
+                @Override
+                protected String getApi() {
+                    return "/api/red_boat/column_list";
+                }
+            }.exe();
+        }
+        else {
+            mLoadMore.setState(LoadMore.TYPE_IDLE);
+        }
+
     }
 }
