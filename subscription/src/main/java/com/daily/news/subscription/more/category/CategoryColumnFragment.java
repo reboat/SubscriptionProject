@@ -25,6 +25,7 @@ import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -69,6 +70,11 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         super.onViewCreated(view, savedInstanceState);
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mColumnAdapter.addFooterView(mLoadMore.getItemView());
+    }
+
+    @Override
+    public LoadViewHolder getProgressBar() {
+        return new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
     }
 
     @Override
