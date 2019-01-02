@@ -21,6 +21,7 @@ public class CategoryResponse {
             public long class_sort_number;
             public boolean is_selected = false;
             public List<ColumnResponse.DataBean.ColumnBean> columns;
+            public boolean has_more;
         }
     }
 }

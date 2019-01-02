@@ -222,6 +222,9 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 mEmptyContainer.addView(emptyView);
             }
             mEmptyContainer.setVisibility(View.VISIBLE);
+            if (dataBean.elements.size() == 0 && feedbackDataListener != null) {
+                feedbackDataListener.feedback(dataBean);
+            }
         } else {
             mEmptyContainer.setVisibility(View.GONE);
             if (feedbackDataListener != null) {

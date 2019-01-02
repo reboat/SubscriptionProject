@@ -17,14 +17,16 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
     private List<ColumnResponse.DataBean.ColumnBean> mColumns;
     private int type;
     private long id;
+    private boolean has_more;
 
     public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns) {
         mColumns = columns;
     }
-    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, int type, long id) {
+    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, int type, long id, boolean has_more) {
         mColumns = columns;
         this.type = type;
         this.id = id;
+        this.has_more = has_more;
     }
 
     @Override
@@ -52,6 +54,7 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
         }else {
             ColumnResponse.DataBean dataBean = new ColumnResponse.DataBean();
             dataBean.elements = mColumns;
+            dataBean.has_more = has_more;
             apiCallBack.onSuccess(dataBean);
             return null;
         }

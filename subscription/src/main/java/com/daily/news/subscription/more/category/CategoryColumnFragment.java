@@ -45,6 +45,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     List<ColumnResponse.DataBean.ColumnBean> columnBeen;
     int type;
     int id;
+    boolean has_more;
 
     public CategoryColumnFragment() {
     }
@@ -55,7 +56,8 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         columnBeen = getArguments().getParcelableArrayList("columns");
         type = getArguments().getInt("type");
         id = getArguments().getInt("id");
-        new ColumnPresenter(this, new LocalColumnStore(columnBeen, type, id));
+        has_more = getArguments().getBoolean("has+more");
+        new ColumnPresenter(this, new LocalColumnStore(columnBeen, type, id, has_more));
 
     }
 
