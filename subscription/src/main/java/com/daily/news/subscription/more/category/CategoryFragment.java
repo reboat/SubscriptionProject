@@ -146,6 +146,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
             args.putInt("type", 2);
             args.putInt("id", dataBean.elements.get(0).class_id);
+            args.putBoolean("has_more", dataBean.elements.get(0).has_more);
             fragment.setArguments(args);
             fragment.setFeedbackDataListener(mCategoryAdapter);
             getChildFragmentManager().beginTransaction()
@@ -239,6 +240,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
                     args.putInt("type", 2);
                     args.putInt("id", category.class_id);
+                    args.putBoolean("has_more", category.has_more);
                     fragment.setArguments(args);
                     fragment.setFeedbackDataListener(CategoryAdapter.this);
                     getChildFragmentManager().beginTransaction()
@@ -274,6 +276,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         @Override
         public void feedback(ColumnResponse.DataBean dataBean) {
             List<ColumnResponse.DataBean.ColumnBean> list = mValues.get(mCurPosition).columns;
+            mValues.get(mCurPosition).has_more = dataBean.has_more;
             if (list == null || list.size() == 0) {
                 mValues.get(mCurPosition).columns = dataBean.elements;
             } else if (list.get(0).id != dataBean.elements.get(0).id) {

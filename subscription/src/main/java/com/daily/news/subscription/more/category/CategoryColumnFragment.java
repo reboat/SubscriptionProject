@@ -56,7 +56,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         columnBeen = getArguments().getParcelableArrayList("columns");
         type = getArguments().getInt("type");
         id = getArguments().getInt("id");
-        has_more = getArguments().getBoolean("has+more");
+        has_more = getArguments().getBoolean("has_more");
         new ColumnPresenter(this, new LocalColumnStore(columnBeen, type, id, has_more));
 
     }
