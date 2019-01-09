@@ -250,7 +250,7 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
                     args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
-                    args.putInt("type", 2);
+                    args.putInt("type", 1);
                     args.putInt("id", category.class_id);
                     args.putBoolean("has_more", category.has_more);
                     fragment.setArguments(args);
