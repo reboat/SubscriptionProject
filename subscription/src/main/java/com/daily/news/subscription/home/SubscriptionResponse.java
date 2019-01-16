@@ -37,6 +37,7 @@ public class SubscriptionResponse {
         public int channel_article_id;
         public String tag;
         public boolean isAd;
+        public String adTag;
 
         @Override
         public int describeContents() {
@@ -52,6 +53,7 @@ public class SubscriptionResponse {
             dest.writeInt(this.channel_article_id);
             dest.writeString(this.tag);
             dest.writeByte(this.isAd ? (byte) 1 : (byte) 0);
+            dest.writeString(this.adTag);
         }
 
         public Focus() {
@@ -85,6 +87,7 @@ public class SubscriptionResponse {
             focusBean.pic_url = adModel.getImageUrlOne();
             focusBean.doc_title = adModel.getTitle();
             focusBean.isAd=true;
+            focusBean.adTag = adModel.getLabel();
             return focusBean;
         }
     }

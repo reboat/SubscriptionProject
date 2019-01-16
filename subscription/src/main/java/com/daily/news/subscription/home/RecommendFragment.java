@@ -113,6 +113,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
             bean.setSort_number(focus.sort_number);
             bean.setTitle(focus.doc_title);
             bean.setTag(focus.tag);
+            bean.adTag = focus.adTag;
             focusBeans.add(bean);
         }
         HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {

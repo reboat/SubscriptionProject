@@ -156,11 +156,11 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
 
         //广告弹窗
         if (subscriptionResponse.adv_places != null & subscriptionResponse.adv_places.getWindow() != null && subscriptionResponse.adv_places.getWindow().size() > 0) {
-            InsertAdFragment.newInstance("" + subscriptionResponse.adv_places.getWindow().get(0).getId()).showDialog(getChildFragmentManager());
+            InsertAdFragment.newInstance("" + subscriptionResponse.adv_places.getWindow().get(0).getAdv_place_id()).showDialog(getChildFragmentManager());
         }
         //底部横幅
         if (subscriptionResponse.adv_places != null && subscriptionResponse.adv_places.getBanner() != null && subscriptionResponse.adv_places.getBanner().size() > 0) {
-            BumperAdFragment.newInstance("" + subscriptionResponse.adv_places.getBanner().get(0).getId(), SettingManager.getInstance().getMainTabHeight()).showDialog(getChildFragmentManager());
+            BumperAdFragment.newInstance("" + subscriptionResponse.adv_places.getBanner().get(0).getAdv_place_id(), SettingManager.getInstance().getMainTabHeight()).showDialog(getChildFragmentManager());
         }
 
     }
