@@ -51,13 +51,14 @@ public class CategoryRedFragment  extends Fragment implements CategoryContract.V
                 long id = intent.getLongExtra(Constants.Name.ID, 0);
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
-                for(int i=0 ; i < mCategories.size() ; i++)
-                {
-                    for(int j=0 ; j< mCategories.get(i).columns.size() ; j++)
-                    {
-                        if(mCategories.get(i).columns.get(j).id == id)
-                        {
-                            mCategories.get(i).columns.get(j).subscribed = subscribe;
+                if(mCategories != null) {
+                    for (int i = 0; i < mCategories.size(); i++) {
+                        if(mCategories.get(i).columns != null){
+                            for (int j = 0; j < mCategories.get(i).columns.size(); j++) {
+                                if (mCategories.get(i).columns.get(j).id == id) {
+                                    mCategories.get(i).columns.get(j).subscribed = subscribe;
+                                }
+                            }
                         }
                     }
                 }

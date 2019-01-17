@@ -89,7 +89,7 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
                             // TODO: 2018/12/21 监测调试
                             for (int i = 0; i < successList.size(); i++) {
                                 AdModel adModel = successList.get(i);
-                                ArticleResponse.DataBean.Article bean = (ArticleResponse.DataBean.Article) ArticleResponse.DataBean.Article.switchToArticleItem(adModel);
+                                ArticleResponse.DataBean.Article bean = (ArticleResponse.DataBean.Article) ArticleResponse.DataBean.Article.switchToArticle(adModel);
                                 adList.add(bean);
                             }
                             initFragment();
@@ -103,7 +103,8 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
     private void initFragment() {
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);
-        new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles, adList));
+        new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles, adList)).subscribe();
+        mArticleFragment.subscribe();
         mArticleFragment.setOnRefreshListener(this);
 
         GuideView.Builder step2 = new GuideView.Builder(getActivity())
@@ -194,16 +195,18 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        mStep1.hide(hidden);
-        mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mStep1.build();
-                if (mMoreSubscribedView != null) {
-                    mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        if(mStep1 != null) {
+            mStep1.hide(hidden);
+            mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    mStep1.build();
+                    if (mMoreSubscribedView != null) {
+                        mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

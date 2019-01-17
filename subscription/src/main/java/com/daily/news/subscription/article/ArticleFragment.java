@@ -60,6 +60,12 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //TODO 重启时会为空，重现方法修改系统->显示->字体大小
+//        if (mPresenter != null) {
+//            mPresenter.subscribe();
+//        }
+    }
+
+    public void subscribe(){
         if (mPresenter != null) {
             mPresenter.subscribe();
         }
