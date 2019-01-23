@@ -28,6 +28,7 @@ import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -193,6 +194,13 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void updateValue(ColumnResponse.DataBean dataBean) {
+        if(columnBeen == null)
+        {
+            columnBeen = new ArrayList<>();
+        }
+        if(dataBean != null && dataBean.elements != null){
+            columnBeen.addAll(dataBean.elements);
+        }
         if(type == 1){
             tvTips.setText("暂无"+ getRedName() +"上线\n    敬请期待");
         }else {
