@@ -36,10 +36,15 @@ public class SubscriptionApplication extends Application {
 //        SettingManager.getInstance().setOpenHttps(false);
 //        SettingManager.getInstance().setHost("10.100.62.206:8085");
 
+        //正式
 //        SettingManager.getInstance().setOpenHttps(true);
 //        SettingManager.getInstance().setHost("api-new.8531.cn");
-//        测试环境
+        //预发
         SettingManager.getInstance().setOpenHttps(true);
-        SettingManager.getInstance().setHost("apibeta.8531.cn");
+        SettingManager.getInstance().setHost("apiprev.8531.cn");
+
+//        测试环境
+//        SettingManager.getInstance().setOpenHttps(true);
+//        SettingManager.getInstance().setHost("apibeta.8531.cn");
     }
 }

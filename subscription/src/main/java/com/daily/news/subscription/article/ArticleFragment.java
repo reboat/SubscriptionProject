@@ -115,9 +115,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     @Override
     public void updateValue(ArticleResponse response) {
-        mArticles = response.data.elements;
-        adBeans = response.data.adBeans;
-        mArticleAdapter.updateValue(mArticles, adBeans);
+        mArticleAdapter.updateValue(response.data.elements, response.data.adBeans);
         if (response.data.elements == null || response.data.elements.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
         }else{
@@ -144,7 +142,10 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     @Override
     public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
-        mArticleAdapter.addData(data.elements);
+        if (data.elements != null) {
+            mArticleAdapter.addData(data.elements);
+        }
+
         if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
