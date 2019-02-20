@@ -12,8 +12,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.RedboatUtils;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.utils.StringUtils;
 
 import java.util.List;

@@ -3,31 +3,20 @@ package com.daily.news.subscription.more;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.category.CategoryFragment;
-import com.daily.news.subscription.more.category.CategoryRedFragment;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.nav.Nav;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.nav.Nav;
 
-public class MoreActivity extends BaseActivity {
+public class MoreActivity extends DailyActivity {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
 

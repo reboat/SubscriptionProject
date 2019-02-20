@@ -1,9 +1,9 @@
 package com.daily.news.subscription.subscribe;
 
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import io.reactivex.Flowable;
 
 /**

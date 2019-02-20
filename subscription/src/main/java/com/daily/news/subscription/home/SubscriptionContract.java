@@ -3,9 +3,9 @@ package com.daily.news.subscription.home;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import io.reactivex.Flowable;
 
 /**

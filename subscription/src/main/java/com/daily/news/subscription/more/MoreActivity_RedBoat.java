@@ -15,10 +15,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.category.CategoryFragment;
 import com.daily.news.subscription.more.category.CategoryRedFragment;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +25,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.Constants;
+import cn.daily.news.biz.core.model.ResourceBiz;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * viewPager实现加载fragment，包含点击tab和滑动切换
  * Created by gaoyangzhen on 2018/3/21.
  */
 
-public class MoreActivity_RedBoat extends BaseActivity {
+public class MoreActivity_RedBoat extends DailyActivity {
 
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
@@ -125,7 +126,7 @@ public class MoreActivity_RedBoat extends BaseActivity {
 
     //动态获取tab的名字，最长4个字符
     private void initView() {
-        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        ResourceBiz biz = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
         if (biz != null && biz.feature_list != null) {
             for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
                 if (bean.name.equals("hch")) {

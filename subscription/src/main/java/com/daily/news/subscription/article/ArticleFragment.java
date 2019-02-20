@@ -12,24 +12,24 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.FooterLoadMore;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.recycleView.LoadMore;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class ArticleFragment extends Fragment implements ArticleContract.View,
-        LoadMoreListener<ArticleResponse.DataBean>,OnItemClickListener{
+        LoadMoreListener<ArticleResponse.DataBean>,OnItemClickListener {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     @BindView(R2.id.article_recyclerView)

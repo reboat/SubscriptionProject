@@ -24,8 +24,7 @@ import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -35,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class DetailFragment extends Fragment implements DetailContract.View, HeaderRefresh.OnRefreshListener {
     private static final String UID = "id";

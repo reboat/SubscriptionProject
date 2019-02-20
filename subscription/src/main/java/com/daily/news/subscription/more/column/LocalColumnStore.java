@@ -1,12 +1,12 @@
 package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.subscribe.SubscribeStore;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
 
 import java.util.List;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import io.reactivex.Flowable;
 
 /**
@@ -40,13 +40,13 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
         if(mColumns == null && type != 0) {
             return new APIGetTask<ColumnResponse.DataBean>(apiCallBack ) {
                 @Override
-                protected void onSetupParams(Object... params) {
+                public void onSetupParams(Object... params) {
                     put("type", type);
                     put("class_id", id);
                 }
 
                 @Override
-                protected String getApi() {
+                public String getApi() {
                     return "/api/red_boat/column_list";
                 }
             };

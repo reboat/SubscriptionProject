@@ -3,7 +3,6 @@ package com.daily.news;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -11,13 +10,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.daily.news.subscription.home.SubscriptionFragment;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.db.ThemeMode;
-import com.zjrb.core.nav.Nav;
 
-import org.w3c.dom.Text;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.db.ThemeMode;
+import cn.daily.news.biz.core.nav.Nav;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends DailyActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

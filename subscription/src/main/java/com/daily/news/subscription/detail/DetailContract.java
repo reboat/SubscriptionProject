@@ -4,10 +4,10 @@ import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
 import com.daily.news.subscription.subscribe.SubscribeContract;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import io.reactivex.Flowable;
 
 /**

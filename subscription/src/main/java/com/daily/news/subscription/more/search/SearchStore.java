@@ -1,24 +1,11 @@
 package com.daily.news.subscription.more.search;
 
-import com.daily.news.subscription.more.column.ColumnResponse;
-import com.daily.news.subscription.more.column.ColumnStore;
 import com.daily.news.subscription.subscribe.SubscribeStore;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
 
-import org.reactivestreams.Publisher;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by lixinke on 2017/7/17.
@@ -77,12 +64,12 @@ public class SearchStore extends SubscribeStore implements SearchContract.Store{
     public APIBaseTask getTask(APICallBack apiCallBack) {
         return new APIGetTask<SearchResponse.DataBean>(apiCallBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
                 put("keyword",params[0]);
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/red_boat/search";
             }
         };

@@ -6,12 +6,12 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.daily.news.ui.holder.SuperNewsHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
 
 /**
  * Created by gaoyangzhen on 2018/3/27.

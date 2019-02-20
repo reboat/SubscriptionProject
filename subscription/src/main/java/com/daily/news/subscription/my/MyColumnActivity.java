@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnPresenter;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.base.toolbar.TopBarFactory;
 
-public class MyColumnActivity extends BaseActivity {
+import cn.daily.news.biz.core.DailyActivity;
+
+public class MyColumnActivity extends DailyActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

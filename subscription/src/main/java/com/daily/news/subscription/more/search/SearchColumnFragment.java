@@ -6,14 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
-import com.daily.news.subscription.more.column.ColumnFragment;
-import com.daily.news.subscription.more.column.ColumnPresenter;
-import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
-import io.reactivex.Flowable;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/17.

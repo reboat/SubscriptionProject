@@ -22,22 +22,24 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.daily.news.subscription.more.column.ColumnContract;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
+
 /**
 * 此页面和ColumnFragment一样，只是在没有数据的时候提示语不同
 * @author zhengy
 * create at 2018/5/30 下午2:29
 **/
-public class ColumnFragment_home extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
+public class ColumnFragment_home extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, OnItemClickListener {
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {

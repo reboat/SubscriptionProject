@@ -11,20 +11,19 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
-import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
-import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.db.SettingManager;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -35,7 +34,7 @@ import io.reactivex.processors.PublishProcessor;
  * 1.有订阅时返回订阅的新闻，无订阅时返回推荐订阅栏目。
  * 2.点击订阅后页面下拉刷新，返回订阅栏目的新闻
  */
-public class SubscriptionFragment extends BaseFragment implements SubscriptionContract.View {
+public class SubscriptionFragment extends DailyFragment implements SubscriptionContract.View {
 
     private static final long DURATION_TIME = 24 * 60 * 60 * 1000;
     private Unbinder mUnBinder;

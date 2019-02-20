@@ -1,9 +1,9 @@
 package com.daily.news.subscription.article;
 
 import com.daily.news.subscription.mock.MockResponse;
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 import io.reactivex.Flowable;
 
 /**

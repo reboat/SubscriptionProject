@@ -18,12 +18,9 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.google.gson.Gson;
-import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
@@ -34,12 +31,14 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by gaoyangzhen on 2018/3/14.
  */
 
-public class SearchBaseFragment extends Fragment implements SearchContract.View, SearchBaseAdapter.OnSubscribeListener, com.zjrb.core.common.base.adapter.OnItemClickListener {
+public class SearchBaseFragment extends Fragment implements SearchContract.View, SearchBaseAdapter.OnSubscribeListener, OnItemClickListener {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
 

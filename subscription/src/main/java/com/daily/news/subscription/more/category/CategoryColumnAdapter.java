@@ -4,7 +4,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.more.column.ColumnAdapter;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 
 import java.util.List;
 

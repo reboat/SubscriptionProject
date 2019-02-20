@@ -4,8 +4,9 @@ import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
 import com.daily.news.subscription.subscribe.SubscribeContract;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
+
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 
 /**
  * Created by lixinke on 2017/7/17.

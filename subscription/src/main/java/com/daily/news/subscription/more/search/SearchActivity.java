@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.RedboatUtils;
-import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 
@@ -27,12 +26,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
 
 /**
  * Created by gaoyangzhen on 2018/3/13.
  */
 
-public class SearchActivity extends BaseActivity implements TextView.OnEditorActionListener, TextWatcher {
+public class SearchActivity extends DailyActivity implements TextView.OnEditorActionListener, TextWatcher {
 
 
     @BindView(R2.id.et_input)

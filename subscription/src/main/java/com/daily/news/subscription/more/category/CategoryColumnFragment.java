@@ -17,15 +17,11 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.FooterLoadMore;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
@@ -34,6 +30,10 @@ import java.util.List;
 import java.util.Map;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.model.ResourceBiz;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/10/20.
@@ -215,7 +215,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     }
 
     private String getRedName(){
-        ResourceBiz biz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        ResourceBiz biz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
         if (biz != null && biz.feature_list != null) {
             for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
                 if (bean.name.equals("hch")) {
@@ -250,14 +250,14 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         if(columnBeen != null && columnBeen.size() > 0) {
             new APIGetTask<ColumnResponse.DataBean>(callback) {
                 @Override
-                protected void onSetupParams(Object... params) {
+                public void onSetupParams(Object... params) {
                     put("type", type);
                     put("class_id", id);
                     put("start", columnBeen.get(columnBeen.size() - 1).id);
                 }
 
                 @Override
-                protected String getApi() {
+                public String getApi() {
                     return "/api/red_boat/column_list";
                 }
             }.exe();

@@ -1,10 +1,10 @@
 package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.detail.RxException;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.common.manager.APICallManager;
-import com.zjrb.core.utils.SettingManager;
 
+import cn.daily.news.biz.core.db.SettingManager;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**

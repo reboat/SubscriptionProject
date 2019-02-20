@@ -1,15 +1,15 @@
 package com.daily.news.subscription.subscribe;
 
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -41,13 +41,13 @@ SubscribeStore implements SubscribeContract.Store {
     public APIBaseTask getSubmitSubscribeTask(APICallBack<ColumnResponse.DataBean.ColumnBean> apiCallBack) {
         return new APIPostTask<ColumnResponse.DataBean.ColumnBean>(apiCallBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
                 put("column_id",params[0]);
                 put("do_subscribe",params[1]);
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/column/subscribe_action";
             }
         };

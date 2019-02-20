@@ -14,7 +14,8 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/17.

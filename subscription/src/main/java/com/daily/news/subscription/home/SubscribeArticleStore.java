@@ -2,12 +2,12 @@ package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.article.ArticleContract;
 import com.daily.news.subscription.article.ArticleResponse;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 
 import java.util.List;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import io.reactivex.Flowable;
 
 /**
@@ -33,13 +33,13 @@ public class SubscribeArticleStore implements ArticleContract.Store {
     public APIBaseTask<ArticleResponse.DataBean> getLoadMoreTask(LoadingCallBack callBack) {
         APIGetTask task = new APIGetTask<ArticleResponse.DataBean>(callBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
                 put("start", params[0]);
                 put("size", params[1]);
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/column/my_article_list";
             }
         };

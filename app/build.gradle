@@ -26,6 +26,25 @@ android {
 //        targetCompatibility 1.8
 //        sourceCompatibility 1.8
 //    }
+
+    buildTypes {
+        debug {
+            manifestPlaceholders = [
+                    "UMENG_APP_KEY": UMENG_APP_KEY,
+                    "QQ_APP_ID"    : QQ_APP_ID,
+                    "_packagename" : _packagename
+            ]
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    "UMENG_APP_KEY": UMENG_APP_KEY,
+                    "QQ_APP_ID"    : QQ_APP_ID,
+                    "_packagename" : _packagename
+            ]
+        }
+    }
 }
 
 dependencies {

@@ -32,11 +32,7 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
@@ -48,6 +44,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 

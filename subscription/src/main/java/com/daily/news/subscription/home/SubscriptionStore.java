@@ -2,14 +2,14 @@ package com.daily.news.subscription.home;
 
 import com.daily.news.subscription.mock.MockResponse;
 import com.daily.news.subscription.subscribe.SubscribeStore;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -49,11 +49,11 @@ public class SubscriptionStore extends SubscribeStore implements SubscriptionCon
     public APIBaseTask getTask(APICallBack<SubscriptionResponse.DataBean> apiCallBack) {
         return  new APIGetTask<SubscriptionResponse.DataBean>(apiCallBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/column/first_page_info";
             }
         }.setShortestTime(400);

@@ -1,11 +1,11 @@
 package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.subscribe.SubscribeStore;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -29,12 +29,12 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
     public APIBaseTask<DetailResponse.DataBean> getTask(APICallBack callBack) {
         return new APIGetTask<DetailResponse.DataBean>(callBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
                 put("column_id", params[0]);
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/column/article_list";
             }
         };
@@ -70,12 +70,12 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
                     }
                 }) {
                     @Override
-                    protected void onSetupParams(Object... params) {
+                    public void onSetupParams(Object... params) {
                         put("column_id", params[0]);
                     }
 
                     @Override
-                    protected String getApi() {
+                    public String getApi() {
                         return "/api/column/article_list";
                     }
                 }.bindLoadViewHolder(progressBar).exe(params);

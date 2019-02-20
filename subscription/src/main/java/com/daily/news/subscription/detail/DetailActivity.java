@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.daily.news.subscription.R;
-import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.base.BaseActivity;
 
 import cn.daily.news.analytics.Analytics;
 

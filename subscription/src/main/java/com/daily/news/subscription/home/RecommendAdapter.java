@@ -14,8 +14,8 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.MoreFragmentAdapter;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,11 +2,12 @@ package com.daily.news.subscription.more.column;
 
 import com.daily.news.subscription.detail.RxException;
 import com.daily.news.subscription.subscribe.SubscribePresenter;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.common.manager.APICallManager;
 
 import java.util.List;
+
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * Created by lixinke on 2017/7/17.

@@ -1,7 +1,8 @@
 package com.daily.news.subscription.article;
 
 
-import com.zjrb.core.api.callback.LoadingCallBack;
+
+import com.zjrb.core.load.LoadingCallBack;
 
 import java.util.List;
 

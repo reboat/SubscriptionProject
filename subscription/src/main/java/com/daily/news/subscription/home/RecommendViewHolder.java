@@ -10,12 +10,10 @@ import android.widget.FrameLayout;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.more.MoreFragmentAdapter;
-import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.page.PageItem;
+import com.zjrb.core.recycleView.PageItem;
 
 import java.util.ArrayList;
 import java.util.List;

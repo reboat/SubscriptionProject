@@ -16,10 +16,8 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.ui.widget.GuideView;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -32,6 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 
 /**

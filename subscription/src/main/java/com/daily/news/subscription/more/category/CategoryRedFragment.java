@@ -23,7 +23,6 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
@@ -34,6 +33,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by gaoyangzhen on 2018/3/13.

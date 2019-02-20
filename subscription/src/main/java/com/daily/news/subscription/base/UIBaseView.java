@@ -1,6 +1,7 @@
 package com.daily.news.subscription.base;
 
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/19.

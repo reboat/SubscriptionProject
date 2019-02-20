@@ -24,9 +24,7 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -43,6 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics.AnalyticsBuilder;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.

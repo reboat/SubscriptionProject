@@ -39,23 +39,30 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.1.1'
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     api 'com.google.android:flexbox:0.3.0'
-    api('cn.daily.android:daily-news:5.7.0.12') {
+    api('cn.daily.android:daily-news:6.0.0.2') {
         transitive false
     }
     api('cn.daily.android:daily-local:5.6.0.2') {
 
     }
-//    compile('com.aliya:android-player:0.1.4') {
-//        exclude group: 'com.android.support'
-//    }
     api('cn.daily.android:android-player:0.2.66-SNAPSHOT') {
         exclude group: 'com.android.support'
     }
     api 'cn.daily.android:daily-db:5.1.0'
-    api 'cn.daily.android:core-library:5.6.0.27'
+//    api 'cn.daily.android:core-library:5.6.0.27'
     api 'cn.daily.android:analytics:5.5.1'
-//    compile project(':core')
-    //compile project(':analytics')
     api 'com.aliya:android-uimode:2.0.8'
-    api 'cn.daily.android:ad:0.0.16'
+//    api 'cn.daily.android:ad:0.0.16'
+
+    api 'cn.daily.android:common-core:0.0.6.10'
+    implementation 'cn.daily.android:biz-core:6.0.0.11'
+
+
+}
+configurations.all {
+    exclude group: "cn.daily.android", module: "core-library"
+    exclude group: "com.umeng.sdk", module: "common"
+        resolutionStrategy {
+            force 'com.umeng.sdk:umeng-common:1.5.4'
+        }
 }

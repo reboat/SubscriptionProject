@@ -2,9 +2,6 @@ package com.daily.news.subscription.my;
 
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.ColumnStore;
-import com.zjrb.core.api.base.APIBaseTask;
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
 
 import org.reactivestreams.Publisher;
 
@@ -13,6 +10,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import cn.daily.news.biz.core.network.compatible.APIBaseTask;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -52,12 +52,12 @@ public class MyStore extends ColumnStore {
     public APIBaseTask getTask(APICallBack<ColumnResponse.DataBean> apiCallBack) {
         return new APIGetTask<ColumnResponse.DataBean>(apiCallBack) {
             @Override
-            protected void onSetupParams(Object... params) {
+            public void onSetupParams(Object... params) {
 
             }
 
             @Override
-            protected String getApi() {
+            public String getApi() {
                 return "/api/column/my_subscription";
             }
         };

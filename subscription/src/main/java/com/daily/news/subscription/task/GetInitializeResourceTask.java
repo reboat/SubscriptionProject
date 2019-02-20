@@ -1,16 +1,15 @@
 package com.daily.news.subscription.task;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.utils.StringUtils;
+import com.zjrb.core.load.LoadingCallBack;
+
+import cn.daily.news.biz.core.constant.Constants;
+import cn.daily.news.biz.core.model.ResourceBiz;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.network.compatible.APICallManager;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 
 /**
@@ -33,12 +32,12 @@ public class GetInitializeResourceTask extends APIGetTask<ResourceBiz> {
     }
 
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
 
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return "/api/resource";
     }
 
@@ -81,7 +80,7 @@ public class GetInitializeResourceTask extends APIGetTask<ResourceBiz> {
                     Nav.with(mFragment).to("http://www.8531.cn/subscription/more");
                 }
 
-                SPHelper.get().put(SPHelper.Key.INITIALIZATION_RESOURCES, resourceBiz).commit();
+                SPHelper.get().put(Constants.Key.INITIALIZATION_RESOURCES, resourceBiz).commit();
 
             } catch (Exception e) {
             }
