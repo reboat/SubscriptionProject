@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
@@ -31,12 +30,6 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.ad.AdList;
-import com.zjrb.daily.ad.listener.AdListDataListener;
-import com.zjrb.daily.ad.model.AdIndexModel;
-import com.zjrb.daily.ad.model.AdModel;
-import com.zjrb.daily.ad.model.AdType;
-import com.zjrb.daily.news.bean.AdBean;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -62,7 +55,6 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
     private static final String COLUMN_DATA = "column_data";
     private static final String COLUMN_DATA_REDBOAT = "column_data_redboat";
     private static final String FOCUS_DATA = "focus_data";
-    private static final String AD_DATA = "ad_data";
     @BindView(R2.id.no_subscription_more_view)
     LinearLayout noSubscriptionMoreView;
     @BindView(R2.id.header_rel)
@@ -86,9 +78,6 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
     boolean isRedboatChecked = true;
 
     String redTitle;
-
-    private AdBean adBean;
-    List<SubscriptionResponse.Focus> local_focuses;
 
     public RecommendFragment_Redboat() {
     }
@@ -120,39 +109,24 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
     }
 
     private void initTitle(String title) {
-            redTitle = title;
-            if (redTitle != null && redTitle != "") {
+        redTitle = title;
+        if (redTitle != null && redTitle != "") {
 
-                if (redTitle.length() > 4) {
-                    redTitle = redTitle.substring(0, 4) + "...";
-                }
-
+            if (redTitle.length() > 4) {
+                redTitle = redTitle.substring(0, 4) + "...";
             }
-    }
 
-    private void initArticles(AdBean bean) {
-        adBean = bean;
+        }
     }
 
     private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
-
-        local_focuses = focuses;
-        if(local_focuses == null){
-            local_focuses = new ArrayList<>();
-        }
-        if(adBean != null && adBean.getFocus() != null){
-            local_focuses = getFocusList(local_focuses, adBean.getFocus());
-        }
-
-
-
-        if (local_focuses == null || local_focuses.size() == 0) {
+        if (focuses == null || focuses.size() == 0) {
             return null;
         }
         List<FocusBean> focusBeans = new ArrayList<>();
-        for (int i = 0; i < local_focuses.size(); i++) {
+        for (int i = 0; i < focuses.size(); i++) {
             FocusBean bean = new FocusBean();
-            SubscriptionResponse.Focus focus = local_focuses.get(i);
+            SubscriptionResponse.Focus focus = focuses.get(i);
             bean.setId(focus.channel_article_id);
             bean.setImage_url(focus.pic_url);
             bean.setUrl(focus.doc_url);
@@ -164,10 +138,9 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
             @Override
             public void onItemClick(View item, int position) {
-//                super.onItemClick(item, position);
                 if (ClickTracker.isDoubleClick()) return;
 
-                SubscriptionResponse.Focus focus = local_focuses.get(position);
+                SubscriptionResponse.Focus focus = focuses.get(position);
                 if (!TextUtils.isEmpty(focus.doc_url)) {
                     Nav.with(item.getContext()).to(focus.doc_url);
                 }
@@ -189,30 +162,6 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         };
         bannerHolder.setData(focusBeans);
         return bannerHolder.getItemView();
-    }
-
-    private List<SubscriptionResponse.Focus> getFocusList(List<SubscriptionResponse.Focus> focus_list, List<AdIndexModel> focus) {
-        final List<SubscriptionResponse.Focus> resultList = focus_list;
-        AdList.create(getActivity())
-                .setSlots(focus)
-                .setType(AdType.FEED)
-                .setAdListDataListener(new AdListDataListener() {
-                    @Override
-                    public void updateListData(List<AdModel> adList, List<String> adFails) {
-                        for (int i = 0; i < adList.size(); i++) {
-                            AdModel adModel = adList.get(i);
-                            SubscriptionResponse.Focus focusBean = SubscriptionResponse.Focus.switchToAdModal(adModel);
-                            if(adModel.getPosition() < resultList.size()){
-                                resultList.add(adModel.getPosition(), focusBean);
-                            }else {
-                                resultList.add(focusBean);
-                            }
-                        }
-                    }
-                })
-                .build();
-
-        return resultList;
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
@@ -260,7 +209,7 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         super.onActivityCreated(savedInstanceState);
     }
 
-    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked, String hch_name, AdBean adBean) {
+    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, List<ColumnResponse.DataBean.ColumnBean> redboat_recommend_list, boolean isRedboatChecked, String hch_name) {
         RecommendFragment_Redboat fragment = new RecommendFragment_Redboat();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
@@ -288,7 +237,6 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         args.putParcelableArrayList(RecommendFragment_Redboat.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
         args.putBoolean("isRedboatChecked", isRedboatChecked);
         args.putString("hch_name", hch_name);
-        fragment.initArticles(adBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -329,14 +277,14 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         mColumnFragment.setRefreshing(false);
         FragmentManager fragmentManager = getFragmentManager();
         if (dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list, dataBean.adv_places);
+            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked, dataBean.hch_name, dataBean.adv_places);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, isRedboatChecked, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
-                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.adv_places);
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             }
 

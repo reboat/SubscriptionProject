@@ -27,12 +27,6 @@ import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.ad.AdList;
-import com.zjrb.daily.ad.listener.AdListDataListener;
-import com.zjrb.daily.ad.model.AdIndexModel;
-import com.zjrb.daily.ad.model.AdModel;
-import com.zjrb.daily.ad.model.AdType;
-import com.zjrb.daily.news.bean.AdBean;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -64,9 +58,6 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     private View mHeaderBanner;
     private int firstItemPosition = 0;
 
-    private AdBean adBean;
-    List<SubscriptionResponse.Focus> local_focuses;
-
     public RecommendFragment() {
     }
 
@@ -90,30 +81,19 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
     }
 
     private View setupBannerView(final List<SubscriptionResponse.Focus> focuses) {
-
-        local_focuses = focuses;
-        if (local_focuses == null) {
-            local_focuses = new ArrayList<>();
-        }
-        if (adBean != null && adBean.getFocus() != null) {
-            local_focuses = getFocusList(local_focuses, adBean.getFocus());
-        }
-
-
-        if (local_focuses == null || local_focuses.size() == 0) {
+        if (focuses == null || focuses.size() == 0) {
             return null;
         }
         List<FocusBean> focusBeans = new ArrayList<>();
-        for (int i = 0; i < local_focuses.size(); i++) {
+        for (int i = 0; i < focuses.size(); i++) {
             FocusBean bean = new FocusBean();
-            SubscriptionResponse.Focus focus = local_focuses.get(i);
+            SubscriptionResponse.Focus focus = focuses.get(i);
             bean.setId(focus.channel_article_id);
             bean.setImage_url(focus.pic_url);
             bean.setUrl(focus.doc_url);
             bean.setSort_number(focus.sort_number);
             bean.setTitle(focus.doc_title);
             bean.setTag(focus.tag);
-            bean.adTag = focus.adTag;
             focusBeans.add(bean);
         }
         HeaderBannerHolder bannerHolder = new HeaderBannerHolder(mColumnFragment.getRecyclerView()) {
@@ -122,7 +102,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
 //                super.onItemClick(item, position);
                 if (ClickTracker.isDoubleClick()) return;
 
-                SubscriptionResponse.Focus focus = local_focuses.get(position);
+                SubscriptionResponse.Focus focus = focuses.get(position);
                 if (!TextUtils.isEmpty(focus.doc_url)) {
                     Nav.with(item.getContext()).to(focus.doc_url);
                 }
@@ -144,32 +124,6 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         };
         bannerHolder.setData(focusBeans);
         return bannerHolder.getItemView();
-    }
-
-    private List<SubscriptionResponse.Focus> getFocusList(List<SubscriptionResponse.Focus> focus_list, List<AdIndexModel> focus) {
-        final List<SubscriptionResponse.Focus> resultList = focus_list;
-        AdList.create(getActivity())
-                .setSlots(focus)
-                .setType(AdType.LOOP)
-                .setAdListDataListener(new AdListDataListener() {
-                    @Override
-                    public void updateListData(List<AdModel> adList, List<String> adFails) {
-                        if (adList != null && adList.size() != 0) {
-                            for (int i = 0; i < adList.size(); i++) {
-                                AdModel adModel = adList.get(i);
-                                SubscriptionResponse.Focus focusBean = SubscriptionResponse.Focus.switchToAdModal(adModel);
-                                if (adModel.getPosition() < resultList.size()) {
-                                    resultList.add(adModel.getPosition(), focusBean);
-                                } else {
-                                    resultList.add(focusBean);
-                                }
-                            }
-                        }
-                    }
-                })
-                .build();
-
-        return resultList;
     }
 
     private View setupMoreSubscriptionView(LayoutInflater inflater, ViewGroup container) {
@@ -198,11 +152,7 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void initArticles(AdBean bean) {
-        adBean = bean;
-    }
-
-    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list, AdBean adBean) {
+    public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list, List<ColumnResponse.DataBean.ColumnBean> recommend_list) {
         RecommendFragment fragment = new RecommendFragment();
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         if (focus_list != null && focus_list.size() > 0) {
@@ -215,7 +165,6 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         Bundle args = new Bundle();
         args.putParcelableArrayList(RecommendFragment.COLUMN_DATA, (ArrayList<? extends Parcelable>) recommend_list);
         args.putParcelableArrayList(RecommendFragment.FOCUS_DATA, (ArrayList<? extends Parcelable>) focus_list);
-        fragment.initArticles(adBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -256,14 +205,14 @@ public class RecommendFragment extends Fragment implements SubscriptionContract.
         mColumnFragment.setRefreshing(false);
         FragmentManager fragmentManager = getFragmentManager();
         if (dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list, dataBean.adv_places);
+            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name, dataBean.adv_places);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
-                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.adv_places);
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             }
         }

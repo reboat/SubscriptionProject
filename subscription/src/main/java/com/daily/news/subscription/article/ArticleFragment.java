@@ -21,7 +21,6 @@ import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
-import com.zjrb.daily.news.bean.ArticleItemBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     private ArticleAdapter mArticleAdapter;
     private List<ArticleResponse.DataBean.Article> mArticles;
-    private List<ArticleResponse.DataBean.Article> adBeans;
+
     private ArticleContract.Presenter mPresenter;
     private FooterLoadMore<ArticleResponse.DataBean> mLoadMore;
 
@@ -60,12 +59,6 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //TODO 重启时会为空，重现方法修改系统->显示->字体大小
-//        if (mPresenter != null) {
-//            mPresenter.subscribe();
-//        }
-    }
-
-    public void subscribe(){
         if (mPresenter != null) {
             mPresenter.subscribe();
         }
@@ -115,15 +108,13 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     @Override
     public void updateValue(ArticleResponse response) {
-        mArticleAdapter.updateValue(response.data.elements, response.data.adBeans);
+        mArticleAdapter.updateValue(response.data.elements);
         if (response.data.elements == null || response.data.elements.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
         }else{
             mLoadMore.setState(LoadMore.TYPE_IDLE);
         }
     }
-
-
 
     @Override
     public void hideProgressBar() {
@@ -142,10 +133,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     @Override
     public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
-        if (data.elements != null) {
-            mArticleAdapter.addData(data.elements);
-        }
-
+        mArticleAdapter.addData(data.elements, true);
         if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }

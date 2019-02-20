@@ -11,6 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
@@ -19,8 +20,6 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.StringUtils;
-import com.zjrb.daily.ad.fragment.BumperAdFragment;
-import com.zjrb.daily.ad.fragment.InsertAdFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +97,7 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     @Override
     public void onPause() {
         super.onPause();
-        if (mAnalytics != null) {
+        if(mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
         mEmitter = PublishProcessor.create();
@@ -142,26 +141,17 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
     public void updateValue(final SubscriptionResponse.DataBean subscriptionResponse) {
 
         if (subscriptionResponse.has_subscribe) {
-            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list, subscriptionResponse.adv_places);
+            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
         } else {
 
             if (subscriptionResponse.hch_switch && !StringUtils.isEmpty(subscriptionResponse.hch_name)) {
-                fragment = RecommendFragment_Redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name, subscriptionResponse.adv_places);
+                fragment = RecommendFragment_Redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
             } else {
-                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.adv_places);
+                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
             }
         }
 
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
-
-        //广告弹窗
-        if (subscriptionResponse.adv_places != null & subscriptionResponse.adv_places.getWindow() != null && subscriptionResponse.adv_places.getWindow().size() > 0) {
-            InsertAdFragment.newInstance("" + subscriptionResponse.adv_places.getWindow().get(0).getAdv_place_id()).showDialog(getChildFragmentManager());
-        }
-        //底部横幅
-        if (subscriptionResponse.adv_places != null && subscriptionResponse.adv_places.getBanner() != null && subscriptionResponse.adv_places.getBanner().size() > 0) {
-            BumperAdFragment.newInstance("" + subscriptionResponse.adv_places.getBanner().get(0).getAdv_place_id(), SettingManager.getInstance().getMainTabHeight()).showDialog(getChildFragmentManager());
-        }
 
     }
 
@@ -175,8 +165,8 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionCo
                     .setPageType("订阅首页")
                     .pageType("订阅页面")
                     .build();
-        } else {
-            if (mAnalytics != null) {
+        }else {
+            if(mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }
         }

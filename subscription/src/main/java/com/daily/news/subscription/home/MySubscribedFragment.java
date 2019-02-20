@@ -16,23 +16,14 @@ import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.article.ArticleResponse;
 import com.daily.news.subscription.task.GetInitializeResourceTask;
-import com.google.gson.Gson;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.GuideView;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.ad.AdList;
-import com.zjrb.daily.ad.listener.AdListDataListener;
-import com.zjrb.daily.ad.model.AdModel;
-import com.zjrb.daily.ad.model.AdType;
-import com.zjrb.daily.news.bean.AdBean;
-import com.zjrb.daily.news.bean.ArticleItemBean;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,8 +48,6 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     private SubscriptionContract.Presenter mPresenter;
     private ArticleFragment mArticleFragment;
     private List<ArticleResponse.DataBean.Article> mArticles;
-    private List<ArticleResponse.DataBean.Article> adList = new ArrayList<>();
-    private AdBean adBean;
     @BindView(R2.id.my_sub_guide)
     View mMySubscribedView;
     @BindView(R2.id.my_more_guide)
@@ -72,39 +61,9 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.subscription_fragment_subscribed_article, container, false);
         mUnBinder = ButterKnife.bind(this, rootView);
-        getAdData();
-        return rootView;
-    }
 
-    private void getAdData() {
-        //处理信息流广告
-        if (adBean!=null&&adBean.getFeed()!=null){
-            AdList.create(getActivity())
-                    .setSlots(adBean.getFeed())
-                    .setType(AdType.FEED)
-                    .setDuration(2000)
-                    .setAdListDataListener(new AdListDataListener() {
-                        @Override
-                        public void updateListData(List<AdModel> successList, List<String> adFails) {
-                            // TODO: 2018/12/21 监测调试
-                            for (int i = 0; i < successList.size(); i++) {
-                                AdModel adModel = successList.get(i);
-                                ArticleResponse.DataBean.Article bean = (ArticleResponse.DataBean.Article) ArticleResponse.DataBean.Article.switchToArticle(adModel);
-                                adList.add(bean);
-                            }
-                            initFragment();
-                        }
-                    })
-                    .build();
-        }else {
-            initFragment();
-        }
-    }
-
-    private void initFragment() {
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.article_fragment);
-        new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles, adList)).subscribe();
-        mArticleFragment.subscribe();
+        new ArticlePresenter(mArticleFragment, new SubscribeArticleStore(mArticles));
         mArticleFragment.setOnRefreshListener(this);
 
         GuideView.Builder step2 = new GuideView.Builder(getActivity())
@@ -129,13 +88,11 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
                 }
             }
         });
+        return rootView;
     }
 
-
-
-    private void initArticles(List<ArticleResponse.DataBean.Article> article_list, AdBean bean) {
+    private void initArticles(List<ArticleResponse.DataBean.Article> article_list) {
         mArticles = article_list;
-        adBean = bean;
     }
 
     @Override
@@ -195,18 +152,16 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if(mStep1 != null) {
-            mStep1.hide(hidden);
-            mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    mStep1.build();
-                    if (mMoreSubscribedView != null) {
-                        mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
+        mStep1.hide(hidden);
+        mMoreSubscribedView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mStep1.build();
+                if (mMoreSubscribedView != null) {
+                    mMoreSubscribedView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
@@ -235,15 +190,15 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         FragmentManager fragmentManager = getFragmentManager();
 
         if (dataBean.has_subscribe && fragmentManager != null) {
-            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list, dataBean.adv_places);
+            Fragment fragment = MySubscribedFragment.newInstance(dataBean.article_list);
             fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
         } else if (!dataBean.has_subscribe && fragmentManager != null) {
             //解决切换用户的问题
             if (dataBean.hch_switch && !StringUtils.isEmpty(dataBean.hch_name)) {
-                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name, dataBean.adv_places);
+                Fragment fragment = RecommendFragment_Redboat.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.redboat_recommend_list, true, dataBean.hch_name);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             } else {
-                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list, dataBean.adv_places);
+                Fragment fragment = RecommendFragment.newInstance(dataBean.focus_list, dataBean.recommend_list);
                 fragmentManager.beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
             }
         }
@@ -260,14 +215,14 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
         mUnBinder.unbind();
     }
 
-    public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list, AdBean adBean) {
+    public static Fragment newInstance(List<ArticleResponse.DataBean.Article> article_list) {
         MySubscribedFragment fragment = new MySubscribedFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         if (article_list != null && article_list.size() > 0) {
             article_list.removeAll(Collections.singleton(null));
         }
-        fragment.initArticles(article_list, adBean);
+        fragment.initArticles(article_list);
         new SubscriptionPresenter(fragment, new SubscriptionStore());
         return fragment;
     }

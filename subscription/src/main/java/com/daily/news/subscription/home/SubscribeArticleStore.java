@@ -16,15 +16,9 @@ import io.reactivex.Flowable;
 
 public class SubscribeArticleStore implements ArticleContract.Store {
     public List<ArticleResponse.DataBean.Article> mArticles;
-    public List<ArticleResponse.DataBean.Article> adBaens;
 
     public SubscribeArticleStore(List<ArticleResponse.DataBean.Article> articles) {
         mArticles = articles;
-    }
-
-    public SubscribeArticleStore(List<ArticleResponse.DataBean.Article> articles, List<ArticleResponse.DataBean.Article> beans) {
-        mArticles = articles;
-        adBaens = beans;
     }
 
     @Override
@@ -32,7 +26,6 @@ public class SubscribeArticleStore implements ArticleContract.Store {
         ArticleResponse response = new ArticleResponse();
         response.data = new ArticleResponse.DataBean();
         response.data.elements = mArticles;
-        response.data.adBeans = adBaens;
         return Flowable.just(response);
     }
 
