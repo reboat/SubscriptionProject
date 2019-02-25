@@ -32,7 +32,7 @@ public class DetailActivity extends BaseActivity {
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment_new detailFragment = DetailFragment_new.newInstance(id);
+        DetailFragment detailFragment = DetailFragment.newInstance(id);
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
     }
