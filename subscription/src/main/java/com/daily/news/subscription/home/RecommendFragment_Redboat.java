@@ -170,9 +170,9 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
             @Override
             public void onClick(View v) {
                 //判断红船号开关，如果没有开关数据，默认是关闭的
-                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
+//                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
 
-//                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
                 new AnalyticsBuilder(getContext(), "500002", "500002", "AppTabClick", false)
                         .setPageType("订阅首页")
                         .setEvenName("点击订阅更多")
@@ -374,9 +374,9 @@ public class RecommendFragment_Redboat extends Fragment implements SubscriptionC
         if (view.getId() == R.id.no_subscription_more_view) {
             //判断红船号开关，如果没有开关数据，默认是关闭的
             if (!ClickTracker.isDoubleClick()) {
-                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
+//                GetInitializeResourceTask.createTask(RecommendFragment_Redboat.this, TAG_INITIALIZE_RESOURCE);
 
-//                Nav.with(v.getContext()).to("http://www.8531.cn/subscription/more");
+                Nav.with(view.getContext()).to("http://www.8531.cn/subscription/more");
                 Map<String, String> otherInfo = new HashMap<>();
                 otherInfo.put("customObjectType", "RelatedColumnType");
                 String otherInfoStr = JsonUtils.toJsonString(otherInfo);

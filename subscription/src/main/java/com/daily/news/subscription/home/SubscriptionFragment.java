@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
+import com.daily.news.subscription.sail.SailFragment;
 import com.zjrb.core.utils.StringUtils;
 
 import butterknife.BindView;
@@ -138,6 +139,8 @@ public class SubscriptionFragment extends DailyFragment implements SubscriptionC
 
     @Override
     public void updateValue(final SubscriptionResponse.DataBean subscriptionResponse) {
+
+//        fragment = SailFragment.newInstance(subscriptionResponse.focus_list);
 
         if (subscriptionResponse.has_subscribe) {
             fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);

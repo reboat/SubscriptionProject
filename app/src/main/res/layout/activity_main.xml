@@ -26,6 +26,7 @@
         android:singleLine="true"
         android:text="分类测试222222222222"
         android:textColor="@color/category_text_color_selector"
+        android:visibility="gone"
         />
 
     <FrameLayout

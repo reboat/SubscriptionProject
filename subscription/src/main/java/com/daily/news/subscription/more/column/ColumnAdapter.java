@@ -95,7 +95,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
             String info = TextUtils.isEmpty(column.subscribe_count_general) ? "" : column.subscribe_count_general + "订阅  ";
             info += TextUtils.isEmpty(column.article_count_general) ? "" : column.article_count_general + "份稿件";
 
-            mColumnInfoView.setText(info);
+            mColumnInfoView.setText("起航号简介,后期更改为真实数据");
             String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
             mSubscribeBtn.setText(subscriptionText);
             mSubscribeBtn.setSelected(column.subscribed);

@@ -214,6 +214,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             holder.mCategoryView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             holder.mCategoryView.setSelected(category.is_selected);
             holder.mCategoryView.setText(category.class_name);
+            holder.mCategoryIndicator.setSelected(category.is_selected);
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -267,6 +268,9 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         public class ViewHolder extends RecyclerView.ViewHolder {
             @BindView(R2.id.more_item_category_name)
             TextView mCategoryView;
+            @BindView(R2.id.more_item_category_indicator)
+            View mCategoryIndicator;
+
             public View mView;
             public CategoryResponse.DataBean.CategoryBean mItem;
 

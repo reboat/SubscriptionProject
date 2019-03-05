@@ -133,8 +133,10 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
     @Override
     public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
-        mArticleAdapter.addData(data.elements, true);
-        if (data.elements == null || data.elements.size() == 0) {
+        if(data != null) {
+            mArticleAdapter.addData(data.elements, true);
+        }
+        if (data == null || data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
     }

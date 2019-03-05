@@ -5,7 +5,6 @@ import android.app.Application;
 import com.aliya.uimode.UiModeManager;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
-import com.zjrb.daily.ad.AdManager;
 
 import cn.daily.news.analytics.AnalyticsManager;
 import cn.daily.news.biz.core.db.SettingManager;

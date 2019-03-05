@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.daily.news.subscription.view.DailyNestedScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants"
+        >
+
+        <RelativeLayout
+            android:id="@+id/sail_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <RelativeLayout
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/_ffffff"
+            >
+
+            <TextView
+                android:id="@+id/choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="精选"
+                android:textSize="@dimen/daily_14"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/category_text_color_selector"
+                />
+
+            <TextView
+                android:id="@+id/subscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订阅"
+                android:textSize="@dimen/daily_14"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/choice"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/category_text_color_selector"
+                />
+
+            <TextView
+                android:id="@+id/rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="榜单"
+                android:textSize="@dimen/daily_14"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/subscribe"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/category_text_color_selector"
+                />
+
+            <TextView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多"
+                android:textSize="@dimen/daily_14"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/arrow"
+                android:drawablePadding="10dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/_aaaaaa"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            >
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+    </com.daily.news.subscription.view.DailyNestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/top_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_ffffff"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/top_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="精选"
+            android:textSize="@dimen/daily_14"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/category_text_color_selector"
+            />
+
+        <TextView
+            android:id="@+id/top_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订阅"
+            android:textSize="@dimen/daily_14"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/top_choice"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/category_text_color_selector"
+            />
+
+        <TextView
+            android:id="@+id/top_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="榜单"
+            android:textSize="@dimen/daily_14"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/top_subscribe"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/category_text_color_selector"
+            />
+
+        <TextView
+            android:id="@+id/top_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更多"
+            android:textSize="@dimen/daily_14"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:drawableRight="@drawable/arrow"
+            android:drawablePadding="10dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/_aaaaaa"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+
+</FrameLayout>

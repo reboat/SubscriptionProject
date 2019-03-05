@@ -4,10 +4,18 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dcdcdc"
+        android:layout_marginTop="5dp"
+        />
+
     <LinearLayout
         android:id="@+id/category_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="5.5dp"
         android:baselineAligned="false"
         android:orientation="horizontal"
         tools:context="com.daily.news.subscription.more.MoreActivity">
@@ -19,7 +27,9 @@
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
             tools:context="com.daily.news.subscription.more.MoreListActivity"
-            tools:listitem="@layout/subscription_item_category"/>
+            tools:listitem="@layout/subscription_item_category"
+            android:background="@color/_f5f5f5"
+            />
 
         <LinearLayout
             android:id="@+id/more_category_detail_container"

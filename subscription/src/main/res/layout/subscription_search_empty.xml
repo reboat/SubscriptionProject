@@ -10,9 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="#999999"
         android:lineSpacingExtra="5sp"
-        android:layout_marginTop="60dp"
-        android:text="无搜索结果"/>
+        android:layout_marginTop="200dp"
+        android:text="暂无搜索结果"/>
 
 </LinearLayout>

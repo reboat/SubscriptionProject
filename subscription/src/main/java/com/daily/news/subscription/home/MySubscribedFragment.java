@@ -117,10 +117,10 @@ public class MySubscribedFragment extends Fragment implements SubscriptionContra
     public void gotoMore() {
         //判断红船号开关，如果没有开关数据，默认是关闭的
         if(!ClickTracker.isDoubleClick()) {
-            GetInitializeResourceTask.createTask(this, TAG_INITIALIZE_RESOURCE);
+//            GetInitializeResourceTask.createTask(this, TAG_INITIALIZE_RESOURCE);
 //        ResourceBiz resourceBiz = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
 
-//        Nav.with(this).to("http://www.8531.cn/subscription/more");
+        Nav.with(this).to("http://www.8531.cn/subscription/more");
             new AnalyticsBuilder(getContext(), "500007", "500007", "AppTabClick", false)
                     .setEvenName("点击“订阅更多”")
                     .setPageType("订阅首页")

@@ -109,25 +109,11 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
 
             final SearchResponse.DataBean.ColumnBean column = getData();
-            if(firstId == column.id && !StringUtils.isEmpty(RedboatUtils.getRedboatTitle()))
-            {
-                searchTitle.setText(RedboatUtils.getRedboatTitle());
-                searchTitle.setVisibility(View.VISIBLE);
-            }else if(secondId == column.id)
-            {
-                searchTitle.setText("栏目号");
-                searchTitle.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                searchTitle.setVisibility(View.GONE);
-            }
-            mTitleView.setText(column.name);
 
             String info = TextUtils.isEmpty(column.subscribe_count_general) ? "" : column.subscribe_count_general + "订阅  ";
             info += TextUtils.isEmpty(column.article_count_general) ? "" : column.article_count_general + "份稿件";
 
-            mColumnInfoView.setText(info);
+            mColumnInfoView.setText("简介信息，后期补充");
             String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
             mSubscribeBtn.setText(subscriptionText);
             mSubscribeBtn.setSelected(column.subscribed);

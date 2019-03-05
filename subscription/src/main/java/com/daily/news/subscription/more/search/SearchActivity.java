@@ -58,13 +58,7 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
 
         Intent intent = getIntent();
         Uri data = intent.getData();
-        type = data.getQueryParameter("type");
-        if (type != null && type.equals("more_new") && !StringUtils.isEmpty(RedboatUtils.getRedboatTitle())) {
-            etInput.setHint("搜索" + RedboatUtils.getRedboatTitle() + "、栏目号");
-
-        } else {
-            etInput.setHint("搜索栏目号");
-        }
+        etInput.setHint("搜索起航号");
     }
 
     @Override
