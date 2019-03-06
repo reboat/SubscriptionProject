@@ -12,7 +12,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
@@ -77,11 +77,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     private DetailContract.Presenter mPresenter;
 
     @BindView(R2.id.detail_column_imageView)
-    ImageView mImageView;
+    CircleImageView mImageView;
     @BindView(R2.id.detail_column_title)
     TextView mTitleView;
-    @BindView(R2.id.detail_column_info)
-    TextView mInfoView;
     @BindView(R2.id.detail_column_description)
     TextView mDescriptionView;
     @BindView(R2.id.detail_column_sub_btn)
@@ -92,6 +90,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView mHeaderImageView;
     @BindView(R2.id.detail_empty_error_container)
     View mEmptyErrorContainer;
+    @BindView(R2.id.toobar_icon)
+    ImageView mToolbarIcon;
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
     private ArticleFragment mArticleFragment;
@@ -143,14 +143,14 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.subscription_fragment_detail_column_new, container, false);
+        View rootView = inflater.inflate(R.layout.subscription_fragment_detail_column, container, false);
         ButterKnife.bind(this, rootView);
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
         mArticleFragment.setOnRefreshListener(this);
 
         appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+            public void onStateChanged(AppBarLayout appBarLayout, State state, int i) {
                 if (state == State.EXPANDED) {
 
                     //展开状态
@@ -210,12 +210,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             options.centerCrop();
             options.placeholder(R.drawable.column_placeholder_big);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
+            Glide.with(this).load(data.detail.pic_url).apply(options).into(mToolbarIcon);
             mTitleView.setText(data.detail.name);
             toolbarTitle.setText(data.detail.name);
 
-            String info = TextUtils.isEmpty(data.detail.subscribe_count_general) ? "" : data.detail.subscribe_count_general + "订阅  ";
-            info += TextUtils.isEmpty(data.detail.article_count_general) ? "" : data.detail.article_count_general + "份稿件";
-            mInfoView.setText(info);
             mDescriptionView.setText(data.detail.description);
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
