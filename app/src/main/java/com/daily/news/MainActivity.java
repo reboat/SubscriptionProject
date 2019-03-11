@@ -50,7 +50,7 @@ public class MainActivity extends DailyActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
                     case R.id.home:
-                        Nav.with(MainActivity.this).to("http://www.8531.cn/subscription/more");
+                        Nav.with(MainActivity.this).to("http://www.8531.cn/subscription/rank");
                         break;
                     case R.id.sub:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, SubscriptionFragment.newInstance()).commitAllowingStateLoss();
