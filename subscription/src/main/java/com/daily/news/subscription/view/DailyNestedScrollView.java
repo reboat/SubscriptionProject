@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -63,8 +64,8 @@ public class DailyNestedScrollView extends NestedScrollView {
             scrollBy(0, dy);
         }
 
-    }
 
+    }
 
 
     @Override

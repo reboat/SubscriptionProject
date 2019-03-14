@@ -88,7 +88,7 @@
             android:id="@+id/cnange"
             android:layout_width="10dp"
             android:layout_height="20dp"
-            android:src="@mipmap/test"
+            android:src="@drawable/zjnews_qihang_up_icon"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"

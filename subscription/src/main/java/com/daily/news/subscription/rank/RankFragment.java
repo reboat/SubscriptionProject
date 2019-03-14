@@ -52,7 +52,7 @@ public class RankFragment extends DailyFragment implements OnItemClickListener,C
 
     String classifName = "总榜";
 
-    public static Fragment fragment(ChannelBean channel, boolean showTopView) {
+    public static Fragment instance(ChannelBean channel, boolean showTopView) {
         RankFragment fragment = new RankFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean(SHOWTOPVIEW, showTopView);
@@ -90,6 +90,9 @@ public class RankFragment extends DailyFragment implements OnItemClickListener,C
         rankResponses.add(new RankResponse());
         rankResponses.add(new RankResponse());
         rankResponses.add(new RankResponse());
+        rankResponses.add(new RankResponse());
+        rankResponses.add(new RankResponse());
+
 
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.color

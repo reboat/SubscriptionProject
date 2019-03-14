@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,10 +25,16 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.home.RecommendFragment;
 import com.daily.news.subscription.home.SubscriptionResponse;
+import com.daily.news.subscription.more.column.ColumnPresenter;
+import com.daily.news.subscription.my.MyColumnFragment;
+import com.daily.news.subscription.my.MyStore;
+import com.daily.news.subscription.rank.RankFragment;
 import com.daily.news.subscription.view.DailyNestedScrollView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.bean.ChannelBean;
 import com.zjrb.daily.news.bean.FocusBean;
 import com.zjrb.daily.news.ui.holder.HeaderBannerHolder;
 
@@ -75,6 +83,9 @@ public class SailFragment extends Fragment {
 
     View bannerView;
 
+    Fragment   choiceFragment,subFragment, rankFragment;
+    private FragmentManager mFragmentManager;
+
     public static Fragment newInstance(List<SubscriptionResponse.Focus> focus_list) {
         SailFragment fragment = new SailFragment();
         if (focus_list != null && focus_list.size() > 0) {
@@ -95,7 +106,29 @@ public class SailFragment extends Fragment {
         if(bannerView != null) {
             sailBanner.addView(bannerView);
         }
+
         return rootView;
+    }
+
+    private void initFragment() {
+        mFragmentManager = getChildFragmentManager();
+        if(mFragmentManager.findFragmentByTag("choiceFragment") != null){
+
+        }else{
+            choiceFragment = RankFragment.instance(new ChannelBean(), true);
+            subFragment = RankFragment.instance(new ChannelBean(), true);
+
+            rankFragment = RankFragment.instance(new ChannelBean(), true);
+
+            mFragmentManager.beginTransaction().add(R.id.framelayout, choiceFragment, "choiceFragment").commit();
+            mFragmentManager.beginTransaction().add(R.id.framelayout, subFragment, "subFragment").commit();
+            mFragmentManager.beginTransaction().add(R.id.framelayout, rankFragment, "rankFragment").commit();
+        }
+
+
+
+
+        onViewClicked(choice);
     }
 
     @Override
@@ -103,11 +136,12 @@ public class SailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initView(view);
+        initFragment();
 
     }
 
     private void initView(View view) {
-        onViewClicked(choice);
+
         if(bannerView != null) {
             WindowManager wm = (WindowManager) getContext()
                     .getSystemService(Context.WINDOW_SERVICE);
@@ -115,7 +149,7 @@ public class SailFragment extends Fragment {
             int width = wm.getDefaultDisplay().getWidth();
             scrollHeight = width * 178 / 360;
         }
-        Log.e("height", scrollHeight + "");
+
         scrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -135,19 +169,20 @@ public class SailFragment extends Fragment {
     private void autoFitScreen(){
         menuHeight = menu.getLayoutParams().height;
         Log.e("menuHeight", menuHeight + "");
-        final View rootView = getActivity().findViewById(android.R.id.content);
+        final View rootView = getActivity().findViewById(R.id.main);
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onGlobalLayout() {
                 rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                scrollview.setMyScrollHeight(scrollHeight);
+                scrollview.setMyScrollHeight((int) menu.getY());
+
                 /**
                  * setBehavior_Y（），传入外层behavior动画执行后折叠view的高度
                  */
-                scrollview.setBehavior_Y(455);
+                scrollview.setBehavior_Y(252);
 
-                int rvNewHeight = rootView.getHeight() - 2 * menuHeight;
+                int rvNewHeight = rootView.getHeight() - menuHeight;
                 /**
                  * framelayout 在xml中height须设置一个相对小的固定值，如果设置MATCH_PARENT或WRAP_CONTENT则无法动态设置其高度
                  *
@@ -209,6 +244,8 @@ public class SailFragment extends Fragment {
             topSubscribe.setSelected(false);
             rank.setSelected(false);
             topRank.setSelected(false);
+            switchFragment(choiceFragment, subFragment, rankFragment);
+
         }
         if(id == R.id.subscribe || id == R.id.top_subscribe){
             choice.setSelected(false);
@@ -217,6 +254,7 @@ public class SailFragment extends Fragment {
             topSubscribe.setSelected(true);
             rank.setSelected(false);
             topRank.setSelected(false);
+            switchFragment(subFragment, choiceFragment, rankFragment);
         }
 
         if(id == R.id.rank || id == R.id.top_rank){
@@ -226,8 +264,25 @@ public class SailFragment extends Fragment {
             topRank.setSelected(true);
             subscribe.setSelected(false);
             topSubscribe.setSelected(false);
+            switchFragment(rankFragment, choiceFragment, subFragment);
+        }
+
+        if(id == R.id.more || id == R.id.top_more){
+            Nav.with(this).toPath("/subscription/more");
         }
 
 
+    }
+
+    private void switchFragment(Fragment show, Fragment hide1, Fragment hide2) {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.show(show);
+        if (hide1 != null) {
+            transaction.hide(hide1);
+        }
+        if (hide2 != null) {
+            transaction.hide(hide2);
+        }
+        transaction.commitAllowingStateLoss();
     }
 }

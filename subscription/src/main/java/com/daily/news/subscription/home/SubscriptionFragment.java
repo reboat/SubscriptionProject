@@ -140,18 +140,18 @@ public class SubscriptionFragment extends DailyFragment implements SubscriptionC
     @Override
     public void updateValue(final SubscriptionResponse.DataBean subscriptionResponse) {
 
-//        fragment = SailFragment.newInstance(subscriptionResponse.focus_list);
+        fragment = SailFragment.newInstance(subscriptionResponse.focus_list);
 
-        if (subscriptionResponse.has_subscribe) {
-            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
-        } else {
-
-            if (subscriptionResponse.hch_switch && !StringUtils.isEmpty(subscriptionResponse.hch_name)) {
-                fragment = RecommendFragment_Redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
-            } else {
-                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
-            }
-        }
+//        if (subscriptionResponse.has_subscribe) {
+//            fragment = MySubscribedFragment.newInstance(subscriptionResponse.article_list);
+//        } else {
+//
+//            if (subscriptionResponse.hch_switch && !StringUtils.isEmpty(subscriptionResponse.hch_name)) {
+//                fragment = RecommendFragment_Redboat.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list, subscriptionResponse.redboat_recommend_list, true, subscriptionResponse.hch_name);
+//            } else {
+//                fragment = RecommendFragment.newInstance(subscriptionResponse.focus_list, subscriptionResponse.recommend_list);
+//            }
+//        }
 
         getFragmentManager().beginTransaction().replace(R.id.subscription_container, fragment).commitAllowingStateLoss();
 
