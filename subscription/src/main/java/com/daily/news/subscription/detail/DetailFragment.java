@@ -67,10 +67,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView toolbarDetailBack;
     @BindView(R2.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R2.id.toolbar_detail_column_sub_btn)
-    TextView toolbarDetailColumnSubBtn;
-    @BindView(R2.id.toolbar_subscribe_container)
-    LinearLayout toolbarSubscribeContainer;
+//    @BindView(R2.id.toolbar_detail_column_sub_btn)
+//    TextView toolbarDetailColumnSubBtn;
+//    @BindView(R2.id.toolbar_subscribe_container)
+//    LinearLayout toolbarSubscribeContainer;
     @BindView(R2.id.toolbar_rel)
     RelativeLayout toolbarRel;
     private String mUid;
@@ -92,6 +92,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     View mEmptyErrorContainer;
     @BindView(R2.id.toobar_icon)
     ImageView mToolbarIcon;
+    @BindView(R2.id.toolbar_detail_sub)
+    ImageView mToolbarSub;
+
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
     private ArticleFragment mArticleFragment;
@@ -109,8 +112,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     String subscriptionText = subscribe ? "已订阅" : "订阅";
                     mSubscriptionView.setText(subscriptionText);
                     mSubscribeContainer.setSelected(subscribe);
-                    toolbarDetailColumnSubBtn.setText(subscriptionText);
-                    toolbarSubscribeContainer.setSelected(subscribe);
+                    int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
+                    mToolbarSub.setImageResource(mId);
+
                 }
 
 
@@ -218,8 +222,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
             mSubscriptionView.setText(subscriptionText);
             mSubscribeContainer.setSelected(data.detail.subscribed);
-            toolbarDetailColumnSubBtn.setText(subscriptionText);
-            toolbarSubscribeContainer.setSelected(data.detail.subscribed);
+            int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
+            mToolbarSub.setImageResource(id);
 
             options.placeholder(R.drawable.detail_column_default);
             Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
@@ -256,7 +260,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         return new LoadViewHolder(main, (ViewGroup) main.getParent());
     }
 
-    @OnClick({R2.id.subscribe_container, R2.id.toolbar_subscribe_container})
+    @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
         if (mDetailColumn.subscribed) {
             String pageType = "栏目详情页";
@@ -333,8 +337,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         String subscriptionText = mDetailColumn.subscribed ? "已订阅" : "订阅";
         mSubscriptionView.setText(subscriptionText);
         mSubscribeContainer.setSelected(subscribe);
-        toolbarDetailColumnSubBtn.setText(subscriptionText);
-        toolbarSubscribeContainer.setSelected(subscribe);
+        int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
+        mToolbarSub.setImageResource(id);
 
 
     }

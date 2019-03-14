@@ -69,7 +69,7 @@
                     android:layout_marginRight="11.5dp"
                     android:layout_marginTop="40dp"
                     android:scaleType="center"
-                    android:src="@drawable/share_white"
+                    android:src="@drawable/zjnews_detail_theme_navigation_share_icon"
                     app:maskColor="@android:color/transparent"
                     />
 
@@ -150,7 +150,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/detail_sub_btn"
+                        android:background="@drawable/subscription_btn_selector"
                         android:gravity="center"
                         android:minWidth="75dp"
                         android:orientation="horizontal"
@@ -171,7 +171,7 @@
                             android:layout_height="30dp"
                             android:layout_marginLeft="2dp"
                             android:gravity="center"
-                            android:textColor="@color/detail_btn_text_color_selector"
+                            android:textColor="@color/column_subscription_text_color_selector"
                             android:textSize="14sp"
                             tools:text="已订阅" />
                     </LinearLayout>
@@ -212,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/detail_back_arrow" />
+                        android:src="@drawable/zjnews_back_red" />
 
 
                     <TextView
@@ -246,41 +246,20 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="11.5dp"
                         android:scaleType="center"
-                        android:src="@mipmap/module_core_topbar_share"
+                        android:src="@drawable/zjnews_detail_navigation_share_icon"
                         app:maskColor="@android:color/transparent"
                         />
 
-                    <LinearLayout
-                        android:id="@+id/toolbar_subscribe_container"
+                    <ImageView
+                        android:id="@+id/toolbar_detail_sub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/toolbar_detail_share"
                         android:layout_marginRight="20dp"
-                        android:background="@drawable/detail_sub_btn_toolbar"
-                        android:gravity="center"
-                        android:minWidth="47dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="9dp"
-                        android:paddingRight="9dp"
-                        >
+                        />
 
-                        <View
-                            android:id="@+id/toolbar_subscribe_icon"
-                            android:layout_width="7.5dp"
-                            android:layout_height="7.5dp"
-                            android:background="@drawable/detail_sub_left_pic" />
 
-                        <TextView
-                            android:id="@+id/toolbar_detail_column_sub_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="21dp"
-                            android:layout_marginLeft="2dp"
-                            android:gravity="center"
-                            android:textColor="@color/detail_btn_text_color_selector"
-                            android:textSize="10sp"
-                            tools:text="已订阅" />
-                    </LinearLayout>
 
 
                 </RelativeLayout>

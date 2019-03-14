@@ -32,6 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="false"
+            android:button="@drawable/check_icon"
             />
         <View
             android:layout_width="match_parent"
@@ -66,6 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="false"
+            android:button="@drawable/check_icon"
             />
         <View
             android:layout_width="match_parent"
@@ -100,6 +102,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="false"
+            android:button="@drawable/check_icon"
             />
         <View
             android:layout_width="match_parent"
@@ -133,6 +136,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="false"
+            android:button="@drawable/check_icon"
             />
         <View
             android:layout_width="match_parent"

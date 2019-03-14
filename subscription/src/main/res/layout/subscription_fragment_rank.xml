@@ -73,6 +73,13 @@
             android:textStyle="bold"
 
             />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/zjnews_qihang_more_icon"
+            android:layout_toRightOf="@+id/classify"
+            android:layout_alignBaseline="@+id/classify"
+            />
 
         <TextView
             android:id="@+id/all_rank"
