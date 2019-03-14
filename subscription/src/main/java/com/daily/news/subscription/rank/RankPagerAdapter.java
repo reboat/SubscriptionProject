@@ -41,10 +41,10 @@ public class RankPagerAdapter extends TabPagerAdapter<ChannelBean> {
         Fragment f;
         switch (channel.getNav_type() != null ? channel.getNav_type() : "") {
             case "normal":
-                f = RankFragment.fragment(channel);
+                f = RankFragment.fragment(channel, false);
                 break;
             default:
-                f = RankFragment.fragment(channel);
+                f = RankFragment.fragment(channel, false);
                 break;
         }
         return f;
