@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.daily.news.subscription">
+    package="com.daily.news.subscription">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,16 +20,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.DAILY"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/subscription/detail"
-                    android:scheme="http"/>
+                    android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -39,16 +39,20 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
-                <action android:name="android.intent.action.DAILY"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
+                    android:path="/native/subscription/more"
+                    android:scheme="@string/data_scheme" />
+                <data
+                    android:host="@string/data_host"
                     android:path="/subscription/more"
-                    android:scheme="http"/>
+                    android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>
 
@@ -59,16 +63,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
-                <action android:name="android.intent.action.DAILY"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/subscription/more_redboat"
-                    android:scheme="http"/>
+                    android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -76,16 +80,20 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.DAILY"/>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DAILY" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
+                    android:path="/native/subscription/mine"
+                    android:scheme="@string/data_scheme" />
+                <data
+                    android:host="@string/data_host"
                     android:path="/subscription/more/my/column"
-                    android:scheme="http"/>
+                    android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>
 
@@ -94,38 +102,40 @@
             android:configChanges="uiMode"
             android:label="@string/title_more_list"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateVisible"
-            >
+            android:windowSoftInputMode="adjustPan|stateVisible">
             <intent-filter>
-                <action android:name="android.intent.action.DAILY"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/subscription/more/search"
-                    android:scheme="http"/>
+                    android:scheme="@string/data_scheme" />
+                <data
+                    android:host="@string/data_host"
+                    android:path="/native/subscription/search/index"
+                    android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".rank.RankActivtiy"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.DAILY"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="www.8531.cn"
                     android:path="/subscription/rank"
-                    android:scheme="http"/>
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 

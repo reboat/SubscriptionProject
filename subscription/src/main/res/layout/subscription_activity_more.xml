@@ -25,7 +25,7 @@
             android:background="?attr/actionBarItemBackground"
             android:paddingRight="7dp"
             android:scaleType="center"
-            android:src="@mipmap/ic_top_bar_back_dark"
+            android:src="@drawable/default_back_arrow"
             app:maskColor="@android:color/transparent" />
 
         <LinearLayout
