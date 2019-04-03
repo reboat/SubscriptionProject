@@ -9,8 +9,9 @@ import com.daily.news.subscription.R;
 import com.zjrb.core.base.BaseActivity;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends DailyActivity {
 
     private Analytics mAnalytics;
     @Override
