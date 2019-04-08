@@ -29,33 +29,30 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    api 'com.android.support:support-v4:28.0.0'
-    api 'com.android.support:design:28.0.0'
-    api 'com.android.support:appcompat-v7:28.0.0'
-    api 'com.android.support:recyclerview-v7:28.0.0'
-    api 'com.android.support.constraint:constraint-layout:1.0.2'
-    api 'com.jakewharton:butterknife:9.0.0-rc1'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
-    api 'io.reactivex.rxjava2:rxjava:2.1.1'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    api 'com.google.android:flexbox:0.3.0'
-    api('cn.daily.android:daily-news:6.0.0.23') {
-        transitive false
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.google.android:flexbox:0.3.0'
+    implementation('cn.daily.android:daily-news:6.0.0.23') {
+        transitive true
     }
-    api('cn.daily.android:daily-local:6.0.0.5') {
-
+    implementation('cn.daily.android:daily-local:6.0.0.5') {
+        transitive true
     }
-    api('cn.daily.android:android-player:0.2.66-SNAPSHOT') {
+    api('cn.daily.android:android-player:0.3.1.1') {
         exclude group: 'com.android.support'
     }
-    api 'cn.daily.android:daily-db:5.1.0'
-//    api 'cn.daily.android:core-library:5.6.0.27'
-    api 'cn.daily.android:analytics:5.5.1'
-    api 'com.aliya:android-uimode:2.0.8'
-//    api 'cn.daily.android:ad:0.0.16'
-
-    api 'cn.daily.android:common-core:0.0.6.10'
-    implementation 'cn.daily.android:biz-core:6.0.0.38'
+    implementation 'cn.daily.android:daily-db:5.1.0'
+    implementation 'cn.daily.android:analytics:5.5.1'
+    implementation 'com.aliya:android-uimode:2.0.8'
+    implementation 'cn.daily.android:common-core:0.0.6.10'
+    implementation 'cn.daily.android:biz-core:6.0.0.76'
     implementation 'cn.daily.android:update:5.7.0'
 
 
@@ -65,5 +62,6 @@ configurations.all {
     exclude group: "com.umeng.sdk", module: "common"
         resolutionStrategy {
             force 'com.umeng.sdk:umeng-common:1.5.4'
+            force 'cn.daily.android:biz-core:6.0.0.76'
         }
 }

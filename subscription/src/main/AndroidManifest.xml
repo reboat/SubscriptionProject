@@ -26,10 +26,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/subscription/detail"
-                    android:scheme="@string/data_scheme" />
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/subscription/detail" />
+                <data android:path="/column.html" />
+
             </intent-filter>
         </activity>
         <activity
