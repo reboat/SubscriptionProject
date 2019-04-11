@@ -23,10 +23,6 @@ public class DetailResponse {
         public List<ArticleResponse.DataBean.Article> elements;
 
         public static class DetailBean extends ColumnResponse.DataBean.ColumnBean {
-            public String background_url;
-            public String description;
-            public long sort_number;
-            public String share_url;
         }
     }
 }

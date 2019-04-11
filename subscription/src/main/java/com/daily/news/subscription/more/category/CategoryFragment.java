@@ -148,9 +148,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             fragment = new CategoryColumnFragment();
             Bundle args = new Bundle();
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
-            args.putInt("type", 2);
-            args.putInt("id", dataBean.elements.get(0).class_id);
-            args.putBoolean("has_more", dataBean.elements.get(0).has_more);
+            args.putString("className", dataBean.elements.get(0).class_name);
             fragment.setArguments(args);
             fragment.setFeedbackDataListener(mCategoryAdapter);
             getChildFragmentManager().beginTransaction()
@@ -242,10 +240,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
-                    args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) category.columns);
-                    args.putInt("type", 2);
-                    args.putInt("id", category.class_id);
-                    args.putBoolean("has_more", category.has_more);
+                    args.putString("className", category.class_name);
                     fragment.setArguments(args);
                     fragment.setFeedbackDataListener(CategoryAdapter.this);
                     getChildFragmentManager().beginTransaction()

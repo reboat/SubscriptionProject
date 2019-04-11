@@ -1,5 +1,7 @@
 package com.daily.news.subscription.more.column;
 
+import android.text.TextUtils;
+
 import com.daily.news.subscription.subscribe.SubscribeStore;
 
 import java.util.List;
@@ -15,18 +17,17 @@ import io.reactivex.Flowable;
 
 public class LocalColumnStore extends SubscribeStore implements ColumnContract.Store {
     private List<ColumnResponse.DataBean.ColumnBean> mColumns;
-    private int type;
-    private long id;
-    private boolean has_more;
+    private String className;
+    private long start = -1;
 
     public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns) {
         mColumns = columns;
     }
-    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, int type, long id, boolean has_more) {
+
+    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, String className, long start, boolean has_more) {
         mColumns = columns;
-        this.type = type;
-        this.id = id;
-        this.has_more = has_more;
+        this.className = className;
+        this.start = start;
     }
 
     @Override
@@ -37,24 +38,25 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
 
     @Override
     public APIBaseTask getTask(APICallBack apiCallBack) {
-        if(mColumns == null && type != 0) {
-            return new APIGetTask<ColumnResponse.DataBean>(apiCallBack ) {
+        if (mColumns == null && !TextUtils.isEmpty(className)) {
+            return new APIGetTask<ColumnResponse.DataBean>(apiCallBack) {
                 @Override
                 public void onSetupParams(Object... params) {
-                    put("type", type);
-                    put("class_id", id);
+                    put("class_name", className);
+                    if (start != -1) {
+                        put("start", start);
+                    }
                 }
 
                 @Override
                 public String getApi() {
-                    return "/api/red_boat/column_list";
+                    return "/api/subscription/column_list";
                 }
             };
 
-        }else {
+        } else {
             ColumnResponse.DataBean dataBean = new ColumnResponse.DataBean();
             dataBean.elements = mColumns;
-            dataBean.has_more = has_more;
             apiCallBack.onSuccess(dataBean);
             return null;
         }

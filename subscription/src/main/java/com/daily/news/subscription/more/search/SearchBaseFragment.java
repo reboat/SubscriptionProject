@@ -42,56 +42,6 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
 
-    String data = "{\n" +
-            "        \"red_boat_columns\":[{\n" +
-            "                \"id\": 125,\n" +
-            "                \"name\": \"浙江发布\",\n" +
-            "                \"pic_url\": \"http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg\",\n" +
-            "                \"subscribe_count\": 100,\n" +
-            "                \"article_count\": 200,\n" +
-            "                \"subscribe_count_general\": \"3.4万\",\n" +
-            "                \"article_count_general\": \"145.6万\",             \n" +
-            "                \"subscribed\": false,\n" +
-            "                \"sort_number\": 1\n" +
-            "            }, {\n" +
-            "                \"id\": 126,\n" +
-            "                \"name\": \"浙江公安\",\n" +
-            "                \"pic_url\": \"http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg\",\n" +
-            "                \"subscribe_count\": 100,\n" +
-            "                \"article_count\": 200,\n" +
-            "                \"subscribe_count_general\": \"3.4万\",\n" +
-            "                \"article_count_general\": \"145.6万\",               \n" +
-            "                \"subscribed\": false,\n" +
-            "                \"sort_number\": 2\n" +
-            "            }\n" +
-            "        ],\n" +
-            "        \"general_columns\": [{\n" +
-            "                \"id\": 127,\n" +
-            "                \"name\": \"浙江发布\",\n" +
-            "                \"pic_url\": \"http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg\",\n" +
-            "                \"subscribe_count\": 100,\n" +
-            "                \"article_count\": 200,\n" +
-            "                \"subscribe_count_general\": \"3.4万\",\n" +
-            "                \"article_count_general\": \"145.6万\",             \n" +
-            "                \"subscribed\": false,\n" +
-            "                \"sort_number\": 1\n" +
-            "            }, {\n" +
-            "                \"id\": 128,\n" +
-            "                \"name\": \"浙江公安\",\n" +
-            "                \"pic_url\": \"http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg\",\n" +
-            "                \"subscribe_count\": 100,\n" +
-            "                \"article_count\": 200,\n" +
-            "                \"subscribe_count_general\": \"3.4万\",\n" +
-            "                \"article_count_general\": \"145.6万\",               \n" +
-            "                \"subscribed\": false,\n" +
-            "                \"sort_number\": 2\n" +
-            "            }\n" +
-            "        ]\n" +
-            "    }";
-
-    SearchResponse.DataBean dataBean;
-
-
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
     List<SearchResponse.DataBean.ColumnBean> mColumns;
@@ -139,18 +89,18 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     }
 
     private void setupRecycleView() {
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(manager);
         mColumns = new ArrayList<>();
         mColumnAdapter = createColumnAdapter(mColumns);
         mColumnAdapter.setOnSubscribeListener(this);
         mColumnAdapter.setOnItemClickListener(this);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
         mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
     }
 
     protected SearchBaseAdapter createColumnAdapter(List<SearchResponse.DataBean.ColumnBean> columns) {
-        return new SearchBaseAdapter(columns);
+        return new SearchBaseAdapter(mRecyclerView,getParams()[0],columns);
     }
 
     public void addHeaderView(View headerView) {
@@ -245,7 +195,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void updateValue(SearchResponse.DataBean dataBean) {
 
-        if ((dataBean.red_boat_columns == null || dataBean.red_boat_columns.size() == 0) && (dataBean.general_columns == null || dataBean.general_columns.size() == 0)) {
+        if (dataBean == null || dataBean.elements == null || dataBean.elements.size() == 0) {
             View emptyView = emptyView(LayoutInflater.from(getActivity()), (ViewGroup) getView());
             if (emptyView != null) {
                 mEmptyContainer.removeAllViews();
@@ -254,10 +204,10 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
             mEmptyContainer.setVisibility(View.VISIBLE);
         } else {
             mEmptyContainer.setVisibility(View.GONE);
+            mColumnAdapter.updateValues(dataBean.elements);
+            mColumnAdapter.notifyDataSetChanged();
         }
 
-        mColumnAdapter.updateValues(dataBean.red_boat_columns, dataBean.general_columns);
-        mColumnAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -323,12 +273,12 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
                 .buildUpon()
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
-                .toString(),REQUEST_CODE_TO_DETAIL);
+                .toString(), REQUEST_CODE_TO_DETAIL);
 
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
             String eventName = "点击栏目条目（头像+标题）";
-            if(bean.red_boat_column){
+            if (bean.red_boat_column) {
                 eventName = "点击之江号条目（头像+标题）";
             }
             Map<String, String> otherInfo = new HashMap<>();

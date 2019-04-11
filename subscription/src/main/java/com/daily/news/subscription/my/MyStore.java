@@ -58,7 +58,7 @@ public class MyStore extends ColumnStore {
 
             @Override
             public String getApi() {
-                return "/api/column/my_subscription";
+                return "/api/subscription/user_subscription";
             }
         };
     }

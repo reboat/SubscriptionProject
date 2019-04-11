@@ -1,6 +1,5 @@
 package com.daily.news.subscription.more.search;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,46 +10,43 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.RedboatUtils;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
-import com.zjrb.core.utils.StringUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 /**
  * Created by gaoyangzhen on 2018/3/14.
  */
 
-public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBean.ColumnBean> {
+public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBean.ColumnBean> implements LoadMoreListener<SearchResponse.DataBean> {
 
     private List<SearchResponse.DataBean.ColumnBean> mColumnBeen;
     private OnSubscribeListener mOnSubscribeListener;
-    static long firstId, secondId;
+    private FooterLoadMore<SearchResponse.DataBean> mFooterLoadMore;
+    private Object mKeyword;
 
-    public SearchBaseAdapter(List<SearchResponse.DataBean.ColumnBean> columnBeen) {
+    public SearchBaseAdapter(ViewGroup parent,Object keyword,List<SearchResponse.DataBean.ColumnBean> columnBeen) {
         super(columnBeen);
         mColumnBeen = columnBeen;
+        mKeyword=keyword;
+        mFooterLoadMore=new FooterLoadMore<>(parent,this);
+        addFooterView(mFooterLoadMore.getItemView());
     }
 
-    public void updateValues(List<SearchResponse.DataBean.ColumnBean> red_boat_columns, List<SearchResponse.DataBean.ColumnBean> general_columns) {
+    public void updateValues(List<SearchResponse.DataBean.ColumnBean> columnBeans) {
         mColumnBeen.clear();
-        firstId = -1;
-        secondId = -1;
-        if (red_boat_columns != null && red_boat_columns.size() != 0) {
-            firstId = red_boat_columns.get(0).id;
-            mColumnBeen.addAll(red_boat_columns);
-        }
-        if (general_columns != null && general_columns.size() != 0) {
-            secondId = general_columns.get(0).id;
-            mColumnBeen.addAll(general_columns);
-
-        }
-
+        mColumnBeen.addAll(columnBeans);
     }
 
     @Override
@@ -62,6 +58,36 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
     public void setOnSubscribeListener(OnSubscribeListener onSubscribeListener) {
         mOnSubscribeListener = onSubscribeListener;
+    }
+
+    @Override
+    public void onLoadMoreSuccess(SearchResponse.DataBean data, LoadMore loadMore) {
+
+        if(data.elements==null || data.elements.size()==0){
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }else{
+            loadMore.setState(LoadMore.TYPE_IDLE);
+            getData().addAll(data.elements);
+            notifyDataSetChanged();
+        }
+
+
+    }
+
+    @Override
+    public void onLoadMore(LoadingCallBack<SearchResponse.DataBean> callback) {
+        new APIGetTask<SearchResponse.DataBean>(callback){
+            @Override
+            public void onSetupParams(Object... params) {
+                put("keyword",params[0]);
+                put("from",params[1]);
+            }
+
+            @Override
+            public String getApi() {
+                return "/api/subscription/search";
+            }
+        }.exe(mKeyword,getDataSize());
     }
 
     /**
@@ -106,14 +132,9 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
         @Override
         public void bindView() {
-
-
             final SearchResponse.DataBean.ColumnBean column = getData();
-
-            String info = TextUtils.isEmpty(column.subscribe_count_general) ? "" : column.subscribe_count_general + "订阅  ";
-            info += TextUtils.isEmpty(column.article_count_general) ? "" : column.article_count_general + "份稿件";
-
-            mColumnInfoView.setText("简介信息，后期补充");
+            mTitleView.setText(column.name);
+            mColumnInfoView.setText(column.description);
             String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
             mSubscribeBtn.setText(subscriptionText);
             mSubscribeBtn.setSelected(column.subscribed);

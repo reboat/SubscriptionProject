@@ -215,7 +215,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void updateValue(ColumnResponse.DataBean dataBean) {
 
-        if (dataBean.elements == null || dataBean.elements.size() == 0) {
+        if (dataBean==null || dataBean.elements == null || dataBean.elements.size() == 0) {
             View emptyView = emptyView(LayoutInflater.from(getActivity()), (ViewGroup) getView());
             if (emptyView != null) {
                 mEmptyContainer.removeAllViews();

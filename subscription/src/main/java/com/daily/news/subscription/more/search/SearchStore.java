@@ -52,7 +52,7 @@ import io.reactivex.Flowable;
 //    }
 //}
 
-public class SearchStore extends SubscribeStore implements SearchContract.Store{
+public class SearchStore extends SubscribeStore implements SearchContract.Store {
 
     @Override
     public Flowable getFlowable(String url) {
@@ -65,12 +65,15 @@ public class SearchStore extends SubscribeStore implements SearchContract.Store{
         return new APIGetTask<SearchResponse.DataBean>(apiCallBack) {
             @Override
             public void onSetupParams(Object... params) {
-                put("keyword",params[0]);
+                put("keyword", params[0]);
+                if (params.length > 1) {
+                    put("from", params[1]);
+                }
             }
 
             @Override
             public String getApi() {
-                return "/api/red_boat/search";
+                return "/api/subscription/search";
             }
         };
     }

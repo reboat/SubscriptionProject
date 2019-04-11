@@ -44,7 +44,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     private FooterLoadMore<ColumnResponse.DataBean> mLoadMore;
     List<ColumnResponse.DataBean.ColumnBean> columnBeen;
-    int type;
+    String className;
     int id;
     boolean has_more;
 
@@ -54,11 +54,8 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        columnBeen = getArguments().getParcelableArrayList("columns");
-        type = getArguments().getInt("type");
-        id = getArguments().getInt("id");
-        has_more = getArguments().getBoolean("has_more");
-        new ColumnPresenter(this, new LocalColumnStore(columnBeen, type, id, has_more));
+        className = getArguments().getString("className");
+        new ColumnPresenter(this, new LocalColumnStore(columnBeen, className, -1, has_more));
 
     }
 
@@ -107,7 +104,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         if (bean.subscribed) {
             String eventName = "“订阅”栏目";
             String pageType = "栏目号分类检索页面";
-            if(bean.red_boat_column){
+            if (bean.red_boat_column) {
                 eventName = "之江号订阅";
                 pageType = "之江号分类检索页面";
 
@@ -115,7 +112,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014","SubColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setPageType(pageType)
@@ -136,13 +133,13 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                 .buildUpon()
                 .appendQueryParameter("id", String.valueOf(getItem(position).id))
                 .build()
-                .toString(),REQUEST_CODE_TO_DETAIL);
+                .toString(), REQUEST_CODE_TO_DETAIL);
 
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
             String eventName = "点击栏目条目（头像+标题）";
             String pageType = "栏目号分类检索页面";
-            if(bean.red_boat_column){
+            if (bean.red_boat_column) {
                 eventName = "点击之江号条目（头像+标题）";
                 pageType = "之江号分类检索页面";
             }
@@ -168,14 +165,14 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         if (bean.subscribed) {
             String eventName = "“取消订阅”栏目";
             String pageType = "栏目号分类检索页面";
-            if(bean.red_boat_column){
+            if (bean.red_boat_column) {
                 eventName = "之江号取消订阅";
                 pageType = "之江号分类检索页面";
             }
             Map<String, String> otherInfo = new HashMap<>();
             otherInfo.put("customObjectType", "RelatedColumnType");
             String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114","SubColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114", "SubColumn", false)
                     .setObjectID(String.valueOf(bean.id))
                     .setObjectName(bean.name)
                     .setEvenName(eventName)
@@ -194,27 +191,24 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void updateValue(ColumnResponse.DataBean dataBean) {
-        if(columnBeen == null)
-        {
+        if (columnBeen == null) {
             columnBeen = new ArrayList<>();
         }
-        if(dataBean != null && dataBean.elements != null){
+        if (dataBean != null && dataBean.elements != null) {
             columnBeen.addAll(dataBean.elements);
         }
-        if(type == 1){
-            tvTips.setText("暂无"+ getRedName() +"上线\n    敬请期待");
-        }else {
-            tvTips.setText("暂无栏目上线\n    敬请期待");
-        }
+
+        tvTips.setText("暂无启航号上线\n    敬请期待");
+
         super.updateValue(dataBean);
-        if(dataBean.elements == null || dataBean.elements.size() == 0){
+        if (dataBean.elements == null || dataBean.elements.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_IDLE);
-        }else if(!dataBean.has_more){
+        } else if (!dataBean.has_more) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
         }
     }
 
-    private String getRedName(){
+    private String getRedName() {
         ResourceBiz biz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
         if (biz != null && biz.feature_list != null) {
             for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
@@ -222,8 +216,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                     String text = bean.desc;
                     if (text != null && text != "") {
 
-                        if(text.length() > 4)
-                        {
+                        if (text.length() > 4) {
                             text = text.substring(0, 4) + "...";
                         }
                         return text;
@@ -240,29 +233,27 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         mColumnAdapter.addData(data.elements, true);
         if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
-        }else if(feedbackDataListener != null){
+        } else if (feedbackDataListener != null) {
             feedbackDataListener.feedback(data);
         }
     }
 
     @Override
     public void onLoadMore(LoadingCallBack<ColumnResponse.DataBean> callback) {
-        if(columnBeen != null && columnBeen.size() > 0) {
+        if (columnBeen != null && columnBeen.size() > 0) {
             new APIGetTask<ColumnResponse.DataBean>(callback) {
                 @Override
                 public void onSetupParams(Object... params) {
-                    put("type", type);
-                    put("class_id", id);
+                    put("class_name", className);
                     put("start", columnBeen.get(columnBeen.size() - 1).id);
                 }
 
                 @Override
                 public String getApi() {
-                    return "/api/red_boat/column_list";
+                    return "/api/subscription/column_list";
                 }
             }.exe();
-        }
-        else {
+        } else {
             mLoadMore.setState(LoadMore.TYPE_IDLE);
         }
 
