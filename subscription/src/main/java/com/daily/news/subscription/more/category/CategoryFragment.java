@@ -208,8 +208,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         public void onBindViewHolder(final CategoryAdapter.ViewHolder holder, final int position) {
             final CategoryResponse.DataBean.CategoryBean category = mValues.get(position);
             holder.mItem = mValues.get(position);
-            int textSize = category.is_selected ? 20 : 17;
-            holder.mCategoryView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             holder.mCategoryView.setSelected(category.is_selected);
             holder.mCategoryView.setText(category.class_name);
             holder.mCategoryIndicator.setSelected(category.is_selected);
