@@ -36,7 +36,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/subscription/detail" />
-                <data android:path="/column.html" />
+                <data android:path="/native/column.html" />
 
             </intent-filter>
         </activity>
