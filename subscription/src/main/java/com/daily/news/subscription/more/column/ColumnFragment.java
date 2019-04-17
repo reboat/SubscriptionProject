@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
+import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.ListSpaceDivider;
@@ -115,7 +116,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(0,15));
 
     }
 

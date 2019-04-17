@@ -162,7 +162,7 @@
                     android:layout_below="@+id/detail_back"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:elevation="30dp"
+                    android:elevation="60dp"
                     android:src="@drawable/column_placeholder_big"
                     app:border_color="@color/_ffffff"
                     app:border_width="2dp" />
