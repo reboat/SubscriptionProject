@@ -18,10 +18,12 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.JsonUtils;
+import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +98,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
         mColumnAdapter.setOnSubscribeListener(this);
         mColumnAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(15,15));
     }
 
     protected SearchBaseAdapter createColumnAdapter(List<SearchResponse.DataBean.ColumnBean> columns) {

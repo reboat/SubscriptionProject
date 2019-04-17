@@ -12,9 +12,9 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/_f5f5f5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/_ffffff"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -23,22 +23,20 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/subscription_background_color"
-            app:statusBarScrim="@color/subscription_background_color"
             app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
             app:scrimVisibleHeightTrigger="80dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">
-
-
+            app:statusBarScrim="@color/subscription_background_color">
 
 
             <RelativeLayout
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                >
+                android:fitsSystemWindows="true">
 
                 <ImageView
+
                     android:id="@+id/detail_column_header_imageView"
                     android:layout_width="match_parent"
                     android:layout_height="198dp"
@@ -58,36 +56,30 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="40dp"
-                    android:src="@drawable/default_back_arrow"
-                    />
+                    android:src="@drawable/ic_top_bar_back_white" />
 
                 <ImageView
                     android:id="@+id/detail_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="11.5dp"
                     android:layout_marginTop="40dp"
+                    android:layout_marginRight="11.5dp"
                     android:scaleType="center"
                     android:src="@drawable/zjnews_detail_theme_navigation_share_icon"
-                    app:maskColor="@android:color/transparent"
-                    />
-
-
+                    app:maskColor="@android:color/transparent" />
 
                 <RelativeLayout
                     android:id="@+id/detail_column_header"
                     android:layout_width="match_parent"
                     android:layout_height="153dp"
                     android:layout_below="@+id/detail_back"
-                    android:layout_marginTop="60dp"
                     android:layout_marginLeft="11.5dp"
+                    android:layout_marginTop="60dp"
                     android:layout_marginRight="11.5dp"
-                    android:background="@drawable/detail_top_bg"
-                    android:elevation="5dp"
                     android:layout_marginBottom="5dp"
-                    >
-
+                    android:background="@drawable/detail_top_bg"
+                    android:elevation="30dp">
 
 
                     <TextView
@@ -95,25 +87,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="9.5dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="47dp"
                         android:lines="1"
                         android:textColor="@color/_000000"
                         android:textSize="16sp"
-                        tools:text="钱塘江"
                         android:textStyle="bold"
-                        />
+                        tools:text="钱塘江" />
 
                     <TextView
                         android:id="@+id/detail_column_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="#起航号#"
-                        android:layout_toRightOf="@+id/detail_column_title"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="12dp"
-                        android:textColor="@color/_d12324"
                         android:layout_alignBaseline="@+id/detail_column_title"
-
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/detail_column_title"
+                        android:text="#起航号#"
+                        android:textColor="@color/_d12324"
+                        android:textSize="12dp"
                         />
 
 
@@ -121,75 +111,62 @@
                         android:id="@+id/detail_column_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/detail_column_title"
+                        android:layout_marginLeft="9.5dp"
+                        android:layout_marginTop="12dp"
                         android:ellipsize="end"
                         android:lines="2"
-                        android:layout_marginLeft="9.5dp"
                         android:textColor="@color/_484848"
                         android:textSize="12sp"
-                        android:layout_below="@+id/detail_column_title"
-                        android:layout_marginTop="5dp"
                         tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美" />
 
                     <TextView
                         android:id="@+id/detail_column_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="文章数 45篇"
-                        android:textSize="12sp"
-                        android:textColor="@color/_cfcfcf"
                         android:layout_below="@+id/detail_column_description"
-                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="9.5dp"
+                        android:layout_marginTop="16dp"
+                        android:text="文章数 45篇"
+                        android:textColor="@color/_cfcfcf"
+                        android:textSize="14sp"
 
                         />
 
                     <LinearLayout
                         android:id="@+id/subscribe_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="58dp"
+                        android:layout_height="22dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/subscription_btn_selector"
+                        android:background="@drawable/subscription_column_btn_selector"
                         android:gravity="center"
-                        android:minWidth="75dp"
                         android:orientation="horizontal"
-                        android:paddingLeft="8.5dp"
-                        android:paddingRight="8.5dp">
-
-                        <View
-                            android:id="@+id/subscribe_icon"
-                            android:layout_width="13.5dp"
-                            android:layout_height="13.5dp"
-                            android:background="@drawable/detail_sub_left_pic"
-                            android:visibility="gone"
-                            />
-
+                       >
                         <TextView
                             android:id="@+id/detail_column_sub_btn"
                             android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="2dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textColor="@color/column_subscription_text_color_selector"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             tools:text="已订阅" />
                     </LinearLayout>
                 </RelativeLayout>
+
                 <com.zjrb.core.ui.widget.CircleImageView
                     android:id="@+id/detail_column_imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:layout_below="@+id/detail_back"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:elevation="30dp"
                     android:src="@drawable/column_placeholder_big"
-                    app:border_width="2dp"
                     app:border_color="@color/_ffffff"
-                    android:elevation="5dp"
-                    />
+                    app:border_width="2dp" />
             </RelativeLayout>
-
 
 
             <android.support.v7.widget.Toolbar
@@ -197,16 +174,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                >
-
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <RelativeLayout
                     android:id="@+id/toolbar_rel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="match_parent">
 
-                    >
                     <ImageView
                         android:id="@+id/toolbar_detail_back"
                         android:layout_width="wrap_content"
@@ -214,21 +188,21 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/zjnews_back_red" />
 
-
                     <TextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:lines="1"
                         android:maxWidth="98dp"
                         android:text="栏目号"
                         android:textColor="@color/_000000_7a7b7d"
                         android:textSize="14sp"
-                        android:layout_centerInParent="true"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:layout_marginLeft="10dp"
 
                         />
+
                     <ImageView
                         android:id="@+id/toobar_icon"
                         android:layout_width="30dp"
@@ -247,29 +221,19 @@
                         android:layout_marginRight="11.5dp"
                         android:scaleType="center"
                         android:src="@drawable/zjnews_detail_navigation_share_icon"
-                        app:maskColor="@android:color/transparent"
-                        />
+                        app:maskColor="@android:color/transparent" />
 
                     <ImageView
                         android:id="@+id/toolbar_detail_sub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/toolbar_detail_share"
                         android:layout_marginRight="20dp"
-                        />
-
-
-
-
+                        android:layout_toLeftOf="@+id/toolbar_detail_share" />
                 </RelativeLayout>
-
             </android.support.v7.widget.Toolbar>
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
 
 
     <fragment
@@ -282,12 +246,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
         />
+
     <include
         android:id="@+id/detail_empty_error_container"
         layout="@layout/subscription_detail_empty_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

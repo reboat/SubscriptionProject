@@ -58,7 +58,7 @@
                 android:maxLines="1"
                 android:textColor="@color/fragment_recommend_background"
                 android:textColorHint="@color/_999999_484848"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="12sp"
                 android:hint="搜索起航号"
                 />
 

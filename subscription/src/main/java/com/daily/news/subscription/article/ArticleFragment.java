@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMore;
@@ -73,7 +74,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mArticleAdapter);
-        mRecyclerView.addItemDecoration(new ListSpaceDivider(0.5d, R.color.dc_dddddd, true));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(15,15));
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mArticleAdapter.addFooterView(mLoadMore.getItemView());
         mArticleAdapter.setOnItemClickListener(this);
