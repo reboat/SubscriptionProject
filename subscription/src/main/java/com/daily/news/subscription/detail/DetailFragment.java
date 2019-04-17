@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +66,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView toolbarDetailBack;
     @BindView(R2.id.toolbar_title)
     TextView toolbarTitle;
-//    @BindView(R2.id.toolbar_detail_column_sub_btn)
+    //    @BindView(R2.id.toolbar_detail_column_sub_btn)
 //    TextView toolbarDetailColumnSubBtn;
 //    @BindView(R2.id.toolbar_subscribe_container)
 //    LinearLayout toolbarSubscribeContainer;
@@ -265,7 +264,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         if (mDetailColumn.subscribed) {
             String pageType = "栏目详情页";
             String eventName = "“取消订阅”栏目";
-            if(mDetailColumn.red_boat_column){
+            if (mDetailColumn.red_boat_column) {
                 pageType = "之江号详情页";
                 eventName = "之江号取消订阅";
             }
@@ -303,7 +302,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         if (bean.subscribed) {
             String pageType = "栏目详情页";
             String eventName = "“订阅”栏目";
-            if(bean.red_boat_column){
+            if (bean.red_boat_column) {
                 pageType = "之江号详情页";
                 eventName = "之江号订阅";
             }
@@ -370,9 +369,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     public void onViewClicked(View view) {
 
         if (mDetailColumn != null) {
-            String shareName = StringUtils.isEmpty(mDetailColumn.name) ? "浙江新闻" : mDetailColumn.name ;
-            String shareDes = StringUtils.isEmpty(mDetailColumn.description) ?"下载浙江新闻，查看更多身边新闻" :  mDetailColumn.description;
-            String shareUrl = StringUtils.isEmpty(mDetailColumn.share_url) ? "https://zj.zjol.com.cn/":  mDetailColumn.share_url;
+            String shareName = StringUtils.isEmpty(mDetailColumn.name) ? "浙江新闻" : mDetailColumn.name;
+            String shareDes = StringUtils.isEmpty(mDetailColumn.description) ? "下载浙江新闻，查看更多身边新闻" : mDetailColumn.description;
+            String shareUrl = StringUtils.isEmpty(mDetailColumn.share_url) ? "https://zj.zjol.com.cn/" : mDetailColumn.share_url;
             //        //分享专用bean
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mDetailColumn.id + "")
@@ -385,31 +384,23 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                             .toString())
                     .setSelfobjectID(mDetailColumn.id + "");
 
+            UmengShareBean shareBean = UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setTitle(shareName)
+                    .setTextContent(shareDes).setTargetUrl(shareUrl)
+                    .setAnalyticsBean(bean)
+                    .setEventName("PageShare")
+                    .setShareContentID(mDetailColumn.id + "")
+                    .setShareType("栏目")
+                    .setNewsCard(false)
+                    .setCardUrl(mDetailColumn.card_url);
+
             if (!StringUtils.isEmpty(mDetailColumn.share_url)) {
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setTitle(shareName)
-                        .setTextContent(shareDes)
-                        .setImgUri(mDetailColumn.pic_url)
-                        .setTargetUrl(shareUrl)
-                        .setAnalyticsBean(bean)
-                        .setEventName("PageShare")
-                        .setShareContentID(mDetailColumn.id + "")
-                        .setShareType("栏目")
-                );
+                shareBean.setImgUri(mDetailColumn.pic_url);
             } else {
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setTitle(shareName)
-                        .setTextContent(shareDes)
-                        .setPicId(R.mipmap.ic_launcher)
-                        .setTargetUrl(shareUrl)
-                        .setAnalyticsBean(bean)
-                        .setEventName("PageShare")
-                        .setShareContentID(mDetailColumn.id + "")
-                        .setShareType("栏目")
-                );
+                shareBean.setPicId(R.mipmap.ic_launcher);
             }
+            UmengShareUtils.getInstance().startShare(shareBean);
         }
 
 

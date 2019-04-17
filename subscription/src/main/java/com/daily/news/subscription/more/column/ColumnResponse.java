@@ -37,6 +37,7 @@ public class ColumnResponse {
             public int priority_level;
             public boolean normal_column;
             public boolean red_boat_column;
+            public String card_url;
 
             @Override
             public int describeContents() {
@@ -61,6 +62,7 @@ public class ColumnResponse {
                 dest.writeInt(this.priority_level);
                 dest.writeByte(this.normal_column ? (byte) 1 : (byte) 0);
                 dest.writeByte(this.red_boat_column ? (byte) 1 : (byte) 0);
+                dest.writeString(this.card_url);
             }
 
             public ColumnBean() {
@@ -83,6 +85,7 @@ public class ColumnResponse {
                 this.priority_level = in.readInt();
                 this.normal_column = in.readByte() != 0;
                 this.red_boat_column = in.readByte() != 0;
+                this.card_url = in.readString();
             }
 
             public static final Parcelable.Creator<ColumnBean> CREATOR = new Parcelable.Creator<ColumnBean>() {
