@@ -1,76 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/_ffffff_aaaaaa"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
-              tools:context="com.daily.news.MainActivity">
-
-    <Button
-        android:id="@+id/night_model"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="切换夜间模式"/>
-
-    <TextView
-        android:id="@+id/testtxt"
-        android:layout_width="85dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:layout_marginBottom="18dp"
-        android:layout_marginTop="18dp"
-        android:lines="1"
-        android:singleLine="true"
-        android:text="分类测试222222222222"
-        android:textColor="@color/category_text_color_selector"
-        android:visibility="gone"
-        />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/_ffffff_aaaaaa"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.daily.news.MainActivity">
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></FrameLayout>
+        android:layout_height="wrap_content"></FrameLayout>
 
-    <RadioGroup
-        android:id="@+id/radio_group"
+    <fragment
+        android:id="@+id/sail_list_fragment"
+        android:name="cn.daily.android.sail.list.SailListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="首页"/>
-
-        <RadioButton
-            android:id="@+id/sub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="订阅"/>
-
-        <RadioButton
-            android:id="@+id/develop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:gravity="center"
-            android:text="发现"/>
-    </RadioGroup>
-
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -56,6 +56,9 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-vector-drawable:28.0.0'
     testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'cn.daily.android:biz-core:6.0.1.33'
+    implementation 'cn.daily.android:sail-list:0.0.1.1.2-SNAPSHOT'
 
-    api project(':subscription')
+    implementation project(':subscription')
 }

@@ -124,7 +124,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     public DetailFragment() {
         new DetailPresenter(this, new DetailStore());
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
     public static DetailFragment newInstance(String uid) {
@@ -176,7 +175,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
             }
         });
-
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;
     }
 
