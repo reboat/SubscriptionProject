@@ -46,7 +46,15 @@ android {
         }
     }
 }
-
+configurations.all {
+    exclude group: "cn.daily.android", module: "core-library"
+    exclude group: "com.umeng.sdk", module: "common"
+    resolutionStrategy {
+        force 'com.umeng.sdk:umeng-common:1.5.4'
+        force 'cn.daily.android:biz-core:6.0.1.33'
+        force 'cn.daily.android:common-core:0.0.6.22-SNAPSHOT'
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

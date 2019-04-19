@@ -69,103 +69,120 @@
                     android:src="@drawable/zjnews_detail_theme_navigation_share_icon"
                     app:maskColor="@android:color/transparent" />
 
-                <RelativeLayout
-                    android:id="@+id/detail_column_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="153dp"
+                <com.zjrb.core.ui.widget.ShadowLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/detail_back"
-                    android:layout_marginLeft="11.5dp"
                     android:layout_marginTop="60dp"
-                    android:layout_marginRight="11.5dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/detail_top_bg"
-                    android:elevation="20dp">
+                    app:shadowColor="#80dbdbdb"
+                    app:shadowDx="0dp"
+                    app:shadowDy="4dp"
+                    app:shadowRadius="12dp"
+                    app:shadowShape="rectangle"
+                    app:shadowSide="bottom|left|right">
+
+                    <RelativeLayout
+                        android:id="@+id/detail_column_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="153dp"
+                        android:background="@drawable/detail_top_bg">
 
 
-                    <TextView
-                        android:id="@+id/detail_column_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="9.5dp"
-                        android:layout_marginTop="47dp"
-                        android:lines="1"
-                        android:textColor="@color/_000000"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        tools:text="钱塘江" />
-
-                    <TextView
-                        android:id="@+id/detail_column_mark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/detail_column_title"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/detail_column_title"
-                        android:text="#起航号#"
-                        android:textColor="@color/_d12324"
-                        android:textSize="12dp"
-                        />
-
-
-                    <TextView
-                        android:id="@+id/detail_column_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/detail_column_title"
-                        android:layout_marginLeft="9.5dp"
-                        android:layout_marginTop="12dp"
-                        android:ellipsize="end"
-                        android:lines="2"
-                        android:textColor="@color/_484848"
-                        android:textSize="12sp"
-                        tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美" />
-
-                    <TextView
-                        android:id="@+id/detail_column_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/detail_column_description"
-                        android:layout_marginLeft="9.5dp"
-                        android:layout_marginTop="16dp"
-                        android:text="文章数 45篇"
-                        android:textColor="@color/_cfcfcf"
-                        android:textSize="14sp"
-
-                        />
-
-                    <LinearLayout
-                        android:id="@+id/subscribe_container"
-                        android:layout_width="58dp"
-                        android:layout_height="22dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/subscription_column_btn_selector"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                       >
                         <TextView
-                            android:id="@+id/detail_column_sub_btn"
+                            android:id="@+id/detail_column_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textColor="@color/column_subscription_text_color_selector"
-                            android:textSize="12sp"
-                            tools:text="已订阅" />
-                    </LinearLayout>
-                </RelativeLayout>
+                            android:layout_marginLeft="9.5dp"
+                            android:layout_marginTop="47dp"
+                            android:fontFamily="@font/fzzcysk_zbjt"
+                            android:lines="1"
+                            android:textColor="@color/_000000"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="钱塘江" />
 
-                <com.zjrb.core.ui.widget.CircleImageView
-                    android:id="@+id/detail_column_imageView"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                        <TextView
+                            android:id="@+id/detail_column_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/detail_column_title"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/detail_column_title"
+                            android:text="#起航号#"
+                            android:textColor="@color/_d12324"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:id="@+id/detail_column_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detail_column_title"
+                            android:layout_marginLeft="9.5dp"
+                            android:layout_marginTop="12dp"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:textColor="@color/_484848"
+                            android:textSize="12sp"
+                            tools:text="不仅是优美的，而且是有格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美格调的美丽的长长的钱塘江不仅美" />
+
+                        <TextView
+                            android:id="@+id/detail_column_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detail_column_description"
+                            android:layout_marginLeft="9.5dp"
+                            android:layout_marginTop="16dp"
+                            android:text="文章数 45篇"
+                            android:textColor="@color/_cfcfcf"
+                            android:textSize="14sp"
+
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/subscribe_container"
+                            android:layout_width="58dp"
+                            android:layout_height="22dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/subscription_column_btn_selector"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/detail_column_sub_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/column_subscription_text_color_selector"
+                                android:textSize="12sp"
+                                tools:text="已订阅" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </com.zjrb.core.ui.widget.ShadowLayout>
+
+                <com.zjrb.core.ui.widget.ShadowLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/detail_back"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="23dp"
                     android:layout_marginTop="20dp"
-                    android:elevation="60dp"
-                    android:src="@drawable/column_placeholder_big"
-                    app:border_color="@color/_ffffff"
-                    app:border_width="2dp" />
+                    app:shadowColor="#507c7c7c"
+                    app:shadowRadius="4dp"
+                    app:shadowDx="0dp"
+                    app:shadowDy="2dp"
+                    app:shadowShape="oval"
+                    app:shadowSide="all">
+
+                    <com.zjrb.core.ui.widget.CircleImageView
+                        android:id="@+id/detail_column_imageView"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:src="@drawable/column_placeholder_big"
+                        app:border_color="@color/_ffffff"
+                        app:border_width="2dp" />
+                </com.zjrb.core.ui.widget.ShadowLayout>
             </RelativeLayout>
 
 
