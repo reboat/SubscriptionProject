@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/detail_back"
                     android:layout_marginTop="60dp"
+                    android:layout_marginBottom="4dp"
                     app:shadowColor="#80dbdbdb"
                     app:shadowDx="0dp"
                     app:shadowDy="4dp"
