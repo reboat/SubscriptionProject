@@ -6,22 +6,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/subscription_background_color"
-    android:fitsSystemWindows="true">
+    android:background="@color/subscription_background_color">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/_ffffff"
-        android:fitsSystemWindows="true">
+        android:background="@color/_ffffff">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
+
             app:contentScrim="@color/subscription_background_color"
             app:layout_collapseMode="parallax"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
@@ -32,8 +30,7 @@
             <RelativeLayout
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
+                android:layout_height="wrap_content">
 
                 <ImageView
 
@@ -169,9 +166,9 @@
                     android:layout_marginLeft="23dp"
                     android:layout_marginTop="20dp"
                     app:shadowColor="#507c7c7c"
-                    app:shadowRadius="4dp"
                     app:shadowDx="0dp"
                     app:shadowDy="2dp"
+                    app:shadowRadius="4dp"
                     app:shadowShape="oval"
                     app:shadowSide="all">
 
@@ -189,14 +186,14 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <RelativeLayout
                     android:id="@+id/toolbar_rel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="50dp">
 
                     <ImageView
                         android:id="@+id/toolbar_detail_back"

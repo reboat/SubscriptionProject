@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -35,6 +36,7 @@ import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
+import com.zjrb.core.utils.UIUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -149,6 +151,15 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         ButterKnife.bind(this, rootView);
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
         mArticleFragment.setOnRefreshListener(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            int height = UIUtils.dip2px(24);
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                height = getResources().getDimensionPixelSize(resourceId);
+            }
+            toolbar.setPadding(0, height, 0, 0);
+        }
 
         appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override

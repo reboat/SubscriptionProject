@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.aliya.view.fitsys.FitWindowsFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    app:fitType="bottom"
     android:background="@color/subscription_background_color"
     tools:context="com.daily.news.subscription.detail.DetailActivity">
 
-    <FrameLayout
-        android:id="@+id/detail_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</com.aliya.view.fitsys.FitWindowsFrameLayout>
+</FrameLayout>
