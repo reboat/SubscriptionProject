@@ -50,7 +50,7 @@ dependencies {
     implementation 'cn.daily.android:analytics:5.5.1'
     implementation 'com.aliya:android-uimode:2.0.8'
     implementation 'cn.daily.android:common-core:0.0.6.22-SNAPSHOT'
-    implementation 'cn.daily.android:biz-core:6.0.1.33'
+    implementation 'cn.daily.android:biz-core:6.0.1.40-SNAPSHOT'
     implementation 'cn.daily.android:update:5.7.0'
 //    implementation project(':shadowLayout')
 //
@@ -61,7 +61,7 @@ configurations.all {
     exclude group: "com.umeng.sdk", module: "common"
         resolutionStrategy {
             force 'com.umeng.sdk:umeng-common:1.5.4'
-            force 'cn.daily.android:biz-core:6.0.1.33'
+            force 'cn.daily.android:biz-core:6.0.1.41-SNAPSHOT'
             force 'cn.daily.android:common-core:0.0.6.23-SNAPSHOT'
         }
 }

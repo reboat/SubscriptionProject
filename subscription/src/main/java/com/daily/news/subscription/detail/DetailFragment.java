@@ -12,7 +12,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.res.TypedArrayUtils;
+import android.support.v4.graphics.TypefaceCompatUtil;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +52,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
 /**
  * Created by gaoyangzhen on 2018/4/16.
@@ -95,6 +99,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView mToolbarIcon;
     @BindView(R2.id.toolbar_detail_sub)
     ImageView mToolbarSub;
+    @BindView(R2.id.detail_column_num)
+    TextView mArticleNumView;
 
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
@@ -226,6 +232,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mToolbarIcon);
             mTitleView.setText(data.detail.name);
             toolbarTitle.setText(data.detail.name);
+
+            if (!TextUtils.isEmpty(data.detail.article_count_general)) {
+                mArticleNumView.setText(String.format("文章数 %s篇", data.detail.article_count_general));
+                TypeFaceUtils.formatNumToDin(mArticleNumView);
+            }
 
             mDescriptionView.setText(data.detail.description);
             String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";

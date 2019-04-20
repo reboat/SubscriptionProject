@@ -51,7 +51,7 @@ configurations.all {
     exclude group: "com.umeng.sdk", module: "common"
     resolutionStrategy {
         force 'com.umeng.sdk:umeng-common:1.5.4'
-        force 'cn.daily.android:biz-core:6.0.1.40-SNAPSHOT'
+        force 'cn.daily.android:biz-core:6.0.1.41-SNAPSHOT'
         force 'cn.daily.android:common-core:0.0.6.23-SNAPSHOT'
     }
 }

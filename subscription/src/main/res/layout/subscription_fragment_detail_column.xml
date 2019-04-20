@@ -131,7 +131,7 @@
                             android:layout_below="@+id/detail_column_description"
                             android:layout_marginLeft="9.5dp"
                             android:layout_marginTop="16dp"
-                            android:text="文章数 45篇"
+                            tools:text="文章数 0篇"
                             android:textColor="@color/_cfcfcf"
                             android:textSize="14sp"
 
