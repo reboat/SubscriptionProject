@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.detail.DetailResponse;
 import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
@@ -19,7 +20,6 @@ import com.zjrb.core.recycleView.FooterLoadMore;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.ui.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,9 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
-public class ArticleFragment extends Fragment implements ArticleContract.View,
-        LoadMoreListener<ArticleResponse.DataBean>,OnItemClickListener {
+public class ArticleFragment extends Fragment implements LoadMoreListener<DetailResponse.DataBean>,
+        ArticleContract.View,
+        OnItemClickListener {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
     @BindView(R2.id.article_recyclerView)
@@ -41,7 +42,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     private List<ArticleResponse.DataBean.Article> mArticles;
 
     private ArticleContract.Presenter mPresenter;
-    private FooterLoadMore<ArticleResponse.DataBean> mLoadMore;
+    private FooterLoadMore<DetailResponse.DataBean> mLoadMore;
 
     private HeaderRefresh mHeaderRefresh;
 
@@ -74,7 +75,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mArticleAdapter);
-        mRecyclerView.addItemDecoration(new SubscriptionDivider(15,15));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(15, 15));
         mLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mArticleAdapter.addFooterView(mLoadMore.getItemView());
         mArticleAdapter.setOnItemClickListener(this);
@@ -89,7 +90,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     }
 
     //用户埋点
-    protected void onItemClick(ArticleResponse.DataBean.Article article){
+    protected void onItemClick(ArticleResponse.DataBean.Article article) {
 
     }
 
@@ -112,7 +113,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
         mArticleAdapter.updateValue(response.data.elements);
         if (response.data.elements == null || response.data.elements.size() == 0) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
-        }else{
+        } else {
             mLoadMore.setState(LoadMore.TYPE_IDLE);
         }
     }
@@ -133,8 +134,8 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     }
 
     @Override
-    public void onLoadMoreSuccess(ArticleResponse.DataBean data, LoadMore loadMore) {
-        if(data != null) {
+    public void onLoadMoreSuccess(DetailResponse.DataBean data, LoadMore loadMore) {
+        if (data != null) {
             mArticleAdapter.addData(data.elements, true);
         }
         if (data == null || data.elements == null || data.elements.size() == 0) {
@@ -143,7 +144,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
     }
 
     @Override
-    public void onLoadMore(LoadingCallBack<ArticleResponse.DataBean> callback) {
+    public void onLoadMore(LoadingCallBack<DetailResponse.DataBean> callback) {
         if (mArticles != null && mArticles.size() > 0) {
             mPresenter.loadMore(mArticles.get(mArticles.size() - 1).getSort_number(), DEFAULT_PAGE_SIZE, callback);
         } else {
@@ -176,8 +177,7 @@ public class ArticleFragment extends Fragment implements ArticleContract.View,
         mHeaderRefresh.setRefreshing(refresh);
     }
 
-    public void canRefresh(boolean canrefresh)
-    {
+    public void canRefresh(boolean canrefresh) {
         mHeaderRefresh.setCanrfresh(canrefresh);
     }
 }

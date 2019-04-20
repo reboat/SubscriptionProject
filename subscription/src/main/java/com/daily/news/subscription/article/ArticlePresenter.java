@@ -2,6 +2,7 @@ package com.daily.news.subscription.article;
 
 
 
+import com.daily.news.subscription.detail.DetailResponse;
 import com.zjrb.core.load.LoadingCallBack;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     }
 
     @Override
-    public void loadMore(long sortNum,int size,LoadingCallBack<ArticleResponse.DataBean> callback) {
+    public void loadMore(long sortNum,int size,LoadingCallBack<DetailResponse.DataBean> callback) {
         mArticleStore.getLoadMoreTask(callback).exe(sortNum,size);
     }
 

@@ -3,6 +3,7 @@ package com.daily.news.subscription.article;
 import com.daily.news.subscription.base.BasePresenter;
 import com.daily.news.subscription.base.BaseStore;
 import com.daily.news.subscription.base.UIBaseView;
+import com.daily.news.subscription.detail.DetailResponse;
 import com.zjrb.core.load.LoadingCallBack;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import cn.daily.news.biz.core.network.compatible.APIBaseTask;
 
 public interface ArticleContract {
     interface Presenter extends BasePresenter {
-        void loadMore(long sortNum,int size,LoadingCallBack<ArticleResponse.DataBean> callback);
+        void loadMore(long sortNum,int size,LoadingCallBack<DetailResponse.DataBean> callback);
 
         void refreshData(List<ArticleResponse.DataBean.Article> article_list);
     }
