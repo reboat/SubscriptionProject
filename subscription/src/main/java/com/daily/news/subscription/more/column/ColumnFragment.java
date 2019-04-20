@@ -77,7 +77,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     public ColumnFragment() {
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
     @Override
@@ -105,6 +104,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         View rootView = inflater.inflate(R.layout.subscription_fragment_column, container, false);
         ButterKnife.bind(this, rootView);
         setupRecycleView();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;
     }
 
@@ -280,8 +280,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void onItemClick(View itemView, int position) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail")
-                .buildUpon()
+        Nav.with(this).to(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString());

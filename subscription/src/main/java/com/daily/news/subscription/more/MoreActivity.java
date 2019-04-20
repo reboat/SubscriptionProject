@@ -53,14 +53,8 @@ public class MoreActivity extends DailyActivity {
         if (view.getId() == R.id.iv_top_bar_back) {
             finish();
         } else if (view.getId() == R.id.txt_input) {
-
-//            Nav.with(this).to("http://www.8531.cn/subscription/more/search");
-            Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/more/search")
-                    .buildUpon()
-                    .appendQueryParameter("type", "more")
-                    .build()
-                    .toString(), REQUEST_CODE_TO_DETAIL);
-
+            Uri.Builder builder = new Uri.Builder().path("/subscription/more/search").appendQueryParameter("type", "more");
+            Nav.with(this).toPath(builder.build().toString(), REQUEST_CODE_TO_DETAIL);
         }
 
     }

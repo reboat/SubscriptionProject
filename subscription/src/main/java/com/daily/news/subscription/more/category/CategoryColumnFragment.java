@@ -129,8 +129,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void onItemClick(View itemView, int position) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail")
-                .buildUpon()
+        Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(getItem(position).id))
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);

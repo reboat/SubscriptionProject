@@ -78,7 +78,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
 
     public CategoryFragment() {
         new CategoryPresenter(this, new CategoryStore());
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
     }
 
 
@@ -94,6 +93,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         View rootView = inflater.inflate(R.layout.subscription_fragment_more, container, false);
         ButterKnife.bind(this, rootView);
         setupRecyclerView();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;
     }
 

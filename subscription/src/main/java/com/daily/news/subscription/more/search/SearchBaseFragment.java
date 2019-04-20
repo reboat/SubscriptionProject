@@ -21,9 +21,7 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.JsonUtils;
-import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -271,8 +269,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     @Override
     public void onItemClick(View itemView, int position) {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail")
-                .buildUpon()
+        Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);
@@ -301,4 +298,9 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     }
 
 
+    public void clear() {
+        mColumnAdapter.getData().clear();
+        mColumnAdapter.notifyDataSetChanged();
+        mColumnAdapter.restMoreState();
+    }
 }

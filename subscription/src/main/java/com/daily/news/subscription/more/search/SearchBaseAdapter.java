@@ -1,5 +1,6 @@
 package com.daily.news.subscription.more.search;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,10 @@ import com.daily.news.subscription.R2;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.FooterLoadMoreV2;
 import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,14 +33,14 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
     private List<SearchResponse.DataBean.ColumnBean> mColumnBeen;
     private OnSubscribeListener mOnSubscribeListener;
-    private FooterLoadMore<SearchResponse.DataBean> mFooterLoadMore;
+    private FooterLoadMoreV2<SearchResponse.DataBean> mFooterLoadMore;
     private Object mKeyword;
 
-    public SearchBaseAdapter(ViewGroup parent,Object keyword,List<SearchResponse.DataBean.ColumnBean> columnBeen) {
+    public SearchBaseAdapter(RecyclerView parent, Object keyword, List<SearchResponse.DataBean.ColumnBean> columnBeen) {
         super(columnBeen);
         mColumnBeen = columnBeen;
-        mKeyword=keyword;
-        mFooterLoadMore=new FooterLoadMore<>(parent,this);
+        mKeyword = keyword;
+        mFooterLoadMore = new FooterLoadMoreV2<>(parent, this);
         addFooterView(mFooterLoadMore.getItemView());
     }
 
@@ -63,9 +63,9 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
     @Override
     public void onLoadMoreSuccess(SearchResponse.DataBean data, LoadMore loadMore) {
 
-        if(data.elements==null || data.elements.size()==0){
+        if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
-        }else{
+        } else {
             loadMore.setState(LoadMore.TYPE_IDLE);
             getData().addAll(data.elements);
             notifyDataSetChanged();
@@ -76,18 +76,24 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
     @Override
     public void onLoadMore(LoadingCallBack<SearchResponse.DataBean> callback) {
-        new APIGetTask<SearchResponse.DataBean>(callback){
+        new APIGetTask<SearchResponse.DataBean>(callback) {
             @Override
             public void onSetupParams(Object... params) {
-                put("keyword",params[0]);
-                put("from",params[1]);
+                put("keyword", params[0]);
+                put("from", params[1]);
             }
 
             @Override
             public String getApi() {
                 return "/api/subscription/search";
             }
-        }.exe(mKeyword,getDataSize());
+        }.exe(mKeyword, getDataSize());
+    }
+
+    public void restMoreState() {
+        if (mFooterLoadMore != null) {
+            mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+        }
     }
 
     /**

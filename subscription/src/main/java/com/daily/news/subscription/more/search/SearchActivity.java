@@ -133,8 +133,12 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
     @OnClick({R2.id.iv_cross, R2.id.tv_cancel})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_cross) {
-
+            SearchColumnFragment fragment = (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
+            if(fragment!=null){
+                fragment.clear();
+            }
             etInput.setText("");
+
         } else if (view.getId() == R.id.tv_cancel) {
             UIUtils.hideSoftInput(etInput); // 手动隐藏软键盘
             finish();
