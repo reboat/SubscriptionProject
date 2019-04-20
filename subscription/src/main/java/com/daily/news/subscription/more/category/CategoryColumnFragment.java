@@ -229,6 +229,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void onLoadMoreSuccess(ColumnResponse.DataBean data, LoadMore loadMore) {
+        columnBeen.addAll(data.elements);
         mColumnAdapter.addData(data.elements, true);
         if (data.elements == null || data.elements.size() == 0) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
