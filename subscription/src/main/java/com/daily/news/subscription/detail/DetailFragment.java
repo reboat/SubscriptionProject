@@ -101,6 +101,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView mToolbarSub;
     @BindView(R2.id.detail_column_num)
     TextView mArticleNumView;
+    @BindView(R2.id.detail_column_mark)
+    TextView mTypeTagView;
 
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
@@ -232,6 +234,12 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mToolbarIcon);
             mTitleView.setText(data.detail.name);
             toolbarTitle.setText(data.detail.name);
+
+            if(!data.detail.normal_column){
+                mTypeTagView.setVisibility(View.VISIBLE);
+            }else{
+                mTypeTagView.setVisibility(View.GONE);
+            }
 
             if (!TextUtils.isEmpty(data.detail.article_count_general)) {
                 mArticleNumView.setText(String.format("文章数 %s篇", data.detail.article_count_general));
