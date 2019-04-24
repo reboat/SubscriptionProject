@@ -280,7 +280,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void onItemClick(View itemView, int position) {
-        Nav.with(this).to(new Uri.Builder().path("/subscription/detail")
+        Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString());
