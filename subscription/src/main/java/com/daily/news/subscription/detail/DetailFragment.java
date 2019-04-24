@@ -30,6 +30,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
+import com.daily.news.subscription.bitmap.BlurTransformation;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
@@ -253,7 +254,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
             mToolbarSub.setImageResource(id);
 
-            options.placeholder(R.drawable.detail_column_default);
+            options.placeholder(R.drawable.detail_column_default).transform(new BlurTransformation(getContext(),6));
             Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
             if (mArticlePresenter != null) {
                 mArticlePresenter.refreshData(data.elements);
