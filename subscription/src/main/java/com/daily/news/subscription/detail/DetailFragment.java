@@ -12,8 +12,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.content.res.TypedArrayUtils;
-import android.support.v4.graphics.TypefaceCompatUtil;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -236,9 +234,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mTitleView.setText(data.detail.name);
             toolbarTitle.setText(data.detail.name);
 
-            if(!data.detail.normal_column){
+            if (!data.detail.normal_column) {
                 mTypeTagView.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mTypeTagView.setVisibility(View.GONE);
             }
 
@@ -254,8 +252,9 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
             mToolbarSub.setImageResource(id);
 
-            options.placeholder(R.drawable.detail_column_default).transform(new BlurTransformation(getContext(),6));
-            Glide.with(this).load(data.detail.background_url).apply(options).into(mHeaderImageView);
+            RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(getContext(), 25f))
+                    .placeholder(R.drawable.detail_column_default);
+            Glide.with(this).load(data.detail.background_url).apply(options1).into(mHeaderImageView);
             if (mArticlePresenter != null) {
                 mArticlePresenter.refreshData(data.elements);
             } else {
