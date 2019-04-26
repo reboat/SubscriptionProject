@@ -8,6 +8,7 @@
              tools:context="com.daily.news.subscription.more.column.ColumnFragment">
 
     <LinearLayout
+        android:background="@color/_ffffff"
         android:id="@+id/column_empty_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

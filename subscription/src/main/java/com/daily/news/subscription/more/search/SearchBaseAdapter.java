@@ -36,10 +36,9 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
     private FooterLoadMoreV2<SearchResponse.DataBean> mFooterLoadMore;
     private Object mKeyword;
 
-    public SearchBaseAdapter(RecyclerView parent, Object keyword, List<SearchResponse.DataBean.ColumnBean> columnBeen) {
+    public SearchBaseAdapter(RecyclerView parent, List<SearchResponse.DataBean.ColumnBean> columnBeen) {
         super(columnBeen);
         mColumnBeen = columnBeen;
-        mKeyword = keyword;
         mFooterLoadMore = new FooterLoadMoreV2<>(parent, this);
         addFooterView(mFooterLoadMore.getItemView());
     }
@@ -76,6 +75,12 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
 
     @Override
     public void onLoadMore(LoadingCallBack<SearchResponse.DataBean> callback) {
+        if (mKeyword == null) {
+            if (mFooterLoadMore != null) {
+                mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+            }
+            return;
+        }
         new APIGetTask<SearchResponse.DataBean>(callback) {
             @Override
             public void onSetupParams(Object... params) {
@@ -91,9 +96,14 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
     }
 
     public void restMoreState() {
+        mKeyword = null;
         if (mFooterLoadMore != null) {
             mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
         }
+    }
+
+    public void updateKeyword(Object keyword) {
+        mKeyword = keyword;
     }
 
     /**

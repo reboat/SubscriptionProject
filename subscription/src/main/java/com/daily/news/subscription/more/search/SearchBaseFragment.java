@@ -53,6 +53,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     private SearchContract.Presenter mPresenter;
     private HeaderRefresh mHeaderRefresh;
+    private Object mKeyword;
 
     public SearchBaseFragment() {
     }
@@ -65,14 +66,13 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sendRequest(getParams());
-
-//        dataBean = new Gson().fromJson(data, SearchResponse.DataBean.class);
-//        updateValue(dataBean);
+        mKeyword = getParams();
+        sendRequest(mKeyword);
     }
 
     public void sendRequest(Object... params) {
-        mPresenter.subscribe(params);
+        mKeyword = params[0];
+        mPresenter.subscribe(mKeyword);
     }
 
     public Object[] getParams() {
@@ -96,11 +96,11 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
         mColumnAdapter.setOnSubscribeListener(this);
         mColumnAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new SubscriptionDivider(15,15));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(15, 15));
     }
 
     protected SearchBaseAdapter createColumnAdapter(List<SearchResponse.DataBean.ColumnBean> columns) {
-        return new SearchBaseAdapter(mRecyclerView,getParams()[0],columns);
+        return new SearchBaseAdapter(mRecyclerView, columns);
     }
 
     public void addHeaderView(View headerView) {
@@ -204,6 +204,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
             mEmptyContainer.setVisibility(View.VISIBLE);
         } else {
             mEmptyContainer.setVisibility(View.GONE);
+            mColumnAdapter.updateKeyword(mKeyword);
             mColumnAdapter.updateValues(dataBean.elements);
             mColumnAdapter.notifyDataSetChanged();
         }
