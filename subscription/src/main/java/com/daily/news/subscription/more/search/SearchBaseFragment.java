@@ -53,7 +53,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     private SearchContract.Presenter mPresenter;
     private HeaderRefresh mHeaderRefresh;
-    private Object mKeyword;
+    private String mKeyword;
 
     public SearchBaseFragment() {
     }
@@ -66,12 +66,12 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mKeyword = getParams();
+        mKeyword = getParams()[0].toString();
         sendRequest(mKeyword);
     }
 
     public void sendRequest(Object... params) {
-        mKeyword = params[0];
+        mKeyword = params[0].toString();
         mPresenter.subscribe(mKeyword);
     }
 
