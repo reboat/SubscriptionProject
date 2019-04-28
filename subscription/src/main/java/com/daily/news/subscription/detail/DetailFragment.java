@@ -157,6 +157,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         View rootView = inflater.inflate(R.layout.subscription_fragment_detail_column, container, false);
         ButterKnife.bind(this, rootView);
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
+        mArticleFragment.setColumnId(mDetailColumn);
         mArticleFragment.setOnRefreshListener(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
@@ -291,25 +292,12 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
         if (mDetailColumn.subscribed) {
-            String pageType = "栏目详情页";
-            String eventName = "“取消订阅”栏目";
-            if (mDetailColumn.red_boat_column) {
-                pageType = "之江号详情页";
-                eventName = "之江号取消订阅";
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114", "SubColumn", false)
-                    .setObjectID(String.valueOf(mDetailColumn.id))
-                    .setObjectName(mDetailColumn.name)
-                    .setEvenName(eventName)
-                    .setPageType(pageType)
-                    .setObjectType(ObjectType.NewsType)
-                    .setOtherInfo(otherInfoStr)
-                    .pageType(pageType)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+                    .name("订阅号取消订阅")
+                    .pageType("订阅号详情页")
                     .columnID(String.valueOf(mDetailColumn.id))
                     .columnName(mDetailColumn.name)
+                    .objectType("C90")
                     .operationType("取消订阅")
                     .build()
                     .send();
@@ -329,25 +317,12 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         getActivity().setResult(Activity.RESULT_OK, intent);
 
         if (bean.subscribed) {
-            String pageType = "栏目详情页";
-            String eventName = "“订阅”栏目";
-            if (bean.red_boat_column) {
-                pageType = "之江号详情页";
-                eventName = "之江号订阅";
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
-                    .setObjectID(String.valueOf(bean.id))
-                    .setObjectName(bean.name)
-                    .setObjectType(ObjectType.NewsType)
-                    .setPageType(pageType)
-                    .setEvenName(eventName)
-                    .setOtherInfo(otherInfoStr)
-                    .pageType(pageType)
-                    .columnID(String.valueOf(bean.id))
-                    .columnName(bean.name)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
+                    .name("订阅号订阅")
+                    .pageType("订阅号详情页")
+                    .columnID(String.valueOf(mDetailColumn.id))
+                    .columnName(mDetailColumn.name)
+                    .objectType("C90")
                     .operationType("订阅")
                     .build()
                     .send();
@@ -406,7 +381,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     .setObjectID(mDetailColumn.id + "")
                     .setObjectName(shareName)
                     .setObjectType(ObjectType.ColumnType)
-                    .setPageType("栏目详情页")
+                    .setPageType("C90")
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("relatedColumn", mDetailColumn.id + "")
                             .put("subject", "")
@@ -434,16 +409,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
 
         //点击分享操作
-        new Analytics.AnalyticsBuilder(getContext(), "800018", "800018", "AppTabClick", false)
-                .setObjectID(mDetailColumn.id + "")
-                .setObjectName(mDetailColumn.name)
-                .setObjectType(ObjectType.ColumnType)
-                .setPageType("栏目详情页")
-                .setEvenName("点击“分享”")
-                .pageType("栏目详情页")
+        new Analytics.AnalyticsBuilder(getContext(), "800018", "AppTabClick", false)
+                .name("点击分享")
+                .pageType("订阅号详情页")
                 .clickTabName("分享")
                 .build()
                 .send();
-
     }
 }

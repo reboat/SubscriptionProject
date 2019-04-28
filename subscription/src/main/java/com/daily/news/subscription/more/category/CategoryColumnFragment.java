@@ -102,25 +102,11 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         super.subscribeSuc(bean);
         if (bean.subscribed) {
-            String eventName = "“订阅”栏目";
-            String pageType = "栏目号分类检索页面";
-            if (bean.red_boat_column) {
-                eventName = "之江号订阅";
-                pageType = "之江号分类检索页面";
-
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "A0014", "SubColumn", false)
-                    .setObjectID(String.valueOf(bean.id))
-                    .setObjectName(bean.name)
-                    .setPageType(pageType)
-                    .setEvenName(eventName)
-                    .setOtherInfo(otherInfoStr)
-                    .pageType(pageType)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+                    .name("订阅号订阅")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
+                    .objectType("C90")
                     .operationType("订阅")
                     .build()
                     .send();
@@ -136,24 +122,12 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
-            String eventName = "点击栏目条目（头像+标题）";
-            String pageType = "栏目号分类检索页面";
-            if (bean.red_boat_column) {
-                eventName = "点击之江号条目（头像+标题）";
-                pageType = "之江号分类检索页面";
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "500003", "500003", "ToDetailColumn", false)
-                    .setEvenName(eventName)
-                    .setPageType(pageType)
-                    .setObjectID(String.valueOf(bean.id))
-                    .setObjectName(bean.name)
-                    .setOtherInfo(otherInfoStr)
-                    .pageType(pageType)
+            new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)
+                    .name("点击订阅号条目")
+                    .pageType("我的订阅页")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
+                    .objectType("C90")
                     .build()
                     .send();
         }
@@ -162,24 +136,12 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         if (bean.subscribed) {
-            String eventName = "“取消订阅”栏目";
-            String pageType = "栏目号分类检索页面";
-            if (bean.red_boat_column) {
-                eventName = "之江号取消订阅";
-                pageType = "之江号分类检索页面";
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "A0114", "SubColumn", false)
-                    .setObjectID(String.valueOf(bean.id))
-                    .setObjectName(bean.name)
-                    .setEvenName(eventName)
-                    .setPageType(pageType)
-                    .setOtherInfo(otherInfoStr)
-                    .pageType(pageType)
+            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+                    .name("订阅号取消订阅")
+                    .pageType("订阅号分类检索页面")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
+                    .objectType("C90")
                     .operationType("取消订阅")
                     .build()
                     .send();

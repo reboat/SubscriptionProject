@@ -108,16 +108,16 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        if (isVisibleToUser && mAnalytics == null) {
-            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
-                    .setEvenName("页面停留时长")
-                    .setPageType("栏目号分类检索页面")
-                    .pageType("栏目号分类检索页面")
-                    .build();
-        }
-        if (!isVisibleToUser && mAnalytics != null) {
-            mAnalytics.sendWithDuration();
-        }
+//        if (isVisibleToUser && mAnalytics == null) {
+//            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
+//                    .setEvenName("页面停留时长")
+//                    .setPageType("栏目号分类检索页面")
+//                    .pageType("栏目号分类检索页面")
+//                    .build();
+//        }
+//        if (!isVisibleToUser && mAnalytics != null) {
+//            mAnalytics.sendWithDuration();
+//        }
     }
 
     @Override
@@ -219,20 +219,12 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                         return;
                     }
 
-                    Map<String, String> otherInfo = new HashMap<>();
-                    otherInfo.put("customObjectType", "RelatedClassType");
-                    String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-                    new Analytics.AnalyticsBuilder(getContext(), "500005", "500005", "ClassNavigationSwitch", false)
-                            .setEvenName("点击栏目分类")
-                            .setPageType("栏目号分类检索页面")
-                            .setObjectID(String.valueOf(category.class_id))
-                            .setObjectName(category.class_name)
-                            .setOtherInfo(otherInfoStr)
-                            .pageType("栏目号分类检索页面")
-                            .classID(String.valueOf(category.class_id))
-                            .className(category.class_name)
-                            .referClassID(String.valueOf(mValues.get(mCurPosition).class_id))
+                    new Analytics.AnalyticsBuilder(getContext(), "500005", "ClassNavigationSwitch", false)
+                            .name("点击订阅号分类")
+                            .pageType("订阅号分类检索页面")
+                            .action(category.class_name)
                             .referClassName(mValues.get(mCurPosition).class_name)
+                            .className(category.class_name)
                             .build()
                             .send();
 

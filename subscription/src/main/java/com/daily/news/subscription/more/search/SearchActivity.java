@@ -108,11 +108,10 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
         } else {
             fragment.sendRequest(new Object[]{keyword});
         }
-        new Analytics.AnalyticsBuilder(this, "A0013", "A0013", "Search", false)
-                .setPageType("之江号/栏目号分类检索页面")
-                .setEvenName("关键词搜索")
-                .setSearch(keyword)
-                .pageType("之江号/栏目号分类检索页面")
+
+        new Analytics.AnalyticsBuilder(this, "A0013", "Search", false)
+                .name("订阅号搜索")
+                .pageType("订阅号分类检索页面")
                 .searchWord(keyword)
                 .isHotWordUsed(false)
                 .isHistoryWordUsed(false)

@@ -15,6 +15,7 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
 
+import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
@@ -43,6 +44,23 @@ public class MyColumnFragment extends ColumnFragment {
     public void onDestroyView() {
         super.onDestroyView();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
+
+        new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+                .name(bean.subscribed?"订阅号订阅":"订阅号取消订阅")
+                .pageType("我的订阅页")
+                .columnID(String.valueOf(bean.id))
+                .columnName(bean.name)
+                .objectType("C90")
+                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .build()
+                .send();
+
+
+        super.onSubscribe(bean);
     }
 
     @Override

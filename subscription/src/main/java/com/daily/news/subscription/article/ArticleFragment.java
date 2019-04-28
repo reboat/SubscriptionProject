@@ -14,6 +14,7 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.detail.DetailResponse;
 import com.daily.news.subscription.widget.SubscriptionDivider;
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMore;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
@@ -45,6 +47,7 @@ public class ArticleFragment extends Fragment implements LoadMoreListener<Detail
     private FooterLoadMore<DetailResponse.DataBean> mLoadMore;
 
     private HeaderRefresh mHeaderRefresh;
+    private DetailResponse.DataBean.DetailBean mDetailBean;
 
     public ArticleFragment() {
     }
@@ -91,7 +94,23 @@ public class ArticleFragment extends Fragment implements LoadMoreListener<Detail
 
     //用户埋点
     protected void onItemClick(ArticleResponse.DataBean.Article article) {
-
+        new Analytics.AnalyticsBuilder(getContext(), "200007", "AppContentClick", false)
+                .name("新闻列表点击")
+                .selfObjectID(String.valueOf(article.getMlf_id()))
+                .columnID(String.valueOf(mDetailBean.id))
+                .classShortName(mDetailBean.name)
+                .objectShortName(article.getList_title())
+                .objectType("C01")
+                .pageType("订阅号详情页")
+                .ilurl(article.getUrl())
+                .objectID(String.valueOf(article.getMlf_id()))
+                .columnName(mDetailBean.name)
+                .selfNewsID(String.valueOf(article.getId()))
+                .pubUrl(article.getUrl())
+                .newsID(String.valueOf(article.getId()))
+                .newsTitle(article.getDoc_title())
+                .build()
+                .send();
     }
 
     public void addHeaderView(View headerView) {
@@ -179,5 +198,9 @@ public class ArticleFragment extends Fragment implements LoadMoreListener<Detail
 
     public void canRefresh(boolean canrefresh) {
         mHeaderRefresh.setCanrfresh(canrefresh);
+    }
+
+    public void setColumnId(DetailResponse.DataBean.DetailBean bean) {
+        mDetailBean =bean;
     }
 }

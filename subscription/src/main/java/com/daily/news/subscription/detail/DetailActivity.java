@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.daily.news.subscription.R;
-import com.zjrb.core.base.BaseActivity;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
@@ -14,6 +13,7 @@ import cn.daily.news.biz.core.DailyActivity;
 public class DetailActivity extends DailyActivity {
 
     private Analytics mAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +23,9 @@ public class DetailActivity extends DailyActivity {
         Intent intent = getIntent();
 
         Bundle bundle = intent.getExtras();
-        if(bundle != null)
-        {
+        if (bundle != null) {
             id = bundle.getString("id");
-        }else {
+        } else {
 
             Uri data = intent.getData();
             id = data.getQueryParameter("id");
@@ -41,17 +40,16 @@ public class DetailActivity extends DailyActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mAnalytics = new Analytics.AnalyticsBuilder(this, "A0010", "500011", "ColumnDetailPageStay", true)
-                .setEvenName("页面停留时长")
-                .setPageType("栏目详情页")
-                .pageType("栏目详情页")
+        mAnalytics = new Analytics.AnalyticsBuilder(this, "A0010", "ColumnDetailPageStay", true)
+                .name("订阅号详情页停留")
+                .pageType("订阅号详情页")
                 .build();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(mAnalytics != null){
+        if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
     }
