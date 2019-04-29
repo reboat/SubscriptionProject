@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APIGetTask;
@@ -116,7 +117,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                     .name("订阅号订阅")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .operationType("订阅")
                     .build()
                     .send();
@@ -137,7 +138,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                     .pageType("我的订阅页")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .build()
                     .send();
         }
@@ -151,7 +152,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                     .pageType("订阅号分类检索页面")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .operationType("取消订阅")
                     .build()
                     .send();

@@ -16,6 +16,7 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
@@ -64,7 +65,7 @@ public class MyColumnFragment extends ColumnFragment {
                 .pageType("我的订阅页")
                 .columnID(String.valueOf(bean.id))
                 .columnName(bean.name)
-                .objectType("C90")
+                .seObjectType(ObjectType.C90)
                 .operationType(bean.subscribed?"取消订阅":"订阅")
                 .build()
                 .send();

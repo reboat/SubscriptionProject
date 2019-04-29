@@ -32,7 +32,6 @@ import com.daily.news.subscription.bitmap.BlurTransformation;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.ui.widget.CircleImageView;
@@ -48,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
@@ -298,7 +298,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     .pageType("订阅号详情页")
                     .columnID(String.valueOf(mDetailColumn.id))
                     .columnName(mDetailColumn.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .operationType("取消订阅")
                     .build()
                     .send();
@@ -323,7 +323,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     .pageType("订阅号详情页")
                     .columnID(String.valueOf(mDetailColumn.id))
                     .columnName(mDetailColumn.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .operationType("订阅")
                     .build()
                     .send();
@@ -378,11 +378,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             String shareDes = StringUtils.isEmpty(mDetailColumn.description) ? "下载浙江新闻，查看更多身边新闻" : mDetailColumn.description;
             String shareUrl = StringUtils.isEmpty(mDetailColumn.share_url) ? "https://zj.zjol.com.cn/" : mDetailColumn.share_url;
             //        //分享专用bean
+            //TODO 分享ObjectType
             OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mDetailColumn.id + "")
                     .setObjectName(shareName)
-                    .setObjectType(ObjectType.ColumnType)
-                    .setPageType("C90")
+                    .setPageType("订阅号详情页/栏目卡片详情页")
                     .setColumn_id(String.valueOf(mDetailColumn.id))
                     .setColumn_name(mDetailColumn.name)
                     .setOtherInfo(Analytics.newOtherInfo()

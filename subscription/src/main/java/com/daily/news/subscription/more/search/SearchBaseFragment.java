@@ -31,6 +31,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
@@ -290,7 +291,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
                     .pageType("搜索页面")
                     .columnID(String.valueOf(bean.id))
                     .columnName(bean.name)
-                    .objectType("C90")
+                    .seObjectType(ObjectType.C90)
                     .build()
                     .send();
         }
