@@ -378,11 +378,13 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             String shareDes = StringUtils.isEmpty(mDetailColumn.description) ? "下载浙江新闻，查看更多身边新闻" : mDetailColumn.description;
             String shareUrl = StringUtils.isEmpty(mDetailColumn.share_url) ? "https://zj.zjol.com.cn/" : mDetailColumn.share_url;
             //        //分享专用bean
-            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+            OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mDetailColumn.id + "")
                     .setObjectName(shareName)
                     .setObjectType(ObjectType.ColumnType)
                     .setPageType("C90")
+                    .setColumn_id(String.valueOf(mDetailColumn.id))
+                    .setColumn_name(mDetailColumn.name)
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("relatedColumn", mDetailColumn.id + "")
                             .put("subject", "")
@@ -393,7 +395,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     .setSingle(false)
                     .setTitle(shareName)
                     .setTextContent(shareDes).setTargetUrl(shareUrl)
-                    .setAnalyticsBean(bean)
+                    .setAnalyticsBean(analyticsBean)
                     .setEventName("PageShare")
                     .setShareContentID(mDetailColumn.id + "")
                     .setShareType("栏目")
