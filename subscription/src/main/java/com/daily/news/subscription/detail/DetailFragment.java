@@ -33,6 +33,7 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.core.utils.JsonUtils;
@@ -255,7 +256,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
             RequestOptions options1 = RequestOptions.bitmapTransform(new BlurTransformation(getContext(), 25f))
                     .placeholder(R.drawable.detail_column_default);
-            Glide.with(this).load(data.detail.background_url).apply(options1).into(mHeaderImageView);
+            GlideApp.with(this).load(data.detail.background_url).apply(options1).into(mHeaderImageView);
             if (mArticlePresenter != null) {
                 mArticlePresenter.refreshData(data.elements);
             } else {
