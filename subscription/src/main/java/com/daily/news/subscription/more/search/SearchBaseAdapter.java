@@ -62,7 +62,7 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
     @Override
     public void onLoadMoreSuccess(SearchResponse.DataBean data, LoadMore loadMore) {
 
-        if (data.elements == null || data.elements.size() == 0) {
+        if (data.elements == null || data.elements.size() == 0 || !data.has_more) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         } else {
             loadMore.setState(LoadMore.TYPE_IDLE);

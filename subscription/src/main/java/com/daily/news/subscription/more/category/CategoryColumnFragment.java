@@ -73,6 +73,16 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     }
 
     @Override
+    protected float getDividerRightMargin() {
+        return 15;
+    }
+
+    @Override
+    protected float getDividerLeftMargin() {
+        return 0;
+    }
+
+    @Override
     public LoadViewHolder getProgressBar() {
         return new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
     }

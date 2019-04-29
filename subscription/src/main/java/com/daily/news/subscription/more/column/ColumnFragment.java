@@ -116,8 +116,16 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new SubscriptionDivider(0,15));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(getDividerLeftMargin(),getDividerRightMargin()));
 
+    }
+
+    protected float getDividerRightMargin() {
+        return 0;
+    }
+
+    protected float getDividerLeftMargin() {
+        return 0;
     }
 
     public void setOnScrollListener(RecyclerView.OnScrollListener listener) {

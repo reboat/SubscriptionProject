@@ -41,6 +41,16 @@ public class MyColumnFragment extends ColumnFragment {
     }
 
     @Override
+    protected float getDividerLeftMargin() {
+        return 15;
+    }
+
+    @Override
+    protected float getDividerRightMargin() {
+        return 15;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
