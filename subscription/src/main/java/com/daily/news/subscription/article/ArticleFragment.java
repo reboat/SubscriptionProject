@@ -96,19 +96,21 @@ public class ArticleFragment extends Fragment implements LoadMoreListener<Detail
     protected void onItemClick(ArticleResponse.DataBean.Article article) {
         new Analytics.AnalyticsBuilder(getContext(), "200007", "AppContentClick", false)
                 .name("新闻列表点击")
-                .selfObjectID(String.valueOf(article.getMlf_id()))
-                .columnID(String.valueOf(mDetailBean.id))
-                .classShortName(mDetailBean.name)
-                .objectShortName(article.getList_title())
-                .seObjectType(ObjectType.C01)
                 .pageType("订阅号详情页")
+                .columnID(String.valueOf(mDetailBean.id))
+                .columnName(mDetailBean.name)
                 .ilurl(article.getUrl())
                 .objectID(String.valueOf(article.getMlf_id()))
-                .columnName(mDetailBean.name)
+                .objectShortName(article.getList_title())
+                .classID(article.getColumn_id())
+                .className(article.getColumn_name())
+                .selfObjectID(String.valueOf(article.getId()))
+                .seObjectType(ObjectType.C01)
+                .newsID(String.valueOf(article.getMlf_id()))
                 .selfNewsID(String.valueOf(article.getId()))
-                .pubUrl(article.getUrl())
-                .newsID(String.valueOf(article.getId()))
                 .newsTitle(article.getDoc_title())
+                .objectType("栏目新闻列表")
+                .pubUrl(article.getUrl())
                 .build()
                 .send();
     }
@@ -201,6 +203,6 @@ public class ArticleFragment extends Fragment implements LoadMoreListener<Detail
     }
 
     public void setColumnId(DetailResponse.DataBean.DetailBean bean) {
-        mDetailBean =bean;
+        mDetailBean = bean;
     }
 }
