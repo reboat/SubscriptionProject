@@ -381,6 +381,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             //TODO 分享ObjectType
             OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mDetailColumn.id + "")
+                    .setObjectType(ObjectType.C90)
                     .setObjectName(shareName)
                     .setPageType("订阅号详情页/栏目卡片详情页")
                     .setColumn_id(String.valueOf(mDetailColumn.id))
