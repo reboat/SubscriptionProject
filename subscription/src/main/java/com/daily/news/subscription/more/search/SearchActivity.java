@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
-import com.daily.news.subscription.RedboatUtils;
-import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 
 import butterknife.BindView;
