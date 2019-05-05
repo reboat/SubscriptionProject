@@ -78,7 +78,7 @@ public class DetailStore extends SubscribeStore implements DetailContract.Store 
                     public String getApi() {
                         return "/api/column/article_list";
                     }
-                }.bindLoadViewHolder(progressBar).setShortestTime(700).exe(params);
+                }.bindLoadViewHolder(progressBar).exe(params);
             }
         }, BackpressureStrategy.BUFFER).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }

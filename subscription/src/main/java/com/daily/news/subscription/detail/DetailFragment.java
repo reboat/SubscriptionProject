@@ -104,7 +104,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @BindView(R2.id.detail_column_mark)
     TextView mTypeTagView;
 
-    @BindView(R2.id.loading_container)
+    @BindView(R2.id.detail_loading_container)
     ViewGroup mLoadingContainer;
     @BindView(R2.id.loading_temp)
     View mLoadingTemp;
