@@ -59,9 +59,9 @@ import cn.daily.news.biz.core.utils.TypeFaceUtils;
  */
 
 public class DetailFragment extends Fragment implements DetailContract.View, HeaderRefresh.OnRefreshListener {
+    public static final int CODE_ALREADY_OFF_THE_SHELF = 50604;
     private static final String UID = "id";
     private static final int DEFAULT_PAGE_SIZE = 10;
-    private static final int CODE_ALREADY_OFF_THE_SHELF = 50604;
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
     @BindView(R2.id.main)
@@ -103,6 +103,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     TextView mArticleNumView;
     @BindView(R2.id.detail_column_mark)
     TextView mTypeTagView;
+
+    @BindView(R2.id.loading_container)
+    ViewGroup mLoadingContainer;
+    @BindView(R2.id.loading_temp)
+    View mLoadingTemp;
 
 
     private DetailResponse.DataBean.DetailBean mDetailColumn;
@@ -158,7 +163,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         View rootView = inflater.inflate(R.layout.subscription_fragment_detail_column, container, false);
         ButterKnife.bind(this, rootView);
         mArticleFragment = (ArticleFragment) getChildFragmentManager().findFragmentById(R.id.detail_article_fragment);
-        mArticleFragment.setColumnId(mDetailColumn);
         mArticleFragment.setOnRefreshListener(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
@@ -168,6 +172,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 height = getResources().getDimensionPixelSize(resourceId);
             }
             toolbar.setPadding(0, height, 0, 0);
+            mLoadingContainer.setPadding(0, height, 0, 0);
         }
 
         appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -212,6 +217,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @Override
     public void showProgressBar() {
+        mLoadingContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -226,8 +232,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mArticleFragment.setRefreshing(false);
         }
         if (response.code == 200) {
+            main.setVisibility(View.VISIBLE);
             DetailResponse.DataBean data = response.data;
             mDetailColumn = data.detail;
+            mArticleFragment.setColumnId(mDetailColumn);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
             options.placeholder(R.drawable.column_placeholder_big);
@@ -279,6 +287,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @Override
     public void hideProgressBar() {
+        mLoadingContainer.setVisibility(View.GONE);
     }
 
     @Override
@@ -287,7 +296,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @Override
     public LoadViewHolder getProgressBar() {
-        return new LoadViewHolder(main, (ViewGroup) main.getParent());
+        return new LoadViewHolder(mLoadingTemp, (ViewGroup) mLoadingTemp.getParent());
     }
 
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})

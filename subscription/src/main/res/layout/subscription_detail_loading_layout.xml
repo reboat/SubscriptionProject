@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loading_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/daily_top_bar_background"
+        android:minHeight="@dimen/toolbar_normal_height">
+
+        <ImageView
+            android:id="@+id/iv_top_bar_back"
+            android:layout_width="42dp"
+            android:layout_height="@dimen/toolbar_normal_height"
+            android:background="?attr/actionBarItemBackground"
+            android:paddingRight="7dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_top_bar_back_red"
+            app:maskColor="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/tv_top_bar_title"
+            style="@style/ToolbarTitle"
+            android:textColor="@color/_222222"
+            tools:text="自定义ToolBar" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_ffffff">
+
+        <FrameLayout
+            android:id="@+id/loading_temp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </FrameLayout>
+</LinearLayout>

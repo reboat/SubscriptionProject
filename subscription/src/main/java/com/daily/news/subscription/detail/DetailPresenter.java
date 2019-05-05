@@ -2,6 +2,7 @@ package com.daily.news.subscription.detail;
 
 import com.daily.news.subscription.subscribe.SubscribePresenter;
 
+import cn.daily.news.biz.core.constant.APICode;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -29,8 +30,12 @@ public class DetailPresenter extends SubscribePresenter implements DetailContrac
         Disposable disposable = mDetailStore.getDetailResponse(mDetailView.getProgressBar(), params).subscribe(new Consumer<DetailResponse>() {
             @Override
             public void accept(DetailResponse response) throws Exception {
-                mDetailView.updateValue(response);
-                mDetailView.hideProgressBar();
+                if (response.code != 200 && response.code != DetailFragment.CODE_ALREADY_OFF_THE_SHELF) {
+                    mDetailView.showError(new RxException(response.message, response.code));
+                } else {
+                    mDetailView.updateValue(response);
+                    mDetailView.hideProgressBar();
+                }
             }
         }, new Consumer<Throwable>() {
             @Override
