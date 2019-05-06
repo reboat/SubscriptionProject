@@ -30,6 +30,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
@@ -292,6 +294,14 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
                 .toString());
+        new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)
+                .name("点击订阅号条目")
+                .pageType("我的订阅页")
+                .columnID(String.valueOf(mColumns.get(position).id))
+                .seObjectType(ObjectType.C90)
+                .columnName(mColumns.get(position).name)
+                .build()
+                .send();
     }
 
 
