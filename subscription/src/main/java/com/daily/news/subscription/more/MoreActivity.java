@@ -3,7 +3,6 @@ package com.daily.news.subscription.more;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,27 +22,17 @@ public class MoreActivity extends DailyActivity {
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
     @BindView(R2.id.txt_input)
     TextView txtInput;
-
-    private FragmentManager mFragmentManager;
-
-    CategoryFragment sub_fragment;
-
-    Unbinder unbinder;
+    CategoryFragment mCategoryFragment;
+    Unbinder mUnbinder;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_activity_more);
-
-        unbinder = ButterKnife.bind(this);
-
-        mFragmentManager = getSupportFragmentManager();
-        sub_fragment = new CategoryFragment();
-
-        mFragmentManager.beginTransaction().add(R.id.more_container, sub_fragment, "category").commit();
-
-
+        mUnbinder = ButterKnife.bind(this);
+        mCategoryFragment = new CategoryFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.more_container, mCategoryFragment, "category").commit();
     }
 
 
@@ -63,17 +52,14 @@ public class MoreActivity extends DailyActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
-            sub_fragment.onActivityResult(requestCode, resultCode, data);
+            mCategoryFragment.onActivityResult(requestCode, resultCode, data);
         }
-
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
+        mUnbinder.unbind();
     }
-
-
 }
