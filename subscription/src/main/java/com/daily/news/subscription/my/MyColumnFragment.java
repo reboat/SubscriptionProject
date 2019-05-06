@@ -34,6 +34,17 @@ public class MyColumnFragment extends ColumnFragment {
             }
         }
     };
+    private String mChannelName;
+    private String mChannelId;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mChannelName = getArguments().getString("channel_name");
+            mChannelId = getArguments().getString("channel_id");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,15 +72,18 @@ public class MyColumnFragment extends ColumnFragment {
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
 
         new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
-                .name(bean.subscribed?"订阅号订阅":"订阅号取消订阅")
+                .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
+                .classID(mChannelId)
                 .pageType("我的订阅页")
                 .columnID(String.valueOf(bean.id))
-                .columnName(bean.name)
                 .seObjectType(ObjectType.C90)
-                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .classShortName(mChannelName)
+                .columnName(bean.name)
+                .selfChannelID(mChannelId)
+                .channelName(mChannelName)
+                .operationType(bean.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();
-
 
         super.onSubscribe(bean);
     }
@@ -87,7 +101,7 @@ public class MyColumnFragment extends ColumnFragment {
 
     @Override
     public LoadViewHolder getProgressBar() {
-        LoadViewHolder holder=new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
+        LoadViewHolder holder = new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
         return holder;
     }
 }
