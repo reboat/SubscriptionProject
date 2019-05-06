@@ -297,6 +297,8 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void onItemClick(View itemView, int position) {
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
+                .appendQueryParameter("channel_id",mChannelId)
+                .appendQueryParameter("channel_name",mChannelName)
                 .build()
                 .toString());
         new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)

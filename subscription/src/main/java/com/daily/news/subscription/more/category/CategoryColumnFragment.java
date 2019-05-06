@@ -117,6 +117,8 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     public void onItemClick(View itemView, int position) {
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(getItem(position).id))
+                .appendQueryParameter("channel_id",mChannelId)
+                .appendQueryParameter("channel_name",mChannelName)
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);
 

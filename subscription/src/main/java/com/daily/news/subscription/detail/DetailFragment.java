@@ -113,6 +113,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     private DetailResponse.DataBean.DetailBean mDetailColumn;
     private ArticleFragment mArticleFragment;
     private ArticlePresenter mArticlePresenter;
+    private String mChannelName;
+    private String mChannelId;
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -141,10 +143,13 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         new DetailPresenter(this, new DetailStore());
     }
 
-    public static DetailFragment newInstance(String uid) {
+    public static DetailFragment newInstance(String uid,String channelId,String channelName) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString(UID, uid);
+        Bundle bundle = new Bundle();
+        bundle.putString("channel_name", channelName);
+        bundle.putString("channel_id", channelId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -154,6 +159,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUid = getArguments().getString(UID);
+            mChannelName = getArguments().getString("channel_name");
+            mChannelId = getArguments().getString("channel_id");
         }
     }
 
@@ -301,17 +308,19 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
-        if (mDetailColumn.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
-                    .name("订阅号取消订阅")
-                    .pageType("订阅号详情页")
-                    .columnID(String.valueOf(mDetailColumn.id))
-                    .columnName(mDetailColumn.name)
-                    .seObjectType(ObjectType.C90)
-                    .operationType("取消订阅")
-                    .build()
-                    .send();
-        }
+        new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+                .name(mDetailColumn.subscribed?"订阅号取消订阅":"订阅号订阅")
+                .classID(mChannelId)
+                .pageType("订阅号详情页")
+                .columnID(String.valueOf(mDetailColumn.id))
+                .seObjectType(ObjectType.C90)
+                .classShortName(mChannelName)
+                .columnName(mDetailColumn.name)
+                .selfChannelID(mChannelId)
+                .channelName(mChannelName)
+                .operationType(mDetailColumn.subscribed?"取消订阅":"订阅")
+                .build()
+                .send();
         mPresenter.submitSubscribe(mDetailColumn);
         modifySubscribeBtnState(!mDetailColumn.subscribed);
 
@@ -325,18 +334,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getActivity().setResult(Activity.RESULT_OK, intent);
-
-        if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
-                    .name("订阅号订阅")
-                    .pageType("订阅号详情页")
-                    .columnID(String.valueOf(mDetailColumn.id))
-                    .columnName(mDetailColumn.name)
-                    .seObjectType(ObjectType.C90)
-                    .operationType("订阅")
-                    .build()
-                    .send();
-        }
     }
 
     @Override

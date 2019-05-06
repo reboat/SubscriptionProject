@@ -13,6 +13,8 @@ import cn.daily.news.biz.core.DailyActivity;
 public class DetailActivity extends DailyActivity {
 
     private Analytics mAnalytics;
+    private String mChannelName;
+    private String mChannelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,13 @@ public class DetailActivity extends DailyActivity {
             id = data.getQueryParameter("id");
         }
 
+        if (getIntent().getData() != null) {
+            mChannelName = getIntent().getData().getQueryParameter("channel_name");
+            mChannelId = getIntent().getData().getQueryParameter("channel_id");
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment detailFragment = DetailFragment.newInstance(id);
+        DetailFragment detailFragment = DetailFragment.newInstance(id,mChannelId,mChannelName);
         transaction.add(R.id.detail_container, detailFragment);
         transaction.commit();
     }
