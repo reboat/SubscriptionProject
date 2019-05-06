@@ -45,6 +45,8 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
     Unbinder unbinder;
 
     String type; // 判断是从more还是more_new跳过来的
+    private String mChannelName;
+    private String mChannelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
         Intent intent = getIntent();
         Uri data = intent.getData();
         etInput.setHint("搜索起航号");
+        mChannelId = getIntent().getStringExtra("channel_id");
+        mChannelName = getIntent().getStringExtra("channel_name");
     }
 
     @Override
@@ -98,6 +102,8 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
             fragment = new SearchColumnFragment();
             Bundle args = new Bundle();
             args.putString("keyword", keyword);
+            args.putString("channel_name", mChannelName);
+            args.putString("channel_id", mChannelId);
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.more_container, fragment, "search")
@@ -131,7 +137,7 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_cross) {
             SearchColumnFragment fragment = (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
-            if(fragment!=null){
+            if (fragment != null) {
                 fragment.clear();
             }
             etInput.setText("");

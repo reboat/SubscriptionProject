@@ -46,7 +46,6 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     private FooterLoadMore<ColumnResponse.DataBean> mLoadMore;
     List<ColumnResponse.DataBean.ColumnBean> columnBeen;
     String className;
-    int id;
     boolean has_more;
 
     public CategoryColumnFragment() {
@@ -112,16 +111,6 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         super.subscribeSuc(bean);
-        if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
-                    .name("订阅号订阅")
-                    .columnID(String.valueOf(bean.id))
-                    .columnName(bean.name)
-                    .seObjectType(ObjectType.C90)
-                    .operationType("订阅")
-                    .build()
-                    .send();
-        }
     }
 
     @Override
@@ -135,10 +124,10 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         if (bean != null) {
             new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)
                     .name("点击订阅号条目")
-                    .pageType("我的订阅页")
+                    .pageType("订阅号分类检索页面")
                     .columnID(String.valueOf(bean.id))
-                    .columnName(bean.name)
                     .seObjectType(ObjectType.C90)
+                    .columnName(bean.name)
                     .build()
                     .send();
         }
@@ -146,17 +135,19 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
-        if (bean.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
-                    .name("订阅号取消订阅")
-                    .pageType("订阅号分类检索页面")
-                    .columnID(String.valueOf(bean.id))
-                    .columnName(bean.name)
-                    .seObjectType(ObjectType.C90)
-                    .operationType("取消订阅")
-                    .build()
-                    .send();
-        }
+        new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
+                .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
+                .classID(mChannelId)
+                .pageType("订阅号分类检索页面")
+                .columnID(String.valueOf(bean.id))
+                .seObjectType(ObjectType.C90)
+                .classShortName(mChannelName)
+                .columnName(bean.name)
+                .selfChannelID(mChannelId)
+                .channelName(mChannelName)
+                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .build()
+                .send();
         //说明:点击时父类会取反,作为参数传给服务端，所以要放在super前
         super.onSubscribe(bean);
     }
@@ -178,26 +169,6 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
         } else if (!dataBean.has_more) {
             mLoadMore.setState(LoadMore.TYPE_NO_MORE);
         }
-    }
-
-    private String getRedName() {
-        ResourceBiz biz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
-        if (biz != null && biz.feature_list != null) {
-            for (ResourceBiz.FeatureListBean bean : biz.feature_list) {
-                if (bean.name.equals("hch")) {
-                    String text = bean.desc;
-                    if (text != null && text != "") {
-
-                        if (text.length() > 4) {
-                            text = text.substring(0, 4) + "...";
-                        }
-                        return text;
-                    }
-                    break;
-                }
-            }
-        }
-        return "栏目";
     }
 
     @Override

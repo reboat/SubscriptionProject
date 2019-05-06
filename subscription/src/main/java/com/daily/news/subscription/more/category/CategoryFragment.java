@@ -37,9 +37,6 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
 
-    private boolean isVisibleToUser;
-    private Analytics mAnalytics;
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -74,6 +71,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     List<CategoryResponse.DataBean.CategoryBean> mCategories;
 
     ColumnFragment fragment;
+    private String mChannelName;
+    private String mChannelId;
 
 
     public CategoryFragment() {
@@ -84,6 +83,10 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mChannelName = getArguments().getString("channel_name");
+            mChannelId = getArguments().getString("channel_id");
+        }
     }
 
     @Override
@@ -103,29 +106,9 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
         mPresenter.subscribe(2);
     }
 
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser = isVisibleToUser;
-//        if (isVisibleToUser && mAnalytics == null) {
-//            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "500010", "ColumnGuidePageStay", true)
-//                    .setEvenName("页面停留时长")
-//                    .setPageType("栏目号分类检索页面")
-//                    .pageType("栏目号分类检索页面")
-//                    .build();
-//        }
-//        if (!isVisibleToUser && mAnalytics != null) {
-//            mAnalytics.sendWithDuration();
-//        }
-    }
-
     @Override
     public void onPause() {
         super.onPause();
-        if (isVisibleToUser && mAnalytics != null) {
-            mAnalytics.sendWithDuration();
-        }
     }
 
     private void setupRecyclerView() {
@@ -147,6 +130,8 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             dataBean.elements.get(0).is_selected = true;
             fragment = new CategoryColumnFragment();
             Bundle args = new Bundle();
+            args.putString("channel_name",mChannelName);
+            args.putString("channel_id",mChannelId);
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
             args.putString("className", dataBean.elements.get(0).class_name);
             fragment.setArguments(args);

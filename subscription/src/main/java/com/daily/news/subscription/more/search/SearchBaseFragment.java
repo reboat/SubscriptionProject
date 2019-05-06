@@ -42,6 +42,8 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 public class SearchBaseFragment extends Fragment implements SearchContract.View, SearchBaseAdapter.OnSubscribeListener, OnItemClickListener {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
+    protected String mChannelName;
+    protected String mChannelId;
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
@@ -62,6 +64,10 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mChannelName = getArguments().getString("channel_name");
+            mChannelId = getArguments().getString("channel_id");
+        }
     }
 
     @Override
@@ -111,6 +117,21 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     @Override
     public void onSubscribe(SearchResponse.DataBean.ColumnBean bean) {
+
+        new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
+                .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
+                .classID(mChannelId)
+                .pageType("订阅号分类检索页面")
+                .columnID(String.valueOf(bean.id))
+                .seObjectType(ObjectType.C90)
+                .classShortName(mChannelName)
+                .columnName(bean.name)
+                .selfChannelID(mChannelId)
+                .channelName(mChannelName)
+                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .build()
+                .send();
+
         mPresenter.submitSubscribe(bean);
         bean.subscribed = !bean.subscribed;
         mColumnAdapter.notifyDataSetChanged();
@@ -118,14 +139,10 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
-//        Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-//        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
         intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-//        getActivity().setResult(Activity.RESULT_OK,intent);
     }
 
     protected boolean isHasSubscribe() {
@@ -258,10 +275,6 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
                 if (id == getItem(i).id) {
                     getItem(i).subscribed = subscribe;
                     getColumnAdapter().notifyItemChanged(i);
-//                    Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-//                    intent.putExtra(Constants.Name.SUBSCRIBE, subscribe);
-//                    intent.putExtra(Constants.Name.ID, id);
-//                    getActivity().setResult(Activity.RESULT_OK,intent);
                     break;
                 }
             }
@@ -278,20 +291,12 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
         ColumnResponse.DataBean.ColumnBean bean = getItem(position);
         if (bean != null) {
-            String eventName = "点击栏目条目（头像+标题）";
-            if (bean.red_boat_column) {
-                eventName = "点击之江号条目（头像+标题）";
-            }
-            Map<String, String> otherInfo = new HashMap<>();
-            otherInfo.put("customObjectType", "RelatedColumnType");
-            String otherInfoStr = JsonUtils.toJsonString(otherInfo);
-
             new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)
-                    .name("点击订阅号搜索条目")
-                    .pageType("搜索页面")
+                    .name("点击订阅号条目")
+                    .pageType("订阅号分类检索页面")
                     .columnID(String.valueOf(bean.id))
-                    .columnName(bean.name)
                     .seObjectType(ObjectType.C90)
+                    .columnName(bean.name)
                     .build()
                     .send();
         }

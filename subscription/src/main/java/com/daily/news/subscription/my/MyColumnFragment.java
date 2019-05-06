@@ -34,17 +34,6 @@ public class MyColumnFragment extends ColumnFragment {
             }
         }
     };
-    private String mChannelName;
-    private String mChannelId;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mChannelName = getArguments().getString("channel_name");
-            mChannelId = getArguments().getString("channel_id");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
