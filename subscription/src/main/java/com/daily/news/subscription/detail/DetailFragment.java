@@ -302,7 +302,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
         if (mDetailColumn.subscribed) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+            new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
                     .name("订阅号取消订阅")
                     .pageType("订阅号详情页")
                     .columnID(String.valueOf(mDetailColumn.id))

@@ -60,7 +60,7 @@ public class MyColumnFragment extends ColumnFragment {
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
 
-        new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+        new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
                 .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
                 .classID(mChannelId)
                 .pageType("我的订阅页")
