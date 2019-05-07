@@ -48,7 +48,7 @@ public class DetailActivity extends DailyActivity {
     public void onResume() {
         super.onResume();
         mAnalytics = new Analytics.AnalyticsBuilder(this, "A0010", "ColumnDetailPageStay", true)
-                .name("订阅号详情页停留")
+                .name("页面停留时长")
                 .pageType("订阅号详情页")
                 .build();
     }

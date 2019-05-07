@@ -402,7 +402,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                     .setTitle(shareName)
                     .setTextContent(shareDes).setTargetUrl(shareUrl)
                     .setAnalyticsBean(analyticsBean)
-                    .setEventName("PageShare")
+                    .setEventName("点击分享栏目卡片")
                     .setShareContentID(mDetailColumn.id + "")
                     .setShareType("栏目")
                     .setNewsCard(false)
