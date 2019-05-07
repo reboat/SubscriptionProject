@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply from: 'http://10.100.62.98:8086/nexus/service/local/artifact/maven/redirect?r=releases&g=cn.daily.android&a=publish&e=gradle&v=0.0.8'
@@ -50,16 +52,19 @@ dependencies {
     implementation 'cn.daily.android:analytics:6.0.0.3'
     implementation 'com.aliya:android-uimode:2.0.8'
     implementation 'cn.daily.android:common-core:0.0.6.38'
-    implementation ('cn.daily.android:biz-core:6.0.1.73'){
+    implementation ('cn.daily.android:biz-core:6.0.1.117-SNAPSHOT'){
         exclude group: 'cn.daily.android',module: 'analytics'
+        changing = true
     }
 }
 configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+
     exclude group: "cn.daily.android", module: "core-library"
     exclude group: "com.umeng.sdk", module: "common"
         resolutionStrategy {
             force 'com.umeng.sdk:umeng-common:1.5.4'
-            force 'cn.daily.android:biz-core:6.0.1.90'
+            force 'cn.daily.android:biz-core:6.0.1.129'
             force 'cn.daily.android:common-core:0.0.6.38'
             force 'cn.daily.android:analytics:6.0.0.3'
         }
