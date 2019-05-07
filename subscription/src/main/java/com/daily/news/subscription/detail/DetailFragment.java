@@ -147,9 +147,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString(UID, uid);
-        Bundle bundle = new Bundle();
-        bundle.putString("channel_name", channelName);
-        bundle.putString("channel_id", channelId);
+        args.putString("channel_name", channelName);
+        args.putString("channel_id", channelId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -308,7 +307,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
-        new Analytics.AnalyticsBuilder(getContext(), "A0114", "SubColumn", false)
+        new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
                 .name(mDetailColumn.subscribed?"订阅号取消订阅":"订阅号订阅")
                 .classID(mChannelId)
                 .pageType("订阅号详情页")
