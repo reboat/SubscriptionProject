@@ -137,7 +137,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "A0014", "SubColumn", false)
+        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
                 .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
                 .classID(mChannelId)
                 .pageType("订阅号分类检索页面")
