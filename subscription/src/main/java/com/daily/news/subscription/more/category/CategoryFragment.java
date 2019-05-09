@@ -71,9 +71,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     List<CategoryResponse.DataBean.CategoryBean> mCategories;
 
     ColumnFragment fragment;
-    private String mChannelName;
-    private String mChannelId;
-
 
     public CategoryFragment() {
         new CategoryPresenter(this, new CategoryStore());
@@ -83,10 +80,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mChannelName = getArguments().getString("channel_name");
-            mChannelId = getArguments().getString("channel_id");
-        }
     }
 
     @Override
@@ -130,8 +123,6 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             dataBean.elements.get(0).is_selected = true;
             fragment = new CategoryColumnFragment();
             Bundle args = new Bundle();
-            args.putString("channel_name",mChannelName);
-            args.putString("channel_id",mChannelId);
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
             args.putString("className", dataBean.elements.get(0).class_name);
             fragment.setArguments(args);

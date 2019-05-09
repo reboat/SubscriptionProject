@@ -117,8 +117,6 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     public void onItemClick(View itemView, int position) {
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(getItem(position).id))
-                .appendQueryParameter("channel_id",mChannelId)
-                .appendQueryParameter("channel_name",mChannelName)
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);
 
@@ -139,14 +137,10 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
         new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
                 .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
-                .classID(mChannelId)
                 .pageType("订阅号分类检索页面")
                 .columnID(String.valueOf(bean.id))
                 .seObjectType(ObjectType.C90)
-                .classShortName(mChannelName)
                 .columnName(bean.name)
-                .selfChannelID(mChannelId)
-                .channelName(mChannelName)
                 .operationType(bean.subscribed?"取消订阅":"订阅")
                 .build()
                 .send();

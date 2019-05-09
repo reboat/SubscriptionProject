@@ -16,17 +16,8 @@ public class MyColumnActivity extends DailyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_activity_my_subscription);
-        String channelName = null;
-        String channelId = null;
-        if (getIntent().getData() != null) {
-            channelName = getIntent().getData().getQueryParameter("channel_name");
-            channelId = getIntent().getData().getQueryParameter("channel_id");
-        }
-
         MyColumnFragment fragment = new MyColumnFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("channel_name", channelName);
-        bundle.putString("channel_id", channelId);
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()

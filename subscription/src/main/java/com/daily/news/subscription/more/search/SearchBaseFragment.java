@@ -42,8 +42,6 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 public class SearchBaseFragment extends Fragment implements SearchContract.View, SearchBaseAdapter.OnSubscribeListener, OnItemClickListener {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
-    protected String mChannelName;
-    protected String mChannelId;
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
@@ -64,10 +62,6 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mChannelName = getArguments().getString("channel_name");
-            mChannelId = getArguments().getString("channel_id");
-        }
     }
 
     @Override
@@ -120,14 +114,10 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
 
         new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
                 .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
-                .classID(mChannelId)
                 .pageType("订阅号分类检索页面")
                 .columnID(String.valueOf(bean.id))
                 .seObjectType(ObjectType.C90)
-                .classShortName(mChannelName)
                 .columnName(bean.name)
-                .selfChannelID(mChannelId)
-                .channelName(mChannelName)
                 .operationType(bean.subscribed?"取消订阅":"订阅")
                 .build()
                 .send();
@@ -286,8 +276,6 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     public void onItemClick(View itemView, int position) {
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
-                .appendQueryParameter("channel_id",mChannelId)
-                .appendQueryParameter("channel_name",mChannelName)
                 .build()
                 .toString(), REQUEST_CODE_TO_DETAIL);
 

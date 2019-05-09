@@ -36,8 +36,6 @@ import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, OnItemClickListener {
-    protected String mChannelName;
-    protected String mChannelId;
 
     @BindView(R2.id.tv_tips)
     protected
@@ -85,10 +83,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mChannelName = getArguments().getString("channel_name");
-            mChannelId = getArguments().getString("channel_id");
-        }
     }
 
     @Override
@@ -297,8 +291,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void onItemClick(View itemView, int position) {
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
-                .appendQueryParameter("channel_id",mChannelId)
-                .appendQueryParameter("channel_name",mChannelName)
                 .build()
                 .toString());
         new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)

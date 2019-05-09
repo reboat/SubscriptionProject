@@ -113,9 +113,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     private DetailResponse.DataBean.DetailBean mDetailColumn;
     private ArticleFragment mArticleFragment;
     private ArticlePresenter mArticlePresenter;
-    private String mChannelName;
-    private String mChannelId;
-
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -143,12 +140,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         new DetailPresenter(this, new DetailStore());
     }
 
-    public static DetailFragment newInstance(String uid,String channelId,String channelName) {
+    public static DetailFragment newInstance(String uid) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString(UID, uid);
-        args.putString("channel_name", channelName);
-        args.putString("channel_id", channelId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -158,8 +153,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUid = getArguments().getString(UID);
-            mChannelName = getArguments().getString("channel_name");
-            mChannelId = getArguments().getString("channel_id");
         }
     }
 
@@ -309,14 +302,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     public void submitSubscribe() {
         new Analytics.AnalyticsBuilder(getContext(), mDetailColumn.subscribed?"A0114":"A0014", "SubColumn", false)
                 .name(mDetailColumn.subscribed?"订阅号取消订阅":"订阅号订阅")
-                .classID(mChannelId)
                 .pageType("订阅号详情页")
                 .columnID(String.valueOf(mDetailColumn.id))
                 .seObjectType(ObjectType.C90)
-                .classShortName(mChannelName)
                 .columnName(mDetailColumn.name)
-                .selfChannelID(mChannelId)
-                .channelName(mChannelName)
                 .operationType(mDetailColumn.subscribed?"取消订阅":"订阅")
                 .build()
                 .send();

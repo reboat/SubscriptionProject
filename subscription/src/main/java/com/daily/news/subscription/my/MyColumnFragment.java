@@ -62,14 +62,10 @@ public class MyColumnFragment extends ColumnFragment {
 
         new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
                 .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
-                .classID(mChannelId)
                 .pageType("我的订阅页")
                 .columnID(String.valueOf(bean.id))
                 .seObjectType(ObjectType.C90)
-                .classShortName(mChannelName)
                 .columnName(bean.name)
-                .selfChannelID(mChannelId)
-                .channelName(mChannelName)
                 .operationType(bean.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();

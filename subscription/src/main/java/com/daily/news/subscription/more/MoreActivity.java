@@ -24,9 +24,6 @@ public class MoreActivity extends DailyActivity {
     TextView txtInput;
     CategoryFragment mCategoryFragment;
     Unbinder mUnbinder;
-    private String mChannelName;
-    private String mChannelId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +31,7 @@ public class MoreActivity extends DailyActivity {
         setContentView(R.layout.subscription_activity_more);
         mUnbinder = ButterKnife.bind(this);
 
-         mChannelName = null;
-         mChannelId = null;
-        if (getIntent().getData() != null) {
-            mChannelName = getIntent().getData().getQueryParameter("channel_name");
-            mChannelId = getIntent().getData().getQueryParameter("channel_id");
-        }
         mCategoryFragment = new CategoryFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("channel_name", mChannelName);
-        bundle.putString("channel_id", mChannelId);
-        mCategoryFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.more_container, mCategoryFragment, "category").commit();
     }
 
@@ -56,10 +43,7 @@ public class MoreActivity extends DailyActivity {
             finish();
         } else if (view.getId() == R.id.txt_input) {
             Uri.Builder builder = new Uri.Builder().path("/subscription/more/search").appendQueryParameter("type", "more");
-            Bundle args = new Bundle();
-            args.putString("channel_name", mChannelName);
-            args.putString("channel_id", mChannelId);
-            Nav.with(this).setExtras(args).toPath(builder.build().toString(), REQUEST_CODE_TO_DETAIL);
+            Nav.with(this).toPath(builder.build().toString(), REQUEST_CODE_TO_DETAIL);
         }
 
     }
