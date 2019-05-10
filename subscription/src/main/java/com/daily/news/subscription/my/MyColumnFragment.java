@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +16,21 @@ import com.daily.news.subscription.R;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 /**
  * Created by lixinke on 2017/7/17.
  */
 
-public class MyColumnFragment extends ColumnFragment {
+public class MyColumnFragment extends ColumnFragment implements LoadMoreListener<ColumnResponse.DataBean> {
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -35,10 +42,19 @@ public class MyColumnFragment extends ColumnFragment {
         }
     };
 
+    private FooterLoadMore<ColumnResponse.DataBean> mFooterLoadMore;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFooterLoadMore=new FooterLoadMore<>(mRecyclerView,this);
+        mColumnAdapter.setFooterLoadMore(mFooterLoadMore.getItemView());
     }
 
     @Override
@@ -88,5 +104,36 @@ public class MyColumnFragment extends ColumnFragment {
     public LoadViewHolder getProgressBar() {
         LoadViewHolder holder = new LoadViewHolder(mRecyclerView, (ViewGroup) mRecyclerView.getParent());
         return holder;
+    }
+
+    @Override
+    public void onLoadMoreSuccess(ColumnResponse.DataBean data, LoadMore loadMore) {
+        if(data!=null && data.has_more){
+            mColumnAdapter.addData(data.elements,true);
+            loadMore.setState(LoadMore.TYPE_IDLE);
+        }else{
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+    }
+
+    @Override
+    public void onLoadMore(LoadingCallBack<ColumnResponse.DataBean> callback) {
+
+        if(mColumnAdapter!=null && mColumnAdapter.getDataSize()>0){
+            long start=mColumnAdapter.getData(mColumnAdapter.getDataSize()-1).id;
+            new APIGetTask(callback) {
+                @Override
+                public void onSetupParams(Object... params) {
+                    put("start",params[0]);
+                }
+
+                @Override
+                public String getApi() {
+                    return "/api/subscription/user_subscription";
+                }
+            }.exe(start);
+        }
+
+
     }
 }
