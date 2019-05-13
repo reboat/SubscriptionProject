@@ -376,15 +376,16 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean.getInstance()
                     .setObjectType(ObjectType.C90)
                     .setPageType("订阅号详情页")
+                    .setSeName("点击分享栏目卡片")
                     .setColumn_id(String.valueOf(mDetailColumn.id))
                     .setColumn_name(mDetailColumn.name);
 
             UmengShareBean shareBean = UmengShareBean.getInstance()
                     .setSingle(false)
                     .setTitle(shareName)
+                    .setEventName("PageShare")
                     .setTextContent(shareDes).setTargetUrl(shareUrl)
                     .setAnalyticsBean(analyticsBean)
-                    .setEventName("点击分享栏目卡片")
                     .setShareContentID(mDetailColumn.id + "")
                     .setShareType("栏目")
                     .setNewsCard(false)
