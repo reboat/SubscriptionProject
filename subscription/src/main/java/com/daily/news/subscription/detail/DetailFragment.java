@@ -374,17 +374,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             //        //分享专用bean
             //TODO 分享ObjectType
             OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean.getInstance()
-                    .setObjectID(mDetailColumn.id + "")
                     .setObjectType(ObjectType.C90)
-                    .setObjectName(shareName)
                     .setPageType("订阅号详情页")
                     .setColumn_id(String.valueOf(mDetailColumn.id))
-                    .setColumn_name(mDetailColumn.name)
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mDetailColumn.id + "")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfobjectID(mDetailColumn.id + "");
+                    .setColumn_name(mDetailColumn.name);
 
             UmengShareBean shareBean = UmengShareBean.getInstance()
                     .setSingle(false)
