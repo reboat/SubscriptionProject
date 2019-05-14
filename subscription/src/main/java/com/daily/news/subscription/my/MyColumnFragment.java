@@ -53,7 +53,7 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFooterLoadMore=new FooterLoadMore<>(mRecyclerView,this);
+        mFooterLoadMore = new FooterLoadMore<>(mRecyclerView, this);
         mColumnAdapter.setFooterLoadMore(mFooterLoadMore.getItemView());
     }
 
@@ -76,7 +76,7 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
 
-        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
+        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed ? "A0114" : "A0014", "SubColumn", false)
                 .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
                 .pageType("我的订阅页")
                 .columnID(String.valueOf(bean.id))
@@ -108,23 +108,26 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
 
     @Override
     public void onLoadMoreSuccess(ColumnResponse.DataBean data, LoadMore loadMore) {
-        if(data!=null && data.has_more){
-            mColumnAdapter.addData(data.elements,true);
+        if (data != null && data.has_more) {
             loadMore.setState(LoadMore.TYPE_IDLE);
-        }else{
+        } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+
+        if (data != null && data.elements != null && data.elements.size() > 0) {
+            mColumnAdapter.addData(data.elements, true);
         }
     }
 
     @Override
     public void onLoadMore(LoadingCallBack<ColumnResponse.DataBean> callback) {
 
-        if(mColumnAdapter!=null && mColumnAdapter.getDataSize()>0){
-            long start=mColumnAdapter.getData(mColumnAdapter.getDataSize()-1).id;
+        if (mColumnAdapter != null && mColumnAdapter.getDataSize() > 0) {
+            long start = mColumnAdapter.getData(mColumnAdapter.getDataSize() - 1).id;
             new APIGetTask(callback) {
                 @Override
                 public void onSetupParams(Object... params) {
-                    put("start",params[0]);
+                    put("start", params[0]);
                 }
 
                 @Override
