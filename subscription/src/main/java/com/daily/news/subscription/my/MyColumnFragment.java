@@ -19,6 +19,7 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.FooterLoadMoreV2;
 import com.zjrb.core.recycleView.LoadMore;
 
 import cn.daily.news.analytics.Analytics;
@@ -135,6 +136,8 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
                     return "/api/subscription/user_subscription";
                 }
             }.exe(start);
+        }else {
+            mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
         }
 
 
