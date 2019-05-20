@@ -94,6 +94,7 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         super.subscribeSuc(bean);
         removeItem(bean);
+        mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
     }
 
     @Override
