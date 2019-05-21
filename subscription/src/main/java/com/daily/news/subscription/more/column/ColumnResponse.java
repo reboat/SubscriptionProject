@@ -21,7 +21,7 @@ public class ColumnResponse {
         public boolean has_more;
 
         public static class ColumnBean implements Parcelable {
-            public int id;
+            public long id;
             public String name;
             public String pic_url;
             public String background_url;
@@ -46,7 +46,7 @@ public class ColumnResponse {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(this.id);
+                dest.writeLong(this.id);
                 dest.writeString(this.name);
                 dest.writeString(this.pic_url);
                 dest.writeString(this.background_url);
