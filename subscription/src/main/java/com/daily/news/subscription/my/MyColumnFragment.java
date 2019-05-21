@@ -19,7 +19,6 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMore;
-import com.zjrb.core.recycleView.FooterLoadMoreV2;
 import com.zjrb.core.recycleView.LoadMore;
 
 import cn.daily.news.analytics.Analytics;
@@ -95,6 +94,17 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
         super.subscribeSuc(bean);
         removeItem(bean);
         mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+    }
+
+    @Override
+    protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean columnBean) {
+        removeItem(columnBean);
+        mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

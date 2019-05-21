@@ -23,7 +23,6 @@ import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.ui.divider.ListSpaceDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                     if (mColumns.get(i).id == id) {
                         mColumns.get(i).subscribed = subscribe;
                         getColumnAdapter().notifyDataSetChanged();
+                        notifyDataChanged(mColumns.get(i));
                     }
                 }
 
@@ -58,6 +58,10 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
             }
         }
     };
+
+    protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean bean) {
+
+    }
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
