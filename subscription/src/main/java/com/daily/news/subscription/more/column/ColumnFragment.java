@@ -1,9 +1,7 @@
 package com.daily.news.subscription.more.column;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,32 +34,10 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class ColumnFragment extends Fragment implements ColumnContract.View, ColumnAdapter.OnSubscribeListener, OnItemClickListener {
 
+    private static final int REQUEST_CODE_TO_DETAIL = 1010;
     @BindView(R2.id.tv_tips)
     protected
     TextView tvTips;
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
-                long id = intent.getLongExtra(Constants.Name.ID, 0);
-                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
-
-                for (int i = 0; i < mColumns.size(); i++) {
-                    if (mColumns.get(i).id == id) {
-                        mColumns.get(i).subscribed = subscribe;
-                        getColumnAdapter().notifyDataSetChanged();
-                        notifyDataChanged(mColumns.get(i));
-                    }
-                }
-
-
-            }
-        }
-    };
-
-    protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean bean) {
-
-    }
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
@@ -109,7 +85,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         View rootView = inflater.inflate(R.layout.subscription_fragment_column, container, false);
         ButterKnife.bind(this, rootView);
         setupRecycleView();
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
         return rootView;
     }
 
@@ -121,7 +96,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mColumnAdapter);
-        mRecyclerView.addItemDecoration(new SubscriptionDivider(getDividerLeftMargin(),getDividerRightMargin()));
+        mRecyclerView.addItemDecoration(new SubscriptionDivider(getDividerLeftMargin(), getDividerRightMargin()));
 
     }
 
@@ -229,7 +204,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void updateValue(ColumnResponse.DataBean dataBean) {
 
-        if (dataBean==null || dataBean.elements == null || dataBean.elements.size() == 0) {
+        if (dataBean == null || dataBean.elements == null || dataBean.elements.size() == 0) {
             View emptyView = emptyView(LayoutInflater.from(getActivity()), (ViewGroup) getView());
             if (emptyView != null) {
                 mEmptyContainer.removeAllViews();
@@ -268,7 +243,6 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     public void onDestroyView() {
         mPresenter.unsubscribe();
         super.onDestroyView();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     public RecyclerView getRecyclerView() {
@@ -296,7 +270,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
         Nav.with(this).toPath(new Uri.Builder().path("/subscription/detail")
                 .appendQueryParameter("id", String.valueOf(mColumns.get(position).id))
                 .build()
-                .toString());
+                .toString(), REQUEST_CODE_TO_DETAIL);
         new Analytics.AnalyticsBuilder(getContext(), "500003", "ToDetailColumn", false)
                 .name("点击订阅号条目")
                 .pageType("我的订阅页")
@@ -307,6 +281,24 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
                 .send();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_TO_DETAIL && resultCode == Activity.RESULT_OK) {
+            long id = data.getLongExtra(Constants.Name.ID, 0);
+            boolean subscribe = data.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+            for (int i = 0; i < mColumns.size(); i++) {
+                if (mColumns.get(i).id == id) {
+                    mColumns.get(i).subscribed = subscribe;
+                    getColumnAdapter().notifyDataSetChanged();
+                    notifyDataChanged(mColumns.get(i));
+                }
+            }
+        }
+    }
+    protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean bean) {
+
+    }
 
     public interface FeedbackDataListener {
         void feedback(ColumnResponse.DataBean dataBean);

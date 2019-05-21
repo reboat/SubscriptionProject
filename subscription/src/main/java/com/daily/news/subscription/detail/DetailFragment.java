@@ -52,6 +52,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
 /**
@@ -327,7 +328,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         modifySubscribeBtnState(!mDetailColumn.subscribed);
-        Toast.makeText(getContext(), mDetailColumn.subscribed ? "取消订阅失败!" : "订阅失败!", Toast.LENGTH_SHORT).show();
+        ZBToast.showByType(getContext(), mDetailColumn.subscribed ? "取消订阅失败!" : "订阅失败!", ZBToast.TYPE_1);
     }
 
     private void modifySubscribeBtnState(boolean subscribe) {

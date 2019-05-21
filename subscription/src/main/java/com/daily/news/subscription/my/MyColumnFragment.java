@@ -31,24 +31,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
  */
 
 public class MyColumnFragment extends ColumnFragment implements LoadMoreListener<ColumnResponse.DataBean> {
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
-                if (!intent.getBooleanExtra(Constants.Name.SUBSCRIBE, true)) {
-                    sendRequest("杭州");
-                }
-            }
-        }
-    };
-
     private FooterLoadMore<ColumnResponse.DataBean> mFooterLoadMore;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,12 +48,6 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
     @Override
     protected float getDividerRightMargin() {
         return 15;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -98,8 +75,10 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
 
     @Override
     protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean columnBean) {
-        removeItem(columnBean);
-        mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+        if (!columnBean.subscribed) {
+            removeItem(columnBean);
+            mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
+        }
     }
 
     @Override
@@ -147,7 +126,7 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
                     return "/api/subscription/user_subscription";
                 }
             }.exe(start);
-        }else {
+        } else {
             mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
         }
 
