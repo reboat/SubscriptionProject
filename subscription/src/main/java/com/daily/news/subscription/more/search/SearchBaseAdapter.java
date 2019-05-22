@@ -66,11 +66,12 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         } else {
             loadMore.setState(LoadMore.TYPE_IDLE);
+        }
+
+        if (data.elements != null && data.elements.size() > 0) {
             getData().addAll(data.elements);
             notifyDataSetChanged();
         }
-
-
     }
 
     @Override
