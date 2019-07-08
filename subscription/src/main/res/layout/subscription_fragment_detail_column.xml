@@ -101,17 +101,6 @@
                             android:textStyle="bold"
                             tools:text="钱塘江" />
 
-                        <TextView
-                            android:id="@+id/detail_column_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@+id/detail_column_title"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/detail_column_title"
-                            android:text="#起航号#"
-                            android:textColor="@color/_d12324"
-                            android:textSize="12dp" />
-
 
                         <TextView
                             android:id="@+id/detail_column_description"
@@ -159,27 +148,48 @@
                     </RelativeLayout>
                 </com.zjrb.core.ui.widget.ShadowLayout>
 
-                <com.zjrb.core.ui.widget.ShadowLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/detail_back"
                     android:layout_marginLeft="23dp"
                     android:layout_marginTop="20dp"
-                    app:shadowColor="#507c7c7c"
-                    app:shadowDx="0dp"
-                    app:shadowDy="2dp"
-                    app:shadowRadius="4dp"
-                    app:shadowShape="oval"
-                    app:shadowSide="all">
+                    android:orientation="horizontal">
 
-                    <com.zjrb.core.ui.widget.CircleImageView
-                        android:id="@+id/detail_column_imageView"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:src="@drawable/column_placeholder_big"
-                        app:border_color="@color/_ffffff"
-                        app:border_width="2dp" />
-                </com.zjrb.core.ui.widget.ShadowLayout>
+                    <com.zjrb.core.ui.widget.ShadowLayout
+                        android:id="@+id/shadow_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:shadowColor="#507c7c7c"
+                        app:shadowDx="0dp"
+                        app:shadowDy="2dp"
+                        app:shadowRadius="4dp"
+                        app:shadowShape="oval"
+                        app:shadowSide="all">
+
+                        <com.zjrb.core.ui.widget.CircleImageView
+                            android:id="@+id/detail_column_imageView"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:src="@drawable/column_placeholder_big"
+                            app:border_color="@color/_ffffff"
+                            app:border_width="2dp" />
+                    </com.zjrb.core.ui.widget.ShadowLayout>
+
+                    <TextView
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/detail_column_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/shadow_container"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/shadow_container"
+                        android:text="#起航号#"
+                        android:textColor="@color/_d12324"
+                        android:textSize="12dp" />
+                </RelativeLayout>
+
+
             </RelativeLayout>
 
 
