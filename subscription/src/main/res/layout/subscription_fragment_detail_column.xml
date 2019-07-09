@@ -236,6 +236,7 @@
                     </com.zjrb.core.ui.widget.ShadowLayout>
 
                     <TextView
+                        android:background="@drawable/sail_flag"
                         android:id="@+id/detail_column_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -243,7 +244,6 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="4dp"
                         android:layout_toRightOf="@+id/shadow_container"
-                        android:text="#起航号#"
                         android:textColor="@color/_d12324"
                         android:textSize="12dp" />
                 </RelativeLayout>
