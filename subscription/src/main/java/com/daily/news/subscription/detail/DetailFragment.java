@@ -523,11 +523,13 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             final DetailResponse.DataBean.DetailBean bean = mDetailColumn;
             bean.rank_hited = true;
             bean.hit_rank_count += 2;
+            bean.subscribed = true;
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
                     mActionView.setText(bean.rank_hited ? "拉票" : "打榜");
                     mHitCountView.setText(bean.hit_rank_count > 99999 ? "10万+" : String.valueOf(bean.hit_rank_count));
+                    subscribeSuc(mDetailColumn);
                 }
             });
         }
