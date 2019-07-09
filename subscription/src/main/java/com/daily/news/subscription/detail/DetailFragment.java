@@ -1,5 +1,7 @@
 package com.daily.news.subscription.detail;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,28 +23,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.core.network.callback.ApiCallback;
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
 import com.daily.news.subscription.article.ArticleFragment;
 import com.daily.news.subscription.article.ArticlePresenter;
 import com.daily.news.subscription.bitmap.BlurTransformation;
 import com.daily.news.subscription.constants.Constants;
+import com.daily.news.subscription.detail.task.PromoteResponse;
+import com.daily.news.subscription.detail.task.PromoteTask;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.ui.widget.CircleImageView;
-import com.zjrb.core.utils.JsonUtils;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +53,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.ZBDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
@@ -104,6 +106,12 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     TextView mArticleNumView;
     @BindView(R2.id.detail_column_mark)
     TextView mTypeTagView;
+    @BindView(R2.id.rank_hit_count)
+    TextView mHitCountView;
+    @BindView(R2.id.rank_action)
+    TextView mActionView;
+    @BindView(R2.id.rank_score)
+    TextView mScoreView;
 
     @BindView(R2.id.detail_loading_container)
     ViewGroup mLoadingContainer;
@@ -271,11 +279,98 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 mArticlePresenter = new ArticlePresenter(mArticleFragment, new DetailArticleStore(mUid, data.elements));
                 mArticlePresenter.refreshData(data.elements);
             }
+
+            mHitCountView.setText(String.valueOf(data.detail.hit_rank_count));
+            if (mDetailColumn.rank_hited) {
+                mActionView.setText("拉票");
+            } else {
+                mActionView.setText("打榜");
+            }
+
         } else if (response.code == CODE_ALREADY_OFF_THE_SHELF) {
             appbar.setVisibility(View.GONE);
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
             L.e("栏目下线");
         }
+    }
+
+    @OnClick(R2.id.rank_action_container)
+    public void onActionClick() {
+        if (!mDetailColumn.rank_hited) {
+            if (!mDetailColumn.subscribed) {
+                ZBDialog.Builder builder = new ZBDialog.Builder()
+                        .setLeftText("取消")
+                        .setRightText("继续打榜")
+                        .setMessage("打榜需要先完成订阅")
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendActionRequest(mDetailColumn.id);
+                            }
+                        });
+                ZBDialog dialog = new ZBDialog(getContext());
+                dialog.setBuilder(builder);
+                dialog.show();
+            } else {
+                sendActionRequest(mDetailColumn.id);
+            }
+        } else {
+            shareSail(mDetailColumn);
+        }
+    }
+
+    private void shareSail(DetailResponse.DataBean.DetailBean bean) {
+        String shareName = String.format("我正在为起航号“%s”拉赞助力，快来和我一起为它加油！", bean.name);
+        String shareDes = TextUtils.isEmpty(bean.description) ? null : String.format("点击查看起航号“%s”榜上排名", bean.name);
+        String shareUrl = "https://zj.zjol.com.cn/";
+
+        UmengShareBean shareBean = UmengShareBean.getInstance()
+                .setSingle(false)
+                .setTitle(shareName)
+                .setTextContent(shareDes).setTargetUrl(shareUrl)
+                .setShareType("栏目")
+                .setNewsCard(false)
+                .setCardUrl(bean.rank_card_url);
+        if (!StringUtils.isEmpty(bean.pic_url)) {
+            shareBean.setImgUri(bean.pic_url);
+        } else {
+            shareBean.setPicId(R.mipmap.ic_launcher);
+        }
+        shareBean.setPicId(R.mipmap.ic_launcher);
+        UmengShareUtils.getInstance().startShare(shareBean);
+    }
+
+    private void sendActionRequest(long id) {
+        new PromoteTask(new PromoteCallback()).exe(id);
+    }
+
+    private void makeAnimation() {
+        mScoreView.setVisibility(View.VISIBLE);
+        ObjectAnimator translate = ObjectAnimator.ofFloat(mScoreView, "translationY", 0, -50);
+        translate.setDuration(1000);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(mScoreView, "alpha", 0, 1);
+        alpha.setDuration(1000);
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mScoreView, "scaleX", 1, 1.2f);
+        scaleX.setDuration(1000);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mScoreView, "scaleY", 1, 1.2f);
+        scaleY.setDuration(1000);
+
+        AnimatorSet step1 = new AnimatorSet();
+        step1.playTogether(translate, alpha, scaleX, scaleY);
+
+        ObjectAnimator translate1 = ObjectAnimator.ofFloat(mScoreView, "translationY", -50, -70);
+        translate1.setDuration(600);
+        ObjectAnimator alpha1 = ObjectAnimator.ofFloat(mScoreView, "alpha", 1, 0);
+        alpha1.setDuration(600);
+
+
+        AnimatorSet step2 = new AnimatorSet();
+        step2.playTogether(translate1, alpha1);
+
+        AnimatorSet allStep = new AnimatorSet();
+        allStep.play(step1).before(step2);
+        allStep.start();
     }
 
     @Override
@@ -301,13 +396,13 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @OnClick({R2.id.subscribe_container, R2.id.toolbar_detail_sub})
     public void submitSubscribe() {
-        new Analytics.AnalyticsBuilder(getContext(), mDetailColumn.subscribed?"A0114":"A0014", "SubColumn", false)
-                .name(mDetailColumn.subscribed?"订阅号取消订阅":"订阅号订阅")
+        new Analytics.AnalyticsBuilder(getContext(), mDetailColumn.subscribed ? "A0114" : "A0014", "SubColumn", false)
+                .name(mDetailColumn.subscribed ? "订阅号取消订阅" : "订阅号订阅")
                 .pageType("订阅号详情页")
                 .columnID(String.valueOf(mDetailColumn.id))
                 .seObjectType(ObjectType.C90)
                 .columnName(mDetailColumn.name)
-                .operationType(mDetailColumn.subscribed?"取消订阅":"订阅")
+                .operationType(mDetailColumn.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();
         mPresenter.submitSubscribe(mDetailColumn);
@@ -408,5 +503,33 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 .clickTabName("分享")
                 .build()
                 .send();
+    }
+
+    private class PromoteCallback implements ApiCallback<PromoteResponse> {
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(String errMsg, int errCode) {
+
+        }
+
+        @Override
+        public void onSuccess(PromoteResponse data) {
+            makeAnimation();
+            ZBToast.showShort(getContext(), data.toast);
+            final DetailResponse.DataBean.DetailBean bean = mDetailColumn;
+            bean.rank_hited = true;
+            bean.hit_rank_count += 2;
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mActionView.setText(bean.rank_hited ? "拉票" : "打榜");
+                    mHitCountView.setText(bean.hit_rank_count > 99999 ? "10万+" : String.valueOf(bean.hit_rank_count));
+                }
+            });
+        }
     }
 }

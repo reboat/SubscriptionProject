@@ -38,6 +38,12 @@ public class ColumnResponse {
             public boolean normal_column;
             public boolean red_boat_column;
             public String card_url;
+            public boolean rank_hited;
+            public String rank_share_url;
+            public String rank_card_url;
+            public String hit_rank_count_general;
+            public int hit_rank_count;
+
 
             @Override
             public int describeContents() {
@@ -63,13 +69,18 @@ public class ColumnResponse {
                 dest.writeByte(this.normal_column ? (byte) 1 : (byte) 0);
                 dest.writeByte(this.red_boat_column ? (byte) 1 : (byte) 0);
                 dest.writeString(this.card_url);
+                dest.writeByte(this.rank_hited ? (byte) 1 : (byte) 0);
+                dest.writeString(this.rank_share_url);
+                dest.writeString(this.rank_card_url);
+                dest.writeString(this.hit_rank_count_general);
+                dest.writeInt(this.hit_rank_count);
             }
 
             public ColumnBean() {
             }
 
             protected ColumnBean(Parcel in) {
-                this.id = in.readInt();
+                this.id = in.readLong();
                 this.name = in.readString();
                 this.pic_url = in.readString();
                 this.background_url = in.readString();
@@ -86,6 +97,11 @@ public class ColumnResponse {
                 this.normal_column = in.readByte() != 0;
                 this.red_boat_column = in.readByte() != 0;
                 this.card_url = in.readString();
+                this.rank_hited = in.readByte() != 0;
+                this.rank_share_url = in.readString();
+                this.rank_card_url = in.readString();
+                this.hit_rank_count_general = in.readString();
+                this.hit_rank_count = in.readInt();
             }
 
             public static final Parcelable.Creator<ColumnBean> CREATOR = new Parcelable.Creator<ColumnBean>() {
