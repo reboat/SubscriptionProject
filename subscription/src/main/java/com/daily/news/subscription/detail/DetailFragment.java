@@ -53,6 +53,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.RankTipDialog;
 import cn.daily.news.biz.core.ui.dialog.ZBDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.TypeFaceUtils;
@@ -298,17 +299,17 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     public void onActionClick() {
         if (!mDetailColumn.rank_hited) {
             if (!mDetailColumn.subscribed) {
-                ZBDialog.Builder builder = new ZBDialog.Builder()
+                RankTipDialog.Builder builder = new RankTipDialog.Builder()
                         .setLeftText("取消")
                         .setRightText("继续打榜")
                         .setMessage("打榜需要先完成订阅")
-                        .setOnClickListener(new View.OnClickListener() {
+                        .setOnRightClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 sendActionRequest(mDetailColumn.id);
                             }
                         });
-                ZBDialog dialog = new ZBDialog(getContext());
+                RankTipDialog dialog = new RankTipDialog(getContext());
                 dialog.setBuilder(builder);
                 dialog.show();
             } else {

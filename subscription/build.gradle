@@ -52,7 +52,7 @@ dependencies {
     implementation 'cn.daily.android:analytics:6.0.0.3'
     implementation 'com.aliya:android-uimode:2.0.8'
     implementation 'cn.daily.android:common-core:0.0.6.38'
-    implementation ('cn.daily.android:biz-core:6.0.1.117-SNAPSHOT'){
+    implementation ('cn.daily.android:biz-core:6.1.0.4'){
         exclude group: 'cn.daily.android',module: 'analytics'
         changing = true
     }
@@ -64,7 +64,7 @@ configurations.all {
     exclude group: "com.umeng.sdk", module: "common"
         resolutionStrategy {
             force 'com.umeng.sdk:umeng-common:1.5.4'
-            force 'cn.daily.android:biz-core:6.0.1.165-SNAPSHOT'
+            force 'cn.daily.android:biz-core:6.1.0.4'
             force 'cn.daily.android:common-core:0.0.6.38'
             force 'cn.daily.android:analytics:6.0.0.3'
         }
