@@ -315,8 +315,25 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             } else {
                 sendActionRequest(mDetailColumn.id);
             }
+
+            new Analytics.AnalyticsBuilder(getContext(), "A0061", "", false)
+                    .name("点击打榜")
+                    .pageType("订阅号详情页")
+                    .columnID(String.valueOf(mDetailColumn.id))
+                    .columnName(mDetailColumn.name)
+                    .seObjectType(ObjectType.C90)
+                    .build()
+                    .send();
         } else {
             shareSail(mDetailColumn);
+            new Analytics.AnalyticsBuilder(getContext(), "A0062", "", false)
+                    .name("点击拉票")
+                    .pageType("订阅号详情页")
+                    .columnID(String.valueOf(mDetailColumn.id))
+                    .columnName(mDetailColumn.name)
+                    .seObjectType(ObjectType.C90)
+                    .build()
+                    .send();
         }
     }
 
