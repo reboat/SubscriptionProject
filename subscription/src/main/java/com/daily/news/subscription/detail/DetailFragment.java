@@ -538,9 +538,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
         @Override
         public void onSuccess(PromoteResponse data) {
-            makeAnimation();
             ZBToast.showShort(getContext(), data.toast);
             final DetailResponse.DataBean.DetailBean bean = mDetailColumn;
+            if (bean.hit_rank_count <= 99999) {
+                makeAnimation();
+            }
             bean.rank_hited = true;
             bean.hit_rank_count += 2;
             bean.subscribed = true;
