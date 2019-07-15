@@ -54,7 +54,6 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.RankTipDialog;
-import cn.daily.news.biz.core.ui.dialog.ZBDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
@@ -113,6 +112,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     TextView mActionView;
     @BindView(R2.id.rank_score)
     TextView mScoreView;
+    @BindView(R2.id.rank_action_container)
+    View mActionViewContainer;
 
     @BindView(R2.id.detail_loading_container)
     ViewGroup mLoadingContainer;
@@ -144,7 +145,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             }
         }
     };
-
 
     public DetailFragment() {
         new DetailPresenter(this, new DetailStore());
@@ -255,8 +255,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
             if (!data.detail.normal_column) {
                 mTypeTagView.setVisibility(View.VISIBLE);
+                mActionViewContainer.setVisibility(View.VISIBLE);
             } else {
                 mTypeTagView.setVisibility(View.GONE);
+                mActionViewContainer.setVisibility(View.GONE);
             }
 
             if (!TextUtils.isEmpty(data.detail.article_count_general)) {
