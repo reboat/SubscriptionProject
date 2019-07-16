@@ -38,6 +38,7 @@ import com.daily.news.subscription.detail.task.PromoteTask;
 import com.daily.news.subscription.listener.AppBarStateChangeListener;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.core.utils.L;
@@ -49,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
+import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
@@ -255,7 +257,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
             if (!data.detail.normal_column) {
                 mTypeTagView.setVisibility(View.VISIBLE);
-                mActionViewContainer.setVisibility(View.VISIBLE);
+                mActionViewContainer.setVisibility(isRankEnable() ? View.VISIBLE : View.GONE);
             } else {
                 mTypeTagView.setVisibility(View.GONE);
                 mActionViewContainer.setVisibility(View.GONE);
@@ -295,6 +297,25 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
             L.e("栏目下线");
         }
+    }
+
+    /**
+     * 榜单是否开启,默认开启
+     *
+     * @return
+     */
+    private boolean isRankEnable() {
+        boolean isRankEnable = true;
+        ResourceBiz resourceBiz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
+        if (resourceBiz != null && resourceBiz.feature_list != null && resourceBiz.feature_list.size() > 0) {
+            for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
+                if ("columns_rank".equals(bean.name)) {
+                    isRankEnable = bean.enabled;
+                    break;
+                }
+            }
+        }
+        return isRankEnable;
     }
 
     @OnClick(R2.id.rank_action_container)
