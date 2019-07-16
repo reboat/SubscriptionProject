@@ -127,26 +127,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     private ArticleFragment mArticleFragment;
     private ArticlePresenter mArticlePresenter;
 
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
-                long id = intent.getLongExtra(Constants.Name.ID, 0);
-                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
-
-                if (String.valueOf(id).equals(mUid)) {
-                    String subscriptionText = subscribe ? "已订阅" : "订阅";
-                    mSubscriptionView.setText(subscriptionText);
-                    mSubscribeContainer.setSelected(subscribe);
-                    int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
-                    mToolbarSub.setImageResource(mId);
-
-                }
-
-
-            }
-        }
-    };
+    private BroadcastReceiver mSubscribeStateReceiver = new SubscribeStateReceiver();
+    private BroadcastReceiver mRankStateReceiver = new RankStateReceiver();
 
     public DetailFragment() {
         new DetailPresenter(this, new DetailStore());
@@ -211,7 +193,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
             }
         });
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mSubscribeStateReceiver, new IntentFilter(Constants.Action.SUBSCRIBE_SUCCESS));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mRankStateReceiver, new IntentFilter(Constants.Action.HIT_RANK_SUCCESS));
         return rootView;
     }
 
@@ -249,7 +232,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mArticleFragment.setColumnId(mDetailColumn);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
-            options.placeholder(R.drawable.column_placeholder_big);
+            options.placeholder(R.drawable.small_pic_holder);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mToolbarIcon);
             mTitleView.setText(data.detail.name);
@@ -497,7 +480,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mSubscribeStateReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mRankStateReceiver);
     }
 
 
@@ -546,6 +530,26 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 .send();
     }
 
+    public void syncRankState(Context context, long column_id, int score) {
+        Intent intent = new Intent("hit_rank_success");
+        intent.putExtra("id", column_id);
+        intent.putExtra("score", score);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    /**
+     * 同步拉票状态
+     * @param bean
+     */
+    private void rankState(DetailResponse.DataBean.DetailBean bean) {
+        mActionView.setText(bean.rank_hited ? "拉票" : "打榜");
+        mHitCountView.setText(bean.hit_rank_count > 99999 ? "10万+" : String.valueOf(bean.hit_rank_count));
+    }
+
+
+    /**
+     * 打榜回调接口
+     */
     private class PromoteCallback implements ApiCallback<PromoteResponse> {
         @Override
         public void onCancel() {
@@ -570,11 +574,54 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    mActionView.setText(bean.rank_hited ? "拉票" : "打榜");
-                    mHitCountView.setText(bean.hit_rank_count > 99999 ? "10万+" : String.valueOf(bean.hit_rank_count));
+                    rankState(bean);
                     subscribeSuc(mDetailColumn);
                 }
             });
+
+            syncRankState(getContext(), mDetailColumn.id, data.delta_count);
+        }
+    }
+
+    /**
+     * 打榜状态同步
+     */
+    private class RankStateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (Constants.Action.HIT_RANK_SUCCESS.equals(intent.getAction())) {
+                long id = intent.getLongExtra(Constants.Name.ID, 0);
+                int score = intent.getIntExtra(Constants.Name.SCORE, 0);
+                if (id == mDetailColumn.id) {
+                    DetailResponse.DataBean.DetailBean bean = mDetailColumn;
+                    bean.rank_hited = true;
+                    bean.hit_rank_count += score;
+                    rankState(bean);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 订阅状态同步
+     */
+    private class SubscribeStateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Constants.Action.SUBSCRIBE_SUCCESS.equals(intent.getAction())) {
+                long id = intent.getLongExtra(Constants.Name.ID, 0);
+                boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
+
+                if (String.valueOf(id).equals(mUid)) {
+                    String subscriptionText = subscribe ? "已订阅" : "订阅";
+                    mSubscriptionView.setText(subscriptionText);
+                    mSubscribeContainer.setSelected(subscribe);
+                    int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
+                    mToolbarSub.setImageResource(mId);
+                }
+            }
         }
     }
 }
