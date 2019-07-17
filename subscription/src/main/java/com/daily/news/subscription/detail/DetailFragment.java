@@ -232,7 +232,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mArticleFragment.setColumnId(mDetailColumn);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
-            options.placeholder(R.drawable.small_pic_holder);
+            options.placeholder(R.drawable.detail_icon_holder);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mImageView);
             Glide.with(this).load(data.detail.pic_url).apply(options).into(mToolbarIcon);
             mTitleView.setText(data.detail.name);

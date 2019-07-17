@@ -230,7 +230,7 @@
                             android:id="@+id/detail_column_imageView"
                             android:layout_width="65dp"
                             android:layout_height="65dp"
-                            android:src="@drawable/column_placeholder_big"
+                            android:src="@drawable/detail_icon_holder"
                             app:border_color="@color/_ffffff"
                             app:border_width="2dp" />
                     </com.zjrb.core.ui.widget.ShadowLayout>

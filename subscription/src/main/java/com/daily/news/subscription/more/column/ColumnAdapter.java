@@ -97,7 +97,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
             mSubscribeBtn.setSelected(column.subscribed);
             RequestOptions options = new RequestOptions();
             options.centerCrop();
-            options.placeholder(R.drawable.column_placeholder_big);
+            options.placeholder(R.drawable.detail_icon_holder);
             Glide.with(itemView).load(column.pic_url).apply(options).into(mImageView);
         }
     }
