@@ -565,7 +565,11 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
         @Override
         public void onError(String errMsg, int errCode) {
-
+            if (errCode == 53003) {
+                ZBToast.showShort(getContext(), errMsg);
+            } else {
+                ZBToast.showShort(getContext(), "打榜失败");
+            }
         }
 
         @Override
