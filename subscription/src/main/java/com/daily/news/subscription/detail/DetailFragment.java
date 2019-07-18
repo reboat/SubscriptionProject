@@ -348,9 +348,15 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         String shareDes = TextUtils.isEmpty(bean.description) ? null : String.format("点击查看起航号“%s”榜上排名", bean.name);
         String shareUrl = "https://zj.zjol.com.cn/";
 
+
         UmengShareBean shareBean = UmengShareBean.getInstance()
                 .setSingle(false)
                 .setTitle(shareName)
+                .setAnalyticsBean(OutSizeAnalyticsBean.getInstance()
+                        .setPageType("订阅号详情页")
+                        .setColumn_id(String.valueOf(mDetailColumn.id))
+                        .setColumn_name(mDetailColumn.name)
+                        .setObjectType(ObjectType.C90))
                 .setTextContent(shareDes).setTargetUrl(shareUrl)
                 .setShareType("栏目")
                 .setNewsCard(false)
@@ -539,6 +545,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     /**
      * 同步拉票状态
+     *
      * @param bean
      */
     private void rankState(DetailResponse.DataBean.DetailBean bean) {
