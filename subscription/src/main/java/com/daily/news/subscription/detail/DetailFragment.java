@@ -359,6 +359,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                         .setObjectType(ObjectType.C90))
                 .setTextContent(shareDes).setTargetUrl(shareUrl)
                 .setShareType("栏目")
+                .setCardPageType("卡片详情")
                 .setNewsCard(false)
                 .setCardUrl(bean.rank_card_url);
         if (!StringUtils.isEmpty(bean.pic_url)) {
