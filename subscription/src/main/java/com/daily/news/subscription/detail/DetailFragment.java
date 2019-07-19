@@ -309,10 +309,22 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                         .setLeftText("取消")
                         .setRightText("继续打榜")
                         .setMessage("打榜需要先完成订阅")
+                        .setOnLeftClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                new Analytics.AnalyticsBuilder(v.getContext(), "200037", "", false)
+                                        .name("点击取消打榜")
+                                        .pageType("弹框").build().send();
+                            }
+                        })
                         .setOnRightClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 sendActionRequest(mDetailColumn.id);
+                                new Analytics.AnalyticsBuilder(v.getContext(), "200038", "", false)
+                                        .name("点击继续打榜")
+                                        .pageType("弹框").build().send();
+
                             }
                         });
                 RankTipDialog dialog = new RankTipDialog(getContext());
