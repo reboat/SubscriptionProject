@@ -268,7 +268,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 mArticlePresenter.refreshData(data.elements);
             }
 
-            mHitCountView.setText(String.valueOf(data.detail.hit_rank_count));
+            mHitCountView.setText(data.detail.hit_rank_count > 99999 ? "10万+" : String.valueOf(data.detail.hit_rank_count));
+
             if (mDetailColumn.rank_hited) {
                 mActionView.setText("拉票");
             } else {
