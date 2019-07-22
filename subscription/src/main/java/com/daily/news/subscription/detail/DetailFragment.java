@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -450,9 +449,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 .build()
                 .send();
         mPresenter.submitSubscribe(mDetailColumn);
-        modifySubscribeBtnState(!mDetailColumn.subscribed);
-
-
     }
 
     @Override
@@ -593,17 +589,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             if (bean.hit_rank_count <= 99999) {
                 makeAnimation();
             }
-            bean.rank_hited = true;
-            bean.hit_rank_count += 2;
-            bean.subscribed = true;
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    rankState(bean);
-                    subscribeSuc(mDetailColumn);
-                }
-            });
-
+            mDetailColumn.subscribed = true;
+            subscribeSuc(mDetailColumn);
             syncRankState(getContext(), mDetailColumn.id, data.delta_count);
         }
     }

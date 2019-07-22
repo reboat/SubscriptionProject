@@ -26,6 +26,7 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
         mStore.getSubmitSubscribeTask(new APICallBack<ColumnResponse.DataBean.ColumnBean>() {
             @Override
             public void onSuccess(ColumnResponse.DataBean.ColumnBean data) {
+                column.subscribed=!column.subscribed;
                 mView.subscribeSuc(column);
             }
 
