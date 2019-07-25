@@ -267,7 +267,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 mArticlePresenter.refreshData(data.elements);
             }
 
-            mHitCountView.setText(data.detail.hit_rank_count > 99999 ? "10万+" : String.valueOf(data.detail.hit_rank_count));
+            mHitCountView.setText(getHitRankCount(mDetailColumn));
 
             if (mDetailColumn.rank_hited) {
                 mActionView.setText("拉票");
@@ -280,6 +280,18 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             mEmptyErrorContainer.setVisibility(View.VISIBLE);
             L.e("栏目下线");
         }
+    }
+
+    /**
+     * 返回打榜人气值 优先使用服务端返回的字符串，为空超过1w显示1万+
+     *
+     * @param bean
+     * @return
+     */
+    private String getHitRankCount(DetailResponse.DataBean.DetailBean bean) {
+        return TextUtils.isEmpty(bean.hit_rank_count_general)
+                ? (bean.hit_rank_count > Constants.MAX_COUNT ? "1万+" : String.valueOf(bean.hit_rank_count))
+                : bean.hit_rank_count_general;
     }
 
     /**
@@ -370,7 +382,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                         .setColumn_name(mDetailColumn.name)
                         .setObjectType(ObjectType.C90))
                 .setTextContent(shareDes)
-                .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url)?shareUrl:bean.rank_share_url)
+                .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url) ? shareUrl : bean.rank_share_url)
                 .setShareType("栏目")
                 .setCardPageType("卡片详情页")
                 .setNewsCard(false)
@@ -587,9 +599,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
         public void onSuccess(PromoteResponse data) {
             ZBToast.showShort(getContext(), data.toast);
             final DetailResponse.DataBean.DetailBean bean = mDetailColumn;
-            if (bean.hit_rank_count <= 99999) {
-                makeAnimation();
-            }
+            makeAnimation();
             mDetailColumn.subscribed = true;
             subscribeSuc(mDetailColumn);
             syncRankState(getContext(), mDetailColumn.id, data.delta_count);

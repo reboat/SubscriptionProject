@@ -5,6 +5,8 @@ package com.daily.news.subscription.constants;
  */
 
 public class Constants {
+    public static final int MAX_COUNT = 10000;
+
     public interface Action {
         String SUBSCRIBE_SUCCESS = "subscribe_success";
         String HIT_RANK_SUCCESS = "hit_rank_success";
