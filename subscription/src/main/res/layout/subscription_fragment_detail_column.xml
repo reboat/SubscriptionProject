@@ -40,11 +40,11 @@
                 android:clipToPadding="false">
 
                 <ImageView
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
                     android:id="@+id/detail_column_header_imageView"
                     android:layout_width="match_parent"
                     android:layout_height="198dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     android:scaleType="centerCrop"
                     android:src="@drawable/detail_column_default" />
 
@@ -179,6 +179,8 @@
                                     android:id="@+id/rank_hit_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:lines="1"
                                     android:textColor="#ffc9c9c9"
                                     android:textSize="12sp"
                                     tools:text="23934" />
@@ -206,13 +208,13 @@
                 </com.zjrb.core.ui.widget.ShadowLayout>
 
                 <RelativeLayout
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/detail_back"
                     android:layout_marginLeft="23dp"
                     android:layout_marginTop="20dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     android:orientation="horizontal">
 
                     <com.zjrb.core.ui.widget.ShadowLayout
@@ -236,7 +238,6 @@
                     </com.zjrb.core.ui.widget.ShadowLayout>
 
                     <TextView
-                        android:background="@drawable/sail_flag"
                         android:id="@+id/detail_column_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -244,6 +245,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="8dp"
                         android:layout_toRightOf="@+id/shadow_container"
+                        android:background="@drawable/sail_flag"
                         android:textColor="@color/_d12324"
                         android:textSize="12dp" />
                 </RelativeLayout>

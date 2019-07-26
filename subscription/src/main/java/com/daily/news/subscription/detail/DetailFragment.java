@@ -573,7 +573,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
      */
     private void rankState(DetailResponse.DataBean.DetailBean bean) {
         mActionView.setText(bean.rank_hited ? "拉票" : "打榜");
-        mHitCountView.setText(bean.hit_rank_count > 99999 ? "10万+" : String.valueOf(bean.hit_rank_count));
+        mHitCountView.setText(getHitRankCount(bean));
     }
 
 
