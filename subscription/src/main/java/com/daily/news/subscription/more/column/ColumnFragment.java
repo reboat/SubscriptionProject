@@ -131,7 +131,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-        intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
+        intent.putExtra(Constants.Name.SUBSCRIBE, !bean.subscribed);
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
