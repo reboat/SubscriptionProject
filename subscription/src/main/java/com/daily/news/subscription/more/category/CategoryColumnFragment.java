@@ -17,21 +17,16 @@ import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnPresenter;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.more.column.LocalColumnStore;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMore;
 import com.zjrb.core.recycleView.LoadMore;
-import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
-import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APIGetTask;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
@@ -135,13 +130,13 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
 
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
-                .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
+        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed ? "A0114" : "A0014", "SubColumn", false)
+                .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
                 .pageType("订阅号分类检索页面")
                 .columnID(String.valueOf(bean.id))
                 .seObjectType(ObjectType.C90)
                 .columnName(bean.name)
-                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .operationType(bean.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();
         //说明:点击时父类会取反,作为参数传给服务端，所以要放在super前
@@ -186,13 +181,14 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
                 public void onSetupParams(Object... params) {
                     put("class_name", className);
                     put("start", columnBeen.get(columnBeen.size() - 1).id);
+                    put("type", mType);
                 }
 
                 @Override
                 public String getApi() {
                     return "/api/subscription/column_list";
                 }
-            }.exe();
+            }.exe(mType);
         } else {
             mLoadMore.setState(LoadMore.TYPE_IDLE);
         }

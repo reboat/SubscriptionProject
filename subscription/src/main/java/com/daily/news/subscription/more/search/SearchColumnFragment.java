@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
+import com.daily.news.subscription.constants.Constants;
 
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
@@ -35,7 +36,7 @@ public class SearchColumnFragment extends SearchBaseFragment {
 
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.subscription_search_empty,parent,false);
+        return inflater.inflate(R.layout.subscription_search_empty, parent, false);
     }
 
     @Override

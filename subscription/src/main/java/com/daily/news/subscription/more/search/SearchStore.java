@@ -66,9 +66,8 @@ public class SearchStore extends SubscribeStore implements SearchContract.Store 
             @Override
             public void onSetupParams(Object... params) {
                 put("keyword", params[0]);
-                if (params.length > 1) {
-                    put("from", params[1]);
-                }
+                put("type", params[1]);
+
             }
 
             @Override

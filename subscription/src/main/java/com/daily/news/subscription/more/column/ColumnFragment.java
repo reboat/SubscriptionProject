@@ -38,15 +38,14 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @BindView(R2.id.tv_tips)
     protected
     TextView tvTips;
-
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
-    List<ColumnResponse.DataBean.ColumnBean> mColumns;
-    public ColumnAdapter mColumnAdapter;
-
     @BindView(R2.id.column_empty_container)
     ViewGroup mEmptyContainer;
 
+    List<ColumnResponse.DataBean.ColumnBean> mColumns;
+    public ColumnAdapter mColumnAdapter;
+    protected int mType;
 
     private ColumnContract.Presenter mPresenter;
     private HeaderRefresh mHeaderRefresh;
@@ -63,6 +62,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mType = getArguments().getInt(Constants.Name.COLUMN_TYPE);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
     }
 
     public Object[] getParams() {
-        return null;
+        return new Object[]{mType};
     }
 
     @Override
@@ -296,6 +296,7 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
             }
         }
     }
+
     protected void notifyDataChanged(ColumnResponse.DataBean.ColumnBean bean) {
 
     }

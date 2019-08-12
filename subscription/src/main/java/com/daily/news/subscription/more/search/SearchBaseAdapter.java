@@ -35,10 +35,12 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
     private OnSubscribeListener mOnSubscribeListener;
     private FooterLoadMoreV2<SearchResponse.DataBean> mFooterLoadMore;
     private Object mKeyword;
+    private int mType;
 
-    public SearchBaseAdapter(RecyclerView parent, List<SearchResponse.DataBean.ColumnBean> columnBeen) {
+    public SearchBaseAdapter(RecyclerView parent, List<SearchResponse.DataBean.ColumnBean> columnBeen, int type) {
         super(columnBeen);
         mColumnBeen = columnBeen;
+        mType = type;
         mFooterLoadMore = new FooterLoadMoreV2<>(parent, this);
         addFooterView(mFooterLoadMore.getItemView());
     }
@@ -87,13 +89,14 @@ public class SearchBaseAdapter extends BaseRecyclerAdapter<SearchResponse.DataBe
             public void onSetupParams(Object... params) {
                 put("keyword", params[0]);
                 put("from", params[1]);
+                put("type", params[2]);
             }
 
             @Override
             public String getApi() {
                 return "/api/subscription/search";
             }
-        }.exe(mKeyword, getDataSize());
+        }.exe(mKeyword, getDataSize(), mType);
     }
 
     public void restMoreState() {

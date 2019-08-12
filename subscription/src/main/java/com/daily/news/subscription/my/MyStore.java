@@ -53,7 +53,9 @@ public class MyStore extends ColumnStore {
         return new APIGetTask<ColumnResponse.DataBean>(apiCallBack) {
             @Override
             public void onSetupParams(Object... params) {
-
+                if (params != null && params.length > 0) {
+                    put("type", params[0]);
+                }
             }
 
             @Override

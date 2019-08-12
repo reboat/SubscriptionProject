@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +22,9 @@ import com.daily.news.subscription.R2;
 import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
-import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +32,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 
 public class CategoryFragment extends Fragment implements CategoryContract.View {
+    private int mType;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -44,14 +41,14 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                 long id = intent.getLongExtra(Constants.Name.ID, 0);
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
-                if(mCategories != null) {
+                if (mCategories != null) {
                     for (int i = 0; i < mCategories.size(); i++) {
-                        if(mCategories.get(i).columns != null){
-                        for (int j = 0; j < mCategories.get(i).columns.size(); j++) {
-                            if (mCategories.get(i).columns.get(j).id == id) {
-                                mCategories.get(i).columns.get(j).subscribed = subscribe;
+                        if (mCategories.get(i).columns != null) {
+                            for (int j = 0; j < mCategories.get(i).columns.size(); j++) {
+                                if (mCategories.get(i).columns.get(j).id == id) {
+                                    mCategories.get(i).columns.get(j).subscribed = subscribe;
+                                }
                             }
-                        }
                         }
                     }
                 }
@@ -80,6 +77,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mType = getArguments().getInt(Constants.Name.COLUMN_TYPE);
     }
 
     @Override
@@ -125,6 +123,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
             Bundle args = new Bundle();
             args.putParcelableArrayList("columns", (ArrayList<? extends Parcelable>) dataBean.elements.get(0).columns);
             args.putString("className", dataBean.elements.get(0).class_name);
+            args.putInt(Constants.Name.COLUMN_TYPE, mType);
             fragment.setArguments(args);
             fragment.setFeedbackDataListener(mCategoryAdapter);
             getChildFragmentManager().beginTransaction()

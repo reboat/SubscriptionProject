@@ -16,5 +16,6 @@ public class Constants {
         String SUBSCRIBE = "subscribe";
         String ID = "id";
         String SCORE = "score";
+        String COLUMN_TYPE = "type";
     }
 }

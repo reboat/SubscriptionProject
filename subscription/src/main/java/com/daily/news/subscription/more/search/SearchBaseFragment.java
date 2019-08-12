@@ -21,12 +21,9 @@ import com.daily.news.subscription.more.column.ColumnResponse;
 import com.daily.news.subscription.widget.SubscriptionDivider;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.utils.JsonUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +39,7 @@ import cn.daily.news.biz.core.network.compatible.LoadViewHolder;
 public class SearchBaseFragment extends Fragment implements SearchContract.View, SearchBaseAdapter.OnSubscribeListener, OnItemClickListener {
 
     private static final int REQUEST_CODE_TO_DETAIL = 1110;
+    private int mType;
 
     @BindView(R2.id.column_recyclerView)
     protected RecyclerView mRecyclerView;
@@ -68,12 +66,13 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mKeyword = getParams()[0].toString();
+        mType = getArguments().getInt(Constants.Name.COLUMN_TYPE);
         sendRequest(mKeyword);
     }
 
     public void sendRequest(Object... params) {
         mKeyword = params[0].toString();
-        mPresenter.subscribe(mKeyword);
+        mPresenter.subscribe(mKeyword,mType);
     }
 
     public Object[] getParams() {
@@ -101,7 +100,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     }
 
     protected SearchBaseAdapter createColumnAdapter(List<SearchResponse.DataBean.ColumnBean> columns) {
-        return new SearchBaseAdapter(mRecyclerView, columns);
+        return new SearchBaseAdapter(mRecyclerView, columns,mType);
     }
 
     public void addHeaderView(View headerView) {
@@ -112,13 +111,13 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void onSubscribe(SearchResponse.DataBean.ColumnBean bean) {
 
-        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed?"A0114":"A0014", "SubColumn", false)
-                .name(bean.subscribed?"订阅号取消订阅":"订阅号订阅")
+        new Analytics.AnalyticsBuilder(getContext(), bean.subscribed ? "A0114" : "A0014", "SubColumn", false)
+                .name(bean.subscribed ? "订阅号取消订阅" : "订阅号订阅")
                 .pageType("订阅号分类检索页面")
                 .columnID(String.valueOf(bean.id))
                 .seObjectType(ObjectType.C90)
                 .columnName(bean.name)
-                .operationType(bean.subscribed?"取消订阅":"订阅")
+                .operationType(bean.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();
 

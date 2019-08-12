@@ -1,19 +1,14 @@
 package com.daily.news.subscription.my;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.daily.news.subscription.R;
-import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.column.ColumnFragment;
 import com.daily.news.subscription.more.column.ColumnResponse;
 import com.zjrb.core.load.LoadMoreListener;
@@ -119,13 +114,14 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
                 @Override
                 public void onSetupParams(Object... params) {
                     put("start", params[0]);
+                    put("type", params[1]);
                 }
 
                 @Override
                 public String getApi() {
                     return "/api/subscription/user_subscription";
                 }
-            }.exe(start);
+            }.exe(start, mType);
         } else {
             mFooterLoadMore.setState(LoadMore.TYPE_IDLE);
         }

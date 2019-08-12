@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.R2;
+import com.daily.news.subscription.constants.Constants;
 import com.daily.news.subscription.more.category.CategoryFragment;
 
 import butterknife.BindView;
@@ -24,6 +25,7 @@ public class MoreActivity extends DailyActivity {
     TextView txtInput;
     CategoryFragment mCategoryFragment;
     Unbinder mUnbinder;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,18 @@ public class MoreActivity extends DailyActivity {
         setContentView(R.layout.subscription_activity_more);
         mUnbinder = ButterKnife.bind(this);
 
+        String type = getIntent().getData().getQueryParameter(Constants.Name.COLUMN_TYPE);
+        mType = Integer.parseInt(type);
+        String hint = mType == 1 ? "搜索启航号" : "搜索栏目";
+        txtInput.setHint(hint);
+        Bundle args = new Bundle();
+        args.putInt(Constants.Name.COLUMN_TYPE, mType);
         mCategoryFragment = new CategoryFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.more_container, mCategoryFragment, "category").commit();
+        mCategoryFragment.setArguments(args);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.more_container, mCategoryFragment, "category")
+                .commit();
     }
 
 
@@ -42,7 +54,7 @@ public class MoreActivity extends DailyActivity {
         if (view.getId() == R.id.iv_top_bar_back) {
             finish();
         } else if (view.getId() == R.id.txt_input) {
-            Uri.Builder builder = new Uri.Builder().path("/subscription/more/search").appendQueryParameter("type", "more");
+            Uri.Builder builder = new Uri.Builder().path("/subscription/more/search").appendQueryParameter("type", String.valueOf(mType));
             Nav.with(this).toPath(builder.build().toString(), REQUEST_CODE_TO_DETAIL);
         }
 
