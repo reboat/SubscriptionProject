@@ -20,8 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by lixinke on 2017/8/25.
  */
 
-public class
-SubscribeStore implements SubscribeContract.Store {
+public class SubscribeStore implements SubscribeContract.Store {
     @Override
     public Flowable getSubmitSubscribeFlowable(final ColumnResponse.DataBean.ColumnBean s) {
         return Flowable.timer(400, TimeUnit.MILLISECONDS).flatMap(new Function<Long, Publisher<?>>() {
