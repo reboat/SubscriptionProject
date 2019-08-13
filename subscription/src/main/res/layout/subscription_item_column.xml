@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:paddingRight="20dp"
-                android:paddingTop="20dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="16dp">
 
     <View
         android:id="@+id/padding_view"
@@ -18,11 +18,11 @@
         android:id="@+id/column_imageView"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
-        app:radius="4dp"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="11dp"
         android:layout_toRightOf="@+id/padding_view"
+        app:radius="4dp"
         app:srcCompat="@drawable/detail_icon_holder" />
 
     <LinearLayout
@@ -57,15 +57,17 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
+    <ImageView
         android:id="@+id/column_subscribe_btn"
-        android:layout_width="58dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/subscription_column_btn_selector"
         android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:src="@drawable/module_biz_topbar_subscribe"
         android:text="@string/subscription"
         android:textColor="@color/column_subscription_text_color_selector"
         android:textSize="12sp" />

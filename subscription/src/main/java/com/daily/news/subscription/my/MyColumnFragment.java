@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.daily.news.subscription.R;
 import com.daily.news.subscription.more.column.ColumnFragment;
@@ -83,7 +84,10 @@ public class MyColumnFragment extends ColumnFragment implements LoadMoreListener
 
     @Override
     public View emptyView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.subscription_my_subscription_empty, parent, false);
+        View emptyView = inflater.inflate(R.layout.subscription_my_subscription_empty, parent, false);
+        TextView tipView = emptyView.findViewById(R.id.subscription_my_subscription_empty_tip);
+        tipView.setText(mType == 1 ? "目前没有任何关注" : "目前没有任何订阅");
+        return emptyView;
     }
 
     @Override

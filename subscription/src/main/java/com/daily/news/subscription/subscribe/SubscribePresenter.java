@@ -26,18 +26,18 @@ public class SubscribePresenter implements SubscribeContract.Presenter {
         mStore.getSubmitSubscribeTask(new APICallBack<ColumnResponse.DataBean.ColumnBean>() {
             @Override
             public void onSuccess(ColumnResponse.DataBean.ColumnBean data) {
-                column.subscribed=!column.subscribed;
                 mView.subscribeSuc(column);
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 super.onError(errMsg, errCode);
-                mView.subscribeFail(column,errMsg);
+                column.subscribed = !column.subscribed;
+                mView.subscribeFail(column, errMsg);
             }
         })
                 .setTag(this)
-                .exe(column.id,!column.subscribed);
+                .exe(column.id, column.subscribed);
     }
 
     @Override

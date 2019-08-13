@@ -123,15 +123,15 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void onSubscribe(ColumnResponse.DataBean.ColumnBean bean) {
-        mPresenter.submitSubscribe(bean);
         bean.subscribed = !bean.subscribed;
         mColumnAdapter.notifyDataSetChanged();
+        mPresenter.submitSubscribe(bean);
     }
 
     @Override
     public void subscribeSuc(ColumnResponse.DataBean.ColumnBean bean) {
         Intent intent = new Intent(Constants.Action.SUBSCRIBE_SUCCESS);
-        intent.putExtra(Constants.Name.SUBSCRIBE, !bean.subscribed);
+        intent.putExtra(Constants.Name.SUBSCRIBE, bean.subscribed);
         intent.putExtra(Constants.Name.ID, bean.id);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
@@ -186,9 +186,8 @@ public class ColumnFragment extends Fragment implements ColumnContract.View, Col
 
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-        bean.subscribed = !bean.subscribed;
         mColumnAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), bean.subscribed ? "取消订阅失败!" : "订阅失败!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), bean.subscribed ? "取消操作失败!" : "操作失败!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

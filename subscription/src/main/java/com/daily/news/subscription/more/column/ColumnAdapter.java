@@ -65,7 +65,7 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
         @BindView(R2.id.column_info_view)
         TextView mColumnInfoView;
         @BindView(R2.id.column_subscribe_btn)
-        TextView mSubscribeBtn;
+        ImageView mSubscribeBtn;
         @BindView(R2.id.padding_view)
         View mPaddingView;
         private OnSubscribeListener mOnSubscribeListener;
@@ -92,8 +92,6 @@ public class ColumnAdapter extends BaseRecyclerAdapter<ColumnResponse.DataBean.C
             final ColumnResponse.DataBean.ColumnBean column = getData();
             mTitleView.setText(column.name);
             mColumnInfoView.setText(column.description);
-            String subscriptionText = column.subscribed ? itemView.getContext().getString(R.string.has_been_subscribed) : itemView.getContext().getString(R.string.subscription);
-            mSubscribeBtn.setText(subscriptionText);
             mSubscribeBtn.setSelected(column.subscribed);
             RequestOptions options = new RequestOptions();
             options.centerCrop();

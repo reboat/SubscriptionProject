@@ -14,6 +14,7 @@
         app:srcCompat="@drawable/empty_subscription"/>
 
     <TextView
+        android:id="@+id/subscription_my_subscription_empty_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="目前没有任何订阅"

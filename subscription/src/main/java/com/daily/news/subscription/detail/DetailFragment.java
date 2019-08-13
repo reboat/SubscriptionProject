@@ -476,7 +476,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         modifySubscribeBtnState(!mDetailColumn.subscribed);
-        ZBToast.showByType(getContext(), mDetailColumn.subscribed ? "取消订阅失败!" : "订阅失败!", ZBToast.TYPE_1);
+        ZBToast.showByType(getContext(), mDetailColumn.subscribed ? "取消操作失败!" : "操作失败!", ZBToast.TYPE_1);
     }
 
     private void modifySubscribeBtnState(boolean subscribe) {

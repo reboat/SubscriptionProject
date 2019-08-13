@@ -152,7 +152,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
             columnBeen.addAll(dataBean.elements);
         }
 
-        tvTips.setText("暂无起航号上线\n敬请期待");
+        tvTips.setText(mType == 1 ? "暂无起航号上线\n敬请期待" : "暂无订阅号上线\n敬请期待");
 
         super.updateValue(dataBean);
         if (dataBean.elements == null || dataBean.elements.size() == 0) {
