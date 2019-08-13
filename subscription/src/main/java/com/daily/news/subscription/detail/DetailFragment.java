@@ -76,10 +76,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     ImageView toolbarDetailBack;
     @BindView(R2.id.toolbar_title)
     TextView toolbarTitle;
-    //    @BindView(R2.id.toolbar_detail_column_sub_btn)
-//    TextView toolbarDetailColumnSubBtn;
-//    @BindView(R2.id.toolbar_subscribe_container)
-//    LinearLayout toolbarSubscribeContainer;
     @BindView(R2.id.toolbar_rel)
     RelativeLayout toolbarRel;
     private String mUid;
@@ -91,10 +87,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
     TextView mTitleView;
     @BindView(R2.id.detail_column_description)
     TextView mDescriptionView;
-    @BindView(R2.id.detail_column_sub_btn)
-    TextView mSubscriptionView;
     @BindView(R2.id.subscribe_container)
-    ViewGroup mSubscribeContainer;
+    ImageView mSubscribeContainer;
     @BindView(R2.id.detail_column_header_imageView)
     ImageView mHeaderImageView;
     @BindView(R2.id.detail_empty_error_container)
@@ -251,8 +245,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
             }
 
             mDescriptionView.setText(data.detail.description);
-            String subscriptionText = data.detail.subscribed ? "已订阅" : "订阅";
-            mSubscriptionView.setText(subscriptionText);
             mSubscribeContainer.setSelected(data.detail.subscribed);
             int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
             mToolbarSub.setImageResource(id);
@@ -461,6 +453,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 .operationType(mDetailColumn.subscribed ? "取消订阅" : "订阅")
                 .build()
                 .send();
+        mDetailColumn.subscribed = !mDetailColumn.subscribed;
         mPresenter.submitSubscribe(mDetailColumn);
     }
 
@@ -475,14 +468,12 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
-        modifySubscribeBtnState(!mDetailColumn.subscribed);
-        ZBToast.showByType(getContext(), mDetailColumn.subscribed ? "取消操作失败!" : "操作失败!", ZBToast.TYPE_1);
+        modifySubscribeBtnState(mDetailColumn.subscribed);
+        ZBToast.showByType(getContext(), "操作失败!", ZBToast.TYPE_1);
     }
 
     private void modifySubscribeBtnState(boolean subscribe) {
         mDetailColumn.subscribed = subscribe;
-        String subscriptionText = mDetailColumn.subscribed ? "已订阅" : "订阅";
-        mSubscriptionView.setText(subscriptionText);
         mSubscribeContainer.setSelected(subscribe);
         int id = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
         mToolbarSub.setImageResource(id);
@@ -638,8 +629,6 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 boolean subscribe = intent.getBooleanExtra(Constants.Name.SUBSCRIBE, false);
 
                 if (String.valueOf(id).equals(mUid)) {
-                    String subscriptionText = subscribe ? "已订阅" : "订阅";
-                    mSubscriptionView.setText(subscriptionText);
                     mSubscribeContainer.setSelected(subscribe);
                     int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
                     mToolbarSub.setImageResource(mId);
