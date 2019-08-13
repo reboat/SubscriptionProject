@@ -89,7 +89,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="11.5dp"
                         android:scaleType="center"
-                        android:src="@drawable/zjnews_detail_theme_navigation_share_icon"
+                        android:src="@mipmap/module_biz_atlas_share"
                         app:maskColor="@android:color/transparent" />
                 </LinearLayout>
 

@@ -312,7 +312,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
                 RankTipDialog.Builder builder = new RankTipDialog.Builder()
                         .setLeftText("取消")
                         .setRightText("继续打榜")
-                        .setMessage("打榜需要先完成订阅")
+                        .setMessage("打榜需要先完成关注")
                         .setOnLeftClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

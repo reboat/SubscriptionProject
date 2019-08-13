@@ -185,7 +185,7 @@ public class SearchBaseFragment extends Fragment implements SearchContract.View,
     @Override
     public void subscribeFail(ColumnResponse.DataBean.ColumnBean bean, String message) {
         mColumnAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), bean.subscribed ? "取消订阅失败!" : "订阅失败!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "操作失败!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
