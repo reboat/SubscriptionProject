@@ -15,7 +15,7 @@ public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
 
     @Override
     public Flowable<CategoryResponse> getFlowable(String url) {
-       return null;
+        return null;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CategoryStore implements CategoryContract.Store<CategoryResponse> {
         return new APIGetTask<CategoryResponse.DataBean>(apiCallBack) {
             @Override
             public void onSetupParams(Object... params) {
-
+                put("type", params[0]);
             }
 
             @Override

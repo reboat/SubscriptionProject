@@ -94,7 +94,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter.subscribe(2);
+        mPresenter.subscribe(mType);
     }
 
     @Override

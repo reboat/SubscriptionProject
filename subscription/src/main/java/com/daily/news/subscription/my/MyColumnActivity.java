@@ -19,8 +19,6 @@ public class MyColumnActivity extends DailyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_activity_my_subscription);
 
-        String type = getIntent().getData().getQueryParameter(Constants.Name.COLUMN_TYPE);
-        mType = Integer.parseInt(type);
         MyColumnFragment fragment = new MyColumnFragment();
         Bundle args = new Bundle();
         args.putInt(Constants.Name.COLUMN_TYPE, mType);
@@ -35,6 +33,8 @@ public class MyColumnActivity extends DailyActivity {
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
+        String type = getIntent().getData().getQueryParameter(Constants.Name.COLUMN_TYPE);
+        mType = Integer.parseInt(type);
         String title = mType == 1 ? "我的关注" : "我的订阅";
         return TopBarFactory.createDefault(view, this, title).getView();
     }

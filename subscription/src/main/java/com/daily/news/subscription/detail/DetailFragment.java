@@ -630,8 +630,10 @@ public class DetailFragment extends Fragment implements DetailContract.View, Hea
 
                 if (String.valueOf(id).equals(mUid)) {
                     mSubscribeContainer.setSelected(subscribe);
-                    int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
-                    mToolbarSub.setImageResource(mId);
+                    if (mDetailColumn != null) {
+                        int mId = mDetailColumn.subscribed ? R.drawable.zjnews_detail_navigation_subscribed_icon : R.drawable.zjnews_detail_navigation_subscribe_icon;
+                        mToolbarSub.setImageResource(mId);
+                    }
                 }
             }
         }

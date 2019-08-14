@@ -35,7 +35,7 @@ public class MoreActivity extends DailyActivity {
 
         String type = getIntent().getData().getQueryParameter(Constants.Name.COLUMN_TYPE);
         mType = Integer.parseInt(type);
-        String hint = mType == 1 ? "搜索启航号" : "搜索栏目";
+        String hint = mType == 1 ? "搜索起航号" : "搜索订阅号";
         txtInput.setHint(hint);
         Bundle args = new Bundle();
         args.putInt(Constants.Name.COLUMN_TYPE, mType);
