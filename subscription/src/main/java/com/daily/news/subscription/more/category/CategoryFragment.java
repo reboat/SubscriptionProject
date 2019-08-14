@@ -206,6 +206,7 @@ public class CategoryFragment extends Fragment implements CategoryContract.View 
                     ColumnFragment fragment = new CategoryColumnFragment();
                     Bundle args = new Bundle();
                     args.putString("className", category.class_name);
+                    args.putInt("type", mType);
                     fragment.setArguments(args);
                     fragment.setFeedbackDataListener(CategoryAdapter.this);
                     getChildFragmentManager().beginTransaction()

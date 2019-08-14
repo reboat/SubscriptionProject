@@ -1,6 +1,7 @@
 package com.daily.news.subscription.more.search;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -94,19 +95,18 @@ public class SearchActivity extends DailyActivity implements TextView.OnEditorAc
         if (!checkValid(keyword)) {
             return;
         }
-        SearchColumnFragment fragment = (SearchColumnFragment) getSupportFragmentManager().findFragmentByTag("search");
-        if (fragment == null) {
-            fragment = new SearchColumnFragment();
-            Bundle args = new Bundle();
-            args.putString("keyword", keyword);
-            fragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.more_container, fragment, "search")
-                    .addToBackStack("search")
-                    .commit();
-        } else {
-            fragment.sendRequest(new Object[]{keyword});
-        }
+
+        Fragment fragment = new SearchColumnFragment();
+        Bundle args = new Bundle();
+        args.putString("keyword", keyword);
+        args.putInt(Constants.Name.COLUMN_TYPE, mType);
+        fragment.setArguments(args);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.more_container, fragment, "search")
+                .addToBackStack("search")
+                .commitAllowingStateLoss();
+
 
         new Analytics.AnalyticsBuilder(this, "A0013", "Search", false)
                 .name("订阅号搜索")

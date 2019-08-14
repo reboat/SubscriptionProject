@@ -50,7 +50,7 @@ public class CategoryColumnFragment extends ColumnFragment implements LoadMoreLi
     public void onAttach(Context context) {
         super.onAttach(context);
         className = getArguments().getString("className");
-        new ColumnPresenter(this, new LocalColumnStore(columnBeen, className, -1, has_more));
+        new ColumnPresenter(this, new LocalColumnStore(columnBeen, className, -1, has_more, mType));
 
     }
 

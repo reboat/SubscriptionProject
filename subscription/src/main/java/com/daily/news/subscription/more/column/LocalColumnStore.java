@@ -19,15 +19,17 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
     private List<ColumnResponse.DataBean.ColumnBean> mColumns;
     private String className;
     private long start = -1;
+    private int mType;
 
     public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns) {
         mColumns = columns;
     }
 
-    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, String className, long start, boolean has_more) {
+    public LocalColumnStore(List<ColumnResponse.DataBean.ColumnBean> columns, String className, long start, boolean has_more, int type) {
         mColumns = columns;
         this.className = className;
         this.start = start;
+        mType = type;
     }
 
     @Override
@@ -43,6 +45,7 @@ public class LocalColumnStore extends SubscribeStore implements ColumnContract.S
                 @Override
                 public void onSetupParams(Object... params) {
                     put("class_name", className);
+                    put("type", mType);
                     if (start != -1) {
                         put("start", start);
                     }
